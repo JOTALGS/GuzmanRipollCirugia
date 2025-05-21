@@ -2,9 +2,11 @@ import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import ContactCTA from './ContactCta';
 
+
 const Hero = () => {
   const title = "GUZMANRIPOLL  ";
   const letterCount = title.length;
+  
 
   return (
     <Box id="hero" display="flex" flexDirection="column" height="100vh" width="100%">

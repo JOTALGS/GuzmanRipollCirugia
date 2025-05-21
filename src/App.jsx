@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { Button, Box, Typography } from "@mui/material";
 
@@ -10,26 +10,35 @@ import Home from "./pages/Home";
 import NavButtons from "./components/home/NavButtons";
 import LinearGradButton from "./components/buttons/LinearGradButton";
 import Navbar from "./components/UI/NavBar";
+import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
+import ProductSection from "./components/procedimientos/ProductSection";
+
 //import Navbar from "./components/navbar/Navbar";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // About Page Component
 function About() {
+  const [isPinned, setIsPinned] = useState(true)
+  
   return (
-    <Box sx={{ mt: 8, width: '100%' }}>
-      <Typography variant="h3" component="h1" gutterBottom>
-        About Us
-      </Typography>
-      <Typography height={'100vh'} variant="body1" paragraph>
-        This is a sample application showcasing React Router with Material UI integration.
-        We've also added smooth scrolling functionality using a Lenis simulation.
-      </Typography>
-      <Typography variant="body1" paragraph>
-        In a real application, you would install the actual Lenis library with:
-        <code>npm install @studio-freight/lenis</code>
-      </Typography>
-      <LinearGradButton />
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
+      <ProductSection />
+    </Box>
+  );
+}
+
+function ProcedimientoCero() {
+  const [isPinned, setIsPinned] = useState(true)
+  
+  return (
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
+      <StandaloneScrollReveal
+        imageSrc="images/wwsav.jpg"
+        imageAlt="Architectural detail with orange geometric patterns"
+        heading="NexaVirtu Tech"
+        pin={isPinned}
+      />
     </Box>
   );
 }
@@ -80,10 +89,14 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/work" element={<About />} />
           <Route path="/contacto" element={<Contact />} />
+          
+          <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
         </Routes>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '82%' }}>
-          <NavButtons />
-        </Box>
+        {location.pathname !== "/cir-mamaria" && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '82%' }}>
+            <NavButtons />
+          </Box>
+        )}
       </Box>
       
     </Router>

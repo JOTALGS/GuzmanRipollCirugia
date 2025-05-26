@@ -22,7 +22,21 @@ function About() {
   const [isPinned, setIsPinned] = useState(true)
   
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        backgroundColor: 'black',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        // Hide scrollbar - Webkit (Brave, Chrome, Safari)
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+        // Hide scrollbar - Firefox
+        scrollbarWidth: 'none', // Firefox
+        msOverflowStyle: 'none', // IE & Edge (legacy)
+      }}
+    >
       <ProductSection />
     </Box>
   );

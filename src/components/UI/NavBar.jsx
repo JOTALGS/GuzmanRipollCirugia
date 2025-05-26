@@ -55,14 +55,11 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="fixed" ref={navRef} sx={{ bgcolor: 'primary.main', zIndex: 1100 }}>
+    <AppBar position="fixed" ref={navRef} sx={{ bgcolor: 'transparent', zIndex: 1100 }}>
       <Toolbar sx={{ justifyContent: 'space-between', px: 3 }}>
 
-        {/* Left: Logo */}
-        <Typography variant="h6" component="div">
-          LOGO
-        </Typography>
-
+        <img src="/images/GR_9_Isologo.png" alt="Logo" style={{ objectFit: 'contain', width: '50px', height: '50px' }} />
+        
         {/* Center: Navigation */}
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Button color="inherit">Inicio</Button>

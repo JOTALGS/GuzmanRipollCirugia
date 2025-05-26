@@ -24,6 +24,13 @@ body {
   
   @font-face {
     font-family: 'Archivo Expanded';
+    src: url('/fonts/Archivo Expanded/Archivo_Expanded-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Archivo Expanded';
     src: url('/fonts/Archivo Expanded/Archivo_Expanded-Italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;

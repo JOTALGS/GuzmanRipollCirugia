@@ -4,9 +4,9 @@
   import gsap from 'gsap';
 
   const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Work', path: '/work' },
-    { label: 'Contacto', path: '/contacto' },
+    { label: 'INICIO', path: '/' },
+    { label: 'TRABAJO', path: '/work' },
+    { label: 'CONTACTO', path: '/contacto' },
   ];
 
   const NavButtons = () => {
@@ -103,7 +103,7 @@ useEffect(() => {
             bottom: 0,
             left: 0,
             width: 0,
-            backgroundColor: 'black',
+            background: 'linear-gradient(to right, #191968, #0081C7)',
             borderRadius: '25px',
             zIndex: 1,
           }}
@@ -120,11 +120,12 @@ useEffect(() => {
               flex: 1,
               zIndex: 2,
               textTransform: 'none',
+              fontWeight: 'bold',
               color: location.pathname === path ? 'white' : 'black',
-              borderRadius: 0,
+              borderRadius: '25px',
               '&:hover': {
                 backgroundColor: 'transparent',
-                color: 'white',
+                color: 'darkgray',
               },
             }}
           >

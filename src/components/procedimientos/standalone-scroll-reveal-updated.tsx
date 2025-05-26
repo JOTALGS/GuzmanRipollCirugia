@@ -23,9 +23,9 @@ export default function StandaloneScrollReveal({
   imageSrc,
   imageAlt = "Architectural project",
   projectNumber = "01",
-  projectTitle = "Ocean house",
-  location = "Victoria, Australia",
-  category = "Residential",
+  projectTitle = "Cirugia Mamaria",
+  location = "Punta del Este, Maldonado",
+  category = "procedimiento 01",
 }: ScrollRevealProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const maskRef = useRef<HTMLDivElement>(null)
@@ -60,7 +60,7 @@ export default function StandaloneScrollReveal({
           },
         },
       }).to(maskRef.current, {
-        clipPath: "inset(0% 0% 0% 0%)",
+        clipPath: "inset(0%)",
         ease: "power2.inOut",
         duration: 1,
       })
@@ -103,6 +103,9 @@ export default function StandaloneScrollReveal({
               alt={imageAlt}
               sx={{
                 position: "absolute",
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
@@ -150,7 +153,7 @@ export default function StandaloneScrollReveal({
           }}
         >
           <Typography color="white" fontSize="0.875rem" fontWeight={500}>
-            PRJCT—Archi
+            DR. GUZMAN RIPOLL
           </Typography>
           <Button variant="text" sx={{ color: "white", fontSize: "0.875rem" }}>
             Menu

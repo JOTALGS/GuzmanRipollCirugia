@@ -8,39 +8,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from '@studio-freight/lenis';
 import Home from "./pages/Home";
 import NavButtons from "./components/home/NavButtons";
-import LinearGradButton from "./components/buttons/LinearGradButton";
-import Navbar from "./components/UI/NavBar";
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
-import ProductSection from "./components/procedimientos/ProductSection";
+import About from "./pages/About";
 
 //import Navbar from "./components/navbar/Navbar";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // About Page Component
-function About() {
-  const [isPinned, setIsPinned] = useState(true)
-  
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: 'black',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        // Hide scrollbar - Webkit (Brave, Chrome, Safari)
-        '&::-webkit-scrollbar': {
-          display: 'none',
-        },
-        // Hide scrollbar - Firefox
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE & Edge (legacy)
-      }}
-    >
-      <ProductSection />
-    </Box>
-  );
-}
 
 function ProcedimientoCero() {
   const [isPinned, setIsPinned] = useState(true)
@@ -97,16 +72,15 @@ const App = () => {
   return (
     <Router autoScrollToTop>
       <Box id="scroll-container" sx={{ textAlign: "center" , scrollBehavior: "smooth" }}>
-        <Navbar />
-        {/* <Navbar /> */}
+
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<About />} />
           <Route path="/work" element={<About />} />
           <Route path="/contacto" element={<Contact />} />
           
           <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
         </Routes>
-        {location.pathname !== "/cir-mamaria" && (
+        {location.pathname !== "/cir-mamaria" && location.pathname !== "/" && (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '82%' }}>
             <NavButtons />
           </Box>

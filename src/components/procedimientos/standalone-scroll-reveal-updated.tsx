@@ -50,14 +50,8 @@ export default function StandaloneScrollReveal({
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: true,
           pin: true,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            if (self.progress > 0.95 && self.direction > 0) {
-              self.scroll(self.end)
-            }
-          },
         },
       }).to(maskRef.current, {
         clipPath: "inset(0%)",

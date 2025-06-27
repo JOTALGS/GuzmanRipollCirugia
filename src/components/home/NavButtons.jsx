@@ -16,64 +16,64 @@
     const buttonRefs = useRef([]);
     const previousIndexRef = useRef(null);
 
-useEffect(() => {
-  const activeIndex = navItems.findIndex(item => item.path === location.pathname);
-  const targetButton = buttonRefs.current[activeIndex];
+    useEffect(() => {
+      const activeIndex = navItems.findIndex(item => item.path === location.pathname);
+      const targetButton = buttonRefs.current[activeIndex];
 
-  if (
-    targetButton &&
-    indicatorRef.current &&
-    containerRef.current
-  ) {
-    const { offsetLeft, offsetWidth } = targetButton;
+      if (
+        targetButton &&
+        indicatorRef.current &&
+        containerRef.current
+      ) {
+        const { offsetLeft, offsetWidth } = targetButton;
 
-    let fromLeft = 0;
-    let fromWidth = 0;
+        let fromLeft = 0;
+        let fromWidth = 0;
 
-    if (previousIndexRef.current !== null) {
-      const prevButton = buttonRefs.current[previousIndexRef.current];
-      if (prevButton) {
-        const prevRect = prevButton.getBoundingClientRect();
-        const containerRect = containerRef.current.getBoundingClientRect();
-        fromLeft = prevRect.left - containerRect.left;
-        fromWidth = prevRect.width;
+        if (previousIndexRef.current !== null) {
+          const prevButton = buttonRefs.current[previousIndexRef.current];
+          if (prevButton) {
+            const prevRect = prevButton.getBoundingClientRect();
+            const containerRect = containerRef.current.getBoundingClientRect();
+            fromLeft = prevRect.left - containerRect.left;
+            fromWidth = prevRect.width;
+          }
+        }
+
+        const indicator = indicatorRef.current;
+        const container = containerRef.current;
+
+        // Set initial indicator position
+        gsap.set(indicator, {
+          left: fromLeft,
+          width: fromWidth,
+        });
+
+        // Animate indicator
+        gsap.to(indicator, {
+          left: offsetLeft,
+          width: offsetWidth,
+          duration: 0.4,
+          ease: 'power2.out',
+        });
+
+        // Animate full container fade-in only on home route
+        if (location.pathname === '/') {
+          gsap.set(container, { opacity: 0 });
+          gsap.to(container, {
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            delay: 2.5,
+          });
+        } else {
+          // Ensure opacity is reset immediately on other routes
+          gsap.set(container, { opacity: 1 });
+        }
+
+        previousIndexRef.current = activeIndex;
       }
-    }
-
-    const indicator = indicatorRef.current;
-    const container = containerRef.current;
-
-    // Set initial indicator position
-    gsap.set(indicator, {
-      left: fromLeft,
-      width: fromWidth,
-    });
-
-    // Animate indicator
-    gsap.to(indicator, {
-      left: offsetLeft,
-      width: offsetWidth,
-      duration: 0.4,
-      ease: 'power2.out',
-    });
-
-    // Animate full container fade-in only on home route
-    if (location.pathname === '/') {
-      gsap.set(container, { opacity: 0 });
-      gsap.to(container, {
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out',
-        delay: 2.5,
-      });
-    } else {
-      // Ensure opacity is reset immediately on other routes
-      gsap.set(container, { opacity: 1 });
-    }
-
-    previousIndexRef.current = activeIndex;
-  }
-}, [location.pathname]);
+    }, [location.pathname]);
 
 
 

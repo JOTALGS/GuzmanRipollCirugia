@@ -9,8 +9,6 @@ export default function IntroAboutSection() {
       sx={{
         height: {xs: '81vh', md: '94vh'},
         paddingBottom: '6vh',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
         // Hide scrollbar - Webkit (Brave, Chrome, Safari)
         '&::-webkit-scrollbar': {
           display: 'none',

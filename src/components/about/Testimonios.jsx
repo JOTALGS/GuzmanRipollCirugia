@@ -78,8 +78,8 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
             key={`testimonio-${index}`}
             sx={{
               flexShrink: 0,
-              maxWidth: "15%",
-              height: '300px',
+              maxWidth: { xs: "10%", md: "15%" },
+              height: { xs: '400px', md: '300px' },
               borderRadius: 3,
               boxShadow: 3,
               // Glass effect styles:
@@ -188,7 +188,7 @@ export default function Testimonios() {
   return (
     <Box
       sx={{
-        height: '94vh',
+        height: { xs: '120vh', md: '110vh' },
         paddingBottom: '6vh',
         overflowY: 'scroll',
         overflowX: 'hidden',
@@ -201,8 +201,8 @@ export default function Testimonios() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: '35px',
-        paddingInline: '75px',
+        columnGap: { xs: '25px', md: '35px' },
+        paddingInline: { xs: '15px', md: '75px' },
         backgroundColor: '#222e34',
         
       }}
@@ -226,8 +226,8 @@ export default function Testimonios() {
         <Typography color="black" fontFamily={'Poppins'}fontSize={'65px'} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
           cada Testimonio.
         </Typography>
-        
-        <Typography color="black" fontFamily={'Poppins'} width={'90%'} fontSize={'25px'} sx={{ lineHeight: 1.2 }}>
+
+        <Typography color="black" fontFamily={'Poppins'} width={{ xs: '200%', md: '75%' }} fontSize={'25px'} sx={{ overflow: 'visible', lineHeight: 1.2 }}>
           Garantizamos confianza, cercanía y un toque humano en cada tratamiento.
         </Typography>
       </Box>
@@ -236,7 +236,7 @@ export default function Testimonios() {
         sx={{
           marginTop: '71px',
           gridColumn: '1 / 13',
-          gridRow: '2 / 3',
+          gridRow: '2 / 4',
           display: 'flex',
           flexDirection: 'column',
           overflowX: 'hidden',
@@ -251,7 +251,7 @@ export default function Testimonios() {
       <Box 
         sx={{
           gridColumn: '1 / 13',
-          gridRow: '4 / 5',
+          gridRow: '5 / 6',
           display: 'flex',
           alignItems: 'center',
           width: '100%',

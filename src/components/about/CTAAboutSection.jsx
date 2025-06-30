@@ -29,7 +29,7 @@ export default function CTAAboutSection() {
         trigger: leftSection,
         start: "top top",
         end: isMobile() ? "bottom+=2500% top" : "bottom+=550% top",
-        pin: true,
+        pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,
         markers: false,

@@ -74,7 +74,7 @@ export default function Faq() {
       <Box sx={{
         gridColumn: '1 / 13',
         gridRow: '1 / 1',
-        mx: 4,
+        mx: { xs: 1, md: 4 },
       }}>
           
         <Box sx={{
@@ -118,7 +118,7 @@ export default function Faq() {
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'space-between',
-                py: 3
+                py: 2
               }}>
                 <Box sx={{ display: 'flex', gap: 2, flex: 1 }}>
                   <Typography 
@@ -132,7 +132,7 @@ export default function Faq() {
                     <Typography
                       variant="h6"
                       component="h3"
-                      sx={{ fontWeight: 500, mb: 1 }}
+                      sx={{ fontSize: { xs: '16px', md: '20px' }, fontWeight: 500, mb: 1 }}
                     >
                       {item.question}
                     </Typography>
@@ -140,7 +140,7 @@ export default function Faq() {
                       <Typography 
                         variant="body1" 
                         color="primary.main" 
-                        sx={{ lineHeight: 1.75, pb: 2 }}
+                        sx={{ fontSize: { xs: '16px', md: '20px' }, lineHeight: 1.75, pb: 2 }}
                       >
                         {item.answer}
                       </Typography>

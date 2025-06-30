@@ -6,6 +6,7 @@ import VerMasProcedimientosAboutSection from "../components/about/VerMasProcedim
 import CTAAboutSection from "../components/about/CTAAboutSection";
 import Testimonios from "../components/about/Testimonios";
 import Especialistas from "../components/about/Especialistas";
+import Faq from "../components/about/faq";
 
 export default function About() {
   const [isPinned, setIsPinned] = useState(true)
@@ -28,6 +29,8 @@ export default function About() {
       <Testimonios />
 
       <Especialistas />
+
+      <Faq />
 
       <Box
         sx={{

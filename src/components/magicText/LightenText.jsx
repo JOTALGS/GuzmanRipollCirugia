@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,6 +9,8 @@ const LightenText = () => {
   const lineWrapperRef = useRef([]);
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // 'sm' or your mobile breakpoint
 
 
   // Text content and splitting logic
@@ -23,21 +25,43 @@ const LightenText = () => {
     tecnológica con un cuidado humano excepcional.
   `;
 
-  const splitText = (text, parts) => {
-    const words = text.split(' ');
-    const partLength = Math.ceil(words.length / parts);
-    const result = [];
-    
-    for (let i = 0; i < parts; i++) {
-      const start = i * partLength;
-      const end = start + partLength;
-      result.push(words.slice(start, end).join(' '));
+const splitText = (text, maxCharsPerLine) => {
+  if (!text || maxCharsPerLine <= 0) return [];
+  
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = '';
+  
+  words.forEach(word => {
+    if (currentLine.length + word.length + 1 <= maxCharsPerLine) {
+      // Si la palabra cabe en la línea actual
+      currentLine += (currentLine ? ' ' : '') + word;
+    } else if (word.length > maxCharsPerLine) {
+      // Manejar palabras muy largas
+      if (currentLine) {
+        lines.push(currentLine);
+        currentLine = '';
+      }
+      
+      // Dividir la palabra larga en múltiples líneas
+      for (let i = 0; i < word.length; i += maxCharsPerLine) {
+        const chunk = word.substring(i, i + maxCharsPerLine);
+        lines.push(chunk);
+      }
+    } else {
+      // Si no cabe, empezar nueva línea
+      if (currentLine) lines.push(currentLine);
+      currentLine = word;
     }
-    
-    return result;
-  };
+  });
+  
+  if (currentLine) lines.push(currentLine);
+  
+  return lines;
+};
 
-  const textParts = splitText(homeText, 8);
+  const charsPerPart = isMobile ? 38 : 50;
+  const textParts = splitText(homeText, charsPerPart);
 
   useLayoutEffect(() => {
     const wrappers = lineWrapperRef.current;
@@ -92,51 +116,55 @@ const LightenText = () => {
               ref={el => lineWrapperRef.current[index] = el}
               className={`relative flex mb-2 items-start justify-start text-start ${index === 0 ? 'justify-end' : ''}`}
             >
-              {/* Base text (dark) */}
-              <Typography 
-                variant="p"
-                fontWeight={"bold"}
-                fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "60px"}}
-                className="line"
-                style={{
-                  color: "#e9e9e9",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: "100",
-                  position: "absolute",
-                  display: "flex" ,
-                  width: "90%",
-                  justifyContent: index === 0 ? "flex-end" : "flex-start",
-                  zIndex: 0,
-                  textWrap: "nowrap"
-                }}
-              >
-                {part}
-              </Typography>
-
-              {/* Overlay text (light) */}
-              <Typography 
-                variant="p"
-                fontWeight={"bold"}
-                fontSize={{xs: "20px", sm: "30px", md: "40px", lg: "60px"}}
-                className="line-overlay"
-                style={{
-                  color: "#01263a",
-                  clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
-                  display: "flex" ,
-                  width: "98.46%",
-                  justifyContent: index === 0 ? "flex-end" : "flex-start",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: "100",
-                  textWrap: "nowrap"
-                }}
-                sx={{ zIndex: 1 }}
+              <Box sx={{ width: "90vw", height: "auto"}}>
+                {/* Base text (dark) - Fixed positioning */}
+                <Typography 
+                  variant="p"
+                  fontWeight={"bold"}
+                  fontSize={{xs: "18px", sm: "30px", md: "40px", lg: "55px"}}
+                  className="line"
+                  style={{
+                    color: "#e9e9e9",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: "100",
+                    position: "absolute",
+                    display: "flex",
+                    width: "90%",
+                    justifyContent: index === 0 ? "flex-end" : "flex-start",
+                    zIndex: 0,
+                    textWrap: "nowrap",
+                  }}
                 >
-                {part}
-              </Typography>
-              {index === 4 && (
-                <Box sx={{ height: "50px"}}/>
-              )}
+                  {part}
+                </Typography>
+              </Box>
+
+
+              <Box sx={{ width: "90vw", height: "auto"}}>
+                {/* Overlay text (light) - Remove clipPath for visibility */}
+                <Typography 
+                  variant="p"
+                  fontWeight={"bold"}
+                  fontSize={{xs: "18px", sm: "30px", md: "40px", lg: "55px"}}
+                  className="line-overlay"
+                  style={{
+                    color: "#01263a",
+                    // Remove clipPath to make visible (or adjust for your animation):
+                    // clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)", 
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: index === 0 ? "flex-end" : "flex-start",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: "100",
+                    textWrap: "nowrap"
+                  }}
+                  sx={{ zIndex: 1 }}
+                >
+                  {part}
+                </Typography>
+              </Box>
               
+              {index === 4 && <Box sx={{ height: "50px"}}/>}
             </div>
           ))}
         </div>

@@ -19,8 +19,8 @@ export default function VerMasProcedimientosAboutSection() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: '35px',
-        paddingInline: '75px',
+        columnGap: { xs: '25px', md: '35px' },
+        paddingInline: { xs: '15px', md: '75px' },
       }}
     >
       <Box
@@ -35,9 +35,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">MOMMY MAKEOVER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>MOMMY MAKEOVER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
       <Box
@@ -52,9 +52,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">CIRUGIA MAMARIA</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>CIRUGIA MAMARIA</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
       <Box
@@ -69,9 +69,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '80%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">LIPOASPIRACION LÁSER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>LIPOASPIRACION LÁSER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
 
@@ -88,9 +88,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '90%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">MOMMY MAKEOVER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>MOMMY MAKEOVER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
       <Box
@@ -105,9 +105,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">CIRUGIA MAMARIA</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>CIRUGIA MAMARIA</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
       <Box
@@ -122,9 +122,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">LIPOASPIRACION LÁSER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>LIPOASPIRACION LÁSER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
 
@@ -140,9 +140,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">MOMMY MAKEOVER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>MOMMY MAKEOVER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
       <Box
@@ -157,12 +157,12 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '90%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">CIRUGIA MAMARIA</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>CIRUGIA MAMARIA</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
-            <Box
+      <Box
         sx={{
           marginTop: '71px',
           gridColumn: '10 / 13',
@@ -174,9 +174,9 @@ export default function VerMasProcedimientosAboutSection() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000' }}>
-          <Typography variant="p">LIPOASPIRACION LÁSER</Typography>
-          <Typography variant="p">Bodytite, Morpheus8</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>LIPOASPIRACION LÁSER</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
 

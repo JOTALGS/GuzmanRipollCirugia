@@ -7,7 +7,7 @@ export default function IntroAboutSection() {
   return (
     <Box
       sx={{
-        height: '94vh',
+        height: {xs: '81vh', md: '94vh'},
         paddingBottom: '6vh',
         overflowY: 'scroll',
         overflowX: 'hidden',
@@ -20,16 +20,16 @@ export default function IntroAboutSection() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: '35px',
-        paddingInline: '75px',
+        columnGap: { xs: '25px', md: '35px' },
+        paddingInline: { xs: '15px', md: '75px' },
         backgroundColor: '#222e34',
         
       }}
     >
       <Box
         sx={{
-          marginTop: '71px',
-          gridColumn: '1 / 6',
+          marginTop: { xs: '50px', md: '71px' },
+          gridColumn: { xs: '1 / 13', md: '1 / 6' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -38,18 +38,18 @@ export default function IntroAboutSection() {
           justifyContent: 'start',
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={'65px'} sx={{ textTransform: 'capitalize'}}>
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
           Cirugía <span style={{ color: '#0081C7' }}>Inteligente</span>, 
         </Typography>
 
-        <Typography color="white" fontFamily={'Poppins'}fontSize={'65px'} sx={{ textTransform: 'capitalize'}}>
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
           Conexión Humana
         </Typography>
       </Box>
 
       <Box
         sx={{
-          gridColumn: '1 / 5',
+          gridColumn: { xs: '1 / 8', md: '1 / 5' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -58,7 +58,7 @@ export default function IntroAboutSection() {
         }}
       >
         <Box>
-          <Typography color="white" fontFamily={'Poppins'} fontSize={'25px'} sx={{ textAlign: 'start' }}>
+          <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '25px' }} sx={{ textAlign: 'start' }}>
             Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
           </Typography>
         </Box>
@@ -69,6 +69,7 @@ export default function IntroAboutSection() {
             display: 'flex',
             justifyContent: 'center',
             marginRight: 'auto',
+            width: { xs: '75%', md: 'fit-content' },
             overflow: 'hidden',
             border: '1px solid gray',
             letterSpacing: '0.1em',
@@ -114,11 +115,13 @@ export default function IntroAboutSection() {
               display: 'flex',
               width: 'fit-content',
               alignItems: 'center',
-              gap: 4,
+              gap: { xs: 2, md: 4 },
               zIndex: 2,
               px: 3,
               py: 2,
               color: 'gray',
+              fontSize: { xs: '12px', md: '16px' },
+              textWrap: 'nowrap',
               transition: 'color 0.3s ease',
               '&:hover': {
                 color: 'white',
@@ -135,7 +138,7 @@ export default function IntroAboutSection() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '7 / 11',
+          gridColumn: { xs: '7 / 13', md: '7 / 11' },
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
@@ -147,12 +150,12 @@ export default function IntroAboutSection() {
 
       <Box
         sx={{
-          marginTop: '71px',
-          gridColumn: '12 / 12',
+          gridColumn: { xs: '1 / 13', md: '12 / 12' },
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
-          justifyContent: 'end',
+          justifyContent: { xs: 'center', md: 'end' },
+          transform: { xs: 'translateY(40px)', md: 'translateY(0)' },
         }}
       >
         <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={'20px'}>(Scroll)</Typography>

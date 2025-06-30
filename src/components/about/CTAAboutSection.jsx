@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { gsap } from "gsap"
@@ -7,24 +7,54 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function CTAAboutSection() {
-    useEffect(() => {
-      const leftSection = document.getElementById("left-section")
-  
-      if (leftSection) {
-        ScrollTrigger.create({
-          trigger: leftSection,
-          start: "top top",
-          end: "bottom+=550% top",
-          pin: true,
-          pinSpacing: false,
-          scrub: true,
-          markers: false,
-          anticipatePin: 1,
-        })
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+
+  useEffect(() => {
+    const leftSection = document.getElementById("left-section");
+    if (!leftSection) return;
+
+    // Mobile detection function
+    const isMobile = () => window.innerWidth <= 768;
+    
+    let scrollTriggerInstance;
+
+    const createScrollTrigger = () => {
+      // Clear existing instance if any
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
       }
-  
-      return () => ScrollTrigger.getAll().forEach(t => t.kill())
-    }, [])
+
+      scrollTriggerInstance = ScrollTrigger.create({
+        trigger: leftSection,
+        start: "top top",
+        end: isMobile() ? "bottom+=2500% top" : "bottom+=550% top",
+        pin: true,
+        pinSpacing: false,
+        scrub: true,
+        markers: false,
+        anticipatePin: 1
+      });
+    };
+
+    // Initial setup
+    createScrollTrigger();
+
+    // Handle window resize
+    const handleResize = () => {
+      createScrollTrigger();
+    };
+    
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function
+    return () => {
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
+      }
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   
   
   return (
@@ -42,8 +72,9 @@ export default function CTAAboutSection() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: '35px',
-        paddingInline: '75px',
+        columnGap: { xs: '25px', md: '35px' },
+        paddingInline: { xs: '15px', md: '75px' },
+        marginBottom: { xs: '6vh', md: '0vh' },
       }}
     >
       <Box
@@ -60,18 +91,22 @@ export default function CTAAboutSection() {
       >
 
         <div id="left-section" className="py-8 px-4">
-          <h1
+          <Typography 
+            component="h1"
             className="leading-tight font-bold text-white text-start space-y-2"
-            style={{
+            sx={{
+              paddingTop: "20px",
               fontFamily: "Arimo",
-              fontSize: "calc(100vw / 32)",
+              fontSize: isXs ? "calc(100vw / 25)" : "calc(100vw / 32)",
               lineHeight: "1",
             }}
           >
             {["Diseñados para", "Maximizar tus", "Resutados"].map((word, i) => (
-              <div key={i} style={{ fontFamily: "Poppins", fontWeight: "200" }}>{word}</div>
+              <div key={i} style={{ fontFamily: "Poppins", fontWeight: "200" }}>
+                {word}
+              </div>
             ))}
-          </h1>
+          </Typography>
 
           {/* <p className="text-gray-900 text-sm lg:text-base leading-relaxed pt-8 pr-24">
             Somos especialistas en mecánica automotriz con más de 15 años de experiencia
@@ -88,10 +123,10 @@ export default function CTAAboutSection() {
         fontFamily: "Poppins",
         fontWeight: "200",
         display: "flex",
-        gridColumn: '8 / 13',
+        gridColumn: { xs: '6 / 13' , md: '8 / 13' },
         gridRow: '1 / 1',
         flexDirection: "column",
-        width: "40vw",
+        width: { xs: "auto", md: "40vw" },
         height: "fit-content",
         justifyContent: "space-between",
         alignItems: "flex-end",
@@ -130,7 +165,7 @@ export default function CTAAboutSection() {
           }
         ].map((card, index) => (
           <Box key={index} sx={{
-            width: "80%",
+            width: { xs: "100%", md: "80%" },
             mb: 4,
             mr: 20,
             display: "flex",

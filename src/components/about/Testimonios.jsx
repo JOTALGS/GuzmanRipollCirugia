@@ -110,7 +110,6 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
               <Box sx={{ mb: 2 }}>
                 <Typography 
                   sx={{
-                    color: 'text.secondary',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 4,

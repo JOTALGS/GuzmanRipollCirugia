@@ -23,7 +23,7 @@ export default function IntroAboutSection() {
         backgroundColor: '#222e34',
         
       }}
-    >
+    > 
       <Box
         sx={{
           marginTop: { xs: '50px', md: '71px' },

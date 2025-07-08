@@ -3,7 +3,17 @@ import { useState } from "react";
 import LightenText from "../magicText/LightenText";
 
 export default function ConoceMasAboutSection() {
-  
+  const conoceMasText = `
+    Cirugia plastica estetica y recontructiva.
+    Nuestra experiencia refinada radica en canalizar el deseo:
+    desde la confianza corporal hasta el bienestar integral,
+    desde tratamientos simples hasta cirugias
+    reconstructivas.
+    Como expertos en cirugía mamaria, ofrecemos
+    tratamientos personalizados que combinan precisión
+    tecnológica con un cuidado humano excepcional.
+  `;
+
   return (
     <Box
       sx={{
@@ -73,7 +83,7 @@ export default function ConoceMasAboutSection() {
           gridRow: '2 / 3',
         }}
       >
-        <LightenText />
+        <LightenText homeText={conoceMasText} />
       </Box>
 
 

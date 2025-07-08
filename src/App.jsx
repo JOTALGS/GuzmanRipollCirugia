@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import NavButtons from "./components/home/NavButtons";
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import About from "./pages/About";
+import ClinicaSection from "./components/clinica/ClinicaSection";
 
 //import Navbar from "./components/navbar/Navbar";
 
@@ -75,12 +76,12 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<About />} />
-          <Route path="/work" element={<About />} />
+          <Route path="/clinica" element={<ClinicaSection />} />
           <Route path="/contacto" element={<Contact />} />
           
           <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
         </Routes>
-        {location.pathname !== "/cir-mamaria" && location.pathname !== "/" && (
+        {location.pathname !== "/cir-mamaria" && location.pathname !== "/" && false && (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '82%' }}>
             <NavButtons />
           </Box>

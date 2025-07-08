@@ -5,25 +5,12 @@ import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LightenText = () => {
+const LightenText = ({ homeText }) => {
   const lineWrapperRef = useRef([]);
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // 'sm' or your mobile breakpoint
-
-
-  // Text content and splitting logic
-  const homeText = `
-    Cirugia plastica estetica y recontructiva.
-    Nuestra experiencia refinada radica en canalizar el deseo:
-    desde la confianza corporal hasta el bienestar integral,
-    desde tratamientos simples hasta cirugias
-    reconstructivas.
-    Como expertos en cirugía mamaria, ofrecemos
-    tratamientos personalizados que combinan precisión
-    tecnológica con un cuidado humano excepcional.
-  `;
 
 const splitText = (text, maxCharsPerLine) => {
   if (!text || maxCharsPerLine <= 0) return [];

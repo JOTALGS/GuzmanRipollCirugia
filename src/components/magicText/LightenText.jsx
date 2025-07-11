@@ -127,7 +127,7 @@ const splitText = (text, maxCharsPerLine) => {
               </Box>
 
 
-              <Box sx={{ width: "90vw", height: "auto"}}>
+              <Box sx={{ width: "90%", height: "auto"}}>
                 {/* Overlay text (light) - Remove clipPath for visibility */}
                 <Typography 
                   variant="p"
@@ -140,6 +140,7 @@ const splitText = (text, maxCharsPerLine) => {
                     // clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)", 
                     display: "flex",
                     width: "100%",
+                    marginRight: "70px",
                     justifyContent: index === 0 ? "flex-end" : "flex-start",
                     fontFamily: "Poppins, sans-serif",
                     fontWeight: "100",

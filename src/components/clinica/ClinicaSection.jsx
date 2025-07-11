@@ -91,6 +91,12 @@ export default function ClinicaSection({ id }) {
         }
       }} />
 
+      <Box sx={{
+        backgroundColor: 'white',
+        width: "100vw",
+        zIndex: 0,
+      }}>
+
       {/* Content Container */}
       <Box sx={{
         position: "relative",
@@ -99,17 +105,26 @@ export default function ClinicaSection({ id }) {
         display: "grid",
         backgroundColor: "#fff",
         gridTemplateColumns: "repeat(12, 1fr)",
-        columnGap: { xs: "25px", md: "35px" },
+        marginInline: { xs: "15px", md: "70px" },
+        columnGap: { xs: "25px", md: "17px" },
         "& > section": { 
           gridColumn: "1 / -1",
         }
       }}>
         <Box sx={{
+          backgroundColor: "#fff",
+          position: "absolute",
+          top: 0,
+          left: "-70px",
+          width: "100vw",
+          height: "300vw",
+        }} />
+        <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
           gridRow: '1 / 1',
         }}>
           {/* Clinic Description Section */}
-          <Box component="section" sx={{ py: 8, px: 6, backgroundColor: "#fff" }}>
+          <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
             <LightenText homeText={clinicaText} />
           </Box>
         </Box>
@@ -120,7 +135,7 @@ export default function ClinicaSection({ id }) {
           gridRow: '2 / 2',
         }}>
           {/* Results Section */}
-          <Box component="section" ref={heroTextRef}  sx={{ py: 8, px: 6, backgroundColor: "#fff" }}>
+          <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "#fff" }}>
             <Box ref={resultadosTitleRef} sx={{ 
               mb: 4, 
               display: "flex", 
@@ -169,38 +184,35 @@ export default function ClinicaSection({ id }) {
           </Typography>
         </Box>
 
-        <Box variant="body1" sx={{ fontFamily: "Poppins", fontWeight: 600, color: "text.primary", py: 20, mb: 2, gridColumn: "3 / 4", gridRow: '4 / 4', }}>
+        <Box variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "text.primary", py: 20, mb: 2, gridColumn: "3 / 4", gridRow: '4 / 4', }}>
           (Liderazgo)
         </Box>
         <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '6 / 10' },
+          gridColumn: { xs: '1 / 13', md: '6 / 11' },
           gridRow: '4 / 4',
           display: "flex",
           textAlign: "start",
         }}>
           {/* Doctor Profile Section */}
           <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "#fff" }}>
-              <Typography variant="body1" sx={{ fontFamily: "Poppins", fontWeight: 600, color: "text.primary", mb: 2 }}>
+              <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "text.primary", mb: 2 }}>
                 Dr. Guzman Ripoll
               </Typography>
               
               <Typography variant="body1" sx={bodyTextStyle}>
-                El Dr. Guzman Ripoll es un Cirujano Plástico, Reconstructor y Estético. En 2010 se recibe de Doctor en
-                Medicina (CLAEH, Uruguay). Especialista en Cirugía Plástica, Reconstructiva y Estética (Udelar,
-                Uruguay). By Masters en Cirugía Mamaria, Microcirugía y Supermicrocirugía (Barcelona, España).
+                El Dr. Guzman Ripoll, es un Cirujano Plástico, Reconstructivo y Estético. .Certificado con títulos de Doctor en Medicina (CLAEH, Uruguay), Especialista en Cirugía Plástica, Reparadora y Estética (Universidad de la República, Uruguay)y Maestría en Cirugía Mamaria, Reconstructiva y Estética (Universitat de Barcelona).
               </Typography>
-              
               <Typography variant="body1" sx={{ ...bodyTextStyle, mt: 2 }}>
-                En la actualidad, se dedica principalmente a realizar cirugías de alta complejidad en Reconstrucción
-                Mamaria con las técnicas más avanzadas del mundo, siendo el único especialista en Uruguay en utilizar la
-                Supermicrocirugía.
+                En la actualidad, se dedida principalmente a realizar cirugías mamarias estéticas y reconstructivas, así como también cirugías de remodelamiento corporal, siendo el único especialista en Uruguay en utilizar la lipoaspiración VASER.
               </Typography>
-              
+              <Typography variant="body1" sx={{ ...bodyTextStyle, mt: 2 }}>
+                Su enfoque se centra en ofrecer a los pacientes los mejores tratamientos y resultados posibles, manteniendo altos estándares de calidad y cuidado. Su dedicación a la formación y la mejora continua le permite cumplir con los más altos estándares de excelencia en su práctica profesional.
+              </Typography>
           </Box>
         </Box>
 
 
-        <Box sx={{ mt: 4, borderRadius: 1, overflow: "hidden", gridColumn: { xs: '1 / 13', md: '6 / 9' }, gridRow: '5 / 5', }}>
+        <Box sx={{ mt: 4, mb: 10, borderRadius: 1, overflow: "hidden", gridColumn: { xs: '1 / 13', md: '6 / 9' }, gridRow: '5 / 5', }}>
           <img
             src="/images/foto-perfil-guzman.webp"
             alt="Dr. Guzman Ripoll"
@@ -208,31 +220,38 @@ export default function ClinicaSection({ id }) {
           />
         </Box>
         <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 13' },
+          gridColumn: { xs: '1 / 13', md: '1 / 7' },
+          gridRow: '6 / 6',
+          padding: "50px",
+          paddingRight: "150px",
+        }}>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ 
+                borderRadius: 2, 
+                overflow: "hidden",
+                aspectRatio: "1/1",
+                bgcolor: "grey.800"
+              }}>
+                <video
+                  src="/videos/logo-animation-1.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Box>
+            </Grid>
+        </Box>
+
+        <Box sx={{
+          gridColumn: { xs: '1 / 13', md: '7 / 13' },
           gridRow: '6 / 6',
         }}>
           {/* Human Connection Section */}
-          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff" }}>
-            <Grid container spacing={6} alignItems="center">
-              <Grid item xs={12} md={6}>
-                <Box sx={{ 
-                  borderRadius: 2, 
-                  overflow: "hidden",
-                  aspectRatio: "1/1",
-                  bgcolor: "grey.800"
-                }}>
-                  <video
-                    src="/videos/logo-animation-1.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </Box>
-              </Grid>
-              
-              <Grid item xs={12} md={6}>
+          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff"}}>
+            <Grid container spacing={6} alignItems="start">
+              <Grid item xs={12} md={6} sx={{ textAlign: "start" }}>
                 <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>
                   Conexión humana
                 </Typography>
@@ -243,7 +262,7 @@ export default function ClinicaSection({ id }) {
                       <Typography variant="body1" sx={pointNumberStyle}>
                         0{index + 1}.
                       </Typography>
-                      <Box>
+                      <Box sx={{ padding: "30px", paddingRight: "200px", paddingTop: "0px" }}>
                         <Typography variant="h3" sx={pointTitleStyle}>
                           {point.title}
                         </Typography>
@@ -279,6 +298,8 @@ export default function ClinicaSection({ id }) {
           </Box>
         </Box>
       </Box>
+      </Box>
+      
     </Box>
   )
 }
@@ -303,7 +324,7 @@ const doctorTitleStyle = {
 
 const bodyTextStyle = {
   fontFamily: "Poppins",
-  fontSize: "1rem",
+  fontSize: "20px",
   fontWeight: 400,
   color: "text.secondary",
   lineHeight: 1.8,
@@ -311,20 +332,20 @@ const bodyTextStyle = {
 }
 
 const sectionTitle = {
-  fontFamily: "heading",
+  fontFamily: "Poppins",
   fontSize: { xs: "2.5rem", md: "3.5rem" },
   color: "text.primary"
 }
 
 const pointNumberStyle = {
-  fontFamily: "heading",
+  fontFamily: "Poppins",
   fontSize: "1.25rem",
-  color: "text.secondary",
+  color: "text.primary",
   minWidth: "40px"
 }
 
 const pointTitleStyle = {
-  fontFamily: "heading",
+  fontFamily: "Poppins",
   fontSize: "1.25rem",
   fontWeight: 600,
   color: "text.primary"

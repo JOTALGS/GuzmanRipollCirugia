@@ -5,23 +5,20 @@ export default function IntroAboutSection() {
   const [isPinned, setIsPinned] = useState(true)
   
   return (
+
     <Box
       sx={{
-        height: {xs: '81vh', md: '94vh'},
-        paddingBottom: '6vh',
-        // Hide scrollbar - Webkit (Brave, Chrome, Safari)
-        '&::-webkit-scrollbar': {
-          display: 'none',
-        },
-        // Hide scrollbar - Firefox
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE & Edge (legacy)
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: { xs: '25px', md: '35px' },
-        paddingInline: { xs: '15px', md: '75px' },
-        backgroundColor: '#222e34',
-        
+        position: "relative",
+        zIndex: 1,
+        height: { xs: "auto", md: "100vh" },
+        display: "grid",
+        backgroundColor: "#fff999",
+        gridTemplateColumns: "repeat(12, 1fr)",
+        marginInline: { xs: "15px", md: "70px" },
+        columnGap: { xs: "25px", md: "17px" },
+        "& > section": { 
+          gridColumn: "1 / -1",
+        }
       }}
     > 
       <Box
@@ -53,6 +50,7 @@ export default function IntroAboutSection() {
           flexDirection: 'column',
           alignItems: 'end',
           justifyContent: 'end',
+          marginBottom: { xs: '50px', md: '50px' },
         }}
       >
         <Box>
@@ -70,6 +68,7 @@ export default function IntroAboutSection() {
             width: { xs: '75%', md: 'fit-content' },
             overflow: 'hidden',
             border: '1px solid gray',
+            borderRadius: '10px',
             letterSpacing: '0.1em',
             fontSize: '16px',
             fontFamily: 'Poppins',
@@ -136,11 +135,12 @@ export default function IntroAboutSection() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '7 / 13', md: '7 / 11' },
+          gridColumn: { xs: '7 / 13', md: '9 / 11' },
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
           justifyContent: 'end',
+          marginBottom: { xs: '50px', md: '50px' },
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '30%', objectFit: 'cover' }} />
@@ -154,6 +154,7 @@ export default function IntroAboutSection() {
           alignItems: 'end',
           justifyContent: { xs: 'center', md: 'end' },
           transform: { xs: 'translateY(40px)', md: 'translateY(0)' },
+          marginBottom: { xs: '50px', md: '50px' },
         }}
       >
         <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={'20px'}>(Scroll)</Typography>

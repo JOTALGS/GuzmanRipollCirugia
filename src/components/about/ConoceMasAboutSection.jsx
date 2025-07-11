@@ -17,20 +17,17 @@ export default function ConoceMasAboutSection() {
   return (
     <Box
       sx={{
-        minHeight: { xs: '100vh', md: '100vh' },
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        // Hide scrollbar - Webkit (Brave, Chrome, Safari)
-        '&::-webkit-scrollbar': {
-          display: 'none',
-        },
-        // Hide scrollbar - Firefox
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE & Edge (legacy)
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: { xs: '25px', md: '35px' },
-        paddingInline: { xs: '15px', md: '75px' },
+        position: "relative",
+        zIndex: 1,
+        height: { xs: "auto", md: "150vh" },
+        display: "grid",
+        backgroundColor: "#fff999",
+        gridTemplateColumns: "repeat(12, 1fr)",
+        marginInline: { xs: "15px", md: "70px" },
+        columnGap: { xs: "25px", md: "17px" },
+        "& > section": { 
+          gridColumn: "1 / -1",
+        }
       }}
     >
       <Box
@@ -76,14 +73,15 @@ export default function ConoceMasAboutSection() {
       </Box>
 
 
-      <Box
-        sx={{
-          marginTop: '71px',
-          gridColumn: '1 / 13',
-          gridRow: '2 / 3',
-        }}
-      >
-        <LightenText homeText={conoceMasText} />
+
+      <Box sx={{
+        gridColumn: { xs: '1 / 13', md: '1 / 13' },
+        gridRow: '2 / 3',
+      }}>
+        {/* Clinic Description Section */}
+        <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
+          <LightenText homeText={conoceMasText} />
+        </Box>
       </Box>
 
 

@@ -168,8 +168,9 @@ export default function ClinicaSection({ id }) {
         <Box sx={{
           gridColumn: { xs: '1 / 1', md: '1 / 1' },
           gridRow: '3 / 3',
+          zIndex: 1
         }}>
-          <ArrowRightIcon sx={{ mt: 1, width: 64, height: 64, color: "text.primary" }} />
+          <ArrowRightIcon sx={{ mt: 1, width: 64, height: 64, color: "#000"}} />
         </Box>
 
         <Box sx={{
@@ -192,10 +193,11 @@ export default function ClinicaSection({ id }) {
           gridRow: '4 / 4',
           display: "flex",
           textAlign: "start",
+          zIndex: 1
         }}>
           {/* Doctor Profile Section */}
           <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "#fff" }}>
-              <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "text.primary", mb: 2 }}>
+              <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "#000", mb: 2 }}>
                 Dr. Guzman Ripoll
               </Typography>
               
@@ -212,7 +214,7 @@ export default function ClinicaSection({ id }) {
         </Box>
 
 
-        <Box sx={{ mt: 4, mb: 10, borderRadius: 1, overflow: "hidden", gridColumn: { xs: '1 / 13', md: '6 / 9' }, gridRow: '5 / 5', }}>
+        <Box sx={{ mt: 4, mb: 10, borderRadius: 1, overflow: "hidden", gridColumn: { xs: '1 / 13', md: '6 / 9' }, gridRow: '5 / 5', zIndex: 1 }}>
           <img
             src="/images/foto-perfil-guzman.webp"
             alt="Dr. Guzman Ripoll"
@@ -224,6 +226,7 @@ export default function ClinicaSection({ id }) {
           gridRow: '6 / 6',
           padding: "50px",
           paddingRight: "150px",
+          zIndex: 1,
         }}>
             <Grid item xs={12} md={6}>
               <Box sx={{ 
@@ -247,6 +250,7 @@ export default function ClinicaSection({ id }) {
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '7 / 13' },
           gridRow: '6 / 6',
+          zIndex: 1,
         }}>
           {/* Human Connection Section */}
           <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff"}}>
@@ -282,6 +286,7 @@ export default function ClinicaSection({ id }) {
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
           gridRow: '7 / 7',
+          zIndex: 1
         }}>
           {/* Full-width Video Section */}
           <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff" }}>

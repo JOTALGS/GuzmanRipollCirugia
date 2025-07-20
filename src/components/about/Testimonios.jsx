@@ -57,7 +57,7 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
       sx={{
         display: 'flex',
         overflowX: 'auto',
-        py: 3,
+        py: { xs: 0, md: 3},
         cursor: 'grab',
         '&::-webkit-scrollbar': { display: 'none' },
         scrollbarWidth: 'none',
@@ -78,8 +78,8 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
             key={`testimonio-${index}`}
             sx={{
               flexShrink: 0,
-              maxWidth: { xs: "10%", md: "15%" },
-              height: { xs: '400px', md: '300px' },
+              maxWidth: { xs: "15%", md: "15%" },
+              height: { xs: '260px', md: '320px' },
               borderRadius: 3,
               boxShadow: 3,
               // Glass effect styles:
@@ -89,7 +89,6 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
               backdropFilter: 'blur(12px)', // Blur effect
               WebkitBackdropFilter: 'blur(12px)', // Safari support
               position: 'relative',
-              overflow: 'hidden',
               // Optional: Inner shadow for depth
               '&::before': {
                 content: '""',
@@ -103,7 +102,7 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
                 pointerEvents: 'none',
                 
               },
-              padding: 4,
+              padding: { xs: 1, md: 4},
             }}
           >
             <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -114,7 +113,7 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 4,
                     minHeight: theme.typography.body1.lineHeight * 4,
-                    fontSize: '18px',
+                    fontSize: { xs: '14px', md: '18px'},
                     fontWeight: '500',
                     color: 'black',
                   }}
@@ -122,7 +121,7 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
                   {testimonio.testimonio}
                 </Typography>
               </Box>
-              <Box sx={{ mt: 'auto', textAlign: 'center', mb: "25px" }}>
+              <Box sx={{ position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', width: '100%',  mt: 'auto', textAlign: 'center' }}>
                 <Typography sx={{ fontWeight: 'bold', color: 'text.primary' }}>
                   {testimonio.author}
                 </Typography>
@@ -188,7 +187,7 @@ export default function Testimonios() {
   return (
     <Box
       sx={{
-        height: { xs: '120vh', md: '110vh' },
+        height: { xs: '115vh', md: '110vh' },
         paddingBottom: '6vh',
         overflowY: 'scroll',
         overflowX: 'hidden',
@@ -219,22 +218,22 @@ export default function Testimonios() {
           justifyContent: 'start',
         }}
       >
-        <Typography color="black" fontFamily={'Poppins'} fontSize={'65px'} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
+        <Typography color="black" fontFamily={'Poppins'} fontSize={{ xs: '45px', md: '65px'}} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
           <span style={{ color: '#0081C7' }}>Confianza</span> en
         </Typography>
 
-        <Typography color="black" fontFamily={'Poppins'}fontSize={'65px'} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
+        <Typography color="black" fontFamily={'Poppins'}fontSize={{ xs: '45px', md: '65px'}} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
           cada Testimonio.
         </Typography>
 
-        <Typography color="black" fontFamily={'Poppins'} width={{ xs: '200%', md: '75%' }} fontSize={'25px'} sx={{ overflow: 'visible', lineHeight: 1.2 }}>
+        <Typography color="black" fontFamily={'Poppins'} width={{ xs: '200%', md: '75%' }} fontSize={{ xs: '18px', md: '25px'}} sx={{ overflow: 'visible', lineHeight: 1.2 }}>
           Garantizamos confianza, cercanía y un toque humano en cada tratamiento.
         </Typography>
       </Box>
 
       <Box
         sx={{
-          marginTop: '71px',
+          marginTop: { xs: '0px', md: '71px' },
           gridColumn: '1 / 13',
           gridRow: '2 / 4',
           display: 'flex',
@@ -243,6 +242,7 @@ export default function Testimonios() {
           textAlign: 'start',
           alignItems: 'start',
           justifyContent: 'start',
+          overflowY: 'hidden',
         }}
       >
         <HorizontalCarousel testimonios={testimonios} onScrollProgress={setScrollProgress} />

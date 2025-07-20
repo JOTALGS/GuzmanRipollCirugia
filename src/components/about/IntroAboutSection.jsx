@@ -10,9 +10,10 @@ export default function IntroAboutSection() {
       sx={{
         position: "relative",
         zIndex: 1,
-        height: { xs: "auto", md: "100vh" },
+        height: { xs: "90vh", md: "100vh" },
         display: "grid",
-        backgroundColor: "#fff999",
+
+        backgroundColor: "#fff",
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "15px", md: "70px" },
         columnGap: { xs: "25px", md: "17px" },
@@ -21,6 +22,22 @@ export default function IntroAboutSection() {
         }
       }}
     > 
+      <Box
+        component="img"
+        src="/images/unnamed.jpg"
+        alt="Background"
+        sx={{
+          width: { xs: "100vw", md: "100vw"},
+          height: { xs: "90vh", md: "100vh"},
+          objectFit: "cover",
+          position: "absolute",
+          top: 0,
+          left: { xs: "-15px", md: "-70px"},
+          zIndex: -1,
+        }}
+      />
+
+
       <Box
         sx={{
           marginTop: { xs: '50px', md: '71px' },
@@ -34,10 +51,10 @@ export default function IntroAboutSection() {
         }}
       >
         <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
-          Cirugía <span style={{ color: '#0081C7' }}>Inteligente</span>, 
+          Cirugía <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>Inteligente</Typography>, 
         </Typography>
 
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize'}}>
           Conexión Humana
         </Typography>
       </Box>
@@ -51,6 +68,7 @@ export default function IntroAboutSection() {
           alignItems: 'end',
           justifyContent: 'end',
           marginBottom: { xs: '50px', md: '50px' },
+          marginRight: { xs: '20px', md: '0px' },
         }}
       >
         <Box>

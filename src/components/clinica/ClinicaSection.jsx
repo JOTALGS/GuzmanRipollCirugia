@@ -8,6 +8,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ResultsPortfolioSection } from "./ResultsPortfolioSection"
 import LightenText from "../magicText/LightenText"
+import Footer from "../UI/Footer"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -289,22 +290,19 @@ export default function ClinicaSection({ id }) {
           zIndex: 1
         }}>
           {/* Full-width Video Section */}
-          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff" }}>
-            <Box sx={{ borderRadius: 2, overflow: "hidden" }}>
-              <video
-                src="/videos/cinematic-ocean.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ width: "100%", height: "auto", display: "block" }}
-              />
-            </Box>
+          <Box sx={{ mt: 4, mb: 10, ml: "calc(-70px + 1vw)", borderRadius: 1, overflow: "visible" }}>
+            <img
+              src="/images/unnamed.png"
+              alt="Dr. Guzman Ripoll"
+              style={{ width: "98vw", height: "auto", display: "block" }}
+            />
           </Box>
         </Box>
       </Box>
       </Box>
       
+
+      <Footer />
     </Box>
   )
 }

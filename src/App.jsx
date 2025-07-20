@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { Button, Box, Typography } from "@mui/material";
 
@@ -10,6 +10,9 @@ import NavButtons from "./components/home/NavButtons";
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import About from "./pages/About";
 import ClinicaSection from "./components/clinica/ClinicaSection";
+
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import { lightTheme, darkTheme } from './utils/theme';
 
 //import Navbar from "./components/navbar/Navbar";
 
@@ -155,55 +158,67 @@ function Contact() {
 }
 
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER
-const App = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const lenis = new Lenis({
-      smooth: true,
-      duration: 2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // slow and smooth easing
-    });
-       
-    function raf(time) {
-      lenis.raf(time);
+  const App = () => {
+    const [mode, setMode] = useState('light');
+
+    const theme = useMemo(() => {
+      return mode === 'light' ? lightTheme : darkTheme;
+    }, [mode]);
+
+    const toggleTheme = () => {
+      setMode(prev => (prev === 'light' ? 'dark' : 'light'));
+    };
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+      const lenis = new Lenis({
+        smooth: true,
+        duration: 2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // slow and smooth easing
+      });
+        
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
 
-    // Log para confirmar que el grid debugger está disponible
-    console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
-  }, []);
+      // Log para confirmar que el grid debugger está disponible
+      console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
+    }, []);
 
-  return (
-    <Router autoScrollToTop>
-      <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
-        
-        <Routes>
-          <Route path="/" element={<About />} />
-          <Route path="/clinica" element={<ClinicaSection />} />
-          <Route path="/contacto" element={<Contact />} />
-          <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
-        </Routes>
-        
-        {/* Componente de navegación condicional */}
-        <ConditionalNavButtons />
-        
-        {/* 🎛️ GRID DEBUGGER - Se superpone a todo el contenido */}
-        <GridDebugger 
-          columns={12}
-          maxWidth="1920px"
-          paddingX="70px"
-          gap="20px"
-          columnColor="rgba(239, 68, 68, 0.1)"
-          toggleKey="g"
-          requireShift={true}
-          zIndex={9999}
-        />
-        
-      </Box>
-    </Router>
-  );
-};
+    return (
+      <Router autoScrollToTop>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
+            <Routes>
+              <Route path="/" element={<About toggleTheme={toggleTheme} />} />
+              <Route path="/clinica" element={<ClinicaSection />} />
+              <Route path="/contacto" element={<Contact />} />
+              <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
+            </Routes>
+            
+            {/* Componente de navegación condicional */}
+            <ConditionalNavButtons />
+            
+            {/* 🎛️ GRID DEBUGGER - Se superpone a todo el contenido */}
+            <GridDebugger 
+              columns={12}
+              maxWidth="1920px"
+              paddingX="70px"
+              gap="20px"
+              columnColor="rgba(239, 68, 68, 0.1)"
+              toggleKey="g"
+              requireShift={true}
+              zIndex={9999}
+            />
+            
+          </Box>
+        </ThemeProvider>
+      </Router>
+    );
+  };
 
 // 🔧 Componente auxiliar para manejar la navegación condicional
 function ConditionalNavButtons() {

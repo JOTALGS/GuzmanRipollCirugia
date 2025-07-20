@@ -28,7 +28,7 @@ export default function CTAAboutSection() {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top top",
-        end: isMobile() ? "bottom+=2500% top" : "bottom+=550% top",
+        end: isMobile() ? "bottom+=5000% top" : "bottom+=710% top",
         pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,
@@ -90,7 +90,7 @@ export default function CTAAboutSection() {
         }}
       >
 
-        <div id="left-section" className="py-8 px-4">
+        <div id="left-section">
           <Typography 
             component="h1"
             className="leading-tight font-bold text-white text-start space-y-2"

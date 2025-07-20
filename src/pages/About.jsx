@@ -7,17 +7,22 @@ import CTAAboutSection from "../components/about/CTAAboutSection";
 import Testimonios from "../components/about/Testimonios";
 import Especialistas from "../components/about/Especialistas";
 import Faq from "../components/about/faq";
+import Footer from "../components/UI/Footer";
 
-export default function About() {
+export default function About({ toggleTheme }) {
   const [isPinned, setIsPinned] = useState(true)
   
   return (
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'background.default',
       }}
     >
+      <button onClick={toggleTheme} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
+        Toggle Theme
+      </button>
+
       <IntroAboutSection />
       
       <ConoceMasAboutSection />
@@ -32,14 +37,7 @@ export default function About() {
 
       <Faq />
 
-      <Box
-        sx={{
-          minHeight: '100vh',
-          backgroundColor: '#5D5D5D',
-        }}
-      >
-        TEXT 
-      </Box>
+      <Footer />
       
     </Box>
   );

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function VerMasProcedimientosAboutSection() {
+export default function VerMasProcedimientosHome() {
   const [isPinned, setIsPinned] = useState(true)
   
   return (

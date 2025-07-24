@@ -6,10 +6,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from '@studio-freight/react-lenis';
 import Home from "./pages/Home";
-import NavButtons from "./components/home/NavButtons";
+import Clinica from "./pages/Clinica";
+
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
-import About from "./pages/About";
-import ClinicaSection from "./components/clinica/ClinicaSection";
 import NavBar from "./components/UI/NavBar";
 import Resultados from "./pages/Resultados";
 
@@ -123,39 +122,7 @@ function GridDebugger({
   );
 }
 
-// About Page Component
-function ProcedimientoCero() {
-  const [isPinned, setIsPinned] = useState(true);
-     
-  return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
-      <StandaloneScrollReveal
-        imageSrc="images/wwsav.jpg"
-        imageAlt="Architectural detail with orange geometric patterns"
-        heading="NexaVirtu Tech"
-        pin={isPinned}
-      />
-    </Box>
-  );
-}
 
-// Contact Page Component
-function Contact() {
-  return (
-    <Box sx={{ mt: 0, pt: 2 }}>
-      <Typography variant="h3" component="h1" gutterBottom>
-        Contact Us
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Have questions? Reach out to us!
-      </Typography>
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="body1">Email: info@example.com</Typography>
-        <Typography variant="body1">Phone: (123) 456-7890</Typography>
-      </Box>
-    </Box>
-  );
-}
 
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
 const App = () => {

@@ -108,7 +108,7 @@ const AnimatedLink = styled(Box)(({ theme }) => ({
   }
 }));
 
-export default function ConoceMasAboutSection() {
+export default function ConoceMasHome() {
   const conoceMasText = `
     Cirugía plástica estética y reconstructiva.
     Nuestra experiencia refinada radica en canalizar el deseo:

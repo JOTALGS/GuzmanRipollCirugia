@@ -40,18 +40,18 @@ export default function IntroAboutSection() {
 
       <Box
         sx={{
-          marginTop: { xs: '50px', md: '71px' },
-          gridColumn: { xs: '1 / 13', md: '1 / 6' },
+          marginTop: { xs: '80px', md: '200px' },
+          gridColumn: { xs: '1 / 13', md: '1 / 8' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
-          textAlign: 'start',
+          textAlign: { xs: 'center', md: 'start'},
           alignItems: 'start',
           justifyContent: 'start',
         }}
       >
         <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
-          Cirugía <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>Inteligente</Typography>, 
+          Cirugía Mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>Inteligente</Typography>, 
         </Typography>
 
         <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize'}}>
@@ -61,21 +61,32 @@ export default function IntroAboutSection() {
 
       <Box
         sx={{
-          gridColumn: { xs: '1 / 8', md: '1 / 5' },
+          gridColumn: { xs: '1 / 13', md: '1 / 5' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'end',
           justifyContent: 'end',
-          marginBottom: { xs: '50px', md: '50px' },
+          marginBottom: { xs: '100px', md: '125px' },
           marginRight: { xs: '20px', md: '0px' },
         }}
       >
-        <Box>
-          <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '25px' }} sx={{ textAlign: 'start' }}>
-            Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
-          </Typography>
-        </Box>
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '25px' }} sx={{ textAlign: 'start', marginBottom: { xs:'115px', md: '20px' } }}>
+          Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          gridColumn: { xs: '1 / 10', md: '1 / 5' },
+          gridRow: '1 / 1',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'end',
+          justifyContent: 'end',
+          marginBottom: { xs: '100px', md: '50px' },
+          marginRight: { xs: '20px', md: '0px' },
+        }}
+      >
 
         <Box
           sx={{
@@ -83,7 +94,7 @@ export default function IntroAboutSection() {
             display: 'flex',
             justifyContent: 'center',
             marginRight: 'auto',
-            width: { xs: '75%', md: 'fit-content' },
+            width: { xs: '65%', md: 'fit-content' },
             overflow: 'hidden',
             border: '1px solid gray',
             borderRadius: '10px',
@@ -158,10 +169,22 @@ export default function IntroAboutSection() {
           display: 'flex',
           alignItems: 'end',
           justifyContent: 'end',
-          marginBottom: { xs: '50px', md: '50px' },
+          marginBottom: { xs: '100px', md: '50px' },
         }}
       >
-        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '30%', objectFit: 'cover' }} />
+        <Box
+          component="img"
+          src="/images/bias.png"
+          alt="scroll"
+          sx={{
+            width: '100%',
+            height: {
+              xs: '15%',
+              md: '30%'
+            },
+            objectFit: 'cover'
+          }}
+        />
       </Box>      
 
       <Box
@@ -170,8 +193,7 @@ export default function IntroAboutSection() {
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
-          justifyContent: { xs: 'center', md: 'end' },
-          transform: { xs: 'translateY(40px)', md: 'translateY(0)' },
+          justifyContent: { xs: 'end', md: 'end' },
           marginBottom: { xs: '50px', md: '50px' },
         }}
       >

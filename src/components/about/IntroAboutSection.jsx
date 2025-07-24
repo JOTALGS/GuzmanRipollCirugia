@@ -23,9 +23,11 @@ export default function IntroAboutSection() {
       }}
     > 
       <Box
-        component="img"
-        src="/images/unnamed.jpg"
-        alt="Background"
+        component="video"
+        autoPlay
+        muted
+        loop
+        playsInline
         sx={{
           width: { xs: "100vw", md: "100vw"},
           height: { xs: "90vh", md: "100vh"},
@@ -35,7 +37,10 @@ export default function IntroAboutSection() {
           left: { xs: "-15px", md: "-70px"},
           zIndex: -1,
         }}
-      />
+      >
+        <source src="/videos/altitude-hero.webm" type="video/webm" />
+        Tu navegador no soporta el elemento de video.
+      </Box>
 
 
       <Box
@@ -54,7 +59,7 @@ export default function IntroAboutSection() {
           Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>inteligente</Typography>, 
         </Typography>
 
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary',}}>
           conexión humana
         </Typography>
       </Box>

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useLenis } from "@studio-freight/react-lenis"
 
 export default function NavBar() {
-  const [timeParts, setTimeParts] = useState({ hour: "00", minute: "00", second: "00", period: "PDD" })
+  const [timeParts, setTimeParts] = useState({ hour: "00", minute: "00", second: "00", period: "PDE" })
   const [isDarkBackground, setIsDarkBackground] = useState(false)
   const location = useLocation()
   
@@ -14,6 +14,7 @@ export default function NavBar() {
     if (location.pathname === "/" || location.pathname === "/inicio") return "Inicio"
     if (location.pathname === "/clinica") return "Clínica"
     if (location.pathname === "/procedimientos") return "Procedimientos"
+    if (location.pathname === "/resultados") return "Resultados"
     if (location.pathname === "/contacto") return "Contacto"
     return "Inicio" // default
   }
@@ -25,7 +26,8 @@ export default function NavBar() {
   const menuLinks = [
     { name: "Inicio", path: "/" },
     { name: "Clínica", path: "/clinica" },
-    { name: "Procedimientos", path: "/procedimientos" }
+    { name: "Procedimientos", path: "/procedimientos" },
+    { name: "Resultados", path: "/resultados" },
   ]
 
   // Reloj en tiempo real con segundos
@@ -40,7 +42,7 @@ export default function NavBar() {
         timeZone: "America/Montevideo",
       })
       const [hour, minute, second] = timeString.split(":")
-      setTimeParts({ hour, minute, second, period: "PDD" })
+      setTimeParts({ hour, minute, second, period: "PDE" })
     }, 1000)
     return () => clearInterval(timer)
   }, [])
@@ -145,7 +147,7 @@ export default function NavBar() {
         paddingTop: '12px',
         paddingBottom: '12px',
         fontFamily: 'Poppins, sans-serif',
-        fontWeight: '500', // Poppins Medium
+        fontWeight: '400', // Poppins Medium
         fontSize: '18px',
         lineHeight: '17.28px',
         letterSpacing: '-0.54px'
@@ -211,7 +213,7 @@ export default function NavBar() {
                     textDecoration: 'none',
                     position: 'relative',
                     fontFamily: 'Poppins, sans-serif',
-                    fontWeight: '500', // Poppins Medium
+                    fontWeight: '400', // Poppins Medium
                     fontSize: '18px',
                     lineHeight: '17.28px',
                     letterSpacing: '-0.54px',
@@ -226,7 +228,8 @@ export default function NavBar() {
                 {index < menuLinks.length - 1 && (
                   <span style={{
                     color: 'inherit',
-                    margin: '0 8px'
+                    marginLeft: '0px',
+                    marginRight: '8px',
                   }}>,</span>
                 )}
               </React.Fragment>
@@ -285,7 +288,7 @@ export default function NavBar() {
                 color: 'inherit',
                 textDecoration: 'none',
                 fontFamily: 'Poppins, sans-serif',
-                fontWeight: '500', // Poppins Medium
+                fontWeight: '400', // Poppins Medium
                 fontSize: '18px',
                 lineHeight: '17.28px',
                 letterSpacing: '-0.54px',

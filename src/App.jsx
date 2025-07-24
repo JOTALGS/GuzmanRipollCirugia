@@ -11,6 +11,7 @@ import StandaloneScrollReveal from "./components/procedimientos/standalone-scrol
 import About from "./pages/About";
 import ClinicaSection from "./components/clinica/ClinicaSection";
 import NavBar from "./components/UI/NavBar";
+import Resultados from "./pages/Resultados";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
@@ -188,6 +189,7 @@ const App = () => {
               <Route path="/inicio" element={<About toggleTheme={toggleTheme} />} />
               <Route path="/clinica" element={<ClinicaSection />} />
               <Route path="/procedimientos" element={<About toggleTheme={toggleTheme} />} />
+              <Route path="/resultados" element={<Resultados/>} /> {/* 👈 NUEVA RUTA */}
               <Route path="/contacto" element={<Contact />} />
               <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
             </Routes>

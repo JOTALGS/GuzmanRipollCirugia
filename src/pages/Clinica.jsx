@@ -9,6 +9,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ResultsPortfolioSection } from "../components/clinica/ResultsPortfolioSection"
 import LightenText from "../components/magicText/LightenText"
 import Footer from "../components/UI/Footer"
+import About from "../components/clinica/about"
+import Conexion from "../components/clinica/conexion"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -51,20 +53,6 @@ export default function Clinica({ id }) {
     }
   }, [])
 
-  const humanConnectionPoints = [
-    {
-      title: "Escucha activa",
-      description: "Cada tratamiento empieza con una escucha empática. Entendemos tus necesidades y objetivos, construyendo confianza desde el primer encuentro."
-    },
-    {
-      title: "Precisión con inteligencia",
-      description: "Usamos tecnología avanzada e inteligencia artificial para planificar cada detalle, elevando desde lo más importante: el cuidado humano."
-    },
-    {
-      title: "Resultados a medida",
-      description: "Cada cuerpo es único, por lo que diseñamos soluciones personalizadas que combinan técnica, estética y conexión emocional."
-    }
-  ]
 
   const clinicaText = `Nuestro propósito es ser la marca de cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
 
@@ -136,33 +124,8 @@ export default function Clinica({ id }) {
           gridRow: '2 / 2',
         }}>
           {/* Results Section */}
-          <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "#fff" }}>
-            <Box ref={resultadosTitleRef} sx={{ 
-              mb: 4, 
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "space-between" 
-            }}>
-              <Typography variant="h2" sx={sectionTitleStyle}>
-                RESULTADOS
-              </Typography>
-              <Box>
-                <IconButton
-                  onClick={() => document.querySelector(".results-carousel .slick-prev")?.click()}
-                  sx={{ color: "text.primary" }}
-                >
-                  <ArrowLeftIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => document.querySelector(".results-carousel .slick-next")?.click()}
-                  sx={{ color: "text.primary", ml: 1 }}
-                >
-                  <ArrowRightIcon />
-                </IconButton>
-              </Box>
-            </Box>
+
             <ResultsPortfolioSection size="large" py="py-0" />
-          </Box>
         </Box>
 
 
@@ -173,131 +136,10 @@ export default function Clinica({ id }) {
         }}>
           <ArrowRightIcon sx={{ mt: 1, width: 64, height: 64, color: "#000"}} />
         </Box>
+        
+        <About />
 
-        <Box sx={{
-          gridColumn: { xs: '6 / 13', md: '4 / 13' },
-          gridRow: '3 / 3',
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "start",
-        }}>
-          <Typography ref={doctorTitleRef} variant="h2" sx={doctorTitleStyle}>
-            Líderes en cirugía plastica mamaria, estética & reconstructiva
-          </Typography>
-        </Box>
-
-        <Box variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "text.primary", py: 20, mb: 2, gridColumn: "3 / 4", gridRow: '4 / 4', }}>
-          (Liderazgo)
-        </Box>
-        <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '6 / 11' },
-          gridRow: '4 / 4',
-          display: "flex",
-          textAlign: "start",
-          zIndex: 1
-        }}>
-          {/* Doctor Profile Section */}
-          <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "#fff" }}>
-              <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: "20px", fontWeight: 600, color: "#000", mb: 2 }}>
-                Dr. Guzman Ripoll
-              </Typography>
-              
-              <Typography variant="body1" sx={bodyTextStyle}>
-                El Dr. Guzman Ripoll, es un Cirujano Plástico, Reconstructivo y Estético. .Certificado con títulos de Doctor en Medicina (CLAEH, Uruguay), Especialista en Cirugía Plástica, Reparadora y Estética (Universidad de la República, Uruguay)y Maestría en Cirugía Mamaria, Reconstructiva y Estética (Universitat de Barcelona).
-              </Typography>
-              <Typography variant="body1" sx={{ ...bodyTextStyle, mt: 2 }}>
-                En la actualidad, se dedida principalmente a realizar cirugías mamarias estéticas y reconstructivas, así como también cirugías de remodelamiento corporal, siendo el único especialista en Uruguay en utilizar la lipoaspiración VASER.
-              </Typography>
-              <Typography variant="body1" sx={{ ...bodyTextStyle, mt: 2 }}>
-                Su enfoque se centra en ofrecer a los pacientes los mejores tratamientos y resultados posibles, manteniendo altos estándares de calidad y cuidado. Su dedicación a la formación y la mejora continua le permite cumplir con los más altos estándares de excelencia en su práctica profesional.
-              </Typography>
-          </Box>
-        </Box>
-
-
-        <Box sx={{ mt: 4, mb: 10, borderRadius: 1, overflow: "hidden", gridColumn: { xs: '1 / 13', md: '6 / 9' }, gridRow: '5 / 5', zIndex: 1 }}>
-          <img
-            src="/images/foto-perfil-guzman.webp"
-            alt="Dr. Guzman Ripoll"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-        </Box>
-        <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 7' },
-          gridRow: '6 / 6',
-          padding: "50px",
-          paddingRight: "150px",
-          zIndex: 1,
-        }}>
-            <Grid item xs={12} md={6}>
-              <Box sx={{ 
-                borderRadius: 2, 
-                overflow: "hidden",
-                aspectRatio: "1/1",
-                bgcolor: "grey.800"
-              }}>
-                <video
-                  src="/videos/logo-animation-1.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </Box>
-            </Grid>
-        </Box>
-
-        <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '7 / 13' },
-          gridRow: '6 / 6',
-          zIndex: 1,
-        }}>
-          {/* Human Connection Section */}
-          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff"}}>
-            <Grid container spacing={6} alignItems="start">
-              <Grid item xs={12} md={6} sx={{ textAlign: "start" }}>
-                <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>
-                  Conexión humana
-                </Typography>
-                
-                <Box sx={{ mt: 6, display: "flex", flexDirection: "column", gap: 4 }}>
-                  {humanConnectionPoints.map((point, index) => (
-                    <Box key={index} sx={{ display: "flex", gap: 3 }}>
-                      <Typography variant="body1" sx={pointNumberStyle}>
-                        0{index + 1}.
-                      </Typography>
-                      <Box sx={{ padding: "30px", paddingRight: "200px", paddingTop: "0px" }}>
-                        <Typography variant="h3" sx={pointTitleStyle}>
-                          {point.title}
-                        </Typography>
-                        <Typography variant="body1" sx={pointDescriptionStyle}>
-                          {point.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-
-
-        <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 13' },
-          gridRow: '7 / 7',
-          zIndex: 1
-        }}>
-          {/* Full-width Video Section */}
-          <Box sx={{ mt: 4, mb: 10, ml: "calc(-70px + 1vw)", borderRadius: 1, overflow: "visible" }}>
-            <img
-              src="/images/unnamed.png"
-              alt="Dr. Guzman Ripoll"
-              style={{ width: "98vw", height: "auto", display: "block" }}
-            />
-          </Box>
-        </Box>
+        <Conexion />
       </Box>
       </Box>
       
@@ -307,56 +149,3 @@ export default function Clinica({ id }) {
   )
 }
 
-// Style constants
-const sectionTitleStyle = {
-  fontFamily: "Archivo Expanded",
-  fontSize: "18px",
-  textTransform: "uppercase",
-  letterSpacing: "0.2em",
-  color: "text.primary"
-}
-
-const doctorTitleStyle = {
-  fontFamily: "Poppins",
-  fontWeight: 400,
-  fontSize: { xs: "2.5rem", md: "3.5rem" },
-  lineHeight: 1.1,
-  letterSpacing: "-0.03em",
-  color: "text.primary"
-}
-
-const bodyTextStyle = {
-  fontFamily: "Poppins",
-  fontSize: "20px",
-  fontWeight: 400,
-  color: "text.secondary",
-  lineHeight: 1.8,
-  paddingRight: "100px"
-}
-
-const sectionTitle = {
-  fontFamily: "Poppins",
-  fontSize: { xs: "2.5rem", md: "3.5rem" },
-  color: "text.primary"
-}
-
-const pointNumberStyle = {
-  fontFamily: "Poppins",
-  fontSize: "1.25rem",
-  color: "text.primary",
-  minWidth: "40px"
-}
-
-const pointTitleStyle = {
-  fontFamily: "Poppins",
-  fontSize: "1.25rem",
-  fontWeight: 600,
-  color: "text.primary"
-}
-
-const pointDescriptionStyle = {
-  mt: 1,
-  fontSize: "1rem",
-  color: "text.secondary",
-  lineHeight: 1.6
-}

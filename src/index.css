@@ -1,3 +1,4 @@
+/* Hide scrollbar for all browsers */
 ::-webkit-scrollbar {
   display: none;
 }
@@ -8,51 +9,66 @@ body, html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
-  
-  body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-  }
 
-  @font-face {
-    font-family: 'Archivo Expanded';
-    src: url('/fonts/Archivo Expanded/Archivo_Expanded-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Archivo Expanded';
-    src: url('/fonts/Archivo Expanded/Archivo_Expanded-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Archivo Expanded';
-    src: url('/fonts/Archivo Expanded/Archivo_Expanded-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-  }
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
 
-  @font-face {
-    font-family: 'Archivo Expanded';
-    src: url('/fonts/Archivo Expanded/Archivo_Expanded-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Archivo Expanded';
-    src: url('/fonts/Archivo Expanded/Archivo_Expanded-BoldItalic.ttf') format('truetype');
-    font-weight: 700;
-    font-style: italic;
-  }
-  
+/* === Archivo Expanded Font === */
+@font-face {
+  font-family: 'Archivo Expanded';
+  src: url('/fonts/Archivo Expanded/Archivo_Expanded-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archivo Expanded';
+  src: url('/fonts/Archivo Expanded/Archivo_Expanded-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archivo Expanded';
+  src: url('/fonts/Archivo Expanded/Archivo_Expanded-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archivo Expanded';
+  src: url('/fonts/Archivo Expanded/Archivo_Expanded-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Archivo Expanded';
+  src: url('/fonts/Archivo Expanded/Archivo_Expanded-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
 /* === Poppins === */
 @font-face {
   font-family: 'Poppins';
   src: url('/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
   font-style: normal;
 }
 
@@ -76,8 +92,6 @@ body, html {
   font-weight: 700;
   font-style: italic;
 }
-
-/* Add more weights/styles as needed */
 
 /* === Red Hat Display === */
 @font-face {
@@ -108,5 +122,98 @@ body, html {
   font-style: italic;
 }
 
-/* Add more weights/styles as needed */
-  
+/* === ESTILOS PARA LA NAVBAR === */
+
+/* Estilos específicos para navbar transparente */
+body {
+  padding-top: 0; /* Sin padding ya que la navbar es transparente */
+}
+
+/* Animación del reloj */
+@keyframes smooth-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.animate-pulse {
+  animation: smooth-blink 1s infinite;
+}
+
+/* Animación para los dos puntos de la hora */
+@keyframes blinkColon {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* Responsive utilities */
+@media (min-width: 1024px) {
+  .lg-flex {
+    display: flex !important;
+  }
+  .lg-block {
+    display: block !important;
+  }
+}
+
+/* Base styles for better compatibility */
+@keyframes smooth-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.animate-pulse {
+  animation: smooth-blink 1s infinite;
+}
+
+/* Lenis smooth scroll styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Base styles for better compatibility */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure proper spacing for fixed navbar */
+body {
+  padding-top: 0;
+}
+
+/* Lenis smooth scroll styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

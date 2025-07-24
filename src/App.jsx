@@ -4,17 +4,15 @@ import { Button, Box, Typography } from "@mui/material";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from '@studio-freight/lenis';
+import { ReactLenis } from '@studio-freight/react-lenis';
 import Home from "./pages/Home";
-import NavButtons from "./components/home/NavButtons";
+import Clinica from "./pages/Clinica";
+
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
-import About from "./pages/About";
-import ClinicaSection from "./components/clinica/ClinicaSection";
+import NavBar from "./components/UI/NavBar";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
-
-//import Navbar from "./components/navbar/Navbar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,80 +121,40 @@ function GridDebugger({
   );
 }
 
-// About Page Component
-function ProcedimientoCero() {
-  const [isPinned, setIsPinned] = useState(true);
-     
+
+
+// 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
+const App = () => {
+  const [mode, setMode] = useState('light');
+
+  const theme = useMemo(() => {
+    return mode === 'light' ? lightTheme : darkTheme;
+  }, [mode]);
+
+  const toggleTheme = () => {
+    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Log para confirmar que el grid debugger está disponible
+    console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
+  }, []);
+
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
-      <StandaloneScrollReveal
-        imageSrc="images/wwsav.jpg"
-        imageAlt="Architectural detail with orange geometric patterns"
-        heading="NexaVirtu Tech"
-        pin={isPinned}
-      />
-    </Box>
-  );
-}
-
-// Contact Page Component
-function Contact() {
-  return (
-    <Box sx={{ mt: 8 }}>
-      <Typography variant="h3" component="h1" gutterBottom>
-        Contact Us
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Have questions? Reach out to us!
-      </Typography>
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="body1">Email: info@example.com</Typography>
-        <Typography variant="body1">Phone: (123) 456-7890</Typography>
-      </Box>
-    </Box>
-  );
-}
-
-// 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER
-  const App = () => {
-    const [mode, setMode] = useState('light');
-
-    const theme = useMemo(() => {
-      return mode === 'light' ? lightTheme : darkTheme;
-    }, [mode]);
-
-    const toggleTheme = () => {
-      setMode(prev => (prev === 'light' ? 'dark' : 'light'));
-    };
-
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      const lenis = new Lenis({
-        smooth: true,
-        duration: 2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // slow and smooth easing
-      });
-        
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
-      // Log para confirmar que el grid debugger está disponible
-      console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
-    }, []);
-
-    return (
-      <Router autoScrollToTop>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+    <Router autoScrollToTop>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ReactLenis root>
           <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
+            {/* NavBar fija en la parte superior */}
+            <NavBar />
+            
             <Routes>
-              <Route path="/" element={<About toggleTheme={toggleTheme} />} />
-              <Route path="/clinica" element={<ClinicaSection />} />
-              <Route path="/contacto" element={<Contact />} />
-              <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
+              <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
+              <Route path="/clinica" element={<Clinica />} />
+              {/* <Route path="/procedimientos" element={<Procedures toggleTheme={toggleTheme} />} /> */}
+              {/* <Route path="/contacto" element={<Contact />} /> */}
             </Routes>
             
             {/* Componente de navegación condicional */}
@@ -215,10 +173,11 @@ function Contact() {
             />
             
           </Box>
-        </ThemeProvider>
-      </Router>
-    );
-  };
+        </ReactLenis>
+      </ThemeProvider>
+    </Router>
+  );
+};
 
 // 🔧 Componente auxiliar para manejar la navegación condicional
 function ConditionalNavButtons() {

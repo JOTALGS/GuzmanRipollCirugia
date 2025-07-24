@@ -72,57 +72,64 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
       onTouchEnd={handleDragEnd}
       onScroll={updateScrollProgress}
     >
-      <Box sx={{ display: 'flex', gap: '35px' }}>
+      <Box sx={{ display: 'flex', gap: '20px', paddingRight: '70px' }}>
         {testimonios.map((testimonio, index) => (
           <Card 
             key={`testimonio-${index}`}
             sx={{
               flexShrink: 0,
-              maxWidth: { xs: "15%", md: "15%" },
-              height: { xs: '260px', md: '320px' },
+              maxWidth: { xs: "280px", md: "430px" }, // maxWidth para que funcione el drag
+              height: { xs: '300px', md: '455px' }, // Figma exact height
               borderRadius: 3,
-              boxShadow: 3,
-              // Glass effect styles:
-              backgroundColor: 'rgba(255, 255, 255, 0.2)', // Semi-transparent white
-              backgroundImage: 'linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              backdropFilter: 'blur(12px)', // Blur effect
-              WebkitBackdropFilter: 'blur(12px)', // Safari support
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+              // Clean glass effect styles:
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1))',
+              border: '1px solid rgba(255, 255, 255, 0.5)',
+              backdropFilter: 'blur(15px)',
+              WebkitBackdropFilter: 'blur(15px)',
               position: 'relative',
-              // Optional: Inner shadow for depth
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                borderRadius: 3,
-                boxShadow: 'inset 0 0 15px rgba(255, 255, 255, 0.5)',
-                pointerEvents: 'none',
-                
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-1px)',
+                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
               },
               padding: { xs: 1, md: 4},
             }}
           >
             <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <Box sx={{ mb: 2 }}>
+              <Box sx={{ mb: 2, flex: 1 }}>
                 <Typography 
                   sx={{
+                    fontFamily: 'Poppins, sans-serif',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 4,
-                    minHeight: theme.typography.body1.lineHeight * 4,
-                    fontSize: { xs: '14px', md: '18px'},
-                    fontWeight: '500',
+                    WebkitLineClamp: { xs: 6, md: 8 },
+                    overflow: 'hidden',
+                    fontSize: { xs: '16px', md: '24px'}, // 24px as specified
+                    fontWeight: '400', // Regular as specified
                     color: 'black',
+                    lineHeight: 1.4,
                   }}
                 >
-                  {testimonio.testimonio}
+                  "{testimonio.testimonio}"
                 </Typography>
               </Box>
-              <Box sx={{ position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', width: '100%',  mt: 'auto', textAlign: 'center' }}>
-                <Typography sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+              <Box sx={{ 
+                position: 'absolute', 
+                bottom: '30px', 
+                left: '50%', 
+                transform: 'translateX(-50%)', 
+                width: 'calc(100% - 60px)',
+                mt: 'auto', 
+                textAlign: 'center'
+              }}>
+                <Typography sx={{ 
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: '500', // Medium as specified
+                  fontSize: { xs: '16px', md: '20px'}, // 20px as specified
+                  color: 'black' 
+                }}>
                   {testimonio.author}
                 </Typography>
               </Box>
@@ -200,9 +207,9 @@ export default function Testimonios() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: { xs: '25px', md: '35px' },
-        paddingInline: { xs: '15px', md: '75px' },
-        backgroundColor: '#222e34',
+        columnGap: { xs: '20px', md: '20px' },
+        paddingInline: { xs: '15px', md: '70px' }, // Changed to 70px as specified
+        backgroundColor: '#ffffffff',
         
       }}
     >
@@ -222,7 +229,7 @@ export default function Testimonios() {
           <span style={{ color: '#0081C7' }}>Confianza</span> en
         </Typography>
 
-        <Typography color="black" fontFamily={'Poppins'}fontSize={{ xs: '45px', md: '65px'}} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
+        <Typography color="black" fontFamily={'Poppins'} fontSize={{ xs: '45px', md: '65px'}} sx={{ textTransform: 'capitalize', lineHeight: 1.2 }}>
           cada Testimonio.
         </Typography>
 
@@ -256,17 +263,18 @@ export default function Testimonios() {
           alignItems: 'center',
           width: '100%',
           padding: '20px 0',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
+          paddingInline: { xs: '15px', md: '70px' },
         }}
       >
         <Typography 
           variant="body1" 
           sx={{ 
-            color: 'white', 
+            color: 'black', 
             fontFamily: 'Poppins', 
             fontSize: '18px',
-            minWidth: '30px',
-            textAlign: 'right'
+            minWidth: 'fit-content',
+            marginRight: '20px'
           }}
         >
           {testimonios.length} Testimonios
@@ -274,11 +282,9 @@ export default function Testimonios() {
         
         <Box 
           sx={{ 
-            flexGrow: 1, 
-            maxWidth: '600px',
-            height: '4px', 
-            backgroundColor: 'rgba(255,255,255,0.3)', 
-            mx: 2,
+            flexGrow: 1,
+            height: '3px', 
+            backgroundColor: 'rgba(165, 165, 165, 0.3)', 
             borderRadius: '2px'
           }}
         >
@@ -286,7 +292,7 @@ export default function Testimonios() {
             sx={{ 
               height: '100%', 
               width: `${scrollProgress * 100}%`, 
-              backgroundColor: '#0081C7',
+              backgroundColor: '#000000ff',
               borderRadius: '2px'
             }} 
           />

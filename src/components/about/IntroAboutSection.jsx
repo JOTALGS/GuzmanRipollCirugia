@@ -50,12 +50,12 @@ export default function IntroAboutSection() {
           justifyContent: 'start',
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: 'capitalize'}}>
-          Cirugía <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>Inteligente</Typography>, 
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ textTransform: ''}}>
+          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textSecondary' }}>inteligente</Typography>, 
         </Typography>
 
         <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize'}}>
-          Conexión Humana
+          conexión humana
         </Typography>
       </Box>
 

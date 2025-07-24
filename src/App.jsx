@@ -4,17 +4,16 @@ import { Button, Box, Typography } from "@mui/material";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from '@studio-freight/lenis';
+import { ReactLenis } from '@studio-freight/react-lenis';
 import Home from "./pages/Home";
 import NavButtons from "./components/home/NavButtons";
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import About from "./pages/About";
 import ClinicaSection from "./components/clinica/ClinicaSection";
+import NavBar from "./components/UI/NavBar";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
-
-//import Navbar from "./components/navbar/Navbar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -142,7 +141,7 @@ function ProcedimientoCero() {
 // Contact Page Component
 function Contact() {
   return (
-    <Box sx={{ mt: 8 }}>
+    <Box sx={{ mt: 0, pt: 2 }}>
       <Typography variant="h3" component="h1" gutterBottom>
         Contact Us
       </Typography>
@@ -157,44 +156,38 @@ function Contact() {
   );
 }
 
-// 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER
-  const App = () => {
-    const [mode, setMode] = useState('light');
+// 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
+const App = () => {
+  const [mode, setMode] = useState('light');
 
-    const theme = useMemo(() => {
-      return mode === 'light' ? lightTheme : darkTheme;
-    }, [mode]);
+  const theme = useMemo(() => {
+    return mode === 'light' ? lightTheme : darkTheme;
+  }, [mode]);
 
-    const toggleTheme = () => {
-      setMode(prev => (prev === 'light' ? 'dark' : 'light'));
-    };
+  const toggleTheme = () => {
+    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-      const lenis = new Lenis({
-        smooth: true,
-        duration: 2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // slow and smooth easing
-      });
-        
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Log para confirmar que el grid debugger está disponible
+    console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
+  }, []);
 
-      // Log para confirmar que el grid debugger está disponible
-      console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
-    }, []);
-
-    return (
-      <Router autoScrollToTop>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+  return (
+    <Router autoScrollToTop>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ReactLenis root>
           <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
+            {/* NavBar fija en la parte superior */}
+            <NavBar />
+            
             <Routes>
               <Route path="/" element={<About toggleTheme={toggleTheme} />} />
+              <Route path="/inicio" element={<About toggleTheme={toggleTheme} />} />
               <Route path="/clinica" element={<ClinicaSection />} />
+              <Route path="/procedimientos" element={<About toggleTheme={toggleTheme} />} />
               <Route path="/contacto" element={<Contact />} />
               <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
             </Routes>
@@ -215,10 +208,11 @@ function Contact() {
             />
             
           </Box>
-        </ThemeProvider>
-      </Router>
-    );
-  };
+        </ReactLenis>
+      </ThemeProvider>
+    </Router>
+  );
+};
 
 // 🔧 Componente auxiliar para manejar la navegación condicional
 function ConditionalNavButtons() {

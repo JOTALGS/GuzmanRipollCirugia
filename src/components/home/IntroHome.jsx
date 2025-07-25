@@ -59,11 +59,7 @@ export default function IntroHome() {
           Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>inteligente</Typography>, 
         </Typography>
 
-<<<<<<< HEAD:src/components/about/IntroAboutSection.jsx
         <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '65px' }} sx={{ color: 'textPrimary',}}>
-=======
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '70px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
->>>>>>> 4e9af8a8166b27cdc4e0a040808233b54f8f1f4b:src/components/home/IntroHome.jsx
           conexión humana
         </Typography>
       </Box>

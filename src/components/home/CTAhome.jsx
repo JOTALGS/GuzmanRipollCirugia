@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import LinearGradButton from "../buttons/LinearGradButton";
+import ClipTopButton from "../buttons/clipTopButton";
+import ClipBottomButton from "../buttons/clipBottomButton";
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -28,7 +31,7 @@ export default function CTAhome() {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top 7%",
-        end: isMobile() ? "bottom+=5000% top" : "bottom+=710% top",
+        end: isMobile() ? "bottom+=5000% top" : "bottom+=142% top",
         pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,
@@ -60,7 +63,7 @@ export default function CTAhome() {
   return (
     <Box
       sx={{
-        height: '250vh',
+        height: { xs: 'auto', md: '250vh' },
         overflowY: 'scroll',
         overflowX: 'hidden',
         // Hide scrollbar - Webkit (Brave, Chrome, Safari)
@@ -72,6 +75,7 @@ export default function CTAhome() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
+        flexDirection: { xs: 'column', md: 'row' },
         columnGap: { xs: '25px', md: '35px' },
         paddingInline: { xs: '15px', md: '75px' },
         marginBottom: { xs: '6vh', md: '0vh' },
@@ -80,7 +84,7 @@ export default function CTAhome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '1 / 7',
+          gridColumn: { xs: '1 / 13', md: '1 / 7'},
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -89,7 +93,9 @@ export default function CTAhome() {
           justifyContent: 'start',
         }}
       >
-
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '12px',md: '15px' , xl: '20px' }} sx={{ fontWeight: 'semibold', width: { xs: '70%', md: '40%'}, color: 'background', textTransform: 'uppercase'}}>
+          Descubrí como podemos transformar tu vida
+        </Typography>
         <div id="left-section">
           <Typography 
             component="h1"
@@ -101,21 +107,29 @@ export default function CTAhome() {
               lineHeight: "1",
             }}
           >
-            {["Diseñados para", "Maximizar tus", "Resutados"].map((word, i) => (
-              <div key={i} style={{ fontFamily: "Poppins", fontWeight: "200" }}>
-                {word}
-              </div>
-            ))}
+            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>
+              Diseñados para 
+            </Typography>
+            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>
+              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>
+                Maximizar
+              </Typography>
+              {' '}  tus 
+            </Typography>
+            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%',color: 'background', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
+              Resultados
+            </Typography>
           </Typography>
 
-          {/* <p className="text-gray-900 text-sm lg:text-base leading-relaxed pt-8 pr-24">
-            Somos especialistas en mecánica automotriz con más de 15 años de experiencia
-            servicio de electrónica automotriz: diagnóstico electrónico, reparación de arranques y
-            alternadores, carga de aire acondicionado y mantenimiento de sistemas eléctricos.
-            Nuestro compromiso es ofrecer transparencia, rapidez y garantía en cada trabajo.
-            Contáctenos hoy para agendar su servicio y déjenos cuidar de su vehículo con
-            la misma pasión y profesionalismo que nos respalda desde nuestros inicios.
-          </p> */}
+          <Typography fontFamily={'Poppins'} fontSize={{ xs: '12px',md: '15px' , xl: '20px' }} component="p" sx={{ width:'80%', marginTop: '20px', }}>
+            Tratamientos avanzados para procesos de recuperación más rápidos.
+          </Typography>
+
+          <Box component="a" href="/contacto" sx={{ textDecoration: 'none' }} >
+            <Box sx={{ marginTop: '30px' }}>
+              <ClipBottomButton>Agendate</ClipBottomButton>
+            </Box>
+          </Box>
         </div>
       </Box>
 
@@ -123,10 +137,9 @@ export default function CTAhome() {
         fontFamily: "Poppins",
         fontWeight: "200",
         display: "flex",
-        gridColumn: { xs: '6 / 13' , md: '8 / 13' },
-        gridRow: '1 / 1',
+        gridColumn: { xs: '1 / 13' , md: '8 / 13' },
+        gridRow: { xs: '2 / 3', md: '1 / 1'},
         flexDirection: "column",
-        width: { xs: "auto", md: "40vw" },
         height: "fit-content",
         justifyContent: "space-between",
         alignItems: "flex-end",
@@ -165,7 +178,7 @@ export default function CTAhome() {
           }
         ].map((card, index) => (
           <Box key={index} sx={{
-            width: { xs: "100%", md: "80%" },
+            width: { xs: "100%", md: "100%" },
             mb: 4,
             mr: 20,
             display: "flex",

@@ -197,7 +197,7 @@ export default function NavBar() {
           <span>
             {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
           </span>
-        </div>
+        </Box>
 
         {/* Navegación Principal con comas - Columna 7-10 */}
         <div style={{
@@ -345,7 +345,7 @@ export default function NavBar() {
             </AnimatePresence>
           </div>
         </div>
-      </nav>
+      </Box>
     </header>
   )
 }

@@ -23,7 +23,7 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
     const scrollPosition = container.scrollLeft;
     const maxScroll = container.scrollWidth - container.clientWidth;
     const progress = maxScroll > 0 ? scrollPosition / maxScroll : 0;
-    
+    console.log('######DEBUG: ',progress);
     if (onScrollProgress) onScrollProgress(progress);
   };
 
@@ -74,11 +74,11 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
     >
       <Box sx={{ display: 'flex', gap: '20px', paddingRight: '70px' }}>
         {testimonios.map((testimonio, index) => (
-          <Card 
+          <Card
             key={`testimonio-${index}`}
             sx={{
               flexShrink: 0,
-              maxWidth: { xs: "280px", md: "430px" }, // maxWidth para que funcione el drag
+              maxWidth: { xs: "280px", md: "350px" }, // maxWidth para que funcione el drag
               height: { xs: '300px', md: '455px' }, // Figma exact height
               borderRadius: 3,
               boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
@@ -136,6 +136,8 @@ const HorizontalCarousel = ({ testimonios, onScrollProgress }) => {
             </CardContent>
           </Card>
         ))}
+
+        
       </Box>
     </Box>
   );
@@ -188,8 +190,6 @@ export default function Testimonios() {
 
   
   const [scrollProgress, setScrollProgress] = useState(0);
-
-  const currentTestimonial = Math.floor(scrollProgress * (testimonios.length - 1)) + 1;
 
   return (
     <Box

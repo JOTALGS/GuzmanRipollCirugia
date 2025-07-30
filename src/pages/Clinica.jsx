@@ -143,7 +143,6 @@ export default function Clinica({ id }) {
       </Box>
       </Box>
       
-
       <Footer />
     </Box>
   )

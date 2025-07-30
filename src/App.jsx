@@ -121,7 +121,21 @@ function GridDebugger({
   );
 }
 
+// About Page Component
+function ProcedimientoCero() {
+  const [isPinned, setIsPinned] = useState(true);
 
+  return (
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
+      <StandaloneScrollReveal
+        imageSrc="images/wwsav.jpg"
+        imageAlt="Architectural detail with orange geometric patterns"
+        heading="NexaVirtu Tech"
+        pin={isPinned}
+      />
+    </Box>
+  );
+}
 
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
 const App = () => {
@@ -148,12 +162,12 @@ const App = () => {
         <ReactLenis root>
           <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
             {/* NavBar fija en la parte superior */}
-            <NavBar />
+            <NavBar  toggleTheme={toggleTheme} />
             
             <Routes>
-              <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
+              <Route path="/" element={<Home/>} />
               <Route path="/clinica" element={<Clinica />} />
-              {/* <Route path="/procedimientos" element={<Procedures toggleTheme={toggleTheme} />} /> */}
+              <Route path="/procedimientos" element={<ProcedimientoCero />} />
               {/* <Route path="/contacto" element={<Contact />} /> */}
             </Routes>
             

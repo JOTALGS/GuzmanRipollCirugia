@@ -10,7 +10,7 @@ export default function IntroHome() {
       sx={{
         position: "relative",
         zIndex: 1,
-        height: { xs: "90vh", md: "100vh" },
+        height: { xs: "100vh", md: "100vh" },
         display: "grid",
 
         backgroundColor: "#fff",
@@ -28,7 +28,7 @@ export default function IntroHome() {
         alt="Background"
         sx={{
           width: { xs: "100vw", md: "100vw"},
-          height: { xs: "90vh", md: "100vh"},
+          height: { xs: "100vh", md: "100vh"},
           objectFit: "cover",
           position: "absolute",
           top: 0,
@@ -40,7 +40,7 @@ export default function IntroHome() {
 
       <Box
         sx={{
-          marginTop: { xs: '80px', md: '250px' },
+          marginTop: { xs: '80px', md: '150px', lg: '180px', xl: '250px' },
           gridColumn: { xs: '1 / 13', md: '1 / 8' },
           gridRow: '1 / 1',
           display: 'flex',
@@ -50,12 +50,31 @@ export default function IntroHome() {
           justifyContent: 'start',
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '70px' }} sx={{ textTransform: '', letterSpacing: '-3px'}}>
-          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>inteligente</Typography>, 
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: '-3px'}}>
+          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>inteligente</Typography>, 
         </Typography>
 
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px', md: '70px' }} sx={{ color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%',color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
           conexión humana
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          gridColumn: { xs: '3 / 11', md: '9 / 13' },
+          gridRow: '1 / 1',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'row',
+          textAlign: { xs: 'center', md: 'end'},
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: { xs: '25px', md: 'px' },
+        }}
+      >
+        <Box sx={{  width: '15px', height: '15px', backgroundColor: '#0081C7', borderRadius: '100%' }}/>
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '20px', md: '35px' }} sx={{ width: '90%',color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-1px'}}>
+          + 400 intervenciones exitosas
         </Typography>
       </Box>
 

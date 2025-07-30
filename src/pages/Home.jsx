@@ -19,9 +19,6 @@ export default function Home({ toggleTheme }) {
         backgroundColor: 'background.default',
       }}
     >
-      <button onClick={toggleTheme} style={{ position: 'absolute', top: 10, right: 10, zIndex: 999 }}>
-        Toggle Theme
-      </button>
 
       <IntroHome />
       

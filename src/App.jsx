@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from '@studio-freight/react-lenis';
 import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
+import Resultados from "./pages/Resultados";
 
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
@@ -15,6 +16,26 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Componentes temporales para las rutas que faltan
+const Contact = () => (
+  <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <Typography variant="h4">Página de Contacto - En construcción</Typography>
+  </Box>
+);
+
+const ProcedimientoCero = () => (
+  <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <Typography variant="h4">Cirugía Mamaria - En construcción</Typography>
+  </Box>
+);
+
+// Componente temporal para navegación (si lo necesitas)
+const NavButtons = () => (
+  <Box>
+    <Typography>Nav Buttons</Typography>
+  </Box>
+);
 
 // 🎛️ GRID DEBUGGER COMPONENT
 function GridDebugger({
@@ -121,22 +142,6 @@ function GridDebugger({
   );
 }
 
-// About Page Component
-function ProcedimientoCero() {
-  const [isPinned, setIsPinned] = useState(true);
-
-  return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: 'black' }}>
-      <StandaloneScrollReveal
-        imageSrc="images/wwsav.jpg"
-        imageAlt="Architectural detail with orange geometric patterns"
-        heading="NexaVirtu Tech"
-        pin={isPinned}
-      />
-    </Box>
-  );
-}
-
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
 const App = () => {
   const [mode, setMode] = useState('light');
@@ -165,10 +170,13 @@ const App = () => {
             <NavBar  toggleTheme={toggleTheme} />
             
             <Routes>
-              <Route path="/" element={<Home/>} />
+              <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
+              <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />
               <Route path="/clinica" element={<Clinica />} />
-              <Route path="/procedimientos" element={<ProcedimientoCero />} />
-              {/* <Route path="/contacto" element={<Contact />} /> */}
+              <Route path="/procedimientos" element={<Home toggleTheme={toggleTheme} />} />
+              <Route path="/resultados" element={<Resultados/>} />
+              <Route path="/contacto" element={<Contact />} />
+              <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
             </Routes>
             
             {/* Componente de navegación condicional */}

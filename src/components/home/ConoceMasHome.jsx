@@ -110,10 +110,10 @@ const AnimatedLink = styled(Box)(({ theme }) => ({
 
 export default function ConoceMasHome() {
   const conoceMasText = `
-    Cirugia plastica estetica y recontructiva.
+    Cirugía plástica estética y reconstructiva.
     Nuestra experiencia refinada radica en canalizar el deseo:
     desde la confianza corporal hasta el bienestar integral,
-    desde tratamientos simples hasta cirugias
+    desde tratamientos simples hasta cirugías
     reconstructivas.
     Como expertos en cirugía mamaria, ofrecemos
     tratamientos personalizados que combinan precisión

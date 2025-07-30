@@ -7,8 +7,8 @@ import { Box, useMediaQuery } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function NavBar({ toggleTheme }) {
-  const [timeParts, setTimeParts] = useState({ hour: "00", minute: "00", second: "00", period: "PDD" })
+export default function NavBar() {
+  const [timeParts, setTimeParts] = useState({ hour: "00", minute: "00", second: "00", period: "PDE" })
   const [isDarkBackground, setIsDarkBackground] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
@@ -19,6 +19,7 @@ export default function NavBar({ toggleTheme }) {
     if (location.pathname === "/" || location.pathname === "/inicio") return "Inicio"
     if (location.pathname === "/clinica") return "Clínica"
     if (location.pathname === "/procedimientos") return "Procedimientos"
+    if (location.pathname === "/resultados") return "Resultados"
     if (location.pathname === "/contacto") return "Contacto"
     return "Inicio" // default
   }
@@ -31,7 +32,7 @@ export default function NavBar({ toggleTheme }) {
     { name: "Inicio", path: "/" },
     { name: "Clínica", path: "/clinica" },
     { name: "Procedimientos", path: "/procedimientos" },
-    { name: "Contacto", path: "/contacto" }
+    { name: "Resultados", path: "/resultados" },
   ]
 
   // Reloj en tiempo real con segundos
@@ -46,7 +47,7 @@ export default function NavBar({ toggleTheme }) {
         timeZone: "America/Montevideo",
       })
       const [hour, minute, second] = timeString.split(":")
-      setTimeParts({ hour, minute, second, period: "PDD" })
+      setTimeParts({ hour, minute, second, period: "PDE" })
     }, 1000)
     return () => clearInterval(timer)
   }, [])
@@ -155,7 +156,7 @@ export default function NavBar({ toggleTheme }) {
         paddingTop: '12px',
         paddingBottom: '12px',
         fontFamily: 'Poppins, sans-serif',
-        fontWeight: '500',
+        fontWeight: '400', // Poppins Medium
         fontSize: '18px',
         lineHeight: '17.28px',
         letterSpacing: '-0.54px'
@@ -196,134 +197,32 @@ export default function NavBar({ toggleTheme }) {
           <span>
             {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
           </span>
-        </Box>
+        </div>
 
-        {/* Botón de hamburguesa para móviles */}
-        {isMobile && (
-          <Box sx={{
-            gridColumn: '11 / 13',
+        {/* Navegación Principal con comas - Columna 7-10 */}
+        <div style={{
+          gridColumn: '7 / 11',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center'
+        }}>
+          <div ref={navRef} style={{
+            position: 'relative',
             display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            zIndex: 100
+            alignItems: 'center'
           }}>
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'inherit',
-                cursor: 'pointer',
-                padding: '8px'
-              }}
-              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
-            >
-              {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </Box>
-        )}
-
-        {/* Menú para escritorio */}
-        {!isMobile && (
-          <>
-            {/* Navegación Principal con comas - Columna 7-10 */}
-            <Box sx={{
-              gridColumn: '7 / 11',
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center'
-            }}>
-              <div ref={navRef} style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                {menuLinks.slice(0, 3).map((link, index) => (
-                  <React.Fragment key={link.name}>
-                    <Link
-                      to={link.path}
-                      data-link={link.name}
-                      onClick={(e) => onNavClick(e, link.path)}
-                      style={{
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        position: 'relative',
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: '500',
-                        fontSize: '18px',
-                        lineHeight: '17.28px',
-                        letterSpacing: '-0.54px',
-                        transition: 'opacity 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.target.style.opacity = '0.7'}
-                      onMouseLeave={(e) => e.target.style.opacity = '1'}
-                    >
-                      {link.name}
-                    </Link>
-                    {/* Comas separadoras */}
-                    {index < 2 && (
-                      <span style={{
-                        color: 'inherit',
-                        margin: '0 8px'
-                      }}>,</span>
-                    )}
-                  </React.Fragment>
-                ))}
-                
-                {/* Underline animado para menú principal */}
-                <AnimatePresence mode="wait">
-                  {menuLinks.slice(0, 3).some(link => link.name === active) && (
-                    <motion.div
-                      key={active}
-                      style={{
-                        position: 'absolute',
-                        bottom: '-8px',
-                        height: '2px',
-                        backgroundColor: 'currentColor',
-                        left: underline.left,
-                        width: underline.width
-                      }}
-                      initial={{ 
-                        width: 0, 
-                        x: '-100%',
-                        opacity: 0 
-                      }}
-                      animate={{ 
-                        width: underline.width, 
-                        x: 0,
-                        opacity: 1 
-                      }}
-                      exit={{ 
-                        width: 0, 
-                        x: '100%',
-                        opacity: 0 
-                      }}
-                      transition={{ 
-                        duration: 0.3, 
-                        ease: "easeInOut" 
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
-            </Box>
-
-            {/* Contacto - Separado al final */}
-            <Box sx={{
-              gridColumn: '12 / 13',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
-            }}>
-              <div style={{ position: 'relative' }}>
+            {menuLinks.map((link, index) => (
+              <React.Fragment key={link.name}>
                 <Link
-                  to="/contacto"
-                  data-link="Contacto"
+                  to={link.path}
+                  data-link={link.name}
+                  onClick={(e) => onNavClick(e, link.path)}
                   style={{
                     color: 'inherit',
                     textDecoration: 'none',
+                    position: 'relative',
                     fontFamily: 'Poppins, sans-serif',
-                    fontWeight: '500',
+                    fontWeight: '400', // Poppins Medium
                     fontSize: '18px',
                     lineHeight: '17.28px',
                     letterSpacing: '-0.54px',
@@ -332,131 +231,121 @@ export default function NavBar({ toggleTheme }) {
                   onMouseEnter={(e) => e.target.style.opacity = '0.7'}
                   onMouseLeave={(e) => e.target.style.opacity = '1'}
                 >
-                  Contacto
+                  {link.name}
                 </Link>
-                
-                {/* Underline para Contacto */}
-                <AnimatePresence>
-                  {active === "Contacto" && (
-                    <motion.div
-                      style={{
-                        position: 'absolute',
-                        bottom: '-8px',
-                        height: '2px',
-                        backgroundColor: 'currentColor',
-                        left: 0,
-                        width: '100%'
-                      }}
-                      initial={{ 
-                        width: 0, 
-                        x: '-100%',
-                        opacity: 0 
-                      }}
-                      animate={{ 
-                        width: '100%', 
-                        x: 0,
-                        opacity: 1 
-                      }}
-                      exit={{ 
-                        width: 0, 
-                        x: '100%',
-                        opacity: 0 
-                      }}
-                      transition={{ 
-                        duration: 0.3, 
-                        ease: "easeInOut" 
-                      }}
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
-            </Box>
-
-            {/* Toggle Theme para escritorio */}
-            <Box sx={{
-              gridColumn: '13 / 13',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
-            }}>
-              <button onClick={toggleTheme} style={{ 
-                position: 'relative', 
-                zIndex: 999,
-                background: 'none',
-                border: 'none',
-                color: 'inherit',
-                cursor: 'pointer',
-                marginLeft: '15px'
-              }}>
-                Toggle Theme
-              </button>
-            </Box>
-          </>
-        )}
-      </Box>
-
-      {/* Menú móvil */}
-      <AnimatePresence>
-        {isMobile && isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              zIndex: 40,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '20px',
-              mixBlendMode: 'normal',
-              color: 'white'
-            }}
-          >
-            {menuLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={(e) => onNavClick(e, link.path)}
-                style={{
-                  color: active === link.name ? '#ccc' : 'white',
-                  textDecoration: 'none',
-                  fontSize: '24px',
-                  fontWeight: active === link.name ? '600' : '400',
-                  margin: '15px 0',
-                  textAlign: 'center',
-                  width: '100%',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {link.name}
-              </Link>
+                {/* Comas separadoras */}
+                {index < menuLinks.length - 1 && (
+                  <span style={{
+                    color: 'inherit',
+                    marginLeft: '0px',
+                    marginRight: '8px',
+                  }}>,</span>
+                )}
+              </React.Fragment>
             ))}
-            <button 
-              onClick={toggleTheme}
+            
+            {/* Underline animado para menú principal */}
+            <AnimatePresence mode="wait">
+              {menuLinks.some(link => link.name === active) && (
+                <motion.div
+                  key={active}
+                  style={{
+                    position: 'absolute',
+                    bottom: '-8px',
+                    height: '2px',
+                    backgroundColor: 'currentColor',
+                    left: underline.left,
+                    width: underline.width
+                  }}
+                  initial={{ 
+                    width: 0, 
+                    x: '-100%',
+                    opacity: 0 
+                  }}
+                  animate={{ 
+                    width: underline.width, 
+                    x: 0,
+                    opacity: 1 
+                  }}
+                  exit={{ 
+                    width: 0, 
+                    x: '100%',
+                    opacity: 0 
+                  }}
+                  transition={{ 
+                    duration: 0.3, 
+                    ease: "easeInOut" 
+                  }}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Contacto - Separado al final */}
+        <div style={{
+          gridColumn: '12 / 13',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center'
+        }}>
+          <div style={{ position: 'relative' }}>
+            <Link
+              to="/contacto"
+              data-link="Contacto"
               style={{
-                marginTop: '30px',
-                background: 'none',
-                border: '1px solid white',
-                color: 'white',
-                padding: '10px 20px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '16px'
+                color: 'inherit',
+                textDecoration: 'none',
+                fontFamily: 'Poppins, sans-serif',
+                fontWeight: '400', // Poppins Medium
+                fontSize: '18px',
+                lineHeight: '17.28px',
+                letterSpacing: '-0.54px',
+                transition: 'opacity 0.3s ease'
               }}
+              onMouseEnter={(e) => e.target.style.opacity = '0.7'}
+              onMouseLeave={(e) => e.target.style.opacity = '1'}
             >
-              Toggle Theme
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              Contacto
+            </Link>
+            
+            {/* Underline para Contacto */}
+            <AnimatePresence>
+              {active === "Contacto" && (
+                <motion.div
+                  style={{
+                    position: 'absolute',
+                    bottom: '-8px',
+                    height: '2px',
+                    backgroundColor: 'currentColor',
+                    left: 0,
+                    width: '100%'
+                  }}
+                  initial={{ 
+                    width: 0, 
+                    x: '-100%',
+                    opacity: 0 
+                  }}
+                  animate={{ 
+                    width: '100%', 
+                    x: 0,
+                    opacity: 1 
+                  }}
+                  exit={{ 
+                    width: 0, 
+                    x: '100%',
+                    opacity: 0 
+                  }}
+                  transition={{ 
+                    duration: 0.3, 
+                    ease: "easeInOut" 
+                  }}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </nav>
     </header>
   )
 }

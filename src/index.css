@@ -197,23 +197,80 @@ body {
   padding-top: 0;
 }
 
-/* Lenis smooth scroll styles */
-html.lenis {
-  height: auto;
+/* === ESTILOS PARA RESULTS CAROUSEL === */
+.results-carousel-container {
+  width: 100%;
+  background-color: white;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
+.results-carousel-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+.results-carousel-button:hover {
+  background-color: #f3f4f6;
 }
 
-.lenis.lenis-stopped {
+/* Asegurar que el scrollbar esté oculto en el carousel */
+.results-carousel-wrapper {
   overflow: hidden;
+  position: relative;
 }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
+/* Estilos adicionales para el carousel de resultados */
+.results-item {
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.results-item:hover {
+  transform: translateY(-4px);
+}
+
+/* Smooth transitions para el drag del carousel */
+.results-carousel-drag {
+  cursor: grab;
+  user-select: none;
+}
+
+.results-carousel-drag:active {
+  cursor: grabbing;
+}
+
+/* Estilos adicionales para el carousel con efecto warp */
+.results-carousel-item {
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Suavizar todas las transiciones del carousel */
+.results-carousel-container * {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Desactivar la selección de texto en el carousel */
+.results-carousel-drag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Mejorar el rendimiento de las animaciones */
+.results-carousel-wrapper {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }

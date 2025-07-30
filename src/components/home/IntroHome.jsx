@@ -23,9 +23,11 @@ export default function IntroHome() {
       }}
     > 
       <Box
-        component="img"
-        src="/images/unnamed.jpg"
-        alt="Background"
+        component="video"
+        autoPlay
+        muted
+        loop
+        playsInline
         sx={{
           width: { xs: "100vw", md: "100vw"},
           height: { xs: "100vh", md: "100vh"},
@@ -35,7 +37,10 @@ export default function IntroHome() {
           left: { xs: "-15px", md: "-70px"},
           zIndex: -1,
         }}
-      />
+      >
+        <source src="/videos/altitude-hero.webm" type="video/webm" />
+        Tu navegador no soporta el elemento de video.
+      </Box>
 
 
       <Box

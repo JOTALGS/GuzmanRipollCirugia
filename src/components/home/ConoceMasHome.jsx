@@ -109,12 +109,16 @@ const AnimatedLink = styled(Box)(({ theme }) => ({
 }));
 
 export default function ConoceMasHome() {
-  const conoceMasText = `
+  const conoceMasTextFirstLine = `
     Cirugía plástica estética y reconstructiva.
+  `;
+  const conoceMasText = `
     Nuestra experiencia refinada radica en canalizar el deseo:
     desde la confianza corporal hasta el bienestar integral,
     desde tratamientos simples hasta cirugías
     reconstructivas.
+  `;
+  const conoceMasTextPart2 = `
     Como expertos en cirugía mamaria, ofrecemos
     tratamientos personalizados que combinan precisión
     tecnológica con un cuidado humano excepcional.
@@ -139,7 +143,7 @@ export default function ConoceMasHome() {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top 7%",
-        end: isMobile() ? "bottom+=5000% top" : "bottom+=11500% top",
+        end: isMobile() ? "bottom+=5000% top" : "bottom+=3000% top",
         pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,
@@ -257,7 +261,12 @@ export default function ConoceMasHome() {
       }}>
         {/* Clinic Description Section */}
         <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
+          <Box sx={{ display: "flex", marginLeft: "auto", width: "90%", alignContent: "end", justifyContent: "end", textAlign: "end", flexDirection: "column" }}>
+            <LightenText homeText={conoceMasTextFirstLine} />
+          </Box>
           <LightenText homeText={conoceMasText} />
+
+          <LightenText homeText={conoceMasTextPart2} />
         </Box>
       </Box>
     </Box>

@@ -14,6 +14,7 @@ import NavBar from "./components/UI/NavBar";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
+import Procedimientos from "./pages/Procedimientos";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -173,7 +174,7 @@ const App = () => {
               <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
               <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />
               <Route path="/clinica" element={<Clinica />} />
-              <Route path="/procedimientos" element={<Home toggleTheme={toggleTheme} />} />
+              <Route path="/procedimientos" element={<Procedimientos toggleTheme={toggleTheme} />} />
               <Route path="/resultados" element={<Resultados/>} />
               <Route path="/contacto" element={<Contact />} />
               <Route path="/cir-mamaria" element={<ProcedimientoCero />} />

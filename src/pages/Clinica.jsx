@@ -53,8 +53,8 @@ export default function Clinica({ id }) {
     }
   }, [])
 
-
-  const clinicaText = `Nuestro propósito es ser la marca de cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
+  const clinicaTextFirstLine = 'Nuestro propósito es ser la marca de cirugía'
+  const clinicaText = ` estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
 
   return (
     <Box id={id} sx={{ position: "relative", backgroundColor: "#222e34" }}>
@@ -114,6 +114,9 @@ export default function Clinica({ id }) {
         }}>
           {/* Clinic Description Section */}
           <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
+            <Box sx={{ display: "flex", marginLeft: "auto", width: "90%", alignContent: "end", justifyContent: "end", textAlign: "end", flexDirection: "column" }}>
+              <LightenText homeText={clinicaTextFirstLine} />
+            </Box>
             <LightenText homeText={clinicaText} />
           </Box>
         </Box>

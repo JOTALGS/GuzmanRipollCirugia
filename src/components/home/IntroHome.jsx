@@ -57,7 +57,7 @@ export default function IntroHome() {
         }}
       >
         <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: '-3px'}}>
-          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>inteligente</Typography>, 
+          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: '-3px' }}>inteligente</Typography>, 
         </Typography>
 
         <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%',color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>

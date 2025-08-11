@@ -258,38 +258,6 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                           layout="fill"
                           objectFit="cover"
                         />
-                        {item.showButton && (
-                          <Box sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 10,
-                            bgcolor: 'rgba(0,0,0,0.3)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            opacity: 0,
-                            transition: 'opacity 0.3s ease',
-                            '&:hover': { opacity: 1 }
-                          }}>
-                            <Button
-                              variant="contained"
-                              sx={{
-                                height: '128px',
-                                width: '128px',
-                                borderRadius: '50%',
-                                bgcolor: 'black',
-                                color: 'white',
-                                boxShadow: theme.shadows[4],
-                                '&:hover': { bgcolor: theme.palette.grey[900] }
-                              }}
-                            >
-                              Ver mas
-                            </Button>
-                          </Box>
-                        )}
                       </CardContent>
                     </Card>
                     <Box sx={{ pt: '16px', textAlign: 'center' }}>

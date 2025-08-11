@@ -99,17 +99,24 @@ export default function Faq() {
             sx={{ 
               fontWeight: 400,
               fontFamily: 'Poppins, sans-serif',
-              color: 'primary.main', 
+              color: 'textAccent', 
               mb: 2 
             }}
           >
             Tenemos respuestas
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body" color="background" sx={{}}>
             En cualquier caso, te sugerimos comunicarte con nosotros si tienes alguna consulta.
           </Typography>
         </Box>
+      </Box>
 
+
+      <Box sx={{
+        gridColumn: '1 / 13',
+        gridRow: '2 / 2',
+        mx: { xs: 1, md: 4 },
+      }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {faqItems.map((item) => (
             <Box key={item.id}>
@@ -122,13 +129,13 @@ export default function Faq() {
               }}>
                 <Box sx={{ display: 'flex', gap: 2, flex: 1 }}>
                   <Typography 
-                    variant="body2" 
-                    color="text.secondary"
-                    sx={{ mt: 0.5 }}
+                    variant="body" 
+                    color="textPrimary"
+                    sx={{ mt: 0.5, fontWeight: 'bold', marginLeft: '20px' }}
                   >
                     {item.id.toString().padStart(2, "0")}.
                   </Typography>
-                  <Box sx={{ flex: 1 }}>
+                  <Box sx={{ width: '82%', marginLeft: 'auto', textAlign: 'start' }}>
                     <Typography
                       variant="h6"
                       component="h3"
@@ -139,7 +146,7 @@ export default function Faq() {
                     <Collapse in={expandedItem === item.id}>
                       <Typography 
                         variant="body1" 
-                        color="primary.main" 
+                        color="textSecondary" 
                         sx={{ fontSize: { xs: '16px', md: '20px' }, lineHeight: 1.75, pb: 2 }}
                       >
                         {item.answer}

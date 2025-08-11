@@ -8,7 +8,8 @@ export const lightTheme = createTheme({
     secondary: { main: '#000000ff' },
     background: { default: '#ffffffff' },
     textPrimary: '#ffffffff',
-    textSecondary: '#0081C7',
+    textSecondary: '#d1d1d1ff',
+    textAccent: '#0081C7',
   },
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif',

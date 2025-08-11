@@ -26,7 +26,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '1 / 4', md: '1 / 4'},
+          gridColumn: { xs: '1 / 5', md: '1 / 5'},
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -56,7 +56,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '4 / 7', md: '4 / 7'},
+          gridColumn: { xs: '5 / 9', md: '5 / 9'},
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -71,9 +71,9 @@ export default function VerMasProcedimientosHome() {
           sx={{
             width: { xs: '100%', md: '100%'},
             height: {
-              xs: '50%',
-              sm: '50%',
-              md: '50%',
+              xs: '90%',
+              sm: '90%',
+              md: '90%',
             },
             objectFit: 'cover',
           }}
@@ -86,7 +86,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '7 / 13', md: '7 / 13'},
+          gridColumn: { xs: '9 / 13', md: '9 / 13'},
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
@@ -118,7 +118,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '1 / 7', md: '1 / 7'},
+          gridColumn: { xs: '1 / 5', md: '1 / 5'},
           gridRow: '2 / 3',
           display: 'flex',
           flexDirection: 'column',
@@ -133,9 +133,9 @@ export default function VerMasProcedimientosHome() {
           sx={{
             width: { xs: '100%', md: '100%'},
             height: {
-              xs: '90%',
-              sm: '90%',
-              md: '90%',
+              xs: '50%',
+              sm: '50%',
+              md: '50%',
             },
             objectFit: 'cover',
           }}
@@ -148,7 +148,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '7 / 10', md: '7 / 10'},
+          gridColumn: { xs: '5 / 9', md: '5 / 9'},
           gridRow: '2 / 3',
           display: 'flex',
           flexDirection: 'column',
@@ -163,9 +163,9 @@ export default function VerMasProcedimientosHome() {
           sx={{
             width: '100%',
             height: {
-              xs: '50%',
-              sm: '50%',
-              md: '50%',
+              xs: '90%',
+              sm: '90%',
+              md: '90%',
             },
             objectFit: 'cover',
           }}
@@ -178,7 +178,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: { xs: '10 / 13', md: '10 / 13'},
+          gridColumn: { xs: '9 / 13', md: '9 / 13'},
           gridRow: '2 / 3',
           display: 'flex',
           flexDirection: 'column',
@@ -209,7 +209,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '1 / 4',
+          gridColumn: '1 / 5',
           gridRow: '3 / 4',
           display: 'flex',
           flexDirection: 'column',
@@ -217,7 +217,7 @@ export default function VerMasProcedimientosHome() {
           justifyContent: 'start',
         }}
       >
-        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
+        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '90%', objectFit: 'cover' }} />
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
           <Typography variant="p" fontSize={{ xs: '10px', md: '20px' }} fontFamily={'Poppins'}>MOMMY MAKEOVER</Typography>
           <Typography variant="p" fontSize={{ xs: '8px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
@@ -226,7 +226,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '4 / 10',
+          gridColumn: '5 / 9',
           gridRow: '3 / 4',
           display: 'flex',
           flexDirection: 'column',
@@ -243,7 +243,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '10 / 13',
+          gridColumn: '9 / 13',
           gridRow: '3 / 4',
           display: 'flex',
           flexDirection: 'column',

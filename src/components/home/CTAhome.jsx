@@ -111,7 +111,7 @@ export default function CTAhome() {
               Diseñados para 
             </Typography>
             <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>
-              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ color: 'textSecondary', letterSpacing: '-3px' }}>
+              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: '-3px' }}>
                 Maximizar
               </Typography>
               {' '}  tus 

@@ -101,7 +101,7 @@ const splitText = (text, maxCharsPerLine) => {
             <div 
               key={`line-${index}`}
               ref={el => lineWrapperRef.current[index] = el}
-              className={`relative flex mb-2 items-start justify-start text-start ${index === 0 ? 'justify-end' : ''}`}
+              className={`relative flex mb-2 items-start justify-start text-start ${index === 0 ? 'justify-start' : ''}`}
             >
               <Box sx={{ width: "90vw", height: "auto"}}>
                 {/* Base text (dark) - Fixed positioning */}
@@ -117,7 +117,7 @@ const splitText = (text, maxCharsPerLine) => {
                     position: "absolute",
                     display: "flex",
                     width: "90%",
-                    justifyContent: index === 0 ? "flex-end" : "flex-start",
+                    justifyContent: index === 0 ? "flex-start" : "flex-start",
                     zIndex: 0,
                     textWrap: "nowrap",
                   }}
@@ -141,7 +141,7 @@ const splitText = (text, maxCharsPerLine) => {
                     display: "flex",
                     width: "100%",
                     marginRight: "70px",
-                    justifyContent: index === 0 ? "flex-end" : "flex-start",
+                    justifyContent: index === 0 ? "flex-start" : "flex-start",
                     fontFamily: "Poppins, sans-serif",
                     fontWeight: "100",
                     textWrap: "nowrap"

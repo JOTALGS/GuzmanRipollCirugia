@@ -56,11 +56,11 @@ export default function IntroHome() {
           justifyContent: 'start',
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: '-3px'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: '', letterSpacing: '-3px'}}>
           Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: '-3px' }}>inteligente</Typography>, 
         </Typography>
 
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%',color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
           conexión humana
         </Typography>
       </Box>
@@ -79,7 +79,7 @@ export default function IntroHome() {
         }}
       >
         <Box sx={{  width: '15px', height: '15px', backgroundColor: '#0081C7', borderRadius: '100%' }}/>
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '20px', md: '35px' }} sx={{ width: '90%',color: 'textPrimary', textTransform: 'capitalize' , letterSpacing: '-1px'}}>
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '20px', md: '35px' }} sx={{ width: '90%',color: 'textSecondary', textTransform: 'capitalize' , letterSpacing: '-1px'}}>
           + 400 intervenciones exitosas
         </Typography>
       </Box>

@@ -62,7 +62,7 @@ export default function Conexion() {
     <>
       <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 7' },
-          gridRow: '6 / 6',
+          gridRow: '8 / 8',
           padding: "50px",
           paddingRight: "150px",
           zIndex: 1,
@@ -88,7 +88,7 @@ export default function Conexion() {
 
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '7 / 13' },
-          gridRow: '6 / 6',
+          gridRow: '8 / 8',
           zIndex: 1,
         }}>
           {/* Human Connection Section */}
@@ -105,7 +105,7 @@ export default function Conexion() {
                       <Typography variant="body1" sx={pointNumberStyle}>
                         0{index + 1}.
                       </Typography>
-                      <Box sx={{ padding: "30px", paddingRight: "200px", paddingTop: "0px" }}>
+                      <Box sx={{ padding: "30px", paddingRight: { xs: "0px", md: "200px"}, paddingTop: "0px" }}>
                         <Typography variant="h3" sx={pointTitleStyle}>
                           {point.title}
                         </Typography>
@@ -124,11 +124,11 @@ export default function Conexion() {
 
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
-          gridRow: '7 / 7',
+          gridRow: '9 / 9',
           zIndex: 1
         }}>
           {/* Full-width Video Section */}
-          <Box sx={{ mt: 4, mb: 10, ml: "calc(-70px + 1vw)", borderRadius: 1, overflow: "visible" }}>
+          <Box zIndex={100} sx={{ mt: 4, mb: 10, ml: { xs: "-10px", md: "calc(-70px + 1vw)"}, borderRadius: 1, overflow: "visible" }}>
             <img
               src="/images/unnamed.png"
               alt="Dr. Guzman Ripoll"

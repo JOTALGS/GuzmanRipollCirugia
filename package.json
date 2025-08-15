@@ -14,18 +14,19 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
+    "@radix-ui/react-slot": "^1.2.3",
     "@studio-freight/lenis": "^1.0.42",
     "@studio-freight/react-lenis": "^0.0.47",
-    "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
-    "framer-motion": "^12.23.7",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.7",
     "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
     "react": "^19.0.0",
-    "tailwind-merge": "^3.3.1",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "styled-components": "^6.1.19",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

@@ -178,7 +178,18 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
 
 
   return (
-    <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "#fff" }}>
+    <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "#fff",
+              ':after': {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                right: -120,
+    
+                width: "100vw",
+                height: "100vh",
+                background: "white",
+                zIndex: -1
+              } }}>
       <Box ref={resultadosTitleRef} sx={{ 
         mb: 4, 
         display: "flex", 

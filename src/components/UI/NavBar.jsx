@@ -96,28 +96,30 @@ export default function NavBar() {
 
   // Animación del underline con efecto custom
   useEffect(() => {
-    if (active === "Contacto") {
-      // Para Contacto, calcular posición independiente
-      const contactEl = document.querySelector('[data-link="Contacto"]')
-      if (contactEl) {
-        const rect = contactEl.getBoundingClientRect()
-        const navRect = contactEl.closest('nav').getBoundingClientRect()
-        setUnderline({ 
-          width: contactEl.offsetWidth, 
-          left: contactEl.offsetLeft - navRect.left
-        })
-      }
-    } else {
-      // Para menú principal
-      const activeEl = navRef.current?.querySelector(`[data-link="${active}"]`)
-      if (activeEl) {
-        setUnderline({ 
-          width: activeEl.offsetWidth, 
-          left: activeEl.offsetLeft 
-        })
+    if (!isMobile) { // Solo aplicar underline en desktop
+      if (active === "Contacto") {
+        // Para Contacto, calcular posición independiente
+        const contactEl = document.querySelector('[data-link="Contacto"]')
+        if (contactEl) {
+          const rect = contactEl.getBoundingClientRect()
+          const navRect = contactEl.closest('nav').getBoundingClientRect()
+          setUnderline({ 
+            width: contactEl.offsetWidth, 
+            left: contactEl.offsetLeft - navRect.left
+          })
+        }
+      } else {
+        // Para menú principal
+        const activeEl = navRef.current?.querySelector(`[data-link="${active}"]`)
+        if (activeEl) {
+          setUnderline({ 
+            width: activeEl.offsetWidth, 
+            left: activeEl.offsetLeft 
+          })
+        }
       }
     }
-  }, [active])
+  }, [active, isMobile])
 
   // Smooth scroll con Lenis
   const lenis = useLenis()
@@ -139,213 +141,347 @@ export default function NavBar() {
     zIndex: 50,
     width: '100%',
     backgroundColor: 'transparent',
-    mixBlendMode: 'difference', // Efecto de inversión automático
+    mixBlendMode: isMenuOpen && isMobile ? 'normal' : 'difference', // Normal en menú móvil abierto
     color: 'white' // Color base blanco que se invierte automáticamente
   }
 
+  // Prevenir scroll cuando el menú está abierto
+  useEffect(() => {
+    if (isMenuOpen && isMobile) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMenuOpen, isMobile])
+
   return (
-    <header style={navbarStyle}>
-      <Box component="nav" sx={{
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        alignItems: 'center',
-        gap: '20px',
-        paddingLeft: { xs: '20px', md: '70px'},
-        paddingRight: { xs: '20px', md: '70px'},
-        paddingTop: '12px',
-        paddingBottom: '12px',
-        fontFamily: 'Poppins, sans-serif',
-        fontWeight: '400', // Poppins Medium
-        fontSize: '18px',
-        lineHeight: '17.28px',
-        letterSpacing: '-0.54px'
-      }}>
-        
-        {/* Logo - Columnas 1-2 */}
-        <Box sx={{ 
-          gridColumn: { xs: '1 / 3', md: '1 / 3'},
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <Link to="/" style={{ 
-            display: 'flex', 
-            alignItems: 'center',
-            textDecoration: 'none'
-          }}>
-            {/* Logo que cambia según el fondo */}
-            <img 
-              src={isDarkBackground ? "/images/GR_6_Iso+Nombre_Blanco.png" : "/images/GR_6_Iso+Nombre.png"}
-              alt="Guzmán Ripoll Logo" 
-              style={{ 
-                height: 'auto',
-                width: 'auto',
-                maxHeight: '40px'
-              }}
-            />
-          </Link>
-        </Box>
-
-        {/* Hora - Alineada al inicio de Columna 4 */}
-        <Box sx={{
-          gridColumn: { xs: '6 / 10', md: '4 / 6' },
-          display: 'flex',
-          justifyContent: { xs: 'flex-center', md: 'flex-start' },
+    <>
+      <header style={navbarStyle}>
+        <Box component="nav" sx={{
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
           alignItems: 'center',
-          color: 'inherit'
+          gap: '20px',
+          paddingLeft: { xs: '20px', md: '70px'},
+          paddingRight: { xs: '20px', md: '70px'},
+          paddingTop: '12px',
+          paddingBottom: '12px',
+          fontFamily: 'Poppins, sans-serif',
+          fontWeight: '400',
+          fontSize: '18px',
+          lineHeight: '17.28px',
+          letterSpacing: '-0.54px'
         }}>
-          <span>
-            {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
-          </span>
-        </Box>
-
-        {/* Navegación Principal con comas - Columna 7-10 */}
-        <div style={{
-          gridColumn: '7 / 11',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center'
-        }}>
-          <div ref={navRef} style={{
-            position: 'relative',
+          {/* Logo - Columnas 1-2 */}
+          <Box sx={{ 
+            gridColumn: { xs: '1 / 7', md: '1 / 3'},
             display: 'flex',
             alignItems: 'center'
           }}>
-            {menuLinks.map((link, index) => (
-              <React.Fragment key={link.name}>
-                <Link
-                  to={link.path}
-                  data-link={link.name}
-                  onClick={(e) => onNavClick(e, link.path)}
-                  style={{
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    position: 'relative',
-                    fontFamily: 'Poppins, sans-serif',
-                    fontWeight: '400', // Poppins Medium
-                    fontSize: '18px',
-                    lineHeight: '17.28px',
-                    letterSpacing: '-0.54px',
-                    transition: 'opacity 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = '0.7'}
-                  onMouseLeave={(e) => e.target.style.opacity = '1'}
-                >
-                  {link.name}
-                </Link>
-                {/* Comas separadoras */}
-                {index < menuLinks.length - 1 && (
-                  <span style={{
-                    color: 'inherit',
-                    marginLeft: '0px',
-                    marginRight: '8px',
-                  }}>,</span>
-                )}
-              </React.Fragment>
-            ))}
-            
-            {/* Underline animado para menú principal */}
-            <AnimatePresence mode="wait">
-              {menuLinks.some(link => link.name === active) && (
-                <motion.div
-                  key={active}
-                  style={{
-                    position: 'absolute',
-                    bottom: '-8px',
-                    height: '2px',
-                    backgroundColor: 'currentColor',
-                    left: underline.left,
-                    width: underline.width
-                  }}
-                  initial={{ 
-                    width: 0, 
-                    x: '-100%',
-                    opacity: 0 
-                  }}
-                  animate={{ 
-                    width: underline.width, 
-                    x: 0,
-                    opacity: 1 
-                  }}
-                  exit={{ 
-                    width: 0, 
-                    x: '100%',
-                    opacity: 0 
-                  }}
-                  transition={{ 
-                    duration: 0.3, 
-                    ease: "easeInOut" 
-                  }}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Contacto - Separado al final */}
-        <div style={{
-          gridColumn: '12 / 13',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center'
-        }}>
-          <div style={{ position: 'relative' }}>
-            <Link
-              to="/contacto"
-              data-link="Contacto"
-              style={{
-                color: 'inherit',
-                textDecoration: 'none',
-                fontFamily: 'Poppins, sans-serif',
-                fontWeight: '400', // Poppins Medium
-                fontSize: '18px',
-                lineHeight: '17.28px',
-                letterSpacing: '-0.54px',
-                transition: 'opacity 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.opacity = '0.7'}
-              onMouseLeave={(e) => e.target.style.opacity = '1'}
-            >
-              Contacto
+            <Link to="/" style={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              textDecoration: 'none'
+            }}>
+              <img 
+                src={isDarkBackground || (isMenuOpen && isMobile) ? "/images/GR_6_Iso+Nombre_Blanco.png" : "/images/GR_6_Iso+Nombre.png"}
+                alt="Guzmán Ripoll Logo" 
+                style={{ 
+                  height: 'auto',
+                  width: 'auto',
+                  maxHeight: '40px'
+                }}
+              />
             </Link>
-            
-            {/* Underline para Contacto */}
-            <AnimatePresence>
-              {active === "Contacto" && (
-                <motion.div
-                  style={{
-                    position: 'absolute',
-                    bottom: '-8px',
-                    height: '2px',
-                    backgroundColor: 'currentColor',
-                    left: 0,
-                    width: '100%'
-                  }}
-                  initial={{ 
-                    width: 0, 
-                    x: '-100%',
-                    opacity: 0 
-                  }}
-                  animate={{ 
-                    width: '100%', 
-                    x: 0,
-                    opacity: 1 
-                  }}
-                  exit={{ 
-                    width: 0, 
-                    x: '100%',
-                    opacity: 0 
-                  }}
-                  transition={{ 
-                    duration: 0.3, 
-                    ease: "easeInOut" 
-                  }}
-                />
+          </Box>
+
+          {/* Hora - Solo en desktop */}
+          <Box sx={{
+            gridColumn: '4 / 6',
+            display: { xs: 'none', md: 'flex' },
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            color: 'inherit'
+          }}>
+            <span>
+              {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
+            </span>
+          </Box>
+
+          {/* Navegación Principal - Solo en desktop */}
+          <Box sx={{
+            gridColumn: '7 / 11',
+            display: { xs: 'none', md: 'flex' },
+            justifyContent: 'flex-start',
+            alignItems: 'center'
+          }}>
+            <div ref={navRef} style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              {menuLinks.map((link, index) => (
+                <React.Fragment key={link.name}>
+                  <Link
+                    to={link.path}
+                    data-link={link.name}
+                    onClick={(e) => onNavClick(e, link.path)}
+                    style={{
+                      color: 'inherit',
+                      textDecoration: 'none',
+                      position: 'relative',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontWeight: '400',
+                      fontSize: '18px',
+                      lineHeight: '17.28px',
+                      letterSpacing: '-0.54px',
+                      transition: 'opacity 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.7'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                  >
+                    {link.name}
+                  </Link>
+                  {/* Comas separadoras */}
+                  {index < menuLinks.length - 1 && (
+                    <span style={{
+                      color: 'inherit',
+                      marginLeft: '0px',
+                      marginRight: '8px',
+                    }}>,</span>
+                  )}
+                </React.Fragment>
+              ))}
+              
+              {/* Underline animado para menú principal */}
+              <AnimatePresence mode="wait">
+                {menuLinks.some(link => link.name === active) && (
+                  <motion.div
+                    key={active}
+                    style={{
+                      position: 'absolute',
+                      bottom: '-8px',
+                      height: '2px',
+                      backgroundColor: 'currentColor',
+                      left: underline.left,
+                      width: underline.width
+                    }}
+                    initial={{ 
+                      width: 0, 
+                      x: '-100%',
+                      opacity: 0 
+                    }}
+                    animate={{ 
+                      width: underline.width, 
+                      x: 0,
+                      opacity: 1 
+                    }}
+                    exit={{ 
+                      width: 0, 
+                      x: '100%',
+                      opacity: 0 
+                    }}
+                    transition={{ 
+                      duration: 0.3, 
+                      ease: "easeInOut" 
+                    }}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          </Box>
+
+          {/* Contacto - Solo en desktop */}
+          <Box sx={{
+            gridColumn: '12 / 13',
+            display: { xs: 'none', md: 'flex' },
+            justifyContent: 'flex-end',
+            alignItems: 'center'
+          }}>
+            <div style={{ position: 'relative' }}>
+              <Link
+                to="/contacto"
+                data-link="Contacto"
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontWeight: '400',
+                  fontSize: '18px',
+                  lineHeight: '17.28px',
+                  letterSpacing: '-0.54px',
+                  transition: 'opacity 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.opacity = '0.7'}
+                onMouseLeave={(e) => e.target.style.opacity = '1'}
+              >
+                Contacto
+              </Link>
+              
+              {/* Underline para Contacto */}
+              <AnimatePresence>
+                {active === "Contacto" && (
+                  <motion.div
+                    style={{
+                      position: 'absolute',
+                      bottom: '-8px',
+                      height: '2px',
+                      backgroundColor: 'currentColor',
+                      left: 0,
+                      width: '100%'
+                    }}
+                    initial={{ 
+                      width: 0, 
+                      x: '-100%',
+                      opacity: 0 
+                    }}
+                    animate={{ 
+                      width: '100%', 
+                      x: 0,
+                      opacity: 1 
+                    }}
+                    exit={{ 
+                      width: 0, 
+                      x: '100%',
+                      opacity: 0 
+                    }}
+                    transition={{ 
+                      duration: 0.3, 
+                      ease: "easeInOut" 
+                    }}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          </Box>
+
+          {/* Hamburger Menu - Solo en móvil */}
+          <Box sx={{
+            gridColumn: '11 / 13',
+            display: { xs: 'flex', md: 'none' },
+            justifyContent: 'flex-end',
+            alignItems: 'center'
+          }}>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: isMenuOpen ? 'white' : 'inherit'
+              }}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <CloseIcon sx={{ fontSize: 28 }} />
+              ) : (
+                <MenuIcon sx={{ fontSize: 28 }} />
               )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </Box>
-    </header>
+            </button>
+          </Box>
+        </Box>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && isMobile && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100vh',
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+              zIndex: 49,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: '80px'
+            }}
+          >
+            {/* Hora en móvil */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              style={{
+                color: 'white',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: '14px',
+                marginBottom: '40px',
+                opacity: 0.7
+              }}
+            >
+              {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
+            </motion.div>
+
+            {/* Links del menú móvil */}
+            <nav style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '30px'
+            }}>
+              {[...menuLinks, { name: "Contacto", path: "/contacto" }].map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
+                  <Link
+                    to={link.path}
+                    onClick={(e) => onNavClick(e, link.path)}
+                    style={{
+                      color: 'white',
+                      textDecoration: 'none',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontWeight: '500',
+                      fontSize: '24px',
+                      letterSpacing: '-0.5px',
+                      position: 'relative',
+                      display: 'inline-block'
+                    }}
+                  >
+                    {link.name}
+                    {active === link.name && (
+                      <motion.div
+                        layoutId="mobile-underline"
+                        style={{
+                          position: 'absolute',
+                          bottom: '-4px',
+                          left: 0,
+                          right: 0,
+                          height: '2px',
+                          backgroundColor: 'white'
+                        }}
+                        initial={{ width: 0 }}
+                        animate={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

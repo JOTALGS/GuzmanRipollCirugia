@@ -55,13 +55,16 @@ export function GridDebugger({
     return null
   }
 
+  // Detectar si es móvil
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+
   // Generar las clases CSS dinámicamente
   const containerStyle = {
     maxWidth,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    gap,
-    gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    paddingLeft: isMobile ? "15px" : paddingX,
+    paddingRight: isMobile ? "15px" : paddingX,
+    gap: isMobile ? "20px" : gap,
+    gridTemplateColumns: `repeat(${isMobile ? 4 : columns}, 1fr)`,
     zIndex,
   }
 
@@ -78,9 +81,9 @@ export function GridDebugger({
           style={containerStyle}
         >
           {/* Genera las columnas visuales */}
-          {Array.from({ length: columns }).map((_, i) => (
-            <div 
-              key={i} 
+          {Array.from({ length: isMobile ? 4 : columns }).map((_, i) => (
+            <div
+              key={i}
               className={`h-full w-full ${columnColor}`}
             />
           ))}
@@ -88,11 +91,11 @@ export function GridDebugger({
       </div>
 
       {/* Indicador visual en la esquina */}
-      <div 
+      <div
         className="pointer-events-none fixed top-4 left-4 rounded bg-black/80 px-3 py-2 text-white text-sm font-mono"
         style={{ zIndex: zIndex + 1 }}
       >
-        Grid Debug: {columns} cols | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
+        Grid Debug: {isMobile ? '4' : columns} cols | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
       </div>
     </>
   )

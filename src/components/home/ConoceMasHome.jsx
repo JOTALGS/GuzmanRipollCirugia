@@ -1,5 +1,5 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 import LightenText from "../magicText/LightenText";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,37 +7,8 @@ import { styled } from "@mui/material/styles";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Componente para texto con sangría en la primera línea
-function IndentedLightenText({ homeText, indent, ...props }) {
-  const containerRef = useRef(null);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Aplicar sangría calculada por CSS variables
-    const firstLineWrapper = containerRef.current.querySelector('div[style*="text-align: left"]:first-child');
-    if (firstLineWrapper) {
-      // Aplicar sangría directamente al wrapper de la primera línea
-      firstLineWrapper.style.marginLeft = indent;
-      
-      // MANUAL CONTROL: Ajuste manual para empezar en la tercera columna
-      // Para mover más a la derecha, descomenta y ajusta el valor:
-      // firstLineWrapper.style.marginLeft = 'calc(4 * var(--col-width) + 3 * var(--gutter-width))';
-      // Para columna 5: 'calc(5 * var(--col-width) + 4 * var(--gutter-width))'
-      // Para columna 6: 'calc(6 * var(--col-width) + 5 * var(--gutter-width))'
-      
-      // No necesitamos ajustar el overlay ya que se hereda el margen
-    }
-  }, [homeText, indent]);
-
-  return (
-    <Box ref={containerRef}>
-      <LightenText homeText={homeText} {...props} />
-    </Box>
-  );
-}
-
-// Estilos para el borde animado (se mantienen igual)
+// Estilos para el borde animado
 const AnimatedBorderBox = styled(Box)(({ theme }) => ({
   position: "relative",
   paddingBottom: "5px",
@@ -76,15 +47,9 @@ const AnimatedBorderBox = styled(Box)(({ theme }) => ({
 
 export default function ConoceMasHome() {
   const conoceMasText = `
-Somos una clínica especializada en
-cirugía plástica. Nuestra experiencia refinada
-reside en canalizar el deseo, desde la seguridad
-corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.
+Somos una clínica especializada en cirugía plástica. Nuestra experiencia refinada reside en canalizar el deseo, desde la seguridad corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.
 
-A lo largo del tiempo, nos hemos convertido en
-expertos en traducir el deseo en confianza,
-combinando precisión tecnológica con un
-cuidado humano excepcional.
+A lo largo del tiempo, nos hemos convertido en expertos en traducir el deseo en confianza, combinando precisión tecnológica con un cuidado humano excepcional.
   `;
 
   useEffect(() => {
@@ -129,17 +94,17 @@ cuidado humano excepcional.
         backgroundColor: "background.default",
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "15px", md: "70px" },
-        columnGap: { xs: "25px", md: "17px" },
+        columnGap: { xs: "20px", md: "20px" },
         "& > section": { gridColumn: "1 / -1" }
       }}
     >
-      {/* CTA derecha */}
+      {/* CTA derecha - OCULTO EN MÓVIL */}
       <Box
         sx={{
           mt: "20px",
           gridColumn: { xs: "8 / 13", md: "11 / 13" },
           gridRow: "1 / 2",
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           alignItems: "start",
           justifyContent: "end"
         }}
@@ -150,7 +115,7 @@ cuidado humano excepcional.
               <Typography
                 color="#000000"
                 fontFamily={"Poppins"}
-                fontSize={{ xs: "15px", md: "18px" }}
+                fontSize={{ xs: "15px", md: "16px" }}
                 sx={{ textTransform: "uppercase" }}
               >
                 Ver nuestros servicios
@@ -175,8 +140,8 @@ cuidado humano excepcional.
           backdropFilter: "blur(10px)",
           background: "rgba(255, 255, 255, 0.1)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-          height: "340px"
+          boxShadow: "4 8px 6px 0 rgba(31, 38, 135, 0.37)",
+          height: "180px"
         }}
       >
         <img
@@ -191,13 +156,13 @@ cuidado humano excepcional.
         />
       </Box>
 
-      {/* Breadcrumb izquierda */}
+      {/* Breadcrumb izquierda - OCULTO EN MÓVIL */}
       <Box
         sx={{
           mt: "20px",
           gridColumn: "1 / 2",
           gridRow: "1 / 2",
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           alignItems: { xs: "center", md: "start" },
           justifyContent: "start"
         }}
@@ -205,43 +170,46 @@ cuidado humano excepcional.
         <Typography
           color="#000000"
           fontFamily={"Poppins"}
-          fontSize={"18px"}
+          fontSize={"16px"}
           sx={{ textTransform: "uppercase" }}
         >
           Clínica
         </Typography>
       </Box>
 
-      {/* Texto con sangría */}
+      {/* Texto con sangría - CORREGIDO */}
       <Box
         sx={{
-          gridColumn: { xs: "1 / 13", md: "1 / 12" },
+          gridColumn: { xs: "1 / 13", md: "1 / 13" },
           gridRow: "2 / 3"
         }}
       >
         <Box
-          component="section"
-          sx={{
-            py: 8,
-            backgroundColor: "#fff",
-            position: "relative",
-            // Calcular el ancho de 3 columnas + 3 gutters para la sangría
-            "--col-width": "calc((100% - 11 * 17px) / 12)",
-            "--gutter-width": "17px",
-            "--indent-width": "calc(3 * var(--col-width) + 2 * var(--gutter-width))",
-            
-            // Ajustes para móvil
-            "@media (max-width: 768px)": {
-              "--col-width": "calc((100% - 11 * 25px) / 12)",
-              "--gutter-width": "25px"
-            }
-          }}
-        >
-          <IndentedLightenText 
-            homeText={conoceMasText} 
-            indent={'var(--indent-width)'} 
-          />
-        </Box>
+  component="section"
+  sx={{
+    py: 8,
+    backgroundColor: "#fff",
+    position: "relative",
+    "--col-width": "calc((100% - 11 * 20px) / 12)",
+    "--gutter-width": "20px",
+    "--indent-width":
+      "calc(3 * var(--col-width) + 3 * var(--gutter-width))",
+
+    textIndent: "var(--indent-width)", // 👈 ahora sí funciona
+
+    "@media (max-width: 768px)": {
+      "--col-width": "calc((100% - 11 * 20px) / 12)",
+      "--gutter-width": "20px",
+      "--indent-width": "0px",
+      textIndent: "0px",
+    },
+    width: "100%",
+    maxWidth: "100%",
+  }}
+>
+  <LightenText homeText={conoceMasText} />
+</Box>
+
       </Box>
     </Box>
   );

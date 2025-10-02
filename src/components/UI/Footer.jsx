@@ -28,10 +28,10 @@ const Footer = () => {
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', md: 'repeat(12, 1fr)' },
           mx: { xs: '15px', md: '70px' },
-          gap: { xs: '30px', md: '20px' },
+          gap: { xs: '32px', md: '20px' }, // Proporción áurea para móvil
           backgroundColor: '#000',
           color: '#fff',
-          py: { xs: 6, md: 8 },
+          py: { xs: '48px', md: 8 }, // Proporción áurea 48px móvil
         }}
       >
         <Box sx={{
@@ -41,11 +41,22 @@ const Footer = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'start',
+          gap: { xs: '24px', md: '12px' }, // Proporción áurea spacing
         }}>
-          <Box sx={{ display: 'flex', width: { xs: '100%', md: '100%'}, textAlign: 'start', flexDirection: 'column', alignItems: 'center', marginBottom: '12px' }}>
-            <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '55px' }} sx={{ width: '100%', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' }}}>
-              Lista para 
-              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '55px' }} sx={{ color: 'textAccent', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' } }}>
+          <Box sx={{ display: 'flex', width: '100%', textAlign: 'start', flexDirection: 'column' }}>
+            <Typography
+              color="white"
+              fontFamily={'Poppins'}
+              fontSize={{ xs: '32px', sm: '36px', md: '45px', xl: '55px' }}
+              sx={{ width: '100%', letterSpacing: { xs: '-1.5px', md: '-3px' }, lineHeight: { xs: 1.2, md: 1.1 } }}
+            >
+              Lista para
+              <Typography
+                component="span"
+                fontFamily={'Poppins'}
+                fontSize={{ xs: '32px', sm: '36px', md: '45px', xl: '55px' }}
+                sx={{ color: 'textAccent', letterSpacing: { xs: '-1.5px', md: '-3px' } }}
+              >
                 {' '}Renovar
               </Typography>
               <br />
@@ -63,11 +74,12 @@ const Footer = () => {
               color: '#000',
               borderRadius: '4px',
               textTransform: 'none',
-              py: 1,
-              px: 3,
+              py: { xs: 1.5, md: 1 },
+              px: { xs: 4, md: 3 },
+              fontSize: { xs: '16px', md: '14px' },
               '&:hover': { backgroundColor: '#E0E0E0' },
             }}
-            >
+          >
             Agendate
           </Button>
         </Box>
@@ -86,15 +98,17 @@ const Footer = () => {
                 <Box
                   sx={{
                     display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
                     justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    mb: 3,
+                    alignItems: { xs: 'flex-start', md: 'flex-start' },
+                    gap: { xs: '12px', md: 0 },
+                    mb: { xs: '24px', md: 3 },
                   }}
                 >
-                  <Typography variant="subtitle1" sx={{ fontSize: { xs: '14px', md: '16px' } }}>
+                  <Typography variant="subtitle1" sx={{ fontSize: { xs: '15px', md: '16px' }, lineHeight: 1.4 }}>
                     Agenda tu consulta y descubrí cómo podemos renovar tu vida.
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#B0B0B0', fontSize: { xs: '12px', md: '14px' } }}>
+                  <Typography variant="caption" sx={{ color: '#B0B0B0', fontSize: { xs: '13px', md: '14px' } }}>
                     *Campos Requeridos
                   </Typography>
                 </Box>
@@ -141,7 +155,9 @@ const Footer = () => {
                       sx: { color: '#fff' },
                     }}
                     sx={{
-                      mb: 3,
+                      mb: { xs: '20px', md: 3 },
+                      '& .MuiInputLabel-root': { fontSize: { xs: '14px', md: '16px' } },
+                      '& .MuiInputBase-input': { fontSize: { xs: '15px', md: '16px' } },
                       '& .MuiInput-underline:before': { borderBottomColor: '#555' },
                       '&:hover .MuiInput-underline:before': { borderBottomColor: '#777' },
                       '& .MuiInput-underline:after': { borderBottomColor: '#60A5FA' },
@@ -169,7 +185,9 @@ const Footer = () => {
                     sx: { color: '#fff' },
                   }}
                   sx={{
-                    mb: 4,
+                    mb: { xs: '24px', md: 4 },
+                    '& .MuiInputLabel-root': { fontSize: { xs: '14px', md: '16px' } },
+                    '& .MuiInputBase-input': { fontSize: { xs: '15px', md: '16px' } },
                     '& .MuiInput-underline:before': { borderBottomColor: '#555' },
                     '&:hover .MuiInput-underline:before': { borderBottomColor: '#777' },
                     '& .MuiInput-underline:after': { borderBottomColor: '#60A5FA' },
@@ -189,7 +207,8 @@ const Footer = () => {
                     color: '#000',
                     borderRadius: '4px',
                     textTransform: 'none',
-                    py: 1.5,
+                    py: { xs: 1.5, md: 1.5 },
+                    fontSize: { xs: '16px', md: '15px' },
                     fontWeight: 'bold',
                     '&:hover': { backgroundColor: '#E0E0E0' },
                   }}
@@ -208,10 +227,10 @@ const Footer = () => {
           {/* Top Hero + Form */}
           
 
-          <Divider sx={{ borderColor: '#333', my: 6 }} />
+          <Divider sx={{ borderColor: '#333', my: { xs: '32px', md: 6 } }} />
 
           {/* Nav Links */}
-          <Grid container spacing={2.5} sx={{ fontSize: '0.875rem' }}>
+          <Grid container spacing={{ xs: 3, md: 2.5 }} sx={{ fontSize: '0.875rem' }}>
             {/* DESCUBRÍ */}
             <Grid item xs={12} sm={6} md={3}>
               <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
@@ -288,9 +307,11 @@ const Footer = () => {
           <Box
             sx={{
               display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
               justifyContent: 'space-between',
-              alignItems: 'center',
-              mt: 6,
+              alignItems: { xs: 'flex-start', md: 'center' },
+              gap: { xs: '20px', md: 0 },
+              mt: { xs: '32px', md: 6 },
             }}
           >
             {/* Logo + Name */}
@@ -334,11 +355,11 @@ const Footer = () => {
             </MuiLink>
 
             {/* Copyright */}
-            <Box display="flex" gap={4}>
-              <Typography variant="caption" sx={{ color: '#B0B0B0' }}>
+            <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={{ xs: 1, md: 4 }}>
+              <Typography variant="caption" sx={{ color: '#B0B0B0', fontSize: { xs: '13px', md: '12px' } }}>
                 Todos los Derechos Reservados.
               </Typography>
-              <Typography variant="caption" sx={{ color: '#B0B0B0' }}>
+              <Typography variant="caption" sx={{ color: '#B0B0B0', fontSize: { xs: '13px', md: '12px' } }}>
                 Copyright ©2025 Guzman Ripoll
               </Typography>
             </Box>

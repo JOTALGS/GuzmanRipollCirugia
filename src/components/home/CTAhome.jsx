@@ -93,7 +93,7 @@ export default function CTAhome() {
           justifyContent: 'start',
         }}
       >
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '12px',md: '15px' , xl: '20px' }} sx={{ fontWeight: 'semibold', width: { xs: '70%', md: '40%'}, color: 'background', textTransform: 'uppercase'}}>
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '12px',md: '16px' , xl: '20px' }} sx={{ fontWeight: 'semibold', width: { xs: '70%', md: '40%'}, color: 'background', textTransform: 'uppercase'}}>
           Descubrí como podemos transformar tu vida
         </Typography>
         <div id="left-section">
@@ -104,7 +104,7 @@ export default function CTAhome() {
               paddingTop: "20px",
               fontFamily: "Arimo",
               fontSize: isXs ? "calc(100vw / 25)" : "calc(100vw / 32)",
-              lineHeight: "1",
+              lineHeight: "0.5",
             }}
           >
             <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>

@@ -106,9 +106,14 @@ const splitText = (text) => {
               style={{ textAlign: 'left', overflow: 'hidden' }}
             >
               {/* Base text (grey for lighting effect, dark for no effect) */}
-              <Typography 
+              <Typography
                 variant="p"
-                fontSize={{xs: "18px", sm: "30px", md: "50px", lg: "70px"}}
+                fontSize={{
+                  xs: "32px",  // Móvil - AJUSTAR AQUÍ
+                  sm: "38px",  // Tablet pequeña
+                  md: "50px",  // Desktop
+                  lg: "70px"   // Desktop grande
+                }}
                 className="line"
                 style={{
                   color: disableLightingEffect ? "#01263a" : "#b0b0b0",
@@ -127,9 +132,14 @@ const splitText = (text) => {
 
               {/* Overlay text (dark) - animated - only when lighting effect is enabled */}
               {!disableLightingEffect && (
-                <Typography 
+                <Typography
                   variant="p"
-                  fontSize={{xs: "18px", sm: "30px", md: "50px", lg: "70px"}}
+                  fontSize={{
+                    xs: "32px",  // Móvil - AJUSTAR AQUÍ
+                    sm: "38px",  // Tablet pequeña
+                    md: "50px",  // Desktop
+                    lg: "70px"   // Desktop grande
+                  }}
                   className="line-overlay"
                   style={{
                     color: "#01263a",

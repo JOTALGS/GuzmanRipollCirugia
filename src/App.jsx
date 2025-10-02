@@ -8,6 +8,7 @@ import { ReactLenis } from '@studio-freight/react-lenis';
 import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
 import Resultados from "./pages/Resultados";
+import ProcedimientoDetalle from "./pages/ProcedimientoDetalle";
 
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
@@ -15,15 +16,11 @@ import NavBar from "./components/UI/NavBar";
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
 import Procedimientos from "./pages/Procedimientos";
+import { ContactSection } from "./components/contact/ContactSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Componentes temporales para las rutas que faltan
-const Contact = () => (
-  <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <Typography variant="h4">Página de Contacto - En construcción</Typography>
-  </Box>
-);
 
 const ProcedimientoCero = () => (
   <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -175,8 +172,9 @@ const App = () => {
               <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />
               <Route path="/clinica" element={<Clinica />} />
               <Route path="/procedimientos" element={<Procedimientos toggleTheme={toggleTheme} />} />
+              <Route path="/procedimiento/:id" element={<ProcedimientoDetalle />} />
               <Route path="/resultados" element={<Resultados/>} />
-              <Route path="/contacto" element={<Contact />} />
+              <Route path="/contacto" element={<ContactSection />} />
               <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
             </Routes>
             

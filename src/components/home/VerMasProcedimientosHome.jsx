@@ -19,8 +19,8 @@ export default function VerMasProcedimientosHome() {
         msOverflowStyle: 'none', // IE & Edge (legacy)
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: { xs: '10px', md: '35px' },
-        paddingInline: { xs: '15px', md: '75px' },
+        columnGap: { xs: '10px', md: '20px' },
+        paddingInline: { xs: '15px', md: '70px' },
       }}
     >
       <Box
@@ -209,7 +209,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '1 / 5',
+          gridColumn: { xs: '1 / 5', md: '1 / 5'},
           gridRow: '3 / 4',
           display: 'flex',
           flexDirection: 'column',
@@ -226,24 +226,7 @@ export default function VerMasProcedimientosHome() {
       <Box
         sx={{
           marginTop: '71px',
-          gridColumn: '5 / 9',
-          gridRow: '3 / 4',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'start',
-          justifyContent: 'start',
-        }}
-      >
-        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '90%', objectFit: 'cover' }} />
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
-          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>CIRUGIA MAMARIA</Typography>
-          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          marginTop: '71px',
-          gridColumn: '9 / 13',
+          gridColumn: { xs: '5 / 9', md: '5 / 9'},
           gridRow: '3 / 4',
           display: 'flex',
           flexDirection: 'column',
@@ -252,6 +235,24 @@ export default function VerMasProcedimientosHome() {
         }}
       >
         <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
+          <Typography variant="p" fontSize={{ xs: '14px', md: '20px' }} fontFamily={'Poppins'}>CIRUGIA MAMARIA</Typography>
+          <Typography variant="p" fontSize={{ xs: '12px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          marginTop: '71px',
+          gridColumn: { xs: '9 / 13', md: '9 / 13'},
+          gridRow: '3 / 4',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'start',
+          justifyContent: 'start',
+        }}
+      >
+        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '90%', objectFit: 'cover' }} />
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start', color: '#000000', textAlign: 'start' }}>
           <Typography variant="p" fontSize={{ xs: '10px', md: '20px' }} fontFamily={'Poppins'}>LIPOASPIRACION LÁSER</Typography>
           <Typography variant="p" fontSize={{ xs: '8px', md: '16px' }} fontFamily={'Poppins'}>Bodytite, Morpheus8</Typography>

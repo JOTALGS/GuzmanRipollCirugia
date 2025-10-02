@@ -1,9 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Card, CardContent, Button, IconButton, useTheme, Typography } from "@mui/material";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight"
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
+import { Box, Card, CardContent, Button, useTheme, Typography } from "@mui/material";
 import { useLenis } from "@studio-freight/react-lenis";
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -178,7 +176,7 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
 
 
   return (
-    <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "#fff",
+    <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "white",
               ':after': {
                 content: '""',
                 position: "absolute",
@@ -199,20 +197,6 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
         <Typography variant="h2" sx={sectionTitleStyle}>
           RESULTADOS
         </Typography>
-        <Box>
-          <IconButton
-            onClick={() => document.querySelector(".results-carousel .slick-prev")?.click()}
-            sx={{ color: "text.primary" }}
-          >
-            <ArrowLeftIcon />
-          </IconButton>
-          <IconButton
-            onClick={() => document.querySelector(".results-carousel .slick-next")?.click()}
-            sx={{ color: "text.primary", ml: 1 }}
-          >
-            <ArrowRightIcon />
-          </IconButton>
-        </Box>
       </Box>
       <Box component="section" sx={{ 
         width: '100%',
@@ -233,7 +217,6 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                 gap: '16px',
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': { display: 'none' },
-                ml: '-8px',
                 py: 1,
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none'
@@ -244,9 +227,8 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                   key={index} 
                   onClick={handleCardClick}
                   sx={{
-                    minWidth: "500px",
+                    minWidth: "700px",
                     maxHeight: '1000px',
-                    pl: '16px',
                     flexShrink: 0
                   }}
                 >
@@ -259,8 +241,8 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                     }}>
                       <CardContent sx={{ 
                         position: 'relative',
-                        width: '600px',
-                        height: '500px',
+                        width: '700px',
+                        height: '600px',
                         p: 0
                       }}>
                         <img 

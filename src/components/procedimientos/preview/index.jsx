@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -260,6 +261,8 @@ export default function Home() {
               </Box>
               
               <MoreButton 
+                component={RouterLink}
+                to={`/procedimiento/${procedure.number}`}
                 endIcon={<ArrowForwardIcon />}
                 sx={{
                   backgroundColor: '#F5F5F5',
@@ -271,7 +274,7 @@ export default function Home() {
                   '&:hover': { backgroundColor: '#E0E0E0' },
                 }}
               >
-                More
+                Ver Más
               </MoreButton>
             </Box>
           </Box>

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Box, Typography } from '@mui/material';
 
 const TestimoniosCarousel = () => {
@@ -13,44 +12,40 @@ const TestimoniosCarousel = () => {
 
   const testimonios = [
     {
-      author: "María Rodríguez",
-      date: "15 Mayo 2023",
+      author: "Ignacio Espeche",
       testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Carlos Martínez",
-      date: "28 Junio 2023",
-      testimonio: "Una experiencia transformadora. La atención personalizada y el profesionalismo del equipo superaron todas mis expectativas. Recomiendo ampliamente sus servicios."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Laura González",
-      date: "3 Julio 2023",
-      testimonio: "Desde el primer momento me sentí en las mejores manos. El Dr. Ripoll y su equipo demuestran un nivel de excelencia y calidez humana incomparable."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Javier Sánchez",
-      date: "12 Agosto 2023",
-      testimonio: "Profesionalismo excepcional combinado con un trato humano extraordinario. Los resultados superaron mis expectativas y el seguimiento post-tratamiento fue impecable."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Ana López",
-      date: "5 Septiembre 2023",
-      testimonio: "La confianza que transmite el Dr. Ripoll es única. Todo el proceso fue transparente y el equipo estuvo pendiente de cada detalle. Estoy muy satisfecha."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "David Fernández",
-      date: "19 Octubre 2023",
-      testimonio: "Una experiencia que recordaré por mucho tiempo. Profesionales, amables y con un toque personal que hace la diferencia."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Sofía Pérez",
-      date: "2 Noviembre 2023",
-      testimonio: "Me sentí como en casa pero con un toque de lujo. Cada detalle cuidadosamente planeado. Definitivamente mi nueva opción favorita."
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     },
     {
-      author: "Miguel Torres",
-      date: "14 Diciembre 2023",
-      testimonio: "Excelencia en cada aspecto. Desde la comunicación inicial hasta la ejecución final, todo fue perfecto. ¡Absolutamente recomendado!"
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
+    },
+    {
+      author: "Ignacio Espeche",
+      testimonio: "Excelente el Dr. Ripoll, en todo momento me hizo sentir seguro, explicándome paso a paso. El equipo del Dr. dando apoyo en el pre y postoperatorio, muy atentos y cuidadosos."
     }
   ];
 
@@ -147,20 +142,29 @@ const TestimoniosCarousel = () => {
     return -offset;
   };
 
-  // Progress bar calculation
-  const progress = ((currentIndex + 1) / (maxIndex + 1)) * 100;
+  // Progress bar calculation - ultra smooth and perfect loading
+  const getProgressWidth = () => {
+    const totalSlides = maxIndex + 1;
+    const currentProgress = currentIndex / Math.max(totalSlides - 1, 1);
+    return Math.min(currentProgress * 100, 100);
+  };
+  
+  const progress = getProgressWidth();
 
   return (
-    <Box sx={{ marginInline: { xs: 'auto', md: '40px' }, padding: { xs: '12px', md: '32px' }, width: { xs: '80%', md: '100%'} }} style={{minHeight: '100vh', backgroundColor: 'white'}}>
+    <Box sx={{ marginInline: { xs: '10px', md: '70px' }, padding: { xs: '20px 5px', md: '32px' }, width: 'auto' }} style={{minHeight: '100vh', backgroundColor: 'white'}}>
       {/* Header */}
       <Box sx={{ display: 'flex', width: { xs: '100%', md: '50%'}, textAlign: 'start', flexDirection: 'column', alignItems: 'center', marginBottom: '32px' }}>
-        <Typography color="black" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: '-3px'}}>
-          <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '70px' }} sx={{ color: 'textAccent', textTransform: '', letterSpacing: '-3px' }}>
+        <Typography color="black" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' }}}>
+          <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '70px' }} sx={{ color: '#75909F', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' } }}>
             Confianza {" "}
           </Typography>
-          en cada testimonio. 
+          en cada
         </Typography>
-        <Typography sx={{ width: '100%' }} style={{ textAlign: 'start', fontSize: '20px', color: '#4B5563' }}>
+        <Typography color="black" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '70px' }} sx={{ width: '100%', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' }}}>
+          Testimonio.
+        </Typography>
+        <Typography sx={{ width: '100%', fontSize: { xs: '16px', md: '20px' } }} style={{ textAlign: 'start', color: '#4B5563' }}>
           Garantizamos confianza, cercanía y un toque humano en cada tratamiento.
         </Typography>
       </Box>
@@ -187,7 +191,7 @@ const TestimoniosCarousel = () => {
             ref={carouselRef}
             style={{ 
               display: 'flex',
-              transition: isDragging ? 'none' : 'transform 0.3s ease-out',
+              transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
               transform: `translateX(${getTransformValue()}px)`,
               cursor: isDragging ? 'grabbing' : 'grab',
               userSelect: 'none'
@@ -204,15 +208,17 @@ const TestimoniosCarousel = () => {
               >
                 <div 
                   style={{
-                    height: '450px',
+                    height: window.innerWidth < 768 ? '280px' : '350px',
                     borderRadius: '16px',
-                    padding: '32px',
+                    padding: window.innerWidth < 768 ? '16px' : '24px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                    backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 255, 0.4))',
-                    border: '1px solid rgba(255, 255, 255, 0.8)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
                     transition: 'all 0.3s ease',
                     position: 'relative'
                   }}
@@ -222,20 +228,21 @@ const TestimoniosCarousel = () => {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   {/* Quote */}
                   <div style={{ flex: 1, overflow: 'hidden' }}>
-                    <div style={{ fontSize: '36px', color: '#93C5FD', marginBottom: '8px' }}>"</div>
                     <p style={{ 
-                      fontSize: '18px',
-                      color: '#1F2937',
-                      lineHeight: '1.6',
+                      fontSize: window.innerWidth < 768 ? '14px' : '16px',
+                      color: '#000000',
+                      lineHeight: '1.5',
                       display: '-webkit-box',
-                      WebkitLineClamp: 6,
+                      WebkitLineClamp: window.innerWidth < 768 ? 6 : 8,
                       WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      margin: 0,
+                      fontFamily: 'Poppins'
                     }}>
                       {testimonio.testimonio}
                     </p>
@@ -243,24 +250,18 @@ const TestimoniosCarousel = () => {
                   
                   {/* Author */}
                   <div style={{ 
-                    textAlign: 'center',
+                    textAlign: 'left',
                     marginTop: '24px',
-                    paddingTop: '24px',
-                    borderTop: '1px solid #E5E7EB'
+                    paddingTop: '0px'
                   }}>
                     <p style={{ 
-                      fontWeight: '600',
-                      fontSize: '20px',
-                      color: '#111827',
-                      marginBottom: '4px'
+                      fontWeight: '400',
+                      fontSize: window.innerWidth < 768 ? '14px' : '16px',
+                      color: '#000000',
+                      marginBottom: '0px',
+                      fontFamily: 'Poppins'
                     }}>
                       {testimonio.author}
-                    </p>
-                    <p style={{ 
-                      fontSize: '14px',
-                      color: '#6B7280'
-                    }}>
-                      {testimonio.date}
                     </p>
                   </div>
                 </div>
@@ -269,80 +270,6 @@ const TestimoniosCarousel = () => {
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <button
-          onClick={handlePrevious}
-          disabled={currentIndex === 0}
-          style={{
-            position: 'absolute',
-            left: '-20px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            width: '48px',
-            height: '48px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid #E5E7EB',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
-            opacity: currentIndex === 0 ? 0.5 : 1,
-            transition: 'all 0.2s ease',
-            zIndex: 10
-          }}
-          onMouseEnter={(e) => {
-            if (currentIndex !== 0) {
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-          }}
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft size={24} color="#374151" />
-        </button>
-        
-        <button
-          onClick={handleNext}
-          disabled={currentIndex === maxIndex}
-          style={{
-            position: 'absolute',
-            right: '-20px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            width: '48px',
-            height: '48px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid #E5E7EB',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            cursor: currentIndex === maxIndex ? 'not-allowed' : 'pointer',
-            opacity: currentIndex === maxIndex ? 0.5 : 1,
-            transition: 'all 0.2s ease',
-            zIndex: 10
-          }}
-          onMouseEnter={(e) => {
-            if (currentIndex !== maxIndex) {
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-          }}
-          aria-label="Next testimonial"
-        >
-          <ChevronRight size={24} color="#374151" />
-        </button>
       </div>
 
       {/* Progress Bar */}
@@ -356,7 +283,8 @@ const TestimoniosCarousel = () => {
         <span style={{ 
           color: '#374151',
           fontWeight: '500',
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap',
+          fontFamily: 'Poppins'
         }}>
           {testimonios.length} Testimonios
         </span>
@@ -370,10 +298,10 @@ const TestimoniosCarousel = () => {
           <div 
             style={{ 
               height: '100%',
-              background: 'linear-gradient(to right, #75909fff, #0081C7)',
+              background: 'linear-gradient(to right, #75909F, #0081C7)',
               borderRadius: '2px',
               width: `${progress}%`,
-              transition: 'width 0.3s ease'
+              transition: 'width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
             }}
           />
         </div>

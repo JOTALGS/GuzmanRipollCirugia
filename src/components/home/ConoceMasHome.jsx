@@ -1,172 +1,120 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import LightenText from "../magicText/LightenText";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { styled } from "@mui/material/styles";
 
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+gsap.registerPlugin(ScrollTrigger);
 
-gsap.registerPlugin(ScrollTrigger)
+// Componente para texto con sangría en la primera línea
+function IndentedLightenText({ homeText, indent, ...props }) {
+  const containerRef = useRef(null);
 
-import { styled } from '@mui/material/styles';
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-// Fixed AnimatedBorderBox with important declarations and proper structure
+    // Aplicar sangría calculada por CSS variables
+    const firstLineWrapper = containerRef.current.querySelector('div[style*="text-align: left"]:first-child');
+    if (firstLineWrapper) {
+      // Aplicar sangría directamente al wrapper de la primera línea
+      firstLineWrapper.style.marginLeft = indent;
+      
+      // MANUAL CONTROL: Ajuste manual para empezar en la tercera columna
+      // Para mover más a la derecha, descomenta y ajusta el valor:
+      // firstLineWrapper.style.marginLeft = 'calc(4 * var(--col-width) + 3 * var(--gutter-width))';
+      // Para columna 5: 'calc(5 * var(--col-width) + 4 * var(--gutter-width))'
+      // Para columna 6: 'calc(6 * var(--col-width) + 5 * var(--gutter-width))'
+      
+      // No necesitamos ajustar el overlay ya que se hereda el margen
+    }
+  }, [homeText, indent]);
+
+  return (
+    <Box ref={containerRef}>
+      <LightenText homeText={homeText} {...props} />
+    </Box>
+  );
+}
+
+// Estilos para el borde animado (se mantienen igual)
 const AnimatedBorderBox = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  paddingBottom: '5px',
-  cursor: 'pointer',
-  display: 'inline-block',
-  overflow: 'hidden',
-  
-  // Always visible underline (slides out on hover)
-  '&::before': {
+  position: "relative",
+  paddingBottom: "5px",
+  cursor: "pointer",
+  display: "inline-block",
+  overflow: "hidden",
+  "&::before": {
     content: '""',
-    position: 'absolute !important',
-    bottom: '0 !important',
-    left: '0 !important',
-    width: '100% !important',
-    height: '1px !important',
-    backgroundColor: '#0081C7 !important',
-    transform: 'translateX(0) !important',
-    transition: 'transform 0.4s ease !important',
-    zIndex: 1,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: "1px",
+    backgroundColor: "#000000",
+    transform: "translateX(0)",
+    transition: "transform 0.4s ease",
+    zIndex: 1
   },
-  
-  // New underline that slides in from left on hover
-  '&::after': {
+  "&::after": {
     content: '""',
-    position: 'absolute !important',
-    bottom: '0 !important',
-    left: '0 !important',
-    width: '100% !important',
-    height: '1px !important',
-    backgroundColor: '#0081C7 !important',
-    transform: 'translateX(-100%) !important',
-    transition: 'transform 0.4s ease !important',
-    zIndex: 1,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: "1px",
+    backgroundColor: "#000000",
+    transform: "translateX(-100%)",
+    transition: "transform 0.4s ease",
+    zIndex: 1
   },
-  
-  // On hover: original underline slides right, new underline slides in from left
-  '&:hover::before': {
-    transform: 'translateX(100%) !important',
-  },
-  
-  '&:hover::after': {
-    transform: 'translateX(0) !important',
-  },
-
-  // Also handle hover on parent link
-  'a:hover &::before': {
-    transform: 'translateX(100%) !important',
-  },
-  
-  'a:hover &::after': {
-    transform: 'translateX(0) !important',
-  }
-}));
-
-// Alternative: Move hover to the link wrapper instead
-const AnimatedLink = styled(Box)(({ theme }) => ({
-  textDecoration: 'none',
-  position: 'relative',
-  paddingBottom: '5px',
-  cursor: 'pointer',
-  display: 'inline-block',
-  overflow: 'hidden',
-  
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    bottom: '0',
-    left: '0',
-    width: '100%',
-    height: '1px',
-    backgroundColor: '#0081C7',
-    transform: 'translateX(0)',
-    transition: 'transform 0.4s ease',
-    zIndex: 1,
-  },
-  
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    bottom: '0',
-    left: '0',
-    width: '100%',
-    height: '1px',
-    backgroundColor: '#0081C7',
-    transform: 'translateX(-100%)',
-    transition: 'transform 0.4s ease',
-    zIndex: 1,
-  },
-  
-  '&:hover::before': {
-    transform: 'translateX(100%)',
-  },
-  
-  '&:hover::after': {
-    transform: 'translateX(0)',
-  }
+  "&:hover::before": { transform: "translateX(100%)" },
+  "&:hover::after": { transform: "translateX(0)" },
+  "a:hover &::before": { transform: "translateX(100%)" },
+  "a:hover &::after": { transform: "translateX(0)" }
 }));
 
 export default function ConoceMasHome() {
-  const conoceMasTextFirstLine = `
-    Cirugía plástica estética y reconstructiva.
-  `;
   const conoceMasText = `
-    Nuestra experiencia refinada radica en canalizar el deseo:
-    desde la confianza corporal hasta el bienestar integral,
-    desde tratamientos simples hasta cirugías
-    reconstructivas.
+Somos una clínica especializada en
+cirugía plástica. Nuestra experiencia refinada
+reside en canalizar el deseo, desde la seguridad
+corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.
+
+A lo largo del tiempo, nos hemos convertido en
+expertos en traducir el deseo en confianza,
+combinando precisión tecnológica con un
+cuidado humano excepcional.
   `;
-  const conoceMasTextPart2 = `
-    Como expertos en cirugía mamaria, ofrecemos
-    tratamientos personalizados que combinan precisión
-    tecnológica con un cuidado humano excepcional.
-  `;
-  const theme = useTheme();
 
   useEffect(() => {
     const leftSection = document.getElementById("pin-section");
     if (!leftSection) return;
 
-    // Mobile detection function
     const isMobile = () => window.innerWidth <= 768;
-    
-    let scrollTriggerInstance;
+    let scrollTriggerInstance = null;
 
     const createScrollTrigger = () => {
-      // Clear existing instance if any
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-      }
+      if (scrollTriggerInstance) scrollTriggerInstance.kill();
 
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top 7%",
         end: isMobile() ? "bottom+=5000% top" : "bottom+=3000% top",
-        pin: isMobile() ? false : true,
+        pin: false,
         pinSpacing: false,
         scrub: true,
         markers: false,
-        anticipatePin: 1
+        anticipatePin: 1,
       });
     };
 
-    // Initial setup
     createScrollTrigger();
-
-    // Handle window resize
-    const handleResize = () => {
-      createScrollTrigger();
-    };
-    
+    const handleResize = () => createScrollTrigger();
     window.addEventListener("resize", handleResize);
 
-    // Cleanup function
     return () => {
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-      }
+      if (scrollTriggerInstance) scrollTriggerInstance.kill();
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -182,91 +130,117 @@ export default function ConoceMasHome() {
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "15px", md: "70px" },
         columnGap: { xs: "25px", md: "17px" },
-        "& > section": { 
-          gridColumn: "1 / -1",
-        }
+        "& > section": { gridColumn: "1 / -1" }
       }}
     >
+      {/* CTA derecha */}
       <Box
         sx={{
-          marginTop: '20px',
-          gridColumn: { xs: '8 / 13', md: '11 / 13' },
-          gridRow: '1 / 2',
-          display: 'flex',
-          alignItems: 'start',
-          justifyContent: 'end',
+          mt: "20px",
+          gridColumn: { xs: "8 / 13", md: "11 / 13" },
+          gridRow: "1 / 2",
+          display: "flex",
+          alignItems: "start",
+          justifyContent: "end"
         }}
       >
-        
         <div id="pin-section" className="py-8 px-4">
-          {/* Option 1: Using the fixed AnimatedBorderBox */}
-          <Box component={"a"} href={"/clinica"} sx={{ textDecoration: 'none' }}>
+          <Box component={"a"} href={"/clinica"} sx={{ textDecoration: "none" }}>
             <AnimatedBorderBox>
-              <Typography 
-                color="#000000" 
-                fontFamily={'Poppins'} 
-                fontSize={{ xs: '15px', md: '18px' }} 
-                sx={{ textTransform: 'uppercase' }}
+              <Typography
+                color="#000000"
+                fontFamily={"Poppins"}
+                fontSize={{ xs: "15px", md: "18px" }}
+                sx={{ textTransform: "uppercase" }}
               >
                 Ver nuestros servicios
               </Typography>
             </AnimatedBorderBox>
           </Box>
-
-          {/* Option 2: Alternative approach - move animation to link wrapper */}
-          {/* 
-          <AnimatedLink component={"a"} href={"/clinica"}>
-            <Typography 
-              color="#000000" 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '15px', md: '18px' }} 
-              sx={{ textTransform: 'uppercase' }}
-            >
-              Ver nuestros servicios
-            </Typography>
-          </AnimatedLink>
-          */}
         </div>
       </Box>
 
+      {/* Tarjeta izquierda */}
       <Box
         sx={{
-          marginTop: '20px',
-          gridColumn: { xs: '2 / 8', md: '4 / 6' },
-          gridRow: '1 / 2',
-          display: 'flex',
-          alignItems: 'start',
-          justifyContent: 'start',
+          mt: "20px",
+          gridColumn: { xs: "3 / 7", md: "4 / 6" },
+          gridRow: "1 / 2",
+          display: "flex",
+          alignItems: "start",
+          justifyContent: "start",
+          position: "relative",
+          borderRadius: "24px",
+          overflow: "hidden",
+          backdropFilter: "blur(10px)",
+          background: "rgba(255, 255, 255, 0.1)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+          height: "340px"
         }}
       >
-        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </Box>      
-
-      <Box
-        sx={{
-          marginTop: '20px',
-          gridColumn: '1 / 2',
-          gridRow: '1 / 2',
-          display: 'flex',
-          alignItems: { xs: 'center', md: 'start' },
-          justifyContent: 'start',
-        }}
-      >
-        <Typography color="#000000" fontFamily={'Poppins'} fontSize={'18px'} sx={{ textTransform: 'uppercase' }}>Clínica</Typography>
+        <img
+          src={"/images/bias.png"}
+          alt="scroll"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "24px"
+          }}
+        />
       </Box>
 
-      <Box sx={{
-        gridColumn: { xs: '1 / 13', md: '1 / 13' },
-        gridRow: '2 / 3',
-      }}>
-        {/* Clinic Description Section */}
-        <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
-          <Box sx={{ display: "flex", marginLeft: "auto", width: "90%", alignContent: "end", justifyContent: "end", textAlign: "end", flexDirection: "column" }}>
-            <LightenText homeText={conoceMasTextFirstLine} />
-          </Box>
-          <LightenText homeText={conoceMasText} />
+      {/* Breadcrumb izquierda */}
+      <Box
+        sx={{
+          mt: "20px",
+          gridColumn: "1 / 2",
+          gridRow: "1 / 2",
+          display: "flex",
+          alignItems: { xs: "center", md: "start" },
+          justifyContent: "start"
+        }}
+      >
+        <Typography
+          color="#000000"
+          fontFamily={"Poppins"}
+          fontSize={"18px"}
+          sx={{ textTransform: "uppercase" }}
+        >
+          Clínica
+        </Typography>
+      </Box>
 
-          <LightenText homeText={conoceMasTextPart2} />
+      {/* Texto con sangría */}
+      <Box
+        sx={{
+          gridColumn: { xs: "1 / 13", md: "1 / 12" },
+          gridRow: "2 / 3"
+        }}
+      >
+        <Box
+          component="section"
+          sx={{
+            py: 8,
+            backgroundColor: "#fff",
+            position: "relative",
+            // Calcular el ancho de 3 columnas + 3 gutters para la sangría
+            "--col-width": "calc((100% - 11 * 17px) / 12)",
+            "--gutter-width": "17px",
+            "--indent-width": "calc(3 * var(--col-width) + 2 * var(--gutter-width))",
+            
+            // Ajustes para móvil
+            "@media (max-width: 768px)": {
+              "--col-width": "calc((100% - 11 * 25px) / 12)",
+              "--gutter-width": "25px"
+            }
+          }}
+        >
+          <IndentedLightenText 
+            homeText={conoceMasText} 
+            indent={'var(--indent-width)'} 
+          />
         </Box>
       </Box>
     </Box>

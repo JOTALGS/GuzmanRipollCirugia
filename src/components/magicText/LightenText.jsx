@@ -5,157 +5,153 @@ import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LightenText = ({ homeText }) => {
+const LightenText = ({ homeText, disableLightingEffect = false }) => {
   const lineWrapperRef = useRef([]);
   const containerRef = useRef(null);
-  const timelineRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // 'sm' or your mobile breakpoint
 
-const splitText = (text, maxCharsPerLine) => {
-  if (!text || maxCharsPerLine <= 0) return [];
+const splitText = (text) => {
+  if (!text) return [];
   
-  const words = text.split(' ');
+  // Dividir por párrafos primero (doble salto de línea)
+  const paragraphs = text.trim().split('\n\n');
   const lines = [];
-  let currentLine = '';
   
-  words.forEach(word => {
-    if (currentLine.length + word.length + 1 <= maxCharsPerLine) {
-      // Si la palabra cabe en la línea actual
-      currentLine += (currentLine ? ' ' : '') + word;
-    } else if (word.length > maxCharsPerLine) {
-      // Manejar palabras muy largas
-      if (currentLine) {
-        lines.push(currentLine);
-        currentLine = '';
-      }
+  paragraphs.forEach((paragraph, paragraphIndex) => {
+    if (paragraph.trim()) {
+      // Dividir cada párrafo en líneas por saltos de línea simples
+      const paragraphLines = paragraph.trim().split('\n');
       
-      // Dividir la palabra larga en múltiples líneas
-      for (let i = 0; i < word.length; i += maxCharsPerLine) {
-        const chunk = word.substring(i, i + maxCharsPerLine);
-        lines.push(chunk);
+      paragraphLines.forEach(line => {
+        if (line.trim()) {
+          lines.push(line.trim());
+        }
+      });
+      
+      // Agregar espacio entre párrafos (excepto el último)
+      if (paragraphIndex < paragraphs.length - 1) {
+        lines.push(''); // Línea vacía para espaciado
       }
-    } else {
-      // Si no cabe, empezar nueva línea
-      if (currentLine) lines.push(currentLine);
-      currentLine = word;
     }
   });
-  
-  if (currentLine) lines.push(currentLine);
   
   return lines;
 };
 
-  const charsPerPart = isMobile ? 38 : 50;
-  const textParts = splitText(homeText, charsPerPart);
+  const textParts = splitText(homeText);
 
   useLayoutEffect(() => {
+    // Skip animation setup if lighting effect is disabled
+    if (disableLightingEffect) return;
+    
     const wrappers = lineWrapperRef.current;
     
-    // Clear any existing ScrollTriggers
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    
-    // Create a timeline for sequential animations
-    timelineRef.current = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 80%",
-        end: "bottom 20%",
-        scrub: 1,
-        markers: false,
-        id: "text-reveal-timeline"
-      }
+    // Clear any existing ScrollTriggers for this component
+    wrappers.forEach((wrapper, index) => {
+      ScrollTrigger.getById(`line-reveal-${index}`)?.kill();
     });
     
+    // Create individual ScrollTriggers for each line for smoother effect
     wrappers.forEach((wrapper, index) => {
       if (!wrapper) return;
       
       const overlay = wrapper.querySelector(".line-overlay");
+      if (!overlay) return;
       
       // Set initial state
       gsap.set(overlay, {
         clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)"
       });
       
-      // Add to timeline with staggered delay
-      timelineRef.current.to(overlay, {
+      // Create individual ScrollTrigger for each line
+      gsap.to(overlay, {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        ease: "none",
-        duration: 1
-      }, index * 0.3); // 0.3 second delay between each line
+        ease: "power2.out",
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top 85%",
+          end: "top 60%",
+          scrub: 1,
+          markers: false,
+          id: `line-reveal-${index}`
+        }
+      });
     });
     
     // Cleanup function
     return () => {
-      timelineRef.current?.scrollTrigger?.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      // Kill individual ScrollTriggers
+      wrappers.forEach((wrapper, index) => {
+        ScrollTrigger.getById(`line-reveal-${index}`)?.kill();
+      });
     };
-  }, []);
+  }, [homeText, disableLightingEffect]);
 
   return (
-    <div ref={containerRef} className="w-full flex items-center justify-center p-4 bg-[#f8f8f8]">
-      <div className="flex items-center justify-center about-intro max-w-4xl w-full min-w-[95vw] mx-4">
-        <div>
-          {textParts.map((part, index) => (
+    <div ref={containerRef} className="w-full">
+      <div className="w-full text-left">
+        {textParts.map((part, index) => {
+          // Si es línea vacía (espaciado entre párrafos)
+          if (part === '') {
+            return <Box key={`space-${index}`} sx={{ height: "40px" }} />;
+          }
+          
+          return (
             <div 
               key={`line-${index}`}
               ref={el => lineWrapperRef.current[index] = el}
-              className={`relative flex mb-2 items-start justify-start text-start ${index === 0 ? 'justify-start' : ''}`}
+              className="relative mb-2"
+              style={{ textAlign: 'left', overflow: 'hidden' }}
             >
-              <Box sx={{ width: "90vw", height: "auto"}}>
-                {/* Base text (dark) - Fixed positioning */}
+              {/* Base text (grey for lighting effect, dark for no effect) */}
+              <Typography 
+                variant="p"
+                fontSize={{xs: "18px", sm: "30px", md: "50px", lg: "70px"}}
+                className="line"
+                style={{
+                  color: disableLightingEffect ? "#01263a" : "#b0b0b0",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: "100",
+                  display: "block",
+                  width: "100%",
+                  textAlign: "left",
+                  lineHeight: "1.05",
+                  letterSpacing: "-2px",
+                  whiteSpace: "normal"
+                }}
+              >
+                {part}
+              </Typography>
+
+              {/* Overlay text (dark) - animated - only when lighting effect is enabled */}
+              {!disableLightingEffect && (
                 <Typography 
                   variant="p"
-                  fontWeight={"bold"}
-                  fontSize={{xs: "18px", sm: "30px", md: "40px", lg: "55px"}}
-                  className="line"
-                  style={{
-                    color: "#e9e9e9",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: "100",
-                    position: "absolute",
-                    display: "flex",
-                    width: "90%",
-                    justifyContent: index === 0 ? "flex-start" : "flex-start",
-                    zIndex: 0,
-                    textWrap: "nowrap",
-                  }}
-                >
-                  {part}
-                </Typography>
-              </Box>
-
-
-              <Box sx={{ width: "90%", height: "auto"}}>
-                {/* Overlay text (light) - Remove clipPath for visibility */}
-                <Typography 
-                  variant="p"
-                  fontWeight={"bold"}
-                  fontSize={{xs: "18px", sm: "30px", md: "40px", lg: "55px"}}
+                  fontSize={{xs: "18px", sm: "30px", md: "50px", lg: "70px"}}
                   className="line-overlay"
                   style={{
                     color: "#01263a",
-                    // Remove clipPath to make visible (or adjust for your animation):
-                    // clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)", 
-                    display: "flex",
-                    width: "100%",
-                    marginRight: "70px",
-                    justifyContent: index === 0 ? "flex-start" : "flex-start",
+                    clipPath: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
                     fontFamily: "Poppins, sans-serif",
                     fontWeight: "100",
-                    textWrap: "nowrap"
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    textAlign: "left",
+                    lineHeight: "1.05",
+                    letterSpacing: "-2px",
+                    whiteSpace: "normal"
                   }}
-                  sx={{ zIndex: 1 }}
                 >
                   {part}
                 </Typography>
-              </Box>
-              
-              {index === 4 && <Box sx={{ height: "50px"}}/>}
+              )}
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
     </div>
   );

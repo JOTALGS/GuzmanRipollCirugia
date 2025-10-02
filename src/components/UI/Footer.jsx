@@ -26,26 +26,26 @@ const Footer = () => {
         component="footer"
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(12, 1fr)',
-          mx: '70px',
-          gap: '20px',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(12, 1fr)' },
+          mx: { xs: '15px', md: '70px' },
+          gap: { xs: '30px', md: '20px' },
           backgroundColor: '#000',
           color: '#fff',
-          py: { xs: 4, md: 8 },
+          py: { xs: 6, md: 8 },
         }}
       >
         <Box sx={{
-          gridColumn: '1 / 5',
-          gridRow: '1 / 1',
-          mx: { xs: 1, md: 4 },
+          gridColumn: { xs: '1 / 1', md: '1 / 5' },
+          gridRow: { xs: '1 / 1', md: '1 / 1' },
+          mx: { xs: 0, md: 4 },
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'start',
         }}>
           <Box sx={{ display: 'flex', width: { xs: '100%', md: '100%'}, textAlign: 'start', flexDirection: 'column', alignItems: 'center', marginBottom: '12px' }}>
-            <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '55px' }} sx={{ width: '100%', textTransform: '', letterSpacing: '-3px'}}>
+            <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '55px' }} sx={{ width: '100%', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' }}}>
               Lista para 
-              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '45px' , xl: '55px' }} sx={{ color: 'textAccent', textTransform: '', letterSpacing: '-3px' }}>
+              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '28px',md: '45px' , xl: '55px' }} sx={{ color: 'textAccent', textTransform: '', letterSpacing: { xs: '-1px', md: '-3px' } }}>
                 {' '}Renovar
               </Typography>
               <br />
@@ -73,9 +73,9 @@ const Footer = () => {
         </Box>
 
         <Box sx={{
-          gridColumn: '7 / 13',
-          gridRow: '1 / 1',
-          mx: { xs: 1, md: 4 },
+          gridColumn: { xs: '1 / 1', md: '7 / 13' },
+          gridRow: { xs: '2 / 2', md: '1 / 1' },
+          mx: { xs: 0, md: 4 },
         }}>
           <Box sx={{ display: 'flex', width: '100%' }}>
               <Box
@@ -91,10 +91,10 @@ const Footer = () => {
                     mb: 3,
                   }}
                 >
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle1" sx={{ fontSize: { xs: '14px', md: '16px' } }}>
                     Agenda tu consulta y descubrí cómo podemos renovar tu vida.
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#B0B0B0' }}>
+                  <Typography variant="caption" sx={{ color: '#B0B0B0', fontSize: { xs: '12px', md: '14px' } }}>
                     *Campos Requeridos
                   </Typography>
                 </Box>

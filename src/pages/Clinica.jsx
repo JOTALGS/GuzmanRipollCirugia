@@ -31,46 +31,15 @@ export default function Clinica({ id }) {
     '/images/images.jpg',
     '/images/logo-apaisado.png',
     '/images/logo-scpreu.png',
-    '/images/images.jpg',
   ];
 
-  useEffect(() => {
-    const elements = [
-      { ref: heroTextRef, y: 50 },
-      { ref: resultadosTitleRef, y: 30 },
-      { ref: doctorTitleRef, y: 50 },
-      { ref: humanConnectionTitleRef, y: 50 }
-    ]
 
-    const animations = elements.map(el => 
-      gsap.fromTo(
-        el.ref.current,
-        { opacity: 0, y: el.y },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el.ref.current,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          }
-        }
-      )
-    )
-
-    return () => {
-      animations.forEach(anim => anim.scrollTrigger?.kill())
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    }
-  }, [])
 
   const clinicaTextFirstLine = 'Nuestro propósito es ser la marca de cirugía'
   const clinicaText = ` estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
 
   return (
-    <Box id={id} sx={{ position: "relative", backgroundColor: "#222e34",
+    <Box id={id} sx={{ position: "relative", backgroundColor: "white",
       overflowX: { xs: "hidden", md: "visible" },
     ':after': {
       content: '""',
@@ -84,18 +53,6 @@ export default function Clinica({ id }) {
       overflow: "hidden",
       zIndex: 0
     } }}>
-      {/* Fixed Background */}
-      <Box sx={{
-        backgroundImage: 'url("/images/imagen5.jpg")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "500px",
-        zIndex: 0
-      }} />
 
       <Box sx={{
         backgroundColor: 'white',
@@ -107,9 +64,11 @@ export default function Clinica({ id }) {
       <Box sx={{
         position: "relative",
         zIndex: 1,
-        mt: "500px",
+        // AQUÍ ESTÁ EL CAMBIO PRINCIPAL - AUMENTÉ EL MARGIN TOP
+        // mt: "100px" → ORIGINAL
+        mt: { xs: "150px", md: "350px" }, // ← NUEVO VALOR CON RESPONSIVE
         display: "grid",
-        backgroundColor: "#fff",
+        backgroundColor: "white",
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "15px", md: "70px" },
         columnGap: { xs: "25px", md: "17px" },
@@ -120,38 +79,53 @@ export default function Clinica({ id }) {
 
       }}>
         <Box sx={{
-          backgroundColor: "#fff",
+          backgroundColor: "white",
           position: "absolute",
           top: 0,
           left: "-70px",
           width: "100vw",
           height: "300vw",
         }} />
+        
+        {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION */}
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
           gridRow: '1 / 1',
+          // AQUÍ PUEDES AGREGAR MÁS ESPACIO INTERNO SI LO NECESITAS
+          // py: 8 → ya existe en la sección, pero puedes aumentarlo
         }}>
           {/* Clinic Description Section */}
-          <Box component="section" sx={{ py: 8, backgroundColor: "#fff" }}>
-            <Box sx={{ display: "flex", marginLeft: "auto", width: "90%", alignContent: "end", justifyContent: "end", textAlign: "end", flexDirection: "column" }}>
-              <LightenText homeText={clinicaTextFirstLine} />
+          <Box component="section" sx={{ 
+            py: 8, // ← Esto controla el padding vertical interno (arriba/abajo)
+            backgroundColor: "#0B1426",
+            // OPCIÓN ALTERNATIVA: Agregar margin top adicional aquí
+            // mt: 4 // ← Esto agregaría más espacio específicamente arriba de esta sección
+          }}>
+            <Box sx={{ 
+              display: "flex", 
+              marginLeft: "auto", 
+              width: "90%", 
+              alignContent: "end", 
+              justifyContent: "end", 
+              textAlign: "end", 
+              flexDirection: "column" 
+            }}>
+              <LightenText homeText={clinicaTextFirstLine} disableLightingEffect={true} />
             </Box>
-            <LightenText homeText={clinicaText} />
+            <LightenText homeText={clinicaText} disableLightingEffect={true} />
           </Box>
         </Box>
 
-
+        {/* RESTO DE LAS SECCIONES... */}
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
           gridRow: '2 / 2',
         }}>
           {/* Results Section */}
-
             <ResultsPortfolioSection size="large" py="py-0" />
         </Box>
 
-          <About />
-
+        <About />
 
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '3 / 11' },
@@ -169,4 +143,3 @@ export default function Clinica({ id }) {
     </Box>
   )
 }
-

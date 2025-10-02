@@ -13,8 +13,7 @@ export default function IntroHome() {
         zIndex: 1,
         height: { xs: "100vh", md: "100vh" },
         display: "grid",
-
-        backgroundColor: "#fff",
+        backgroundColor: "white",
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "15px", md: "70px" },
         columnGap: { xs: "25px", md: "17px" },
@@ -24,24 +23,19 @@ export default function IntroHome() {
       }}
     > 
       <Box
-        component="video"
-        autoPlay
-        muted
-        loop
-        playsInline
         sx={{
-          width: { xs: "100vw", md: "100vw"},
-          height: { xs: "100vh", md: "100vh"},
-          objectFit: "cover",
+          width: "100vw",
+          height: "100vh",
+          backgroundImage: 'url("/images/imagen5.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           position: "absolute",
           top: 0,
-          left: { xs: "-15px", md: "-70px"},
+          left: { xs: "-15px", md: "-70px" },
           zIndex: -1,
         }}
-      >
-        <source src="/videos/altitude-hero.webm" type="video/webm" />
-        Tu navegador no soporta el elemento de video.
-      </Box>
+      />
 
 
       <Box

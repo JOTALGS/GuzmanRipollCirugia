@@ -55,7 +55,6 @@ export default function NavBar() {
   // Detección de fondo mejorada
   useEffect(() => {
     const detectBackground = () => {
-      // Crear un elemento temporal para detectar el color de fondo
       const tempElement = document.createElement('div')
       tempElement.style.position = 'fixed'
       tempElement.style.top = '20px'
@@ -70,35 +69,31 @@ export default function NavBar() {
       const computedStyle = window.getComputedStyle(tempElement)
       const bgColor = computedStyle.backgroundColor
       
-      // Analizar si el fondo es oscuro o claro
       const rgb = bgColor.match(/\d+/g)
       if (rgb && rgb.length >= 3) {
         const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000
         setIsDarkBackground(brightness < 128)
       } else {
-        // Fallback: detectar por scroll o tiempo
         setIsDarkBackground(window.scrollY > 200)
       }
       
       document.body.removeChild(tempElement)
     }
 
-    // Detectar cambios en scroll
     const handleScroll = () => {
       detectBackground()
     }
 
     window.addEventListener('scroll', handleScroll)
-    detectBackground() // Ejecutar al montar
+    detectBackground() 
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Animación del underline con efecto custom
+  // Animación del underline
   useEffect(() => {
-    if (!isMobile) { // Solo aplicar underline en desktop
+    if (!isMobile) {
       if (active === "Contacto") {
-        // Para Contacto, calcular posición independiente
         const contactEl = document.querySelector('[data-link="Contacto"]')
         if (contactEl) {
           const rect = contactEl.getBoundingClientRect()
@@ -109,7 +104,6 @@ export default function NavBar() {
           })
         }
       } else {
-        // Para menú principal
         const activeEl = navRef.current?.querySelector(`[data-link="${active}"]`)
         if (activeEl) {
           setUnderline({ 
@@ -128,24 +122,21 @@ export default function NavBar() {
       e.preventDefault()
       lenis?.scrollTo(href, { offset: -100, duration: 1.2 })
     }
-    // Cerrar menú en móviles al hacer clic en un enlace
     if (isMobile) {
       setIsMenuOpen(false)
     }
   }
 
-  // Efecto de inversión custom
   const navbarStyle = {
     position: 'fixed',
     top: 0,
     zIndex: 50,
     width: '100%',
     backgroundColor: 'transparent',
-    mixBlendMode: isMenuOpen && isMobile ? 'normal' : 'difference', // Normal en menú móvil abierto
-    color: 'white' // Color base blanco que se invierte automáticamente
+    mixBlendMode: isMenuOpen && isMobile ? 'normal' : 'difference',
+    color: 'white'
   }
 
-  // Prevenir scroll cuando el menú está abierto
   useEffect(() => {
     if (isMenuOpen && isMobile) {
       document.body.style.overflow = 'hidden'
@@ -177,7 +168,7 @@ export default function NavBar() {
           lineHeight: '17.28px',
           letterSpacing: '-0.54px'
         }}>
-          {/* Logo - Columnas 1-2 */}
+          {/* Logo */}
           <Box sx={{ 
             gridColumn: { xs: '1 / 7', md: '1 / 3'},
             display: 'flex',
@@ -200,7 +191,7 @@ export default function NavBar() {
             </Link>
           </Box>
 
-          {/* Hora - Solo en desktop */}
+          {/* Hora */}
           <Box sx={{
             gridColumn: '4 / 6',
             display: { xs: 'none', md: 'flex' },
@@ -213,7 +204,7 @@ export default function NavBar() {
             </span>
           </Box>
 
-          {/* Navegación Principal - Solo en desktop */}
+          {/* Navegación Principal */}
           <Box sx={{
             gridColumn: '7 / 11',
             display: { xs: 'none', md: 'flex' },
@@ -223,42 +214,33 @@ export default function NavBar() {
             <div ref={navRef} style={{
               position: 'relative',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
+              gap: '16px'
             }}>
-              {menuLinks.map((link, index) => (
-                <React.Fragment key={link.name}>
-                  <Link
-                    to={link.path}
-                    data-link={link.name}
-                    onClick={(e) => onNavClick(e, link.path)}
-                    style={{
-                      color: 'inherit',
-                      textDecoration: 'none',
-                      position: 'relative',
-                      fontFamily: 'Poppins, sans-serif',
-                      fontWeight: '400',
-                      fontSize: '18px',
-                      lineHeight: '17.28px',
-                      letterSpacing: '-0.54px',
-                      transition: 'opacity 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => e.target.style.opacity = '0.7'}
-                    onMouseLeave={(e) => e.target.style.opacity = '1'}
-                  >
-                    {link.name}
-                  </Link>
-                  {/* Comas separadoras */}
-                  {index < menuLinks.length - 1 && (
-                    <span style={{
-                      color: 'inherit',
-                      marginLeft: '0px',
-                      marginRight: '8px',
-                    }}>,</span>
-                  )}
-                </React.Fragment>
+              {menuLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  data-link={link.name}
+                  onClick={(e) => onNavClick(e, link.path)}
+                  style={{
+                    color: 'inherit',
+                    textDecoration: 'none',
+                    position: 'relative',
+                    fontFamily: 'Poppins, sans-serif',
+                    fontWeight: '400',
+                    fontSize: '18px',
+                    lineHeight: '17.28px',
+                    letterSpacing: '-0.54px',
+                    transition: 'opacity 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = '0.7'}
+                  onMouseLeave={(e) => e.target.style.opacity = '1'}
+                >
+                  {link.name}
+                </Link>
               ))}
               
-              {/* Underline animado para menú principal */}
               <AnimatePresence mode="wait">
                 {menuLinks.some(link => link.name === active) && (
                   <motion.div
@@ -271,32 +253,17 @@ export default function NavBar() {
                       left: underline.left,
                       width: underline.width
                     }}
-                    initial={{ 
-                      width: 0, 
-                      x: '-100%',
-                      opacity: 0 
-                    }}
-                    animate={{ 
-                      width: underline.width, 
-                      x: 0,
-                      opacity: 1 
-                    }}
-                    exit={{ 
-                      width: 0, 
-                      x: '100%',
-                      opacity: 0 
-                    }}
-                    transition={{ 
-                      duration: 0.3, 
-                      ease: "easeInOut" 
-                    }}
+                    initial={{ width: 0, x: '-100%', opacity: 0 }}
+                    animate={{ width: underline.width, x: 0, opacity: 1 }}
+                    exit={{ width: 0, x: '100%', opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   />
                 )}
               </AnimatePresence>
             </div>
           </Box>
 
-          {/* Contacto - Solo en desktop */}
+          {/* Contacto */}
           <Box sx={{
             gridColumn: '12 / 13',
             display: { xs: 'none', md: 'flex' },
@@ -323,7 +290,6 @@ export default function NavBar() {
                 Contacto
               </Link>
               
-              {/* Underline para Contacto */}
               <AnimatePresence>
                 {active === "Contacto" && (
                   <motion.div
@@ -335,32 +301,17 @@ export default function NavBar() {
                       left: 0,
                       width: '100%'
                     }}
-                    initial={{ 
-                      width: 0, 
-                      x: '-100%',
-                      opacity: 0 
-                    }}
-                    animate={{ 
-                      width: '100%', 
-                      x: 0,
-                      opacity: 1 
-                    }}
-                    exit={{ 
-                      width: 0, 
-                      x: '100%',
-                      opacity: 0 
-                    }}
-                    transition={{ 
-                      duration: 0.3, 
-                      ease: "easeInOut" 
-                    }}
+                    initial={{ width: 0, x: '-100%', opacity: 0 }}
+                    animate={{ width: '100%', x: 0, opacity: 1 }}
+                    exit={{ width: 0, x: '100%', opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   />
                 )}
               </AnimatePresence>
             </div>
           </Box>
 
-          {/* Hamburger Menu - Solo en móvil */}
+          {/* Hamburger Menu */}
           <Box sx={{
             gridColumn: '11 / 13',
             display: { xs: 'flex', md: 'none' },
@@ -414,7 +365,6 @@ export default function NavBar() {
               paddingTop: '80px'
             }}
           >
-            {/* Hora en móvil */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -430,7 +380,6 @@ export default function NavBar() {
               {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
             </motion.div>
 
-            {/* Links del menú móvil */}
             <nav style={{
               display: 'flex',
               flexDirection: 'column',

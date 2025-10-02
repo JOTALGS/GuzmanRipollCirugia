@@ -92,8 +92,8 @@ export default function About() {
       zIndex: 1
       }}>
         {/* Doctor Profile Section */}
-        <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "#fff" }}>
-          <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: { xs: "25px", md: "20px"}, fontWeight: 600, color: "#000", mb: 2 }}>
+        <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "white" }}>
+          <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: { xs: "25px", md: "20px"}, fontWeight: 600, color: "black", mb: 2 }}>
               Dr. Guzman Ripoll
           </Typography>
           

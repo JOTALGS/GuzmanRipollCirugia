@@ -72,16 +72,10 @@ export default function Conexion() {
                 borderRadius: 2, 
                 overflow: "hidden",
                 aspectRatio: "1/1",
-                bgcolor: "grey.800"
+                backgroundImage: 'url("/images/imagen5.jpg")',
+                backgroundSize: "cover",
+                backgroundPosition: "center"
               }}>
-                <video
-                  src="/videos/logo-animation-1.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
               </Box>
             </Grid>
         </Box>
@@ -92,7 +86,7 @@ export default function Conexion() {
           zIndex: 1,
         }}>
           {/* Human Connection Section */}
-          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "#fff"}}>
+          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "white"}}>
             <Grid container spacing={6} alignItems="start">
               <Grid item xs={12} md={6} sx={{ textAlign: "start" }}>
                 <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>

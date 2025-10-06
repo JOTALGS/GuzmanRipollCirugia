@@ -46,11 +46,9 @@ const AnimatedBorderBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function ConoceMasHome() {
-  const conoceMasText = `
-Somos una clínica especializada en cirugía plástica. Nuestra experiencia refinada reside en canalizar el deseo, desde la seguridad corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.
+  const conoceMasTextPart1 = `Somos una clínica especializada en cirugía plástica. Nuestra experiencia refinada reside en canalizar el deseo, desde la seguridad corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.`;
 
-A lo largo del tiempo, nos hemos convertido en expertos en traducir el deseo en confianza, combinando precisión tecnológica con un cuidado humano excepcional.
-  `;
+  const conoceMasTextPart2 = `A lo largo del tiempo, nos hemos convertido en expertos en traducir el deseo en confianza, combinando precisión tecnológica con un cuidado humano excepcional.`;
 
   useEffect(() => {
     const leftSection = document.getElementById("pin-section");
@@ -185,30 +183,18 @@ A lo largo del tiempo, nos hemos convertido en expertos en traducir el deseo en 
         }}
       >
         <Box
-  component="section"
-  sx={{
-    py: 8,
-    backgroundColor: "#fff",
-    position: "relative",
-    "--col-width": "calc((100% - 11 * 20px) / 12)",
-    "--gutter-width": "20px",
-    "--indent-width":
-      "calc(3 * var(--col-width) + 3 * var(--gutter-width))",
-
-    textIndent: "var(--indent-width)", // 👈 ahora sí funciona
-
-    "@media (max-width: 768px)": {
-      "--col-width": "calc((100% - 11 * 20px) / 12)",
-      "--gutter-width": "20px",
-      "--indent-width": "0px",
-      textIndent: "0px",
-    },
-    width: "100%",
-    maxWidth: "100%",
-  }}
->
-  <LightenText homeText={conoceMasText} />
-</Box>
+          component="section"
+          sx={{
+            py: 8,
+            backgroundColor: "#fff",
+            width: "100vw",
+            maxWidth: "100%",
+          }}
+        >
+          <LightenText homeText={conoceMasTextPart1} />
+          <Box sx={{ height: { xs: "60px", md: "140px" } }}></Box>
+          <LightenText homeText={conoceMasTextPart2} />
+        </Box>
 
       </Box>
     </Box>

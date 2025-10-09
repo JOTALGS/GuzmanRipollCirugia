@@ -28,7 +28,7 @@ const ClipTopButton = ({children}) => {
             width: { xs: '65%', md: 'fit-content' },
             overflow: 'hidden',
             border: '1px solid gray',
-            borderRadius: '10px',
+            borderRadius: '25px',
             letterSpacing: '0.1em',
             fontSize: '16px',
             fontFamily: 'Poppins',

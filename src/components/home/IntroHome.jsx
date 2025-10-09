@@ -78,13 +78,13 @@ export default function IntroHome() {
       {/* Título Principal */}
       <Box
         sx={{
-          marginTop: { xs: '80px', md: '150px', lg: '180px', xl: '250px' }, 
+          marginTop: { xs: '100px', md: '150px', lg: '180px', xl: '250px' }, 
           gridColumn: { xs: '1 / 13', md: '1 / 8' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
           textAlign: { xs: 'center', md: 'start'},
-          alignItems: 'start',
+          alignItems: { xs: 'center', md: 'start' },
           justifyContent: 'start',
         }}
       >
@@ -100,7 +100,7 @@ export default function IntroHome() {
       {/* Contador de intervenciones */}
       <Box
         sx={{
-          gridColumn: { xs: '4 / 12', md: '10 / 13' },
+          gridColumn: { xs: '1 / 13', md: '10 / 13' },
           gridRow: '1 / 1',
           position: 'relative',
           display: 'flex',
@@ -108,12 +108,13 @@ export default function IntroHome() {
           textAlign: { xs: 'center', md: 'end'},
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: { xs: '25px', md: 'px' }, 
+          marginTop: { xs: '290px', md: '0px' },
+          marginBottom: { xs: '25px', md: '0px' }, 
         }}
       >
         
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '20px', md: '21px' }} sx={{ 
-          width: '90%',
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '18px', md: '21px' }} sx={{ 
+          width: { xs: '100%', md: '90%' },
           color: 'textSecondary', 
           textTransform: 'capitalize',
           letterSpacing: '-1px'
@@ -129,22 +130,24 @@ export default function IntroHome() {
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'start',
+          alignItems: { xs: 'start', md: 'start' },
           justifyContent: 'end',
-          marginBottom: { xs: '20px', md: '5px' },
-          marginRight: { xs: '20px', md: '0px' },
+          marginBottom: { xs: '120px', md: '5px' },
+          marginRight: { xs: '0px', md: '0px' },
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '20px' }} sx={{ 
-          textAlign: 'start', 
-          marginBottom: { xs:'115px', md: '20px' }, 
-          letterSpacing: '-1px' 
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '15px', md: '20px' }} sx={{ 
+          textAlign: { xs: 'start', md: 'start' },
+          marginBottom: { xs:'15px', md: '20px' }, 
+          letterSpacing: '-1px',
+          lineHeight: 1.4
         }}>
           Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
         </Typography>
 
         <Box sx={{ 
-          marginBottom: { xs: '20px', md: '0px' },
+          marginBottom: { xs: '0px', md: '0px' },
+          width: { xs: 'auto', md: 'auto' },
           '& .clip-top-button': {
             // Efecto Glass iOS Ultra Clean
             backdropFilter: 'blur(40px) saturate(200%)',
@@ -158,7 +161,7 @@ export default function IntroHome() {
               )
             `,
             border: '1px solid rgba(255, 255, 255, 0.25)',
-            borderRadius: '50px', // Más redondeado
+            borderRadius: '50px',
             padding: { xs: '12px 28px', md: '14px 32px' },
             transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             position: 'relative',
@@ -234,7 +237,7 @@ export default function IntroHome() {
         </Box>
       </Box>
 
-      {/* Contenedor del video CON FADED SUTIL */}
+      {/* Contenedor del video */}
       <Box
         sx={{
           marginTop: '71px',
@@ -243,7 +246,7 @@ export default function IntroHome() {
           display: 'flex',
           alignItems: 'end',
           justifyContent: 'end',
-          marginBottom: { xs: '100px', md: '50px' },
+          marginBottom: { xs: '120px', md: '50px' },
         }}
       >
         <Box
@@ -253,7 +256,7 @@ export default function IntroHome() {
           sx={{
             width: '100%',
             height: {
-              xs: '12%',
+              xs: '160px',
               md: '25%'
             },
             // Efecto Glass iOS - Frost Subtle
@@ -307,7 +310,7 @@ export default function IntroHome() {
               bottom: 0,
               left: 0,
               right: 0,
-              height: '30%', // Más reducido
+              height: '30%',
               background: `
                 linear-gradient(
                   to top, 
@@ -357,11 +360,13 @@ export default function IntroHome() {
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
-          justifyContent: { xs: 'end', md: 'end' },
-          marginBottom: { xs: '50px', md: '50px' },
+          justifyContent: { xs: 'center', md: 'end' },
+          marginBottom: { xs: '30px', md: '50px' },
         }}
       >
-        <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={'20px'}>(Scroll)</Typography>
+        <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '20px' }}>
+          (Scroll)
+        </Typography>
       </Box>
 
     </Box>

@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 
 // Data de procedimientos con información médica real
 const procedimientosData = {
-  1: {
+  "01": {
     number: "01",
     title: "Aumento Mamario",
     subtitle: "Implantes Mamarios",
@@ -50,7 +50,7 @@ const procedimientosData = {
       }
     ]
   },
-  2: {
+  "02": {
     number: "02", 
     title: "Lipoescultura VASER",
     subtitle: "BodyTite & Morpheus8",
@@ -77,7 +77,7 @@ const procedimientosData = {
       }
     ]
   },
-  3: {
+  "03": {
     number: "03",
     title: "Rinoplastia",
     subtitle: "Refinamiento Nasal",
@@ -116,7 +116,7 @@ const procedimientosData = {
       }
     ]
   },
-  4: {
+  "04": {
     number: "04",
     title: "Abdominoplastia", 
     subtitle: "Remodelación Abdominal",
@@ -155,7 +155,7 @@ const procedimientosData = {
       }
     ]
   },
-  5: {
+  "05": {
     number: "05",
     title: "Blefaroplastia",
     subtitle: "Rejuvenecimiento Ocular", 
@@ -202,7 +202,13 @@ export default function ProcedimientoDetalle() {
   const maskRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
   
-  const procedimiento = procedimientosData[id] || procedimientosData[1]
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  console.log("Procedimiento ID:", id)
+  const procedimiento = procedimientosData[id]
+  console.log("Procedimiento:", procedimiento)
 
   useEffect(() => {
     const img = new Image()
@@ -392,7 +398,9 @@ export default function ProcedimientoDetalle() {
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
               border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              borderLeft: "none",
+              borderRight: "none",
+              //borderRadius: "20px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
               height: "fit-content"
             }}>
@@ -451,7 +459,9 @@ export default function ProcedimientoDetalle() {
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
               border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              borderTop: "none",
+              borderBottom: "none",
+              //borderRadius: "20px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
               height: "fit-content"
             }}>
@@ -505,7 +515,9 @@ export default function ProcedimientoDetalle() {
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
               border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              borderLeft: "none",
+              borderRight: "none",
+              //borderRadius: "20px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
               height: "fit-content"
             }}>
@@ -542,7 +554,7 @@ export default function ProcedimientoDetalle() {
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
               border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              //borderRadius: "20px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
               height: "fit-content"
             }}>
@@ -592,14 +604,24 @@ export default function ProcedimientoDetalle() {
                 {procedimiento.tecnologias.map((tech, index) => (
                   <Grid item xs={12} md={6} key={index}>
                     <Box sx={{
-                      p: 4,
+                      p: 3,
                       backgroundColor: "rgba(255, 255, 255, 0.7)",
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "20px",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      //borderRadius: "16px",
                       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-                      height: "100%"
+                      height: "100%",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        boxShadow: "0 12px 40px rgba(0, 0, 0, 0.1)",
+                      },
+                      display: "flex",
+                      alignItems: "flex-start",
+                      flexDirection: "column"
                     }}>
                       <Typography
                         variant="h5"
@@ -655,14 +677,19 @@ export default function ProcedimientoDetalle() {
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "16px",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      //borderRadius: "16px",
                       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
                       height: "100%",
                       transition: "all 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         boxShadow: "0 12px 40px rgba(0, 0, 0, 0.1)",
-                      }
+                      },
+                      display: "flex",
+                      alignItems: "flex-start",
+                      flexDirection: "column"
                     }}>
                       <Typography
                         variant="h6"
@@ -718,7 +745,7 @@ export default function ProcedimientoDetalle() {
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "16px",
+                      //borderRadius: "16px",
                       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
                       height: "100%",
                       textAlign: "center",
@@ -781,7 +808,7 @@ export default function ProcedimientoDetalle() {
               backdropFilter: "blur(10px)",
               WebkitBackdropFilter: "blur(10px)",
               border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "24px",
+              //borderRadius: "24px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
             }}>
               <Typography

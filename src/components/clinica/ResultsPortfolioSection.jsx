@@ -227,8 +227,9 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                   key={index} 
                   onClick={handleCardClick}
                   sx={{
-                    minWidth: "700px",
-                    maxHeight: '1000px',
+                    minWidth: {xs: '300px', md:  '700px'},
+                    maxWidth: {xs: '300px', md:  '700px'},
+                    maxHeight: {xs: '1000px', md: '1000px'},
                     flexShrink: 0
                   }}
                 >

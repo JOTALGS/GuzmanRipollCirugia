@@ -58,7 +58,6 @@ const MoreButton = styled(Button)(({ theme }) => ({
   fontSize: '0.75rem',
   color: theme.palette.text.disabled,
   padding: 0,
-  minWidth: 'auto',
   textTransform: 'none',
   '&:hover': {
     backgroundColor: 'transparent',
@@ -260,9 +259,10 @@ export default function Home() {
                 ))}
               </Box>
               
-              <MoreButton 
+              <Button 
                 component={RouterLink}
                 to={`/procedimiento/${procedure.number}`}
+                onClick={() => window.scrollTo(0, 0)}
                 endIcon={<ArrowForwardIcon />}
                 sx={{
                   backgroundColor: '#F5F5F5',
@@ -275,7 +275,7 @@ export default function Home() {
                 }}
               >
                 Ver Más
-              </MoreButton>
+              </Button>
             </Box>
           </Box>
         ))}
@@ -427,7 +427,10 @@ export default function Home() {
               
               {/* More Button */}
               <Button
+                component={RouterLink}
                 endIcon={<ArrowForwardIcon />}
+                to={`/procedimiento/${procedure.number}`}
+                onClick={() => window.scrollTo(0, 0)}
                 sx={{
                   backgroundColor: '#F5F5F5',
                   color: '#000',
@@ -439,7 +442,7 @@ export default function Home() {
                   '&:hover': { backgroundColor: '#E0E0E0' },
                 }}
               >
-                More
+                Más
               </Button>
             </Box>
           </Box>

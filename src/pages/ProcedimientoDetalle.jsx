@@ -4,23 +4,21 @@ import React, { useRef, useLayoutEffect, useState, useEffect } from "react"
 import { useParams, Link as RouterLink } from "react-router-dom"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
-import { Box, Typography, Button, Grid, Container, Divider, Chip } from "@mui/material"
+import { Box, Typography, Button, Container, Chip } from "@mui/material"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import Footer from "../components/UI/Footer"
 
-// Register GSAP plugin
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-// Data de procedimientos con información médica real
 const procedimientosData = {
   1: {
     number: "01",
-    title: "Aumento Mamario",
-    subtitle: "Implantes Mamarios",
-    category: "Cirugía Mamaria",
-    imageSrc: "/images/imagen5.jpg",
+    title: "Cirugía Mamaria",
+    subtitle: "Aumento, Reducción & Reconstrucción",
+    category: "Especialización Principal",
+    imageSrc: "/images/image.png",
     description: "El aumento mamario mediante la colocación de implantes o prótesis mamarias es el procedimiento quirúrgico más realizado a nivel mundial según las estadísticas internacionales. Es un procedimiento seguro y con resultados predecibles cuando es realizado por cirujanos plásticos avezados.",
     objetivo: "Aumento de tamaño mamario, corrección de deformidades, asimetrías, malformaciones congénitas.",
     specs: {
@@ -56,6 +54,7 @@ const procedimientosData = {
     subtitle: "BodyTite & Morpheus8",
     category: "Contorno Corporal",
     imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Tecnología de vanguardia para remodelación corporal avanzada con resultados inmediatos y recuperación optimizada.",
     description: "Tecnología avanzada de remodelación corporal que combina BodyTite (radiofrequencia asistida) con Morpheus8 para contornear y definir tu figura ideal con mínima invasión y máximos resultados.",
     objetivo: "Remodelación corporal avanzada, eliminación de grasa localizada y tensado de piel simultáneo.",
     specs: {
@@ -74,123 +73,6 @@ const procedimientosData = {
       {
         name: "Morpheus8",
         description: "Microagujas con radiofrecuencia que penetran hasta 4mm estimulando colágeno, elastina y ácido hialurónico para renovación profunda."
-      }
-    ]
-  },
-  3: {
-    number: "03",
-    title: "Rinoplastia",
-    subtitle: "Refinamiento Nasal",
-    category: "Cirugía Facial",
-    imageSrc: "/images/imagen5.jpg",
-    description: "Refinamiento nasal que respeta tu armonía facial natural mediante técnicas ultraprecisas para lograr resultados naturales y proporcionales.",
-    objetivo: "Corrección de deformidades nasales, mejora de la función respiratoria y armonización con el resto del rostro.",
-    specs: {
-      tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico",
-      anestesia: "General",
-      duracion: "2-3 horas aproximadamente"
-    },
-    tecnica: "Técnica ultraprecisa respetando estructuras naturales. Puede ser abierta o cerrada según el caso. Se moldea cartílago y hueso para crear la forma deseada manteniendo función respiratoria.",
-    recuperacion: "7-10 días de reposo con retiro de férula a los 7 días. Inflamación gradual que mejora en 6-12 meses para ver resultado definitivo.",
-    process: [
-      {
-        step: "01",
-        title: "Análisis Facial",
-        description: "Estudio de proporciones y armonía facial completa con simulación 3D."
-      },
-      {
-        step: "02", 
-        title: "Planificación",
-        description: "Diseño personalizado respetando características únicas del paciente."
-      },
-      {
-        step: "03",
-        title: "Cirugía",
-        description: "Técnica ultraprecisa respetando estructuras anatómicas."
-      },
-      {
-        step: "04",
-        title: "Seguimiento",
-        description: "Control evolutivo hasta lograr el resultado definitivo."
-      }
-    ]
-  },
-  4: {
-    number: "04",
-    title: "Abdominoplastia", 
-    subtitle: "Remodelación Abdominal",
-    category: "Contorno Corporal",
-    imageSrc: "/images/imagen5.jpg",
-    description: "Remodelación abdominal completa para un torso firme y definido, eliminando exceso de piel y tensando músculos abdominales.",
-    objetivo: "Eliminación de exceso cutáneo, tensado de músculos abdominales separados y creación de contorno abdominal armonioso.",
-    specs: {
-      tipo: "Ambulatoria o con internación breve",
-      lugar: "Block quirúrgico",
-      anestesia: "General", 
-      duracion: "3-4 horas aproximadamente"
-    },
-    tecnica: "Resección de exceso cutáneo-graso y plicatura de músculos rectos abdominales. Reposicionamiento de ombligo. Puede combinarse con liposucción para optimizar contorno.",
-    recuperacion: "Reposo laboral por 10-14 días. Uso de faja compresiva por 6 semanas. Evitar ejercicios abdominales por 2 meses.",
-    process: [
-      {
-        step: "01",
-        title: "Evaluación",
-        description: "Análisis de la pared abdominal, diástasis muscular y exceso de piel."
-      },
-      {
-        step: "02",
-        title: "Planificación", 
-        description: "Diseño personalizado del contorno abdominal ideal."
-      },
-      {
-        step: "03",
-        title: "Procedimiento",
-        description: "Remoción de exceso y reconstrucción muscular."
-      },
-      {
-        step: "04", 
-        title: "Recuperación",
-        description: "Protocolo especializado de rehabilitación."
-      }
-    ]
-  },
-  5: {
-    number: "05",
-    title: "Blefaroplastia",
-    subtitle: "Rejuvenecimiento Ocular", 
-    category: "Cirugía Facial",
-    imageSrc: "/images/imagen5.jpg",
-    description: "Rejuvenecimiento de la mirada eliminando signos de envejecimiento mediante técnica microquirúrgica para resultados naturales.",
-    objetivo: "Eliminación de bolsas palpebrales, exceso cutáneo y corrección de párpados caídos para rejuvenecer la mirada.",
-    specs: {
-      tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico", 
-      anestesia: "Local con sedación",
-      duracion: "1-2 horas aproximadamente"
-    },
-    tecnica: "Técnica microquirúrgica con incisiones en pliegues naturales. Puede ser superior, inferior o combinada. Remoción o reposicionamiento de grasa orbital.",
-    recuperacion: "5-7 días de reposo. Compresas frías primeras 48hs. Cicatrices imperceptibles que maduran en 3-6 meses.",
-    process: [
-      {
-        step: "01",
-        title: "Consulta",
-        description: "Evaluación del área ocular y planificación del tratamiento."
-      },
-      {
-        step: "02",
-        title: "Diseño", 
-        description: "Marcación precisa de incisiones para cicatrices imperceptibles."
-      },
-      {
-        step: "03",
-        title: "Cirugía",
-        description: "Técnica microquirúrgica para resultados naturales."
-      },
-      {
-        step: "04",
-        title: "Recuperación",
-        description: "Cuidados específicos para una cicatrización óptima."
       }
     ]
   }
@@ -241,17 +123,18 @@ export default function ProcedimientoDetalle() {
 
   return (
     <>
-      {/* Scroll Reveal Hero Section */}
+      {/* HERO SECTION CON SCROLL REVEAL */}
       <Box
         ref={sectionRef}
         sx={{
           position: "relative",
           height: "100vh",
           width: "100%",
-          bgcolor: "black",
+          bgcolor: "#F5F5F5",
           overflow: "hidden",
         }}
       >
+        {/* Imagen con máscara que se expande */}
         <Box
           ref={maskRef}
           sx={{
@@ -260,124 +143,468 @@ export default function ProcedimientoDetalle() {
             backgroundImage: `url(${procedimiento.imageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            zIndex: 2,
           }}
         />
-        
-        {/* Overlay Content */}
+
+        {/* Contenido siempre visible */}
         <Box
           sx={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(45deg, rgba(0,0,0,0.6), transparent)",
+            zIndex: 1,
             display: "flex",
             alignItems: "center",
-            zIndex: 10,
           }}
         >
-          <Box sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(12, 1fr)",
-            marginInline: { xs: "15px", md: "70px" },
-            columnGap: { xs: "25px", md: "20px" },
-            width: "100%"
+          <Box sx={{ 
+            width: "100%", 
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: { xs: "20px", md: "70px" }
           }}>
-            <Box sx={{ gridColumn: { xs: "1 / 13", md: "1 / 8" } }}>
-              <Button
-                component={RouterLink}
-                to="/procedimientos"
-                startIcon={<ArrowBackIcon />}
-                sx={{
-                  color: "white",
-                  mb: 3,
-                  textTransform: "none",
-                  "&:hover": { bgcolor: "rgba(255,255,255,0.1)" }
-                }}
-              >
-                Volver a Procedimientos
-              </Button>
-              
-              <Chip
-                label={procedimiento.category}
-                sx={{
-                  bgcolor: "rgba(255,255,255,0.2)",
-                  color: "white",
-                  fontSize: "12px",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  mb: 2,
-                }}
-              />
-              
+            {/* Botón Volver */}
+            <Button
+              component={RouterLink}
+              to="/procedimientos"
+              startIcon={<ArrowBackIcon />}
+              sx={{
+                position: "absolute",
+                top: { xs: -200, md: -250 },
+                left: 0,
+                color: "#111",
+                textTransform: "none",
+                fontWeight: 500,
+                fontSize: "15px",
+                "&:hover": { bgcolor: "rgba(0,0,0,0.05)" },
+                zIndex: 20
+              }}
+            >
+              Volver a Procedimientos
+            </Button>
+
+            {/* IZQUIERDA: Número más pequeño */}
+            <Box>
               <Typography
                 variant="h1"
                 sx={{
-                  color: "white",
+                  color: "#111",
                   fontFamily: "Poppins",
-                  fontSize: { xs: "4rem", md: "6rem" },
-                  fontWeight: 700,
+                  fontSize: { xs: "5rem", md: "8rem", lg: "74px" },
+                  fontWeight: 600,
                   lineHeight: 0.9,
-                  mb: 1,
-                  opacity: 0.8
+                  opacity: 0.95
                 }}
               >
                 {procedimiento.number}
               </Typography>
-              
+            </Box>
+
+            {/* DERECHA: Título menos bold + Catch Phrase con más espacio */}
+            <Box
+              sx={{
+                textAlign: "right",
+                maxWidth: { xs: "50%", md: "45%", lg: "45%" },
+                  lineHeight: 1.5,
+
+              }}
+            >
+              {/* Glassmorphism Chip */}
+              <Chip
+                label={procedimiento.category}
+                sx={{
+                  background: "rgba(255, 255, 255, 0.25)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                  color: "#111",
+                  fontSize: "11px",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  fontWeight: 500,
+                  mb: 2.5,
+                  height: "26px"
+                }}
+              />
+
+              {/* Título menos bold */}
               <Typography
                 variant="h2"
                 sx={{
-                  color: "white",
-                  fontFamily: "Poppins", 
-                  fontSize: { xs: "2rem", md: "3rem" },
+                  color: "#111",
+                  fontFamily: "Poppins",
+                  fontSize: { xs: "2.2rem", md: "3.5rem", lg: "4rem" },
                   fontWeight: 600,
                   lineHeight: 1.1,
-                  mb: 1,
+                  mb: 3.5,
+                  letterSpacing: "-0.02em"
                 }}
               >
                 {procedimiento.title}
               </Typography>
-              
+
+              {/* Catch Phrase con más espaciado */}
               <Typography
-                variant="h3"
+                variant="body1"
                 sx={{
-                  color: "rgba(255,255,255,0.8)",
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.2rem", md: "1.5rem" },
-                  fontWeight: 300,
-                  mb: 3,
+                  color: "rgba(0,0,0,0.65)",
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: { xs: "0.9rem", md: "1rem" },
+                  fontWeight: 400,
+                  lineHeight: 1.65,
+                  letterSpacing: "-0.01em"
                 }}
               >
-                {procedimiento.subtitle}
+                {procedimiento.catchPhrase}
               </Typography>
             </Box>
           </Box>
         </Box>
       </Box>
 
-      {/* Main Content */}
-      <Box sx={{ bgcolor: "white", py: { xs: 6, md: 10 } }}>
+      {/* BENEFITS SECTION */}
+      <Box sx={{ bgcolor: "white", py: { xs: 6, sm: 8, md: 10 } }}>
         <Box sx={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
-          marginInline: { xs: "15px", md: "70px" },
-          columnGap: { xs: "25px", md: "20px" },
-          rowGap: { xs: 6, md: 8 }
+          columnGap: "20px",
+          mx: { xs: "20px", sm: "40px", md: "70px" },
         }}>
-          
-          {/* Overview Section */}
-          <Box sx={{ 
+          <Box sx={{ gridColumn: { xs: "1 / 13", md: "3 / 10" } }}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "2.625rem" },
+                fontWeight: 700,
+                color: "#111",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+                mb: { xs: 3, md: 6 },
+                textAlign: "left"
+              }}
+            >
+              Beneficios
+            </Typography>
+
+            <Box sx={{
+              backgroundColor: "#F8F8F8",
+              borderRadius: "20px",
+              p: { xs: "12px", sm: "14px", md: "16px" },
+            }}>
+              <Box sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+                gap: "14px",
+                mb: "14px"
+              }}>
+                {/* Card 1 */}
+                <Box sx={{
+                  backgroundColor: "#E9E9E9",
+                  borderRadius: "16px",
+                  p: { xs: "20px", md: "24px" },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  transition: "all 0.25s ease",
+                  "&:hover": {
+                    backgroundColor: "#E6E6E6",
+                    transform: "translateY(-2px)"
+                  }
+                }}>
+                  <Box sx={{ display: "flex", gap: "4px", mb: "8px" }}>
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  </Box>
+                  <Typography sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#111",
+                    mb: "6px",
+                    textAlign: "left"
+                  }}>
+                    Resultados Predecibles
+                  </Typography>
+                  <Typography sx={{
+                    fontSize: "15px",
+                    lineHeight: 1.55,
+                    color: "rgba(0,0,0,0.7)",
+                    textAlign: "left"
+                  }}>
+                    Nos enfocamos en lograr resultados naturales y armoniosos, cumpliendo con las expectativas de cada paciente.
+                  </Typography>
+                </Box>
+
+                {/* Card 2 */}
+                <Box sx={{
+                  backgroundColor: "#E9E9E9",
+                  borderRadius: "16px",
+                  p: { xs: "20px", md: "24px" },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  transition: "all 0.25s ease",
+                  "&:hover": {
+                    backgroundColor: "#E6E6E6",
+                    transform: "translateY(-2px)"
+                  }
+                }}>
+                  <Box sx={{ display: "flex", gap: "4px", mb: "8px" }}>
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  </Box>
+                  <Typography sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#111",
+                    mb: "6px",
+                    textAlign: "left"
+                  }}>
+                    Diseño Personalizado
+                  </Typography>
+                  <Typography sx={{
+                    fontSize: "15px",
+                    lineHeight: 1.55,
+                    color: "rgba(0,0,0,0.7)",
+                    textAlign: "left"
+                  }}>
+                    Cada tratamiento es único y se adapta a tus características físicas y objetivos estéticos personales.
+                  </Typography>
+                </Box>
+
+                {/* Card 3 */}
+                <Box sx={{
+                  backgroundColor: "#E9E9E9",
+                  borderRadius: "16px",
+                  p: { xs: "20px", md: "24px" },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  transition: "all 0.25s ease",
+                  "&:hover": {
+                    backgroundColor: "#E6E6E6",
+                    transform: "translateY(-2px)"
+                  }
+                }}>
+                  <Box sx={{ display: "flex", gap: "4px", mb: "8px" }}>
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                    <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  </Box>
+                  <Typography sx={{
+                    fontFamily: "Poppins",
+                    fontSize: "18px",
+                    fontWeight: 600,
+                    color: "#111",
+                    mb: "6px",
+                    textAlign: "left"
+                  }}>
+                    Tecnología Avanzada
+                  </Typography>
+                  <Typography sx={{
+                    fontSize: "15px",
+                    lineHeight: 1.55,
+                    color: "rgba(0,0,0,0.7)",
+                    textAlign: "left"
+                  }}>
+                    Utilizamos las técnicas más modernas y equipamiento de última generación para garantizar tu seguridad.
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Card Ancha */}
+              <Box sx={{
+                backgroundColor: "#E9E9E9",
+                borderRadius: "16px",
+                p: { xs: "20px", md: "24px 28px" },
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                transition: "all 0.25s ease",
+                "&:hover": {
+                  backgroundColor: "#E6E6E6",
+                  transform: "translateY(-2px)"
+                }
+              }}>
+                <Box sx={{ display: "flex", gap: "4px", mb: "8px" }}>
+                  <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                  <Box sx={{ width: "7px", height: "7px", backgroundColor: "#111", borderRadius: "50%" }} />
+                </Box>
+                <Typography sx={{
+                  fontFamily: "Poppins",
+                  fontSize: "18px",
+                  fontWeight: 600,
+                  color: "#111",
+                  mb: "6px",
+                  textAlign: "left"
+                }}>
+                  Atención Integral
+                </Typography>
+                <Typography sx={{
+                  fontSize: "15px",
+                  lineHeight: 1.55,
+                  color: "rgba(0,0,0,0.7)",
+                  maxWidth: "90%",
+                  textAlign: "left"
+                }}>
+                  Acompañamiento completo desde la consulta inicial hasta el seguimiento post-operatorio para asegurar tu bienestar.
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* NUESTRO ACERCAMIENTO SECTION */}
+      <Box sx={{ bgcolor: "white", py: { xs: 6, sm: 8, md: 10 } }}>
+        <Box sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(12, 1fr)",
+          columnGap: "20px",
+          mx: { xs: "20px", sm: "40px", md: "70px" },
+        }}>
+          <Box sx={{ gridColumn: { xs: "1 / 13", md: "3 / 10" } }}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontFamily: "Poppins",
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "2.625rem" },
+                fontWeight: 700,
+                color: "#111",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+                mb: { xs: 3, md: 6 },
+                textAlign: "left"
+              }}
+            >
+              Nuestro Acercamiento
+            </Typography>
+
+            <Box sx={{
+              backgroundColor: "#F8F8F8",
+              borderRadius: "20px",
+              p: { xs: "12px", sm: "14px", md: "16px" },
+            }}>
+              <Box sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "14px",
+              }}>
+                {[
+                  { 
+                    dots: 1, 
+                    title: "Consulta personalizada",
+                    text: "Conocemos tus expectativas, anatomía y antecedentes clínicos. Definimos juntos el mejor enfoque para lograr un resultado natural y seguro."
+                  },
+                  {
+                    dots: 2,
+                    title: "Diseño del procedimiento", 
+                    text: "Se estudian proporciones, medidas y proyección ideales según tu estructura corporal. Todo el plan se define de forma individualizada."
+                  },
+                  {
+                    dots: 3,
+                    title: "Precisión y cuidado",
+                    text: "Utilizamos tecnología avanzada y protocolos internacionales para garantizar seguridad y resultados armónicos."
+                  },
+                  {
+                    dots: 4,
+                    title: "Seguimiento cercano",
+                    text: "Te acompañamos durante el proceso postoperatorio, con controles programados y asistencia personalizada."
+                  },
+                  {
+                    dots: 5,
+                    title: "Armonía y confianza",
+                    text: "Buscamos resultados equilibrados, que realcen tu figura respetando tu anatomía y bienestar general."
+                  }
+                ].map((item, index) => (
+                  <Box key={index} sx={{
+                    backgroundColor: "#E9E9E9",
+                    borderRadius: "16px",
+                    p: { xs: "20px", md: "24px" },
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "12px",
+                    transition: "all 0.25s ease",
+                    "&:hover": {
+                      backgroundColor: "#E6E6E6",
+                      transform: "translateY(-2px)"
+                    }
+                  }}>
+                    <Box sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "4px",
+                      mb: "8px",
+                      height: "18px"
+                    }}>
+                      {Array.from({ length: item.dots }).map((_, i) => (
+                        <Box key={i} sx={{
+                          width: "7px",
+                          height: "7px",
+                          backgroundColor: "#111",
+                          borderRadius: "50%"
+                        }} />
+                      ))}
+                    </Box>
+
+                    <Typography sx={{
+                      fontFamily: "Poppins",
+                      fontSize: "18px",
+                      fontWeight: 600,
+                      color: "#111",
+                      mb: "6px",
+                      textAlign: "left"
+                    }}>
+                      {item.title}
+                    </Typography>
+
+                    <Typography sx={{
+                      fontSize: "15px",
+                      lineHeight: 1.55,
+                      color: "rgba(0,0,0,0.7)",
+                      textAlign: "left"
+                    }}>
+                      {item.text}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* INFORMACIÓN DEL PROCEDIMIENTO */}
+      <Box sx={{ bgcolor: "white", py: { xs: 6, sm: 8, md: 10 } }}>
+        <Container maxWidth={false} sx={{
+          maxWidth: "1400px",
+          px: { xs: "20px", sm: "40px", md: "70px" },
+        }}>
+          <Box sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            columnGap: { xs: "0px", sm: "20px", md: "24px" },
+            rowGap: { xs: 4, sm: 5, md: 8 }
+          }}>
+
+          <Box sx={{
             gridColumn: { xs: "1 / 13", md: "1 / 13" },
-            textAlign: "center",
-            mb: 4
+            mb: { xs: 2, sm: 3, md: 4 }
           }}>
             <Typography
               variant="h2"
               sx={{
                 fontFamily: "Poppins",
-                fontSize: { xs: "2rem", md: "3rem" },
+                fontSize: { xs: "1.75rem", sm: "2.25rem", md: "3rem" },
                 fontWeight: 600,
                 color: "black",
-                mb: 3,
+                mb: { xs: 2, md: 3 },
+                textAlign: "left"
               }}
             >
               Información del Procedimiento
@@ -385,413 +612,386 @@ export default function ProcedimientoDetalle() {
           </Box>
 
           {/* Description Card */}
-          <Box sx={{ gridColumn: { xs: "1 / 13", md: "1 / 7" } }}>
+          <Box sx={{ gridColumn: { xs: "1 / 13", sm: "1 / 13", md: "1 / 7" } }}>
             <Box sx={{
-              p: { xs: 3, md: 4 },
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-              height: "fit-content"
+              p: { xs: "3px", sm: "4px", md: "5px" },
+              backgroundColor: "#F5F5F5",
+              borderRadius: { xs: "12px", md: "14px" },
             }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.5rem", md: "1.8rem" },
-                  fontWeight: 600,
-                  color: "black",
-                  mb: 3,
-                }}
-              >
-                Descripción
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "16px",
-                  lineHeight: 1.7,
-                  color: "#4B5563",
-                  mb: 3,
-                }}
-              >
-                {procedimiento.description}
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontWeight: 600,
-                  color: "#75909F",
-                  mb: 2,
-                }}
-              >
-                Objetivo
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: 1.6,
-                  color: "#4B5563",
-                }}
-              >
-                {procedimiento.objetivo}
-              </Typography>
+              <Box sx={{
+                p: { xs: "18px", sm: "20px", md: "24px" },
+                backgroundColor: "#E9E9E9",
+                borderRadius: { xs: "8px", md: "10px" },
+                height: "fit-content"
+              }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: { xs: "17px", sm: "18px", md: "20px" },
+                    fontWeight: 500,
+                    color: "#000",
+                    mb: { xs: 3, md: 4 },
+                    letterSpacing: "-0.01em",
+                    textAlign: "left"
+                  }}
+                >
+                  Descripción
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: "14px", sm: "15px" },
+                    lineHeight: 1.6,
+                    color: "#333",
+                    mb: { xs: 3, md: 4 },
+                    fontWeight: 400,
+                    textAlign: "left"
+                  }}
+                >
+                  {procedimiento.description}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontWeight: 500,
+                    color: "#000",
+                    mb: 2,
+                    fontSize: "16px",
+                    textAlign: "left"
+                  }}
+                >
+                  Objetivo
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontSize: "14px",
+                    lineHeight: 1.5,
+                    color: "#333",
+                    fontWeight: 400,
+                    textAlign: "left"
+                  }}
+                >
+                  {procedimiento.objetivo}
+                </Typography>
+              </Box>
             </Box>
           </Box>
 
           {/* Specifications Card */}
-          <Box sx={{ gridColumn: { xs: "1 / 13", md: "7 / 13" } }}>
+          <Box sx={{ gridColumn: { xs: "1 / 13", sm: "1 / 13", md: "7 / 13" } }}>
             <Box sx={{
-              p: { xs: 3, md: 4 },
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-              height: "fit-content"
+              p: { xs: "3px", sm: "4px", md: "5px" },
+              backgroundColor: "#F5F5F5",
+              borderRadius: { xs: "12px", md: "14px" },
             }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.5rem", md: "1.8rem" },
-                  fontWeight: 600,
-                  color: "black",
-                  mb: 3,
-                }}
-              >
-                Especificaciones
-              </Typography>
-              
-              {Object.entries(procedimiento.specs).map(([key, value]) => (
-                <Box key={key} sx={{ mb: 2 }}>
-                  <Typography
-                    variant="subtitle2"
-                    sx={{
-                      fontFamily: "Poppins",
-                      fontWeight: 600,
-                      color: "#75909F",
-                      textTransform: "capitalize",
-                      fontSize: "14px",
-                      mb: 0.5,
-                    }}
-                  >
-                    {key.replace('_', ' ')}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontSize: "15px",
-                      color: "#4B5563",
-                    }}
-                  >
-                    {value}
-                  </Typography>
+              <Box sx={{
+                p: { xs: "18px", sm: "20px", md: "24px" },
+                backgroundColor: "#E9E9E9",
+                borderRadius: { xs: "8px", md: "10px" },
+                height: "fit-content"
+              }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: { xs: "17px", sm: "18px", md: "20px" },
+                    fontWeight: 500,
+                    color: "#000",
+                    mb: { xs: 3, md: 4 },
+                    letterSpacing: "-0.01em",
+                    textAlign: "left"
+                  }}
+                >
+                  Especificaciones
+                </Typography>
+
+                <Box sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 3,
+                }}>
+                  {Object.entries(procedimiento.specs).map(([key, value]) => (
+                    <Box key={key} sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start'
+                    }}>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          fontFamily: "Poppins",
+                          fontWeight: 500,
+                          color: "#000",
+                          textTransform: "capitalize",
+                          fontSize: { xs: "13px", sm: "14px" },
+                          mb: 1,
+                          textAlign: "left"
+                        }}
+                      >
+                        {key.replace('_', ' ')}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontSize: { xs: "13px", sm: "14px" },
+                          color: "#333",
+                          fontWeight: 400,
+                          textAlign: "left"
+                        }}
+                      >
+                        {value}
+                      </Typography>
+                    </Box>
+                  ))}
                 </Box>
-              ))}
+              </Box>
             </Box>
           </Box>
 
           {/* Technique Card */}
-          <Box sx={{ gridColumn: { xs: "1 / 13", md: "1 / 7" } }}>
+          <Box sx={{ gridColumn: { xs: "1 / 13", sm: "1 / 13", md: "1 / 7" } }}>
             <Box sx={{
-              p: { xs: 3, md: 4 },
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-              height: "fit-content"
+              p: { xs: "3px", sm: "4px", md: "5px" },
+              backgroundColor: "#F5F5F5",
+              borderRadius: { xs: "12px", md: "14px" },
             }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.5rem", md: "1.8rem" },
-                  fontWeight: 600,
-                  color: "black",
-                  mb: 3,
-                }}
-              >
-                Técnica
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "16px",
-                  lineHeight: 1.7,
-                  color: "#4B5563",
-                }}
-              >
-                {procedimiento.tecnica}
-              </Typography>
+              <Box sx={{
+                p: { xs: "18px", sm: "20px", md: "24px" },
+                backgroundColor: "#E9E9E9",
+                borderRadius: { xs: "8px", md: "10px" },
+                height: "fit-content"
+              }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: { xs: "17px", sm: "18px", md: "20px" },
+                    fontWeight: 500,
+                    color: "#000",
+                    mb: { xs: 3, md: 4 },
+                    letterSpacing: "-0.01em",
+                    textAlign: "left"
+                  }}
+                >
+                  Técnica
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: "14px", sm: "15px" },
+                    lineHeight: 1.6,
+                    color: "#333",
+                    fontWeight: 400,
+                    textAlign: "left"
+                  }}
+                >
+                  {procedimiento.tecnica}
+                </Typography>
+              </Box>
             </Box>
           </Box>
 
           {/* Recovery Card */}
-          <Box sx={{ gridColumn: { xs: "1 / 13", md: "7 / 13" } }}>
+          <Box sx={{ gridColumn: { xs: "1 / 13", sm: "1 / 13", md: "7 / 13" } }}>
             <Box sx={{
-              p: { xs: 3, md: 4 },
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: "1px solid rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-              height: "fit-content"
+              p: { xs: "3px", sm: "4px", md: "5px" },
+              backgroundColor: "#F5F5F5",
+              borderRadius: { xs: "12px", md: "14px" },
             }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.5rem", md: "1.8rem" },
-                  fontWeight: 600,
-                  color: "black",
-                  mb: 3,
-                }}
-              >
-                Recuperación
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "16px",
-                  lineHeight: 1.7,
-                  color: "#4B5563",
-                }}
-              >
-                {procedimiento.recuperacion}
-              </Typography>
+              <Box sx={{
+                p: { xs: "18px", sm: "20px", md: "24px" },
+                backgroundColor: "#E9E9E9",
+                borderRadius: { xs: "8px", md: "10px" },
+                height: "fit-content"
+              }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: { xs: "17px", sm: "18px", md: "20px" },
+                    fontWeight: 500,
+                    color: "#000",
+                    mb: { xs: 3, md: 4 },
+                    letterSpacing: "-0.01em",
+                    textAlign: "left"
+                  }}
+                >
+                  Recuperación
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: "14px", sm: "15px" },
+                    lineHeight: 1.6,
+                    color: "#333",
+                    fontWeight: 400,
+                    textAlign: "left"
+                  }}
+                >
+                  {procedimiento.recuperacion}
+                </Typography>
+              </Box>
             </Box>
           </Box>
 
-          {/* Technologies Section (for Lipoescultura) */}
+          {/* Tecnologías (si existen) */}
           {procedimiento.tecnologias && (
-            <Box sx={{ gridColumn: "1 / 13" }}>
+            <Box sx={{ gridColumn: "1 / 13", mt: { xs: 4, md: 6 } }}>
               <Typography
                 variant="h3"
                 sx={{
                   fontFamily: "Poppins",
-                  fontSize: { xs: "1.8rem", md: "2.2rem" },
+                  fontSize: { xs: "1.75rem", sm: "2rem", md: "2.5rem" },
                   fontWeight: 600,
                   color: "black",
-                  mb: 4,
-                  textAlign: "center",
+                  mb: { xs: 3, md: 5 },
+                  textAlign: "left",
                 }}
               >
                 Tecnologías Avanzadas
               </Typography>
-              
-              <Grid container spacing={4}>
+
+              <Box sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gap: { xs: "20px", md: "24px" },
+              }}>
                 {procedimiento.tecnologias.map((tech, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Box sx={{
-                      p: 4,
-                      backgroundColor: "rgba(255, 255, 255, 0.7)",
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
-                      border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "20px",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-                      height: "100%"
-                    }}>
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontFamily: "Poppins",
-                          fontWeight: 600,
-                          color: "#75909F",
-                          mb: 2,
-                        }}
-                      >
-                        {tech.name}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontSize: "16px",
-                          lineHeight: 1.7,
-                          color: "#4B5563",
-                        }}
-                      >
-                        {tech.description}
-                      </Typography>
-                    </Box>
-                  </Grid>
+                  <Box key={index} sx={{
+                    backgroundColor: "#E9E9E9",
+                    borderRadius: "24px",
+                    p: { xs: "24px", md: "32px" },
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                    border: "1px solid rgba(255,255,255,0.8)",
+                    transition: "all 0.25s ease",
+                    "&:hover": {
+                      backgroundColor: "#E6E6E6",
+                      transform: "translateY(-2px)"
+                    }
+                  }}>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontFamily: "Poppins",
+                        fontWeight: 600,
+                        color: "#000",
+                        mb: 3,
+                        fontSize: "20px",
+                        letterSpacing: "-0.01em",
+                        textAlign: "left"
+                      }}
+                    >
+                      {tech.name}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: "15px",
+                        lineHeight: 1.6,
+                        color: "rgba(0,0,0,0.7)",
+                        fontWeight: 400,
+                        textAlign: "left"
+                      }}
+                    >
+                      {tech.description}
+                    </Typography>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
             </Box>
           )}
 
-          {/* Sub-procedures Section (for Cirugía Mamaria) */}
+          {/* Sub-procedimientos (si existen) */}
           {procedimiento.subprocedimientos && (
-            <Box sx={{ gridColumn: "1 / 13" }}>
+            <Box sx={{ gridColumn: "1 / 13", mt: { xs: 4, md: 6 } }}>
               <Typography
                 variant="h3"
                 sx={{
                   fontFamily: "Poppins",
-                  fontSize: { xs: "1.8rem", md: "2.2rem" },
+                  fontSize: { xs: "1.75rem", sm: "2rem", md: "2.5rem" },
                   fontWeight: 600,
                   color: "black",
-                  mb: 4,
-                  textAlign: "center",
+                  mb: { xs: 3, md: 5 },
+                  textAlign: "left",
                 }}
               >
                 Tipos de Cirugía Mamaria
               </Typography>
-              
-              <Grid container spacing={3}>
-                {procedimiento.subprocedimientos.map((sub, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Box sx={{
-                      p: 3,
-                      backgroundColor: "rgba(255, 255, 255, 0.7)",
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
-                      border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "16px",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-                      height: "100%",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        boxShadow: "0 12px 40px rgba(0, 0, 0, 0.1)",
-                      }
-                    }}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontFamily: "Poppins",
-                          fontWeight: 600,
-                          color: "#75909F",
-                          mb: 2,
-                        }}
-                      >
-                        {sub.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontSize: "15px",
-                          lineHeight: 1.6,
-                          color: "#4B5563",
-                        }}
-                      >
-                        {sub.description}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          )}
 
-          {/* Process Steps (for other procedures) */}
-          {procedimiento.process && (
-            <Box sx={{ gridColumn: "1 / 13" }}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "1.8rem", md: "2.2rem" },
-                  fontWeight: 600,
-                  color: "black",
-                  mb: 4,
-                  textAlign: "center",
-                }}
-              >
-                Proceso del Tratamiento
-              </Typography>
-              
-              <Grid container spacing={3}>
-                {procedimiento.process.map((step, index) => (
-                  <Grid item xs={12} md={6} lg={3} key={index}>
-                    <Box sx={{
-                      p: 3,
-                      backgroundColor: "rgba(255, 255, 255, 0.7)",
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
-                      border: "1px solid rgba(0, 0, 0, 0.05)",
-                      borderRadius: "16px",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
-                      height: "100%",
-                      textAlign: "center",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        boxShadow: "0 12px 40px rgba(0, 0, 0, 0.1)",
-                      }
-                    }}>
-                      <Typography
-                        variant="h4"
-                        sx={{
-                          fontFamily: "Poppins",
-                          fontSize: "2rem",
-                          fontWeight: 700,
-                          color: "#75909F",
-                          mb: 2,
-                          opacity: 0.7
-                        }}
-                      >
-                        {step.step}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontFamily: "Poppins",
-                          fontWeight: 600,
-                          color: "black",
-                          mb: 2,
-                        }}
-                      >
-                        {step.title}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontSize: "14px",
-                          lineHeight: 1.6,
-                          color: "#4B5563",
-                        }}
-                      >
-                        {step.description}
-                      </Typography>
-                    </Box>
-                  </Grid>
+              <Box sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gap: { xs: "20px", md: "24px" },
+              }}>
+                {procedimiento.subprocedimientos.map((sub, index) => (
+                  <Box key={index} sx={{
+                    backgroundColor: "#E9E9E9",
+                    borderRadius: "24px",
+                    p: { xs: "24px", md: "32px" },
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                    border: "1px solid rgba(255,255,255,0.8)",
+                    transition: "all 0.25s ease",
+                    "&:hover": {
+                      backgroundColor: "#E6E6E6",
+                      transform: "translateY(-2px)"
+                    }
+                  }}>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontFamily: "Poppins",
+                        fontWeight: 600,
+                        color: "#000",
+                        mb: 3,
+                        fontSize: { xs: "18px", md: "20px" },
+                        letterSpacing: "-0.01em",
+                        textAlign: "left"
+                      }}
+                    >
+                      {sub.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: { xs: "14px", md: "15px" },
+                        lineHeight: 1.6,
+                        color: "rgba(0,0,0,0.7)",
+                        fontWeight: 400,
+                        textAlign: "left"
+                      }}
+                    >
+                      {sub.description}
+                    </Typography>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
             </Box>
           )}
 
           {/* CTA Section */}
-          <Box sx={{ 
+          <Box sx={{
             gridColumn: "1 / 13",
-            textAlign: "center",
-            mt: 6
+            mt: { xs: 6, md: 8 }
           }}>
             <Box sx={{
-              p: { xs: 4, md: 6 },
-              backgroundColor: "rgba(255, 255, 255, 0.7)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: "1px solid rgba(0, 0, 0, 0.05)",
+              backgroundColor: "#E9E9E9",
               borderRadius: "24px",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.06)",
+              p: { xs: "32px", md: "48px" },
+              boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+              border: "1px solid rgba(255,255,255,0.8)",
+              textAlign: "center"
             }}>
               <Typography
                 variant="h4"
                 sx={{
                   fontFamily: "Poppins",
-                  fontSize: { xs: "1.5rem", md: "2rem" },
+                  fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
                   fontWeight: 600,
                   color: "black",
-                  mb: 2,
+                  mb: { xs: 2, md: 3 },
                 }}
               >
                 ¿Listo para transformar tu imagen?
@@ -799,11 +999,12 @@ export default function ProcedimientoDetalle() {
               <Typography
                 variant="body1"
                 sx={{
-                  fontSize: "16px",
-                  color: "#4B5563",
-                  mb: 4,
-                  maxWidth: "600px",
-                  mx: "auto"
+                  fontSize: { xs: "15px", sm: "16px", md: "17px" },
+                  color: "rgba(0,0,0,0.7)",
+                  mb: { xs: 3, md: 4 },
+                  maxWidth: "700px",
+                  mx: "auto",
+                  lineHeight: 1.6
                 }}
               >
                 Agenda tu consulta personalizada y descubre cómo podemos ayudarte a lograr tus objetivos estéticos.
@@ -811,18 +1012,23 @@ export default function ProcedimientoDetalle() {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "#0081C7",
+                  background: "rgba(0, 129, 199, 0.8)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
                   color: "white",
-                  px: 6,
-                  py: 2,
-                  fontSize: "16px",
+                  px: { xs: 4, sm: 5, md: 6 },
+                  py: { xs: 1.5, md: 2 },
+                  fontSize: { xs: "14px", sm: "15px", md: "16px" },
                   fontWeight: 600,
-                  borderRadius: "12px",
+                  borderRadius: "16px",
                   textTransform: "none",
                   "&:hover": {
-                    backgroundColor: "#0070B5",
+                    background: "rgba(0, 112, 181, 0.9)",
+                    backdropFilter: "blur(15px)",
+                    WebkitBackdropFilter: "blur(15px)",
                     transform: "translateY(-2px)",
-                    boxShadow: "0 8px 25px rgba(0, 129, 199, 0.3)"
+                    boxShadow: "0 8px 25px rgba(0, 129, 199, 0.4)"
                   },
                   transition: "all 0.3s ease"
                 }}
@@ -831,7 +1037,8 @@ export default function ProcedimientoDetalle() {
               </Button>
             </Box>
           </Box>
-        </Box>
+          </Box>
+        </Container>
       </Box>
 
       <Footer />

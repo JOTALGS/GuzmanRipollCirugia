@@ -76,14 +76,15 @@ export default function CTAhome() {
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
         flexDirection: { xs: 'column', md: 'row' },
-        columnGap: { xs: '25px', md: '35px' },
-        paddingInline: { xs: '15px', md: '75px' },
+        columnGap: { xs: '25px', md: '20px' },
+        paddingInline: { xs: '15px', md: '70px' },
         marginBottom: { xs: '6vh', md: '0vh' },
       }}
     >
+      {/* SECCIÓN IZQUIERDA - TEXTO PRINCIPAL */}
       <Box
         sx={{
-          marginTop: '71px',
+          marginTop: '100px',
           gridColumn: { xs: '1 / 13', md: '1 / 7'},
           gridRow: '1 / 1',
           display: 'flex',
@@ -93,46 +94,114 @@ export default function CTAhome() {
           justifyContent: 'start',
         }}
       >
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '12px',md: '16px' , xl: '20px' }} sx={{ fontWeight: 'semibold', width: { xs: '70%', md: '40%'}, color: 'background', textTransform: 'uppercase'}}>
+        {/* TEXTO SUPERIOR PEQUEÑO */}
+        <Typography 
+          fontFamily={'Red Hat Display'} 
+          fontSize={{ xs: '12px', md: '16px', xl: '16px' }} 
+          sx={{ 
+            fontWeight: '500', 
+            width: { xs: '60%', md: '30%'}, 
+            color: 'background', 
+            textTransform: 'uppercase',
+            lineHeight: '1.1', // EDITAR AQUÍ - Line height texto pequeño
+          }}
+        >
           Descubrí como podemos transformar tu vida
         </Typography>
+        
         <div id="left-section">
+          {/* CONTENEDOR PRINCIPAL DEL TÍTULO */}
           <Typography 
             component="h1"
             className="leading-tight font-bold text-white text-start space-y-2"
             sx={{
-              paddingTop: "20px",
-              fontFamily: "Arimo",
+              paddingTop: "40px",
               fontSize: isXs ? "calc(100vw / 25)" : "calc(100vw / 32)",
-              lineHeight: "0.5",
+              lineHeight: '0.9', // EDITAR AQUÍ - Line height general del título
             }}
           >
-            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>
+            {/* LÍNEA 1: "Diseñados para" */}
+            <Typography 
+              fontFamily={'Poppins'} 
+              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+              sx={{ 
+                width: '100%', 
+                color: 'background', 
+                textTransform: '', 
+                letterSpacing: '-3px',
+                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 1
+              }}
+            >
               Diseñados para 
             </Typography>
-            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%', color: 'background', textTransform: '', letterSpacing: '-3px'}}>
-              <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: '-3px' }}>
+            
+            {/* LÍNEA 2: "Maximizar tus" */}
+            <Typography 
+              fontFamily={'Poppins'} 
+              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+              sx={{ 
+                width: '100%', 
+                color: 'background', 
+                textTransform: '', 
+                letterSpacing: '-3px',
+                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 2
+              }}
+            >
+              <Typography 
+                component="span" 
+                fontFamily={'Poppins'} 
+                fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+                sx={{ 
+                  color: 'textAccent', 
+                  letterSpacing: '-3px',
+                  lineHeight: '1.1', // EDITAR AQUÍ - Line height del span "Maximizar"
+                }}
+              >
                 Maximizar
               </Typography>
-              {' '}  tus 
+              {' '}Tus 
             </Typography>
-            <Typography fontFamily={'Poppins'} fontSize={{ xs: '45px',md: '45px' , xl: '70px' }} sx={{ width: '100%',color: 'background', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
+            
+            {/* LÍNEA 3: "Resultados" */}
+            <Typography 
+              fontFamily={'Poppins'} 
+              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+              sx={{ 
+                width: '100%', 
+                color: 'background', 
+                textTransform: 'capitalize', 
+                letterSpacing: '-3px',
+                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 3
+              }}
+            >
               Resultados
             </Typography>
           </Typography>
 
-          <Typography fontFamily={'Poppins'} fontSize={{ xs: '12px',md: '15px' , xl: '20px' }} component="p" sx={{ width:'80%', marginTop: '20px', }}>
+          {/* TEXTO DESCRIPTIVO */}
+          <Typography 
+            fontFamily={'Poppins'} 
+            fontSize={{ xs: '12px', md: '16px', xl: '16px' }} 
+            component="p" 
+            sx={{ 
+              width: '80%', 
+              marginTop: '30px',
+              lineHeight: '1.2', // EDITAR AQUÍ - Line height texto descriptivo
+            }}
+          >
             Tratamientos avanzados para procesos de recuperación más rápidos.
           </Typography>
 
+          {/* BOTÓN */}
           <Box component="a" href="/contacto" sx={{ textDecoration: 'none' }} >
-            <Box sx={{ marginTop: '30px' }}>
+            <Box sx={{ marginTop: '20px' }}>
               <ClipBottomButton>Agendate</ClipBottomButton>
             </Box>
           </Box>
         </div>
       </Box>
 
+      {/* SECCIÓN DERECHA - CARDS */}
       <Box sx={{
         fontFamily: "Poppins",
         fontWeight: "200",
@@ -144,7 +213,7 @@ export default function CTAhome() {
         justifyContent: "space-between",
         alignItems: "flex-end",
         flexWrap: "wrap",
-        marginTop: "110px"
+        marginTop: { xs: '-50px' , md: '100px' }
       }}>
 
         {[
@@ -190,6 +259,7 @@ export default function CTAhome() {
             
             <Box sx={{ display: "flex", width: "100%", flexDirection: "column"}}>
 
+              {/* HEADER DE CARD CON NÚMERO */}
               <Box sx={{
                 display: "flex",
                 alignItems: "center",
@@ -219,24 +289,25 @@ export default function CTAhome() {
                   marginLeft: "40px",
                   fontSize: "1.2rem",
                   fontWeight: "100",
+                  lineHeight: '1.7', // EDITAR AQUÍ - Line height título de card
                 }}>
                   {card.title}
                 </Box>
               </Box>
 
-              {/* Image */}
+              {/* IMAGEN */}
               <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
                 <img src={card.image} style={{ width: "50%", height: "300px", objectFit: "contain" }} />
               </Box>
 
             </Box>
 
-            {/* Content */}
+            {/* CONTENIDO DE CARD */}
             <Box sx={{ mt: 2, width: "75%" }}>
               <Box sx={{ 
                 fontWeight: 600,
                 fontSize: "1.1rem",
-                lineHeight: 1.2,
+                lineHeight: '1.1', // EDITAR AQUÍ - Line height subtítulo
                 textAlign: "start",
               }}>
                 {card.subtitle}
@@ -245,7 +316,7 @@ export default function CTAhome() {
                 mt: 1,
                 fontSize: "0.9rem",
                 fontWeight: 300,
-                lineHeight: 1.4,
+                lineHeight: '1.2', // EDITAR AQUÍ - Line height texto de card
                 textAlign: "start",
               }}>
                 {card.text}

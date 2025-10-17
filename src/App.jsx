@@ -12,6 +12,7 @@ import ProcedimientoDetalle from "./pages/ProcedimientoDetalle";
 
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
+import LoadingScreen from "./components/LoadingScreen";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
@@ -143,6 +144,7 @@ function GridDebugger({
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
 const App = () => {
   const [mode, setMode] = useState('light');
+  const [loading, setLoading] = useState(true);
 
   const theme = useMemo(() => {
     return mode === 'light' ? lightTheme : darkTheme;
@@ -162,6 +164,10 @@ const App = () => {
     <Router autoScrollToTop>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+
+        {/* Loading Screen */}
+        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+
         <ReactLenis root>
           <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
             {/* NavBar fija en la parte superior */}

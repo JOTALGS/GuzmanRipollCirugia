@@ -1,77 +1,32 @@
 "use client"
 
 import React from "react"
-import { motion, useTransform, useVelocity, type MotionValue } from "framer-motion"
 
 interface CarouselItemProps {
   item: { title: string; subtitle: string }
   index: number
-  x: MotionValue<number>
-  viewportWidth: number
-  itemAbsoluteCenter: number
-  ITEM_WIDTH: number
-  ITEM_HEIGHT: number
-  GUTTER: number
+  itemWidth: number
 }
 
-export function CarouselItem({
-  item,
-  index,
-  x,
-  viewportWidth,
-  itemAbsoluteCenter,
-  ITEM_WIDTH,
-  ITEM_HEIGHT,
-  GUTTER,
-}: CarouselItemProps) {
+const ITEM_HEIGHT = 525
+
+export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
   const { title: itemTitle, subtitle: itemSubtitle } = item
 
-  // 1) posición absoluta del centro del ítem
-  const itemCenterX = useTransform(x, latestX => latestX + itemAbsoluteCenter)
-
-  // 2) distancia al centro del viewport
-  const distanceFromCenter = useTransform(
-    itemCenterX,
-    centerX => Math.abs(centerX - viewportWidth / 2)
-  )
-
-  // 3) escala base (de 1.02 a 0.98)
-  const maxDistance = ITEM_WIDTH * 1.5
-  const baseScale = useTransform(
-    distanceFromCenter,
-    [0, maxDistance],
-    [1.02, 0.98]
-  )
-
-  // 4) detectamos si el carrusel se está moviendo
-  const velocity = useVelocity(x)
-  const isMoving = useTransform(velocity, v => Math.abs(v) > 0.1)
-
-  // 5) combinamos: si NO mueve → escala 1; si mueve → baseScale
-  const scale = useTransform(
-    [baseScale, isMoving],
-    ([s, moving]) => (moving ? s : 1)
-  )
-
   return (
-    <motion.div
-      key={index}
+    <div
       style={{
-        flexShrink: 0,
-        width: ITEM_WIDTH,
-        marginRight: GUTTER,
-        scale,
-        overflow: "visible",           // para que el texto no se corte
+        width: `${itemWidth}px`,
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",      // alineamos por arriba
+        alignItems: "flex-start",
       }}
     >
       {/* Contenedor de imagen */}
       <div
         style={{
           width: "100%",
-          height: ITEM_HEIGHT,
+          height: `${ITEM_HEIGHT}px`,
           borderRadius: "4px",
           overflow: "hidden",
           position: "relative",
@@ -91,12 +46,13 @@ export function CarouselItem({
             fontFamily: "Poppins, sans-serif",
           }}
         >
-          {/* Aquí iría tu <img> o <Image> */}
+          {/* Aquí iría tu imagen */}
+          {/* <img src={...} alt={itemTitle} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> */}
         </div>
       </div>
 
       {/* Título y subtítulo */}
-      <div style={{ paddingTop: "16px" }}>
+      <div style={{ paddingTop: "16px", width: "100%" }}>
         <h3
           style={{
             color: "black",
@@ -125,7 +81,6 @@ export function CarouselItem({
           {itemSubtitle}
         </p>
       </div>
-    </motion.div>
+    </div>
   )
 }
-

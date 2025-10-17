@@ -78,21 +78,21 @@ export default function IntroHome() {
       {/* Título Principal */}
       <Box
         sx={{
-          marginTop: { xs: '100px', md: '150px', lg: '180px', xl: '250px' }, 
+          marginTop: { xs: '150px', md: '200px', lg: '200px', xl: '450px' },
           gridColumn: { xs: '1 / 13', md: '1 / 8' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
-          textAlign: { xs: 'center', md: 'start'},
-          alignItems: { xs: 'center', md: 'start' },
+          textAlign: 'left',
+          alignItems: 'flex-start',
           justifyContent: 'start',
         }}
       >
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: '', letterSpacing: '-3px'}}>
-          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '54px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: '-3px' }}>inteligente</Typography>, 
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', letterSpacing: { xs: '-1.5px', md: '-3px' }, lineHeight: 1.1}}>
+          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: { xs: '-1.5px', md: '-3px' } }}>inteligente</Typography>,
         </Typography>
 
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '35px',md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: 'capitalize' , letterSpacing: '-3px'}}>
+        <Typography fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: 'capitalize' , letterSpacing: { xs: '-1.5px', md: '-3px' }, lineHeight: 1.1}}>
           conexión humana
         </Typography>
       </Box>
@@ -103,21 +103,22 @@ export default function IntroHome() {
           gridColumn: { xs: '1 / 13', md: '10 / 13' },
           gridRow: '1 / 1',
           position: 'relative',
-          display: 'flex',
+          display: 'none',
           flexDirection: 'row',
-          textAlign: { xs: 'center', md: 'end'},
+          textAlign: { xs: 'left', md: 'end'},
           alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: { xs: '290px', md: '0px' },
-          marginBottom: { xs: '25px', md: '0px' }, 
+          justifyContent: { xs: 'flex-start', md: 'center' },
+          marginTop: { xs: '220px', md: '0px' },
+          marginBottom: { xs: '20px', md: '0px' },
         }}
       >
-        
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '18px', md: '21px' }} sx={{ 
+
+        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '16px', sm: '18px', md: '21px' }} sx={{
           width: { xs: '100%', md: '90%' },
-          color: 'textSecondary', 
+          color: 'textSecondary',
           textTransform: 'capitalize',
-          letterSpacing: '-1px'
+          letterSpacing: '-0.5px',
+          fontWeight: 500
         }}>
           + 400 intervenciones exitosas
         </Typography>
@@ -126,127 +127,106 @@ export default function IntroHome() {
       {/* Contenedor del párrafo y botón */}
       <Box
         sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 6' },
+          gridColumn: { xs: '1 / 13', md: '1 / 5' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: { xs: 'start', md: 'start' },
-          justifyContent: 'end',
-          marginBottom: { xs: '120px', md: '5px' },
+          alignItems: 'flex-start',
+          justifyContent: { xs: 'start', md: 'end' },
+          marginTop: { xs: '400px', md: '0px' },
+          marginBottom: { xs: '30px', md: '60px' },
           marginRight: { xs: '0px', md: '0px' },
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '15px', md: '20px' }} sx={{ 
-          textAlign: { xs: 'start', md: 'start' },
-          marginBottom: { xs:'15px', md: '20px' }, 
-          letterSpacing: '-1px',
-          lineHeight: 1.4
+        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '14px', sm: '15px', md: '20px' }} sx={{
+          textAlign: 'left',
+          marginBottom: { xs:'12px', md: '20px' },
+          letterSpacing: { xs: '-0.5px', md: '-1px' },
+          lineHeight: 1.5,
+          fontWeight: 400
         }}>
           Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
         </Typography>
 
-        <Box sx={{ 
-          marginBottom: { xs: '0px', md: '0px' },
-          width: { xs: 'auto', md: 'auto' },
+        <Box sx={{
+          display: 'flex',
+          gap: { xs: 2, md: 2.5 },
+          flexWrap: 'wrap',
           '& .clip-top-button': {
             // Efecto Glass iOS Ultra Clean
             backdropFilter: 'blur(40px) saturate(200%)',
             backgroundColor: 'rgba(255, 255, 255, 0.12)',
-            backgroundImage: `
-              linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.15) 0%,
-                rgba(255, 255, 255, 0.05) 50%,
-                rgba(255, 255, 255, 0.08) 100%
-              )
-            `,
-            border: '1px solid rgba(255, 255, 255, 0.25)',
-            borderRadius: '50px',
-            padding: { xs: '12px 28px', md: '14px 32px' },
-            transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            position: 'relative',
-            overflow: 'hidden',
-            
-            // Efecto de brillo sutil
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
-              zIndex: 1
-            },
-            
-            // Sombra ultra sutil
+            border: '1px solid rgba(255, 255, 255, 0.18)',
+            borderRadius: '8px',
+            padding: { xs: '10px 24px', md: '12px 28px' },
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            fontFamily: 'Poppins',
+            fontWeight: '500',
+            fontSize: { xs: '14px', md: '15px' },
+            letterSpacing: '-0.2px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             boxShadow: `
-              0 8px 32px rgba(0, 0, 0, 0.12),
-              0 2px 8px rgba(0, 0, 0, 0.08),
+              0 8px 32px rgba(0, 0, 0, 0.1),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.05)
+              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
             `,
-            
             '&:hover': {
               backdropFilter: 'blur(45px) saturate(220%)',
               backgroundColor: 'rgba(255, 255, 255, 0.18)',
-              border: '1px solid rgba(255, 255, 255, 0.35)',
-              transform: 'translateY(-2px) scale(1.02)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              transform: 'translateY(-2px)',
               boxShadow: `
-                0 12px 40px rgba(0, 0, 0, 0.18),
-                0 4px 20px rgba(0, 0, 0, 0.12),
+                0 12px 40px rgba(0, 0, 0, 0.15),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-              `,
-              
-              // Efecto de brillo al hover
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '100%',
-                height: '100%',
-                background: 'radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
-                transform: 'translate(-50%, -50%)',
-                transition: 'all 0.4s ease'
-              }
-            },
-            
-            '&:active': {
-              transform: 'translateY(0px) scale(0.98)',
-              transition: 'all 0.1s ease'
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05)
+              `
             }
           },
-          
-          // Estilos para el texto dentro del botón
-          '& .clip-top-button .MuiTypography-root': {
+          '& .glass-button-outline': {
+            // Botón con borde
+            backgroundColor: 'transparent',
+            color: '#fff',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '50px',
+            padding: { xs: '10px 24px', md: '12px 28px' },
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
             fontFamily: 'Poppins',
             fontWeight: '500',
+            fontSize: { xs: '14px', md: '15px' },
             letterSpacing: '-0.2px',
-            background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.5)',
+              transform: 'translateY(-2px)',
+            }
           }
         }}>
           <ClipTopButton className="clip-top-button">
             Conoce Más
           </ClipTopButton>
+         
         </Box>
       </Box>
 
       {/* Contenedor del video */}
       <Box
         sx={{
-          marginTop: '71px',
-          gridColumn: { xs: '7 / 13', md: '8 / 11' },
+          marginTop: { xs: '0px', md: '71px' },
+          gridColumn: { xs: '1 / 13', md: '8 / 11' },
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
-          justifyContent: 'end',
-          marginBottom: { xs: '120px', md: '50px' },
+          justifyContent: { xs: 'center', md: 'end' },
+          marginBottom: { xs: '30px', md: '50px' },
+          marginLeft: { xs: '-15px', md: '0px' },
+          marginRight: { xs: '-15px', md: '0px' },
         }}
       >
         <Box
@@ -254,16 +234,17 @@ export default function IntroHome() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           sx={{
-            width: '100%',
+            width: { xs: 'calc(100% + 30px)', md: '100%' },
             height: {
-              xs: '160px',
+              xs: '200px',
+              sm: '250px',
               md: '25%'
             },
             // Efecto Glass iOS - Frost Subtle
-            backdropFilter: 'blur(20px) saturate(180%)',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(30px) saturate(200%)',
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '24px',
+            borderRadius: { xs: '0px', md: '24px' },
             boxShadow: `
               0 8px 32px rgba(0, 0, 0, 0.1),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -274,7 +255,7 @@ export default function IntroHome() {
             overflow: 'hidden',
             cursor: 'pointer',
             '&:hover': {
-              backdropFilter: 'blur(25px) saturate(200%)',
+              backdropFilter: 'blur(35px) saturate(220%)',
               backgroundColor: 'rgba(255, 255, 255, 0.15)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
               transform: 'scale(1.02)',
@@ -302,69 +283,45 @@ export default function IntroHome() {
               display: 'block',
             }}
           />
-          
-          {/* Overlay con gradiente MUY SUTIL */}
-          <Box
+
+          {/* Visualización 3D - Inside video */}
+          <Typography
+            fontFamily={'Poppins'}
+            fontSize={{ xs: '10px', md: '12px' }}
             sx={{
               position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '30%',
-              background: `
-                linear-gradient(
-                  to top, 
-                  rgba(70, 70, 70, 0.25) 0%, 
-                  rgba(70, 70, 70, 0.1) 40%, 
-                  transparent 80%
-                )
-              `,
-              backdropFilter: 'blur(4px)',
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              paddingBottom: { xs: '6px', md: '10px' },
-              borderBottomLeftRadius: '24px',
-              borderBottomRightRadius: '24px',
-              pointerEvents: 'none',
+              bottom: { xs: '12px', md: '16px' },
+              right: { xs: '12px', md: '16px' },
+              color: 'white',
+              fontWeight: '300',
+              letterSpacing: '0.7px',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+              textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+              backdropFilter: 'blur(6px)',
+              padding: { xs: '3px 10px', md: '4px 14px' },
+              borderRadius: '6px',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              border: '0.5px solid rgba(255, 255, 255, 0.15)',
             }}
           >
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '10px', md: '12px' }} 
-              sx={{ 
-                color: 'white',
-                fontWeight: '300',
-                letterSpacing: '0.7px',
-                textTransform: 'uppercase',
-                textAlign: 'center',
-                textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-                backdropFilter: 'blur(6px)',
-                padding: { xs: '3px 10px', md: '4px 14px' },
-                borderRadius: '6px',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '0.5px solid rgba(255, 255, 255, 0.15)',
-                pointerEvents: 'none',
-              }}
-            >
-              Visualización 3D
-            </Typography>
-          </Box>
+            Visualización 3D
+          </Typography>
         </Box>
-      </Box>      
+      </Box>
 
       {/* Texto (Scroll) */}
       <Box
         sx={{
-          gridColumn: { xs: '1 / 13', md: '12 / 12' },
+          gridColumn: { xs: '1 / 13', md: '12 / 13' },
           gridRow: '1 / 1',
           display: 'flex',
           alignItems: 'end',
           justifyContent: { xs: 'center', md: 'end' },
-          marginBottom: { xs: '30px', md: '50px' },
+          marginBottom: { xs: '25px', md: '50px' },
         }}
       >
-        <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={{ xs: '18px', md: '20px' }}>
+        <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={{ xs: '16px', sm: '18px', md: '20px' }} sx={{ fontWeight: 300, letterSpacing: '0.5px' }}>
           (Scroll)
         </Typography>
       </Box>

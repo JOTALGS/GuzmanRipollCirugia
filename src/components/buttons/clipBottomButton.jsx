@@ -24,7 +24,7 @@ const ClipBottomButton = ({children}) => {
             marginRight: 'auto',
             width: { xs: '65%', md: 'fit-content' },
             overflow: 'hidden',
-            borderRadius: '10px',
+            borderRadius: '5px',
             letterSpacing: '0.1em',
             fontSize: '16px',
             fontFamily: 'Poppins',

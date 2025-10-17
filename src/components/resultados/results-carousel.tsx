@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState, useEffect } from "react"
-import { motion, useMotionValue, animate } from "framer-motion"
+import { motion, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { CarouselItem } from "./carousel-item"
 
@@ -11,147 +11,125 @@ const originalItems = [
   { title: "LIPOASPIRACIÓN", subtitle: "(BodyTite)" },
   { title: "LIPOASPIRACIÓN 2024", subtitle: "(BodyTite)" },
   { title: "LIPOESCULTURA", subtitle: "(BodyTite)" },
+  { title: "ABDOMINOPLASTIA", subtitle: "(Cirugía Abdominal)" },
+  { title: "RINOPLASTIA", subtitle: "(Cirugía Nasal)" },
+  { title: "BLEFAROPLASTIA", subtitle: "(Cirugía de Párpados)" },
+  { title: "OTOPLASTIA", subtitle: "(Cirugía de Orejas)" },
+  { title: "MENTOPLASTIA", subtitle: "(Cirugía de Mentón)" },
+  { title: "GINECOMASTIA", subtitle: "(Reducción Mamaria)" },
+  { title: "LIFTING FACIAL", subtitle: "(Rejuvenecimiento)" },
 ]
 
-// Constantes (de Figma)
-const ITEM_WIDTH = 430
-const ITEM_HEIGHT = 525
 const GUTTER = 20
-const BUFFER = 3
 
 export function ResultsCarousel() {
-  const [items, setItems] = useState<typeof originalItems>([])
   const viewportRef = useRef<HTMLDivElement>(null)
   const [viewportWidth, setViewportWidth] = useState(0)
+  const [itemWidth, setItemWidth] = useState(430)
   const x = useMotionValue(0)
   const [isDragging, setIsDragging] = useState(false)
-  const [itemAbsoluteCenters, setItemAbsoluteCenters] = useState<number[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Calcula el x necesario para centrar el ítem dado
-  const getCenteredX = (itemIndex: number) => {
-    if (!viewportRef.current || viewportWidth === 0) return 0
-    const itemOffset = 70 + itemIndex * (ITEM_WIDTH + GUTTER)
-    const itemCenter = itemOffset + ITEM_WIDTH / 2
-    const viewportCenter = viewportRef.current.offsetWidth / 2
-    return viewportCenter - itemCenter
+  const getPositionX = (index: number) => {
+    const firstItemOffset = 70
+    const totalOffset = firstItemOffset + index * (itemWidth + GUTTER)
+    return -totalOffset
   }
 
-  // Inicializo items con buffer para loop infinito
   useEffect(() => {
-    const buffered = [
-      ...originalItems.slice(-BUFFER),
-      ...originalItems,
-      ...originalItems.slice(0, BUFFER),
-    ]
-    setItems(buffered)
-
     const handleResize = () => {
       if (viewportRef.current) {
         const w = viewportRef.current.offsetWidth
         setViewportWidth(w)
-        // centrar el primer ítem real
-        x.set(getCenteredX(BUFFER))
+
+        const gridWidth = w - 140
+        const calculatedWidth = Math.max(300, (gridWidth / 12) * 4)
+        setItemWidth(calculatedWidth)
+
+        const targetX = getPositionX(currentIndex)
+        x.set(targetX)
       }
     }
+
     handleResize()
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
-  }, [x])
-
-  // Calculo centers absolutos de cada ítem en el strip
-  useEffect(() => {
-    if (!viewportRef.current || viewportWidth === 0) return
-    const centers = items.map((_, i) => {
-      const offset = 70 + i * (ITEM_WIDTH + GUTTER)
-      return offset + ITEM_WIDTH / 2
-    })
-    setItemAbsoluteCenters(centers)
-  }, [items, viewportWidth])
+  }, [currentIndex, itemWidth])
 
   const handleDragStart = () => setIsDragging(true)
 
-  const handleDragEnd = (
-    _: MouseEvent | TouchEvent | PointerEvent,
-    info: { velocity: { x: number } }
-  ) => {
+  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false)
     const currentX = x.get()
-    const projected = currentX + info.velocity.x * 0.2
+    const velocity = info.velocity.x
+    const offset = info.offset.x
 
-    // buscamos el ítem más cercano a esa proyección
-    let closest = 0
-    let minDist = Infinity
-    items.forEach((_, i) => {
-      const tx = getCenteredX(i)
-      const d = Math.abs(tx - projected)
-      if (d < minDist) {
-        minDist = d
-        closest = i
+    let newIndex = currentIndex
+
+    if (Math.abs(offset) > 50 || Math.abs(velocity) > 500) {
+      if (offset > 0 || velocity > 0) {
+        newIndex = Math.max(0, currentIndex - 1)
+      } else {
+        newIndex = Math.min(originalItems.length - 1, currentIndex + 1)
       }
-    })
+    }
 
-    // animamos al ítem más cercano
-    const targetX = getCenteredX(closest)
+    setCurrentIndex(newIndex)
+    const targetX = getPositionX(newIndex)
+
     animate(x, targetX, {
       type: "spring",
       stiffness: 400,
-      damping: 60,
-      onUpdate: latest => {
-        // lógica de wrap infinito
-        const realWidth = originalItems.length * (ITEM_WIDTH + GUTTER)
-        const firstX = getCenteredX(BUFFER)
-        const lastX = getCenteredX(BUFFER + originalItems.length - 1)
-        const wrapTh = (ITEM_WIDTH + GUTTER) / 2
-
-        if (latest > firstX + wrapTh) {
-          x.set(latest - realWidth)
-        } else if (latest < lastX - wrapTh) {
-          x.set(latest + realWidth)
-        }
-      },
+      damping: 40,
+      mass: 0.8,
     })
   }
 
-  // scroll vía flechas
   const scroll = (dir: "left" | "right") => {
-    const currentX = x.get()
-    // encontramos el ítem centrado ahora
-    let curr = 0
-    let minD = Infinity
-    items.forEach((_, i) => {
-      const absCenter = currentX + itemAbsoluteCenters[i]
-      const d = Math.abs(absCenter - viewportWidth / 2)
-      if (d < minD) {
-        minD = d
-        curr = i
-      }
-    })
+    let newIndex
+    if (dir === "left") {
+      newIndex = Math.max(0, currentIndex - 1)
+    } else {
+      newIndex = Math.min(originalItems.length - 1, currentIndex + 1)
+    }
 
-    const next = dir === "left" ? Math.max(0, curr - 1) : Math.min(items.length - 1, curr + 1)
-    const targetX = getCenteredX(next)
+    setCurrentIndex(newIndex)
+    const targetX = getPositionX(newIndex)
+
     animate(x, targetX, {
       type: "spring",
       stiffness: 400,
-      damping: 60,
-      onUpdate: latest => {
-        // mismo wrap
-        const realWidth = originalItems.length * (ITEM_WIDTH + GUTTER)
-        const firstX = getCenteredX(BUFFER)
-        const lastX = getCenteredX(BUFFER + originalItems.length - 1)
-        const wrapTh = (ITEM_WIDTH + GUTTER) / 2
-
-        if (latest > firstX + wrapTh) {
-          x.set(latest - realWidth)
-        } else if (latest < lastX - wrapTh) {
-          x.set(latest + realWidth)
-        }
-      },
+      damping: 40,
+      mass: 0.8,
     })
   }
 
   return (
-    <div style={{ width: "100%", backgroundColor: "white" }}>
-      {/* Header con flechas */}
+    <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
+      <div
+        style={{
+          paddingLeft: "70px",
+          paddingRight: "70px",
+          paddingTop: "40px",
+          paddingBottom: "20px",
+          maxWidth: "1920px",
+          margin: "0 auto",
+        }}
+      >
+        <p
+          style={{
+            color: "#000000",
+            lineHeight: "1.7",
+            fontWeight: "600",
+            fontSize: "20px",
+            fontFamily: "Poppins, sans-serif",
+            margin: 0,
+          }}
+        >
+          RESULTADOS
+        </p>
+      </div>
+
       <div
         style={{
           paddingLeft: "70px",
@@ -165,73 +143,78 @@ export function ResultsCarousel() {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-end",
-            paddingTop: "48px",
-            paddingBottom: "48px",
+            paddingTop: "24px",
+            paddingBottom: "24px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
             <button
               onClick={() => scroll("left")}
+              disabled={currentIndex === 0}
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: currentIndex === 0 ? "not-allowed" : "pointer",
+                opacity: currentIndex === 0 ? 0.3 : 1,
+                transition: "opacity 0.2s ease",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "transparent",
-                border: "1px solid #e5e5e5",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = "#f3f4f6"
-                e.currentTarget.style.borderColor = "#d1d5db"
+              onMouseEnter={(e) => {
+                if (currentIndex !== 0) {
+                  e.currentTarget.style.opacity = "0.6"
+                }
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = "transparent"
-                e.currentTarget.style.borderColor = "#e5e5e5"
+              onMouseLeave={(e) => {
+                if (currentIndex !== 0) {
+                  e.currentTarget.style.opacity = "1"
+                }
               }}
               aria-label="Anterior"
             >
-              <ArrowLeft color="black" size={16} />
+              <ArrowLeft color="black" size={24} strokeWidth={1.5} />
             </button>
             <button
               onClick={() => scroll("right")}
+              disabled={currentIndex === originalItems.length - 1}
               style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: currentIndex === originalItems.length - 1 ? "not-allowed" : "pointer",
+                opacity: currentIndex === originalItems.length - 1 ? 0.3 : 1,
+                transition: "opacity 0.2s ease",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "transparent",
-                border: "1px solid #e5e5e5",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = "#f3f4f6"
-                e.currentTarget.style.borderColor = "#d1d5db"
+              onMouseEnter={(e) => {
+                if (currentIndex !== originalItems.length - 1) {
+                  e.currentTarget.style.opacity = "0.6"
+                }
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = "transparent"
-                e.currentTarget.style.borderColor = "#e5e5e5"
+              onMouseLeave={(e) => {
+                if (currentIndex !== originalItems.length - 1) {
+                  e.currentTarget.style.opacity = "1"
+                }
               }}
               aria-label="Siguiente"
             >
-              <ArrowRight color="black" size={16} />
+              <ArrowRight color="black" size={24} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Carousel */}
       <div
         style={{
           position: "relative",
-          overflowX: "hidden",   // sólo ocultamos horizontalmente
-          overflowY: "visible",  // permitimos que el texto bajo la card se vea
+          overflowX: "hidden",
+          overflowY: "visible",
+          cursor: isDragging ? "grabbing" : "grab",
+          touchAction: "pan-y",
         }}
         ref={viewportRef}
       >
@@ -239,33 +222,46 @@ export function ResultsCarousel() {
           style={{
             display: "flex",
             userSelect: "none",
-            cursor: isDragging ? "grabbing" : "grab",
             x,
+            willChange: "transform",
           }}
           drag="x"
+          dragConstraints={{
+            left: -(originalItems.length - 1) * (itemWidth + GUTTER) - 70,
+            right: 0,
+          }}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
-          dragElastic={0.1}
+          dragElastic={0.05}
+          dragTransition={{
+            bounceStiffness: 600,
+            bounceDamping: 40,
+            power: 0.3,
+            timeConstant: 200,
+          }}
         >
-          <div style={{ display: "flex", paddingLeft: "70px", alignItems: "flex-start" }}>
-            {items.map((item, index) => (
-              <CarouselItem
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              paddingLeft: "70px",
+            }}
+          >
+            {originalItems.map((item, index) => (
+              <div
                 key={index}
-                item={item}
-                index={index}
-                x={x}
-                viewportWidth={viewportWidth}
-                itemAbsoluteCenter={itemAbsoluteCenters[index]}
-                ITEM_WIDTH={ITEM_WIDTH}
-                ITEM_HEIGHT={ITEM_HEIGHT}
-                GUTTER={GUTTER}
-              />
+                style={{
+                  marginRight: GUTTER,
+                  flexShrink: 0,
+                }}
+              >
+                <CarouselItem item={item} index={index} itemWidth={itemWidth} />
+              </div>
             ))}
           </div>
         </motion.div>
       </div>
 
-      {/* Footer */}
       <div
         style={{
           paddingLeft: "70px",

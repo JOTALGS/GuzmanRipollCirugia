@@ -65,7 +65,6 @@ const MoreButton = styled(Button)(({ theme }) => ({
   fontSize: '0.75rem',
   color: theme.palette.text.disabled,
   padding: 0,
-  minWidth: 'auto',
   textTransform: 'none',
   '&:hover': {
     backgroundColor: 'transparent',

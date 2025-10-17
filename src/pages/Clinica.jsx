@@ -22,6 +22,10 @@ export default function Clinica({ id }) {
   const doctorTitleRef = useRef(null)
   const humanConnectionTitleRef = useRef(null)
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
   const logos = [
     '/images/logo-apaisado.png',
     '/images/logo-scpreu.png',
@@ -35,8 +39,7 @@ export default function Clinica({ id }) {
 
 
 
-  const clinicaTextFirstLine = 'Nuestro propósito es ser la marca de cirugía'
-  const clinicaText = ` estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
+  const clinicaText = `Nuestro propósito es ser la marca de cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
 
   return (
     <Box id={id} sx={{ position: "relative", backgroundColor: "white",
@@ -78,40 +81,24 @@ export default function Clinica({ id }) {
         overflow: "hidden"
 
       }}>
-        <Box sx={{
-          backgroundColor: "white",
-          position: "absolute",
-          top: 0,
-          left: "-70px",
-          width: "100vw",
-          height: "300vw",
-        }} />
         
         {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION */}
         <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 13' },
+          gridColumn: { xs: '1 / 13', md: '1 / -1' },
           gridRow: '1 / 1',
           // AQUÍ PUEDES AGREGAR MÁS ESPACIO INTERNO SI LO NECESITAS
           // py: 8 → ya existe en la sección, pero puedes aumentarlo
         }}>
           {/* Clinic Description Section */}
-          <Box component="section" sx={{ 
-            py: 8, // ← Esto controla el padding vertical interno (arriba/abajo)
-            backgroundColor: "#0B1426",
-            // OPCIÓN ALTERNATIVA: Agregar margin top adicional aquí
-            // mt: 4 // ← Esto agregaría más espacio específicamente arriba de esta sección
-          }}>
-            <Box sx={{ 
-              display: "flex", 
-              marginLeft: "auto", 
-              width: "90%", 
-              alignContent: "end", 
-              justifyContent: "end", 
-              textAlign: "end", 
-              flexDirection: "column" 
-            }}>
-              <LightenText homeText={clinicaTextFirstLine} disableLightingEffect={true} />
-            </Box>
+          <Box
+            component="section"
+            sx={{
+              py: 8,
+              backgroundColor: "#fff",
+              width: "90vw",
+              maxWidth: "110%",
+            }}
+          >
             <LightenText homeText={clinicaText} disableLightingEffect={true} />
           </Box>
         </Box>

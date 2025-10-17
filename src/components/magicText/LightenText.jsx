@@ -139,7 +139,6 @@ useLayoutEffect(() => {
                   fontWeight={"bold"}
                   className="line"
                   backgroundColor={"transparent"}
-                  marginLeft={index === 0 ? { xs: "25px", md: "450px" } : { xs: "0px", md: "0px" }}
                   sx={{
                     // 18–56/70px según viewport, pero suave:
                     fontSize: {
@@ -150,7 +149,7 @@ useLayoutEffect(() => {
                       xl: 'clamp(55px, 3.5vw, 75px)',
                     },
                     lineHeight: { xs: 1.25, sm: 1.2, md: 1.15, lg: 1.05 },
-                    letterSpacing: { xs: '-1px', md: '-2px' },
+                    letterSpacing: { xs: '-1px', md: '-0.2px' },
 
                     // 🔒 Control de ancho por caracteres: evita overflow tanto a 100% como 125%
                     maxWidth: { xs: '32ch', sm: '44ch', md: '56ch', lg: '60ch' },
@@ -160,7 +159,7 @@ useLayoutEffect(() => {
                     overflowWrap: 'anywhere',
 
                     // Indent 1ª línea sin px mágicos
-                    textIndent: index === 0 ? { xs: '2ch', md: '6ch' } : 0,
+                    textIndent: index === 0 ? { xs: '2ch', md: '5.1ch' } : 0,
                     // Si preferís desplazar en lugar de indent:
                     ml: index === 0 ? { xs: '4vw', md: '12vw' } : 0,
 
@@ -192,7 +191,6 @@ useLayoutEffect(() => {
                   fontWeight={"bold"}
                   className="line-overlay"
                   backgroundColor={"transparent"}
-                  marginLeft={index === 0 ? { xs: "25px", md: "450px" } : { xs: "0px", md: "0px" }}
 
                   sx={{
                     // 18–56/70px según viewport, pero suave:
@@ -204,17 +202,17 @@ useLayoutEffect(() => {
                       xl: 'clamp(55px, 3.5vw, 75px)',
                     },
                     lineHeight: { xs: 1.25, sm: 1.2, md: 1.15, lg: 1.05 },
-                    letterSpacing: { xs: '-1px', md: '-2px' },
+                    letterSpacing: { xs: '-1px', md: '-0.2px' },
 
                     // 🔒 Control de ancho por caracteres: evita overflow tanto a 100% como 125%
-                    maxWidth: { xs: '32ch', sm: '44ch', md: '56ch', lg: '60ch' },
+                    maxWidth: { xs: '32ch', sm: '44ch', md: '56ch', lg: '70ch' },
 
                     // ❌ No fuerces a una sola línea
                     whiteSpace: 'normal',
                     overflowWrap: 'anywhere',
 
                     // Indent 1ª línea sin px mágicos
-                    textIndent: index === 0 ? { xs: '2ch', md: '6ch' } : 0,
+                    textIndent: index === 0 ? { xs: '2ch', md: '5.1ch' } : 0,
                     // Si preferís desplazar en lugar de indent:
                     ml: index === 0 ? { xs: '4vw', md: '12vw' } : 0,
 

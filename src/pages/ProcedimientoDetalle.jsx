@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 }
 
 const procedimientosData = {
-  1: {
+  "01": {
     number: "01",
     title: "Cirugía Mamaria",
     subtitle: "Aumento, Reducción & Reconstrucción",
@@ -48,7 +48,7 @@ const procedimientosData = {
       }
     ]
   },
-  2: {
+  "02": {
     number: "02", 
     title: "Lipoescultura VASER",
     subtitle: "BodyTite & Morpheus8",
@@ -84,7 +84,13 @@ export default function ProcedimientoDetalle() {
   const maskRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
   
-  const procedimiento = procedimientosData[id] || procedimientosData[1]
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  console.log("Procedimiento ID:", id)
+  const procedimiento = procedimientosData[id]
+  console.log("Procedimiento:", procedimiento)
 
   useEffect(() => {
     const img = new Image()

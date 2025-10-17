@@ -339,7 +339,7 @@ const TestimoniosCarousel = () => {
                 <div
                   key={index}
                   style={{
-                    width: `${isMobile ? (165 / cardsToShow) : (100 / cardsToShow)}%`,
+                    width: `${isMobile ? (155 / cardsToShow) : (100 / cardsToShow)}%`,
                     flex: 'none',
                     minHeight: '310px',
                     padding: '0 12px',
@@ -349,7 +349,7 @@ const TestimoniosCarousel = () => {
                   <div 
                     style={{
                       height: 'auto',
-                      minHeight: window.innerWidth < 768 ? '200px' : '240px',
+                      minHeight: window.innerWidth < 768 ? '280px' : '280px',
                       borderRadius: '12px',
                       padding: '32px',
                       display: 'flex',
@@ -364,7 +364,6 @@ const TestimoniosCarousel = () => {
                       border: '1px solid rgba(229, 231, 235, 0.3)',
                       maxWidth: '500px',
                       maxHeight: '280px',
-                      minHeight: '280px',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';

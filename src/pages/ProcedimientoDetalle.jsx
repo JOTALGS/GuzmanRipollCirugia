@@ -167,6 +167,8 @@ export default function ProcedimientoDetalle() {
             width: "100%", 
             position: "relative",
             display: "flex",
+            flexDirection: {xs: 'column', md: 'row'},
+            height: {xs: "80%", md: 'auto' },
             alignItems: "center",
             justifyContent: "space-between",
             px: { xs: "20px", md: "70px" }
@@ -201,7 +203,8 @@ export default function ProcedimientoDetalle() {
                   fontSize: { xs: "5rem", md: "8rem", lg: "74px" },
                   fontWeight: 600,
                   lineHeight: 0.9,
-                  opacity: 0.95
+                  opacity: 0.95,
+                  marginTop: {xs: '45px', md: '0px'}
                 }}
               >
                 {procedimiento.number}
@@ -211,8 +214,8 @@ export default function ProcedimientoDetalle() {
             {/* DERECHA: Título menos bold + Catch Phrase con más espacio */}
             <Box
               sx={{
-                textAlign: "right",
-                maxWidth: { xs: "50%", md: "45%", lg: "45%" },
+                textAlign: {xs: 'center', md: "right"},
+                maxWidth: { xs: "50%", md: "45%", lg: "35%" },
                   lineHeight: 1.5,
 
               }}
@@ -232,6 +235,8 @@ export default function ProcedimientoDetalle() {
                   fontWeight: 500,
                   mb: 2.5,
                   height: "26px"
+
+                  
                 }}
               />
 

@@ -140,6 +140,12 @@ const TestimoniosCarousel = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Ensure currentIndex stays within bounds when cardsToShow or testimonios change
+  useEffect(() => {
+    const newMax = Math.max(0, testimonios.length - cardsToShow);
+    setCurrentIndex(prev => Math.min(prev, newMax));
+  }, [cardsToShow, testimonios.length]);
+
   const maxIndex = Math.max(0, testimonios.length - cardsToShow);
 
   const handlePrevious = () => {
@@ -155,14 +161,14 @@ const TestimoniosCarousel = () => {
   // Mouse drag handlers
   const handleMouseDown = (e) => {
     setIsDragging(true);
-    setStartX(e.pageX);
+    setStartX(e.clientX);
     e.preventDefault();
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();
-    const currentX = e.pageX;
+    const currentX = e.clientX;
     const diff = currentX - startX;
     setDragOffset(diff);
   };
@@ -184,12 +190,12 @@ const TestimoniosCarousel = () => {
   // Touch handlers for mobile
   const handleTouchStart = (e) => {
     setIsDragging(true);
-    setStartX(e.touches[0].pageX);
+    setStartX(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
     if (!isDragging) return;
-    const currentX = e.touches[0].pageX;
+    const currentX = e.touches[0].clientX;
     const diff = currentX - startX;
     setDragOffset(diff);
   };
@@ -213,8 +219,15 @@ const TestimoniosCarousel = () => {
     if (!containerRef.current) return 0;
     const containerWidth = containerRef.current.offsetWidth;
     const cardWidth = containerWidth / cardsToShow;
-    const offset = (currentIndex * cardWidth) - dragOffset;
-    return -offset;
+    // Calculate the desired offset based on currentIndex and drag
+    const desired = (currentIndex * cardWidth) - dragOffset;
+
+    // Calculate bounds: minDesired is 0 (start), maxDesired is the maximum scrollable offset
+    const maxOffset = Math.max(0, (testimonios.length * cardWidth) - containerWidth);
+    // desired corresponds to positive scroll to the right; clamp between 0 and maxOffset
+    const clamped = Math.max(0, Math.min(desired, maxOffset));
+
+    return -clamped;
   };
 
   // Progress bar calculation - ultra smooth and perfect loading
@@ -316,7 +329,9 @@ const TestimoniosCarousel = () => {
                 transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: `translateX(${getTransformValue()}px)`,
                 cursor: isDragging ? 'grabbing' : 'grab',
-                userSelect: 'none'
+                userSelect: 'none',
+                paddingInline: '20px',
+                marginInline: '50px',
               }}
             >
               {testimonios.map((testimonio, index) => (
@@ -324,7 +339,8 @@ const TestimoniosCarousel = () => {
                   key={index}
                   style={{
                     width: `${100 / cardsToShow}%`,
-                flex: 'none',
+                    flex: 'none',
+                    minHeight: '310px',
                     padding: '0 12px',
                     boxSizing: 'border-box'
                   }}
@@ -345,7 +361,9 @@ const TestimoniosCarousel = () => {
                       transition: 'all 0.3s ease',
                       position: 'relative',
                       border: '1px solid rgba(229, 231, 235, 0.3)',
-                      maxWidth: '500px'
+                      maxWidth: '500px',
+                      maxHeight: '280px',
+                      minHeight: '280px',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -433,33 +451,6 @@ const TestimoniosCarousel = () => {
             }}
           />
         </div>
-      </div>
-
-      {/* Dots Indicator */}
-      <div style={{ 
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '8px',
-        marginTop: '40px',
-        paddingBottom: '20px'
-      }}>
-        {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            style={{
-              width: index === currentIndex ? '32px' : '8px',
-              height: '8px',
-              borderRadius: '4px',
-              backgroundColor: index === currentIndex ? '#000000' : '#D1D5DB',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              outline: 'none'
-            }}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
       </div>
     </Box>
   );

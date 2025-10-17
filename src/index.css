@@ -198,7 +198,6 @@ html.lenis {
 * {
   box-sizing: border-box;
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 /* Ensure proper spacing for fixed navbar */

@@ -14,6 +14,7 @@ const TestimoniosCarousel = () => {
   const containerRef = useRef(null);
   const [cardsToShow, setCardsToShow] = useState(3);
   const sectionRef = useRef(null);
+  const isMobile = window.innerWidth < 768;
 
   // GSAP Animation setup
   useEffect(() => {
@@ -338,7 +339,7 @@ const TestimoniosCarousel = () => {
                 <div
                   key={index}
                   style={{
-                    width: `${100 / cardsToShow}%`,
+                    width: `${isMobile ? (165 / cardsToShow) : (100 / cardsToShow)}%`,
                     flex: 'none',
                     minHeight: '310px',
                     padding: '0 12px',

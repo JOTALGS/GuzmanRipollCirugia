@@ -189,7 +189,7 @@ export default function Home() {
         sx={{
           position: "relative",
           zIndex: 1,
-          height: { xs: "100vh", md: "300vh" },
+          height: { xs: "100vh", md: "360vh" },
           display: "grid",
           marginBottom: { xs: '80px', md: '100px', lg: '100px', xl: '150px' },
           backgroundColor: "#fff",
@@ -199,17 +199,6 @@ export default function Home() {
           "& > section": {
             gridColumn: "1 / -1",
           },
-          '::before': {
-            content: '""',
-            position: 'absolute',
-            top: { xs: '60px', md: '80px' },
-            left: '-70px',
-            right: '0',
-            width: 'calc(100vw + 70px)',
-            height: '1px',
-            backgroundColor: '#D0D0D0',
-            zIndex: -1,
-          }
         }}
       >
         <Box
@@ -260,9 +249,8 @@ export default function Home() {
                 content: '""',
                 position: 'absolute',
                 top: '-30px',
-                left: '-70px',
-                right: '0',
-                width: 'calc(100vw + 70px)',
+                left: '1/2',
+                width: 'calc(100vw - 140px)',
                 height: '1px',
                 backgroundColor: '#D0D0D0',
                 zIndex: 0,
@@ -502,7 +490,7 @@ export default function Home() {
                   left: 0,
                   right: 0,
                   height: '1px',
-                  backgroundImage: 'repeating-linear-gradient(to right, #D0D0D0 0, #D0D0D0 6px, transparent 6px, transparent 12px)',
+                  //backgroundImage: 'repeating-linear-gradient(to right, #D0D0D0 0, #D0D0D0 6px, transparent 6px, transparent 12px)',
                 } : {}
               }}
             >

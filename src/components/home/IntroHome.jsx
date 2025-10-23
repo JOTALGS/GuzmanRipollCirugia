@@ -44,55 +44,110 @@ export default function IntroHome() {
     <Box
       sx={{
         position: "relative",
-        zIndex: 1,
-        height: { xs: "100vh", md: "100vh" },
+        width: "100%",
+        minHeight: { xs: "100vh", md: "100vh" },
         display: "grid",
         backgroundColor: "transparent",
         gridTemplateColumns: "repeat(12, 1fr)",
-        marginInline: { xs: "15px", md: "70px" },
-        columnGap: { xs: "20px", md: "20px" },
+        // Use padding instead of marginInline for better control
+        paddingX: { xs: "15px", sm: "30px", md: "50px", lg: "70px" },
+        columnGap: { xs: "15px", sm: "20px" },
+        paddingTop: { xs: "120px", sm: "140px", md: "160px", lg: "180px", xl: "200px" },
+        paddingBottom: { xs: "30px", md: "60px" },
+        overflow: "hidden", // Prevent horizontal scroll
         "& > section": {
           gridColumn: "1 / -1",
         },
-        overflow: "visible"
       }}
     > 
-      {/* Background Image */}
+      {/* Background Image - Fixed positioning for better scaling */}
       <Box
         sx={{
-          width: "150vw",
-          height: "100vh",
+          width: "100%",
+          height: "100%",
           backgroundImage: 'url("/images/imagen5.jpg")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           position: "absolute",
           top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: -1,
-          minWidth: "100vw"
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0,
         }}
       />
 
       {/* Título Principal */}
       <Box
         sx={{
-          marginTop: { xs: '150px', md: '200px', lg: '200px', xl: '450px' },
-          gridColumn: { xs: '1 / 13', md: '1 / 8' },
-          gridRow: '1 / 1',
+          gridColumn: { 
+            xs: '1 / 13', 
+            sm: '1 / 13',
+            md: '1 / 13', 
+            lg: '1 / 10', 
+            xl: '1 / 8' 
+          },
+          
+          backgroundColor: "transparent",
+          gridRow: '1',
+          zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
-          textAlign: 'left',
-          alignItems: 'flex-start',
-          justifyContent: 'start',
+          textAlign: { xs: 'center', sm: 'center', md: 'center', lg: 'left' },
+          alignItems: { xs: 'center', sm: 'center', md: 'center', lg: 'flex-start' },
+          justifyContent: 'flex-start',
+          marginBottom: { xs: '30px', sm: '40px', md: '50px' },
         }}
       >
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', letterSpacing: { xs: '-1.5px', md: '-3px' }, lineHeight: 1.1}}>
-          Cirugía mamaria <Typography component="span" fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ color: 'textAccent', letterSpacing: { xs: '-1.5px', md: '-3px' } }}>inteligente</Typography>,
+        <Typography 
+          fontFamily={'Poppins'} 
+          sx={{ 
+            fontSize: { 
+              xs: 'clamp(32px, 8vw, 40px)',
+              sm: 'clamp(40px, 7vw, 50px)',
+              md: 'clamp(48px, 6vw, 60px)',
+              lg: 'clamp(55px, 5vw, 65px)',
+              xl: 'clamp(60px, 4.5vw, 70px)'
+            },
+            width: '100%',
+            color: 'textSecondary',
+            letterSpacing: { xs: '-1px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
+            lineHeight: 1.1,
+          }}
+        >
+          Cirugía mamaria{' '}
+          <Typography 
+            component="span" 
+            fontFamily={'Poppins'} 
+            sx={{ 
+              fontSize: 'inherit',
+              color: 'textAccent',
+              letterSpacing: 'inherit',
+              fontWeight: 'inherit'
+            }}
+          >
+            inteligente
+          </Typography>,
         </Typography>
 
-        <Typography fontFamily={'Poppins'} fontSize={{ xs: '32px', sm: '40px', md: '54px' , xl: '70px' }} sx={{ width: '100%', color: 'textSecondary', textTransform: 'capitalize' , letterSpacing: { xs: '-1.5px', md: '-3px' }, lineHeight: 1.1}}>
+        <Typography 
+          fontFamily={'Poppins'} 
+          sx={{ 
+            fontSize: { 
+              xs: 'clamp(32px, 8vw, 40px)',
+              sm: 'clamp(40px, 7vw, 50px)',
+              md: 'clamp(48px, 6vw, 60px)',
+              lg: 'clamp(55px, 5vw, 65px)',
+              xl: 'clamp(60px, 4.5vw, 70px)'
+            },
+            width: '100%',
+            color: 'textSecondary',
+            textTransform: 'capitalize',
+            letterSpacing: { xs: '-1px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
+            lineHeight: 1.1,
+          }}
+        >
           conexión humana
         </Typography>
       </Box>
@@ -101,25 +156,31 @@ export default function IntroHome() {
       <Box
         sx={{
           gridColumn: { xs: '1 / 13', md: '10 / 13' },
-          gridRow: '1 / 1',
-          position: 'relative',
+          gridRow: { xs: '2', md: '1' },
           display: 'none',
           flexDirection: 'row',
-          textAlign: { xs: 'left', md: 'end'},
+          textAlign: { xs: 'left', md: 'right' },
           alignItems: 'center',
-          justifyContent: { xs: 'flex-start', md: 'center' },
-          marginTop: { xs: '220px', md: '0px' },
-          marginBottom: { xs: '20px', md: '0px' },
+          zIndex: 1,
+          justifyContent: { xs: 'flex-start', md: 'flex-end' },
+          marginBottom: { xs: '20px', md: '0' },
         }}
       >
-
-        <Typography fontFamily={'Red Hat Display'} fontSize={{ xs: '16px', sm: '18px', md: '21px' }} sx={{
-          width: { xs: '100%', md: '90%' },
-          color: 'textSecondary',
-          textTransform: 'capitalize',
-          letterSpacing: '-0.5px',
-          fontWeight: 500
-        }}>
+        <Typography 
+          fontFamily={'Red Hat Display'} 
+          sx={{
+            fontSize: { 
+              xs: 'clamp(14px, 4vw, 16px)',
+              sm: 'clamp(16px, 3.5vw, 18px)',
+              md: 'clamp(18px, 2vw, 21px)'
+            },
+            width: '100%',
+            color: 'textSecondary',
+            textTransform: 'capitalize',
+            letterSpacing: '-0.5px',
+            fontWeight: 500
+          }}
+        >
           + 400 intervenciones exitosas
         </Typography>
       </Box>
@@ -127,43 +188,66 @@ export default function IntroHome() {
       {/* Contenedor del párrafo y botón */}
       <Box
         sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 5' },
-          gridRow: '1 / 1',
+          gridColumn: { 
+            xs: '1 / 13',
+            sm: '1 / 13', 
+            md: '1 / 6',
+            lg: '1 / 5'
+          },
+          gridRow: { xs: '3', md: '2' },
           display: 'flex',
+          zIndex: 1,
           flexDirection: 'column',
-          alignItems: 'flex-start',
-          justifyContent: { xs: 'start', md: 'end' },
-          marginTop: { xs: '400px', md: '0px' },
-          marginBottom: { xs: '30px', md: '60px' },
-          marginRight: { xs: '0px', md: '0px' },
+          alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
+          justifyContent: 'flex-start',
+          marginTop: { xs: '150px', md: 'auto' },
+          marginBottom: { xs: '30px', md: '0px' },
         }}
       >
-        <Typography color="white" fontFamily={'Poppins'} fontSize={{ xs: '14px', sm: '15px', md: '20px' }} sx={{
-          textAlign: 'left',
-          marginBottom: { xs:'12px', md: '20px' },
-          letterSpacing: { xs: '-0.5px', md: '-1px' },
-          lineHeight: 1.5,
-          fontWeight: 400
-        }}>
+        <Typography 
+          color="white" 
+          fontFamily={'Poppins'} 
+          sx={{
+            fontSize: { 
+              xs: 'clamp(13px, 3.5vw, 14px)',
+              sm: 'clamp(14px, 3vw, 15px)',
+              md: 'clamp(16px, 2vw, 18px)',
+              lg: 'clamp(18px, 1.8vw, 20px)'
+            },
+            textAlign: { xs: 'center', sm: 'center', md: 'left' },
+            marginBottom: { xs: '16px', sm: '18px', md: '20px' },
+            letterSpacing: { xs: '-0.3px', md: '-0.5px', lg: '-0.8px' },
+            lineHeight: 1.5,
+            fontWeight: 400,
+            maxWidth: { xs: '100%', md: '90%' }
+          }}
+        >
           Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
         </Typography>
 
         <Box sx={{
           display: 'flex',
-          gap: { xs: 2, md: 2.5 },
+          gap: { xs: '12px', sm: '16px', md: '20px' },
           flexWrap: 'wrap',
+          justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
+          width: { xs: '150%', md: '100%'},
           '& .clip-top-button': {
-            // Efecto Glass iOS Ultra Clean
             backdropFilter: 'blur(40px) saturate(200%)',
             backgroundColor: 'rgba(255, 255, 255, 0.12)',
             border: '1px solid rgba(255, 255, 255, 0.18)',
             borderRadius: '8px',
-            padding: { xs: '10px 24px', md: '12px 28px' },
+            padding: { 
+              xs: 'clamp(8px, 2vw, 10px) clamp(20px, 5vw, 24px)',
+              md: 'clamp(10px, 1.5vw, 12px) clamp(24px, 3vw, 28px)'
+            },
             cursor: 'pointer',
             transition: 'all 0.3s ease',
             fontFamily: 'Poppins',
             fontWeight: '500',
-            fontSize: { xs: '14px', md: '15px' },
+            fontSize: { 
+              xs: 'clamp(13px, 3.5vw, 14px)',
+              md: 'clamp(14px, 1.8vw, 15px)'
+            },
             letterSpacing: '-0.2px',
             display: 'inline-flex',
             alignItems: 'center',
@@ -184,49 +268,33 @@ export default function IntroHome() {
                 inset 0 -1px 0 rgba(0, 0, 0, 0.05)
               `
             }
-          },
-          '& .glass-button-outline': {
-            // Botón con borde
-            backgroundColor: 'transparent',
-            color: '#fff',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            borderRadius: '50px',
-            padding: { xs: '10px 24px', md: '12px 28px' },
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            fontFamily: 'Poppins',
-            fontWeight: '500',
-            fontSize: { xs: '14px', md: '15px' },
-            letterSpacing: '-0.2px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.5)',
-              transform: 'translateY(-2px)',
-            }
           }
         }}>
           <ClipTopButton className="clip-top-button">
             Conoce Más
           </ClipTopButton>
-         
         </Box>
       </Box>
 
       {/* Contenedor del video */}
       <Box
         sx={{
-          marginTop: { xs: '0px', md: '71px' },
-          gridColumn: { xs: '1 / 13', md: '8 / 11' },
-          gridRow: '1 / 1',
+          gridColumn: { 
+            xs: '1 / 13',
+            sm: '1 / 13',
+            md: '7 / 12',
+            lg: '8 / 11',
+            xl: '8 / 11'
+          },
+          zIndex: 1,
+          gridRow: { xs: '2', md: '2' },
           display: 'flex',
-          alignItems: 'end',
-          justifyContent: { xs: 'center', md: 'end' },
-          marginBottom: { xs: '30px', md: '50px' },
-          marginLeft: { xs: '-15px', md: '0px' },
-          marginRight: { xs: '-15px', md: '0px' },
+          alignItems: { xs: 'center', md: 'flex-end' },
+          justifyContent: { xs: 'center', md: 'flex-end' },
+          marginTop: { xs: '75px', md: '0px' },
+          marginBottom: { xs: '20px', sm: '30px', md: '0px' },
+          // Remove negative margins that cause overflow
+          marginX: { xs: 0, md: 0 },
         }}
       >
         <Box
@@ -234,17 +302,19 @@ export default function IntroHome() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           sx={{
-            width: { xs: 'calc(100% + 30px)', md: '100%' },
+            width: '100%',
+            maxWidth: { xs: '100%', md: '100%' },
             height: {
-              xs: '200px',
-              sm: '250px',
-              md: '25%'
+              xs: 'clamp(180px, 40vw, 220px)',
+              sm: 'clamp(220px, 35vw, 280px)',
+              md: 'clamp(200px, 25vh, 300px)',
+              lg: 'clamp(250px, 28vh, 350px)'
             },
-            // Efecto Glass iOS - Frost Subtle
+            aspectRatio: { md: '16/9' },
             backdropFilter: 'blur(30px) saturate(200%)',
             backgroundColor: 'rgba(255, 255, 255, 0.15)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: { xs: '0px', md: '24px' },
+            borderRadius: { xs: '16px', sm: '20px', md: '24px' },
             boxShadow: `
               0 8px 32px rgba(0, 0, 0, 0.1),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -287,19 +357,25 @@ export default function IntroHome() {
           {/* Visualización 3D - Inside video */}
           <Typography
             fontFamily={'Poppins'}
-            fontSize={{ xs: '10px', md: '12px' }}
             sx={{
+              fontSize: { 
+                xs: 'clamp(9px, 2.5vw, 10px)',
+                md: 'clamp(10px, 1.5vw, 12px)'
+              },
               position: 'absolute',
-              bottom: { xs: '12px', md: '16px' },
-              right: { xs: '12px', md: '16px' },
+              bottom: { xs: '10px', sm: '12px', md: '16px' },
+              right: { xs: '10px', sm: '12px', md: '16px' },
               color: 'white',
               fontWeight: '300',
-              letterSpacing: '0.7px',
+              letterSpacing: '0.5px',
               textTransform: 'uppercase',
               textAlign: 'center',
               textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
               backdropFilter: 'blur(6px)',
-              padding: { xs: '3px 10px', md: '4px 14px' },
+              padding: { 
+                xs: 'clamp(2px, 1vw, 3px) clamp(8px, 2vw, 10px)',
+                md: 'clamp(3px, 0.8vw, 4px) clamp(12px, 1.5vw, 14px)'
+              },
               borderRadius: '6px',
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               border: '0.5px solid rgba(255, 255, 255, 0.15)',
@@ -314,14 +390,27 @@ export default function IntroHome() {
       <Box
         sx={{
           gridColumn: { xs: '1 / 13', md: '12 / 13' },
-          gridRow: '1 / 1',
+          gridRow: { xs: '4', md: '2' },
           display: 'flex',
-          alignItems: 'end',
-          justifyContent: { xs: 'center', md: 'end' },
-          marginBottom: { xs: '25px', md: '50px' },
+          zIndex: 1,
+          alignItems: { xs: 'center', md: 'flex-end' },
+          justifyContent: { xs: 'center', md: 'flex-end' },
+          marginTop: { xs: '0px', md: '0px' },
         }}
       >
-        <Typography color="#ffffff" fontFamily={'Poppins'} fontSize={{ xs: '16px', sm: '18px', md: '20px' }} sx={{ fontWeight: 300, letterSpacing: '0.5px' }}>
+        <Typography 
+          color="#ffffff" 
+          fontFamily={'Poppins'} 
+          sx={{ 
+            fontSize: { 
+              xs: 'clamp(14px, 4vw, 16px)',
+              sm: 'clamp(16px, 3.5vw, 18px)',
+              md: 'clamp(18px, 2vw, 20px)'
+            },
+            fontWeight: 300,
+            letterSpacing: '0.5px'
+          }}
+        >
           (Scroll)
         </Typography>
       </Box>

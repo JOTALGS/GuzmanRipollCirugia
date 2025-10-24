@@ -490,7 +490,7 @@ export default function Home() {
                   left: 0,
                   right: 0,
                   height: '1px',
-                  backgroundImage: 'repeating-linear-gradient(to right, #D0D0D0 0, #D0D0D0 6px, transparent 6px, transparent 12px)',
+                  //backgroundImage: 'repeating-linear-gradient(to right, #D0D0D0 0, #D0D0D0 6px, transparent 6px, transparent 12px)',
                 } : {}
               }}
             >

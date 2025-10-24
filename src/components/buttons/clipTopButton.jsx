@@ -8,24 +8,23 @@ const ClipTopButton = ({children}) => {
   return (
       <Box
         sx={{
-          gridColumn: { xs: '1 / 10', md: '1 / 5' },
+          gridColumn: { xs: '1 / 13', md: '1 / 5' },
           gridRow: '1 / 1',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'end',
-          justifyContent: 'end',
+          alignItems: {xs: 'center', md: 'end'},
+          justifyContent: { xs: 'center', md: 'end'},
           marginBottom: { xs: '100px', md: '50px' },
-          marginRight: { xs: '20px', md: '0px' },
+          marginRight: { xs: '0px', md: '0px' },
         }}
       >
-
         <Box
           sx={{
             position: 'relative',
             display: 'flex',
             justifyContent: 'center',
             marginRight: 'auto',
-            width: { xs: '65%', md: 'fit-content' },
+            width: { xs: '100%', md: 'fit-content' },
             overflow: 'hidden',
             border: '1px solid gray',
             borderRadius: '25px',

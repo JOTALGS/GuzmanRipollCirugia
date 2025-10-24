@@ -200,38 +200,37 @@ export default function Footer() {
             component="footer"
             sx={{
               display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
-              mx: { xs: "15px", md: "70px" },
-              gap: { xs: "32px", md: "20px" },
+              gridTemplateColumns: "repeat(12, 1fr)",
+              mx: "70px",
+              columnGap: "20px",
               backgroundColor: "#000",
               color: "#fff",
-              py: { xs: "48px", md: 8 },
+              py: 8,
             }}
           >
             <Box
               sx={{
-                gridColumn: { xs: "1 / 1", md: "1 / 5" },
-                gridRow: { xs: "1 / 1", md: "1 / 1" },
-                mx: { xs: 0, md: 4 },
+                gridColumn: "1 / 5",
+                gridRow: "1 / 1",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "start",
-                gap: { xs: "12px", md: "4px" },
+                gap: "4px",
               }}
             >
               <Box sx={{ display: "flex", width: "100%", textAlign: "start", flexDirection: "column" }}>
                 <Typography
                   color="white"
                   fontFamily={"Poppins"}
-                  fontSize={{ xs: "32px", sm: "36px", md: "45px", xl: "55px" }}
-                  sx={{ width: "100%", letterSpacing: { xs: "-1.5px", md: "-3px" }, lineHeight: { xs: 1.2, md: 1.1 } }}
+                  fontSize={{ md: "45px", xl: "55px" }}
+                  sx={{ width: "100%", letterSpacing: "-3px", lineHeight: 1.1 }}
                 >
                   Lista para
                   <Typography
                     component="span"
                     fontFamily={"Poppins"}
-                    fontSize={{ xs: "32px", sm: "36px", md: "45px", xl: "55px" }}
-                    sx={{ color: "textAccent", letterSpacing: { xs: "-1.5px", md: "-3px" } }}
+                    fontSize={{ md: "45px", xl: "55px" }}
+                    sx={{ color: "textAccent", letterSpacing: "-3px" }}
                   >
                     {" "}
                     Renovar
@@ -251,9 +250,9 @@ export default function Footer() {
                   color: "#000",
                   borderRadius: "4px",
                   textTransform: "none",
-                  py: { xs: 1.5, md: 1 },
-                  px: { xs: 4, md: 3 },
-                  fontSize: { xs: "16px", md: "14px" },
+                  py: 1,
+                  px: 3,
+                  fontSize: "14px",
                   "&:hover": { backgroundColor: "#E0E0E0" },
                 }}
               >
@@ -263,9 +262,8 @@ export default function Footer() {
 
             <Box
               sx={{
-                gridColumn: { xs: "1 / 1", md: "7 / 13" },
-                gridRow: { xs: "2 / 2", md: "1 / 1" },
-                mx: { xs: 0, md: 4 },
+                gridColumn: "7 / 13",
+                gridRow: "1 / 1",
               }}
             >
               <Box sx={{ display: "flex", width: "100%" }}>
@@ -356,90 +354,75 @@ export default function Footer() {
               </Box>
             </Box>
 
-            <Box sx={{ gridColumn: "1 / 13", gridRow: "2 / 2", mx: { xs: 1, md: 4 } }}>
-              <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.15)", borderStyle: "dotted", borderWidth: "1px", my: { xs: "32px", md: 6 } }} />
+            {/* Columnas de información - ahora en row 2 */}
+            <Box sx={{ gridColumn: "1 / 4", gridRow: "2 / 2", mt: 6 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+                DESCUBRÍ
+              </Typography>
+              <List disablePadding dense>
+                {[
+                  { to: "/", text: "Inicio" },
+                  { to: "/clinica", text: "Clínica" },
+                  { to: "/tratamientos", text: "Tratamientos" },
+                  { to: "/contacto", text: "Contacto" },
+                ].map((link) => (
+                  <ListItem key={link.text} disablePadding sx={{ mb: 1 }}>
+                    <MuiLink component={RouterLink} to={link.to} underline="none" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" } }}>
+                      <ListItemText primary={link.text} primaryTypographyProps={{ fontSize: "14px" }} />
+                    </MuiLink>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
 
-              <Grid container spacing={{ xs: 3, md: 2.5 }} sx={{ fontSize: "0.875rem" }}>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-                    DESCUBRÍ
-                  </Typography>
-                  <List disablePadding dense>
-                    {[
-                      { to: "/", text: "Inicio" },
-                      { to: "/clinica", text: "Clínica" },
-                      { to: "/tratamientos", text: "Tratamientos" },
-                      { to: "/contacto", text: "Contacto" },
-                    ].map((link) => (
-                      <ListItem key={link.text} disablePadding sx={{ mb: 1 }}>
-                        <MuiLink component={RouterLink} to={link.to} underline="none" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" } }}>
-                          <ListItemText primary={link.text} />
-                        </MuiLink>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
+            <Box sx={{ gridColumn: "4 / 7", gridRow: "2 / 2", mt: 6 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+                CONTACTOS
+              </Typography>
+              <List disablePadding dense>
+                {["Instagram", "Facebook", "+598.99.016.358", "info@guzmanripoll.com"].map((item) => (
+                  <ListItem key={item} disablePadding sx={{ color: "#B0B0B0", mb: 1, fontSize: "14px" }}>
+                    {item}
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
 
-                <Grid item xs={12} sm={6} md={3}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-                    CONTACTOS
-                  </Typography>
-                  <List disablePadding dense>
-                    {["Instagram", "Facebook", "+598.99.016.358", "info@guzmanripoll.com"].map((item) => (
-                      <ListItem key={item} disablePadding sx={{ color: "#B0B0B0", mb: 1 }}>
-                        {item}
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
+            <Box sx={{ gridColumn: "7 / 13", gridRow: "2 / 2", mt: 6 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+                DIRECCIÓN
+              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box>
+                  <Typography sx={{ color: "#B0B0B0", fontSize: "14px" }}>Av. Franklin Delano Roosevelt</Typography>
+                  <Typography sx={{ color: "#B0B0B0", fontSize: "14px" }}>20100, Punta del Este.</Typography>
+                </Box>
+                <Box>
+                  <MuiLink component={RouterLink} to="#" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" }, fontSize: "14px" }}>
+                    Back to top ↑
+                  </MuiLink>
+                </Box>
+              </Box>
+            </Box>
 
-                <Grid item xs={12} sm={6} md={6}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-                    DIRECCIÓN
-                  </Typography>
-                  <Grid container>
-                    <Grid item xs={8}>
-                      <Typography sx={{ color: "#B0B0B0" }}>Av. Franklin Delano Roosevelt</Typography>
-                      <Typography sx={{ color: "#B0B0B0" }}>20100, Punta del Este.</Typography>
-                    </Grid>
-                    <Grid item xs={4} textAlign="right">
-                      <MuiLink component={RouterLink} to="#" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" } }}>
-                        Back to top ↑
-                      </MuiLink>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
+            {/* Divider */}
+            <Box sx={{ gridColumn: "1 / 13", gridRow: "3 / 3" }}>
+              <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.15)", borderStyle: "dotted", borderWidth: "1px", my: 6 }} />
+            </Box>
 
+            {/* Bottom section */}
+            <Box sx={{ gridColumn: "1 / 13", gridRow: "4 / 4" }}>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column", md: "row" },
                   justifyContent: "space-between",
-                  alignItems: { xs: "flex-start", md: "center" },
-                  gap: { xs: "20px", md: 0 },
-                  mt: { xs: "32px", md: 6 },
+                  alignItems: "center",
+                  gap: 4,
                 }}
               >
-                {/* Bottom original */}
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Box
-                    sx={{
-                      width: 24,
-                      height: 24,
-                      backgroundColor: "#fff",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: "bold",
-                      color: "#000",
-                      fontSize: "0.75rem",
-                    }}
-                  >
-                    GZ
-                  </Box>
-                  <Typography variant="caption">GUZMÁN RIPOLL</Typography>
+                {/* Logo */}
+                <Box display="flex" alignItems="center">
+                  <Box component="img" src="/images/GR_9_Isologo_Blanco.png" alt="Guzmán Ripoll" sx={{ height: 32, width: "auto" }} />
                 </Box>
 
                 <MuiLink
@@ -460,11 +443,11 @@ export default function Footer() {
                   <LinkedInIcon fontSize="small" />
                 </MuiLink>
 
-                <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 4 }}>
-                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: { xs: "13px", md: "12px" } }}>
+                <Box display="flex" gap={4}>
+                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px" }}>
                     Todos los Derechos Reservados.
                   </Typography>
-                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: { xs: "13px", md: "12px" } }}>
+                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px" }}>
                     Copyright ©2025 Guzman Ripoll
                   </Typography>
                 </Box>

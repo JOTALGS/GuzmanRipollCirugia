@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
 import Resultados from "./pages/Resultados";
 import ProcedimientoDetalle from "./pages/ProcedimientoDetalle";
+import NotFound from "./pages/NotFound";
 
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
@@ -182,6 +183,7 @@ const App = () => {
               <Route path="/resultados" element={<Resultados/>} />
               <Route path="/contacto" element={<ContactSection />} />
               <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
             
             {/* Componente de navegación condicional */}

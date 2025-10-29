@@ -86,7 +86,7 @@ export default function Conexion() {
           zIndex: 1,
         }}>
           {/* Human Connection Section */}
-          <Box component="section"  sx={{ py: 8, px: 6, backgroundColor: "white"}}>
+          <Box component="section"  sx={{ py: 8, px: {xs: 2, md: 6}, backgroundColor: "white"}}>
             <Grid container spacing={6} alignItems="start">
               <Grid item xs={12} md={6} sx={{ textAlign: "start" }}>
                 <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>

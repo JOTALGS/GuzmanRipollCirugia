@@ -295,7 +295,7 @@ export function ResultsCarousel() {
             fontWeight: 500,
           }}
         >
-          (Scroll)
+          (Drag)
         </span>
       </div>
     </div>

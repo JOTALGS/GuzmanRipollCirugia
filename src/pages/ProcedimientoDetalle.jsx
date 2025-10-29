@@ -171,7 +171,7 @@ export default function ProcedimientoDetalle() {
             height: {xs: "80%", md: 'auto' },
             alignItems: "center",
             justifyContent: "space-between",
-            px: { xs: "20px", md: "70px" }
+            px: { xs: "0px", md: "70px" },
           }}>
             {/* Botón Volver */}
             <Button
@@ -215,9 +215,9 @@ export default function ProcedimientoDetalle() {
             <Box
               sx={{
                 textAlign: {xs: 'center', md: "right"},
-                maxWidth: { xs: "50%", md: "45%", lg: "35%" },
-                  lineHeight: 1.5,
-
+                maxWidth: { xs: "100%", md: "45%", lg: "35%" },
+                lineHeight: { xs: 1.1, md: 1.5 },
+                mt: { xs: "20px", md: "0px" }
               }}
             >
               {/* Glassmorphism Chip */}
@@ -233,10 +233,8 @@ export default function ProcedimientoDetalle() {
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   fontWeight: 500,
-                  mb: 2.5,
+                  mb: { xs: 0.5, md: 2.5},
                   height: "26px"
-
-                  
                 }}
               />
 
@@ -249,7 +247,7 @@ export default function ProcedimientoDetalle() {
                   fontSize: { xs: "2.2rem", md: "3.5rem", lg: "4rem" },
                   fontWeight: 600,
                   lineHeight: 1.1,
-                  mb: 3.5,
+                  mb: { xs: 1, md: 3.5},
                   letterSpacing: "-0.02em"
                 }}
               >

@@ -243,7 +243,7 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                       <CardContent sx={{ 
                         position: 'relative',
                         width: '700px',
-                        height: '600px',
+                        height: {xs: '400px', md: '600px'},
                         p: 0
                       }}>
                         <img 

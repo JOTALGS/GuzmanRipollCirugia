@@ -46,6 +46,7 @@ export default function IntroHome() {
         position: "relative",
         width: "100%",
         minHeight: { xs: "100vh", md: "100vh" },
+        maxHeight: { xs: "100vh", md: "100vh" },
         display: "grid",
         backgroundColor: "transparent",
         gridTemplateColumns: "repeat(12, 1fr)",
@@ -91,7 +92,7 @@ export default function IntroHome() {
           
           backgroundColor: "transparent",
           gridRow: '1',
-          zIndex: 1,
+          zIndex: 100,
           display: 'flex',
           flexDirection: 'column',
           textAlign: { xs: 'center', sm: 'center', md: 'center', lg: 'left' },
@@ -200,7 +201,7 @@ export default function IntroHome() {
           flexDirection: 'column',
           alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
           justifyContent: 'flex-start',
-          marginTop: { xs: '150px', md: 'auto' },
+          marginTop: { xs: '5px', md: 'auto' },
           marginBottom: { xs: '30px', md: '0px' },
         }}
       >
@@ -287,11 +288,23 @@ export default function IntroHome() {
             xl: '8 / 11'
           },
           zIndex: 1,
+          position: 'relative',
           gridRow: { xs: '2', md: '2' },
+          padding: { xs: '0px', md: '7px' },
+          borderTopLeftRadius: { xs: '20px', md: '24px' },
+          borderTopRightRadius: { xs: '20px', md: '24px' },
+          borderBottomLeftRadius: { xs: '20px', md: '12px' },
+          borderBottomRightRadius: { xs: '20px', md: '12px' },
+
+          backdropFilter: 'blur(30px) saturate(100%)',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          border: '0.5px solid rgba(255, 255, 255, 0.15)',
           display: 'flex',
-          alignItems: { xs: 'center', md: 'flex-end' },
+          flexDirection: 'column',
+          gap: '4px',
+          alignItems: { xs: 'center', md: 'flex-start' },
           justifyContent: { xs: 'center', md: 'flex-end' },
-          marginTop: { xs: '75px', md: '0px' },
+          marginTop: { xs: '20%', md: '150px' },
           marginBottom: { xs: '20px', sm: '30px', md: '0px' },
           // Remove negative margins that cause overflow
           marginX: { xs: 0, md: 0 },
@@ -353,8 +366,9 @@ export default function IntroHome() {
               display: 'block',
             }}
           />
-
-          {/* Visualización 3D - Inside video */}
+        </Box>
+        
+                  {/* Visualización 3D - Inside video */}
           <Typography
             fontFamily={'Poppins'}
             sx={{
@@ -362,9 +376,7 @@ export default function IntroHome() {
                 xs: 'clamp(9px, 2.5vw, 10px)',
                 md: 'clamp(10px, 1.5vw, 12px)'
               },
-              position: 'absolute',
-              bottom: { xs: '10px', sm: '12px', md: '16px' },
-              right: { xs: '10px', sm: '12px', md: '16px' },
+              position: 'relative',
               color: 'white',
               fontWeight: '300',
               letterSpacing: '0.5px',
@@ -376,14 +388,13 @@ export default function IntroHome() {
                 xs: 'clamp(2px, 1vw, 3px) clamp(8px, 2vw, 10px)',
                 md: 'clamp(3px, 0.8vw, 4px) clamp(12px, 1.5vw, 14px)'
               },
+              zIndex: 100,
               borderRadius: '6px',
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              border: '0.5px solid rgba(255, 255, 255, 0.15)',
             }}
           >
             Visualización 3D
           </Typography>
-        </Box>
       </Box>
 
       {/* Texto (Scroll) */}
@@ -395,7 +406,7 @@ export default function IntroHome() {
           zIndex: 1,
           alignItems: { xs: 'center', md: 'flex-end' },
           justifyContent: { xs: 'center', md: 'flex-end' },
-          marginTop: { xs: '0px', md: '0px' },
+          marginTop: { xs: '-15%', md: '0px' },
         }}
       >
         <Typography 

@@ -7,6 +7,8 @@ export default function IntroHome() {
   const [isPinned, setIsPinned] = useState(true);
   const biasVideoRef = useRef(null);
   const videoRef = useRef(null);
+  const inteligenteBoxRef = useRef(null);
+  const inteligenteTextRef = useRef(null);
   
   useEffect(() => {
     if (biasVideoRef.current) {
@@ -24,6 +26,42 @@ export default function IntroHome() {
           delay: 0.3
         }
       );
+    }
+  }, []);
+
+  // Animation for the inteligente box
+  useEffect(() => {
+    if (inteligenteBoxRef.current && inteligenteTextRef.current) {
+      const box = inteligenteBoxRef.current;
+      const text = inteligenteTextRef.current;
+      
+      // Get the final dimensions from the text
+      const finalHeight = text.offsetHeight + 15;
+      const finalWidth = text.offsetWidth + 110; // Adding padding (8px on each side)
+      
+      // Reset to initial state
+      gsap.set(box, {
+        width: 0,
+        height: 0,
+        opacity: 1
+      });
+
+      // Create the animation timeline
+      const tl = gsap.timeline({ delay: 0.5 });
+      
+      // First: grow height from 0 to text height with 1px width
+      tl.to(box, {
+        width: 1,
+        height: finalHeight,
+        duration: 0.4,
+        ease: "power2.out"
+      })
+      // Then: grow width from 1px to full text width
+      .to(box, {
+        width: finalWidth,
+        duration: 0.6,
+        ease: "power2.out"
+      });
     }
   }, []);
 
@@ -115,21 +153,43 @@ export default function IntroHome() {
             color: 'textSecondary',
             letterSpacing: { xs: '-1px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
             lineHeight: 1.1,
+            alignItems: 'center',
+            display: 'flex',
           }}
         >
           Cirugía mamaria{' '}
-          <Typography 
-            component="span" 
-            fontFamily={'Poppins'} 
-            sx={{ 
-              fontSize: 'inherit',
-              color: 'textAccent',
-              letterSpacing: 'inherit',
-              fontWeight: 'inherit'
+          <Box 
+            ref={inteligenteBoxRef}
+            sx={{
+              display: 'inline-block',
+              paddingX: '8px',
+              borderRadius: '7px',
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              backdropFilter: 'blur(15px) saturate(50%)',
+              border: '0.5px solid rgba(255, 255, 255, 0.15)',
+              verticalAlign: 'bottom',
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: '8px',
+              alignContent: 'center',
             }}
           >
-            inteligente
-          </Typography>,
+            <Typography 
+              ref={inteligenteTextRef}
+              component="span" 
+              fontFamily={'Poppins'} 
+              sx={{ 
+                fontSize: 'inherit',
+                color: 'textAccent',
+                letterSpacing: 'inherit',
+                fontWeight: 'semibold',
+                lineHeight: 1.2,
+              }}
+            >
+              inteligente
+            </Typography>
+          </Box>,
         </Typography>
 
         <Typography 
@@ -291,8 +351,8 @@ export default function IntroHome() {
           position: 'relative',
           gridRow: { xs: '2', md: '2' },
           padding: { xs: '0px', md: '7px' },
-          borderTopLeftRadius: { xs: '20px', md: '24px' },
-          borderTopRightRadius: { xs: '20px', md: '24px' },
+          borderTopLeftRadius: { xs: '20px', md: '28px' },
+          borderTopRightRadius: { xs: '20px', md: '28px' },
           borderBottomLeftRadius: { xs: '20px', md: '12px' },
           borderBottomRightRadius: { xs: '20px', md: '12px' },
 
@@ -304,7 +364,7 @@ export default function IntroHome() {
           gap: '4px',
           alignItems: { xs: 'center', md: 'flex-start' },
           justifyContent: { xs: 'center', md: 'flex-end' },
-          marginTop: { xs: '20%', md: '150px' },
+          marginTop: { xs: '20%', md: '180px' },
           marginBottom: { xs: '20px', sm: '30px', md: '0px' },
           // Remove negative margins that cause overflow
           marginX: { xs: 0, md: 0 },

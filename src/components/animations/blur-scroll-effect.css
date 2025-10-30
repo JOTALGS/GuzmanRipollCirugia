@@ -1,0 +1,116 @@
+/**
+ * BLUR SCROLL EFFECT - Estilos CSS
+ * =================================
+ * Estilos esenciales para el efecto de blur
+ * Portable y minimalista
+ */
+
+/* Reset básico */
+.blur-text * {
+  box-sizing: border-box;
+}
+
+/* Contenedor del texto con efecto blur */
+.blur-text {
+  line-height: 1.2;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+/* Estilos para cada variante de efecto */
+.blur-text-1 {
+  font-weight: 420;
+}
+
+.blur-text-2 {
+  font-weight: 300;
+  font-family: monospace;
+}
+
+.blur-text-3 {
+  font-weight: 600;
+}
+
+.blur-text-4 {
+  font-weight: 400;
+}
+
+/* Contenedor de secciones */
+.blur-scroll-section {
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+/* Para evitar layout shifts durante el split */
+.blur-text .word,
+.blur-text .char {
+  display: inline-block;
+}
+
+.blur-text .word {
+  white-space: nowrap;
+}
+
+/* Loader opcional */
+.loading::before,
+.loading::after {
+  content: '';
+  position: fixed;
+  z-index: 9999;
+}
+
+.loading::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.loading::after {
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  opacity: 0.4;
+  background: #fff;
+  animation: loaderAnim 0.7s linear infinite alternate forwards;
+}
+
+@keyframes loaderAnim {
+  to {
+    opacity: 1;
+    transform: scale3d(0.5, 0.5, 1);
+  }
+}
+
+/* Optimizaciones de performance */
+.blur-text .char,
+.blur-text .word {
+  will-change: auto;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .blur-text {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .blur-scroll-section {
+    padding: 1.5rem;
+  }
+}
+
+/* Theme presets (opcional) */
+.blur-text-dark {
+  color: rgb(227 226 220 / 86%);
+  background-color: #000;
+}
+
+.blur-text-light {
+  color: rgb(20 20 20 / 86%);
+  background-color: #fff;
+}

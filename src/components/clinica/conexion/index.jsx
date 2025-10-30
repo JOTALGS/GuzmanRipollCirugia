@@ -60,30 +60,36 @@ export default function Conexion() {
 
   return (
     <>
+      {/* IMAGEN - Arriba en móvil, izquierda en desktop */}
       <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 7' },
-          gridRow: '8 / 8',
-          padding: "50px",
-          paddingRight: "150px",
+          gridRow: { xs: '8 / 8', md: '8 / 8' },
+          padding: { xs: "0px", md: "50px" },
+          paddingLeft: { xs: "0px", md: "0px" },
+          paddingRight: { xs: "0px", md: "100px" },
           zIndex: 1,
+          order: { xs: 1, md: 1 },
         }}>
             <Grid item xs={12} md={6}>
-              <Box sx={{ 
-                borderRadius: 2, 
+              <Box sx={{
+                borderRadius: { xs: 8, md: 2 },
                 overflow: "hidden",
                 aspectRatio: "1/1",
                 backgroundImage: 'url("/images/imagen5.jpg")',
                 backgroundSize: "cover",
-                backgroundPosition: "center"
+                width: { xs: "100vw", md: "auto" },
+                marginLeft: { xs: "calc(-1 * var(--grid-margin, 15px))", md: "0" },
               }}>
               </Box>
             </Grid>
         </Box>
 
-        <Box sx={{
+      {/* TEXTO - Abajo en móvil, derecha en desktop */}
+      <Box sx={{
           gridColumn: { xs: '1 / 13', md: '7 / 13' },
-          gridRow: '8 / 8',
+          gridRow: { xs: '9 / 9', md: '8 / 8' },
           zIndex: 1,
+          order: { xs: 2, md: 2 },
         }}>
           {/* Human Connection Section */}
           <Box component="section"  sx={{ py: 8, px: {xs: 2, md: 6}, backgroundColor: "white"}}>
@@ -92,14 +98,14 @@ export default function Conexion() {
                 <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>
                   Conexión humana
                 </Typography>
-                
+
                 <Box sx={{ mt: 6, display: "flex", flexDirection: "column", gap: 4 }}>
                   {humanConnectionPoints.map((point, index) => (
                     <Box key={index} sx={{ display: "flex", gap: 3 }}>
                       <Typography variant="body1" sx={pointNumberStyle}>
                         0{index + 1}.
                       </Typography>
-                      <Box sx={{ padding: "30px", paddingRight: { xs: "0px", md: "200px"}, paddingTop: "0px" }}>
+                      <Box sx={{ padding: { xs: "0px", md: "30px" }, paddingRight: { xs: "0px", md: "200px"}, paddingTop: "0px" }}>
                         <Typography variant="h3" sx={pointTitleStyle}>
                           {point.title}
                         </Typography>
@@ -112,22 +118,6 @@ export default function Conexion() {
                 </Box>
               </Grid>
             </Grid>
-          </Box>
-        </Box>
-
-
-        <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '1 / 13' },
-          gridRow: '9 / 9',
-          zIndex: 1
-        }}>
-          {/* Full-width Video Section */}
-          <Box zIndex={100} sx={{ mt: 4, mb: 10, ml: { xs: "-10px", md: "calc(-70px + 1vw)"}, borderRadius: 1, overflow: "visible" }}>
-            <img
-              src="/images/unnamed.png"
-              alt="Dr. Guzman Ripoll"
-              style={{ width: "98vw", height: "auto", display: "block" }}
-            />
           </Box>
         </Box>
     </>

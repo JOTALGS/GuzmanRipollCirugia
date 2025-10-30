@@ -38,7 +38,7 @@ export default function IntroHome() {
       const text = inteligenteTextRef.current;
       
       // Get the final dimensions from the text
-      const wOffset = isMobile? 50 : 110;
+      const wOffset = isMobile? 15 : 50;
 
       const finalHeight = text.offsetHeight + 15;
       const finalWidth = text.offsetWidth + wOffset; // Adding padding (8px on each side)

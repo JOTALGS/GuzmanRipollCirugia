@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -9,123 +9,35 @@ import {
   ListItem,
   ListItemText,
   Button,
-  Grid,
   TextField,
   Divider,
-  useTheme,
-  keyframes,
-  IconButton,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-// Logo original (carpeta public/images)
+// Logo (carpeta public/images)
 import LogoGR from "/images/GR_6_Iso+Nombre_Blanco.png";
 
-/* ===== Cinta infinita (duplicamos contenido y desplazamos -50%) ===== */
-const scrollLeft = keyframes`
-  0%   { transform: translate3d(0,0,0); }
-  100% { transform: translate3d(-50%,0,0); }
-`;
+// ⬇️ NUEVO: usa tu animación standalone
+import StandaloneMarqueeAnimation from "../animations/standalone-marquee-animation"; // <- ajusta la ruta si hace falta
 
 export default function Footer() {
-  const theme = useTheme();
-
-  const [marqueeDuration, setMarqueeDuration] = useState(20);
-  const trackRef = useRef(null);
-
-  useLayoutEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    const measure = () => {
-      const total = el.scrollWidth;
-      const single = total / 2;
-      const speedPxPerSec = 60;
-      const secs = Math.max(8, Math.min(120, single / speedPxPerSec));
-      setMarqueeDuration(secs);
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
   return (
     <Box sx={{ width: "100%", bgcolor: "#000", color: "#fff", position: "relative", zIndex: 1000 }}>
-      {/* ===== Mobile (xs–sm) — minimalista con cinta y gradiente de marca ===== */}
+      {/* ===== Mobile (xs–sm) — reemplazo total por tu animación ===== */}
       <Box sx={{ display: { xs: "block", md: "none" } }}>
-        <Box
-          sx={{
-            background: "#000", // Negro
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <Container maxWidth="lg" sx={{ pt: 5, pb: 3 }}>
+        <Box sx={{ background: "#000", position: "relative", overflow: "hidden" }}>
+          <Container maxWidth="lg" sx={{ pt: 8, pb: 3 }}>
             {/* Logo */}
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 3.5 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
               <Box component="img" src={LogoGR} alt="Guzmán Ripoll" sx={{ height: 44, width: "auto" }} />
             </Box>
 
-            {/* Cinta infinita */}
-            <Box
-              sx={{
-                position: "relative",
-                overflow: "hidden",
-                py: 2,
-                mb: 4,
-                maskImage: "linear-gradient(to right, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent)",
-              }}
-            >
-              <Box
-                ref={trackRef}
-                sx={{
-                  display: "flex",
-                  willChange: "transform",
-                  animation: `${scrollLeft} ${marqueeDuration}s linear infinite`,
-                  "@media (prefers-reduced-motion: reduce)": { animationPlayState: "paused" },
-                }}
-              >
-                {/* Bloque A */}
-                <Box sx={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
-                  {Array(10).fill("Agenda tu consulta").map((txt, idx) => (
-                    <Typography
-                      key={idx}
-                      component="span"
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: { xs: 36, sm: 44 },
-                        lineHeight: 1.1,
-                        marginRight: { xs: 3, sm: 4 },
-                      }}
-                    >
-                      {txt}&nbsp;&nbsp;*&nbsp;&nbsp;
-                    </Typography>
-                  ))}
-                </Box>
-                {/* Bloque A duplicado */}
-                <Box sx={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
-                  {Array(10).fill("Agenda tu consulta").map((txt, idx) => (
-                    <Typography
-                      key={idx}
-                      component="span"
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: { xs: 36, sm: 44 },
-                        lineHeight: 1.1,
-                        marginRight: { xs: 3, sm: 4 },
-                      }}
-                    >
-                      {txt}&nbsp;&nbsp;*&nbsp;&nbsp;
-                    </Typography>
-                  ))}
-                </Box>
-              </Box>
+            {/* ⬇️ Tu animación (sustituye la cinta infinita rota) */}
+            <Box sx={{ mb: 4 }}>
+              <StandaloneMarqueeAnimation />
             </Box>
 
             {/* Mail grande y legible */}
@@ -139,8 +51,7 @@ export default function Footer() {
                   textUnderlineOffset: "6px",
                   fontSize: { xs: 24, sm: 28 },
                   fontWeight: 700,
-                  letterSpacing: 0,
-                  lineHeight: 1.2,
+                  lineHeight: 1.5,
                   display: "inline-block",
                   "&:hover": { opacity: 0.9 },
                 }}
@@ -151,40 +62,19 @@ export default function Footer() {
 
             {/* Redes */}
             <Box sx={{ display: "flex", justifyContent: "center", gap: 2.5, mb: 3.5 }}>
-              <MuiLink
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}
-              >
+              <MuiLink href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
                 <InstagramIcon fontSize="medium" />
               </MuiLink>
-              <MuiLink
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}
-              >
+              <MuiLink href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
                 <LinkedInIcon fontSize="medium" />
               </MuiLink>
-              <MuiLink
-                href="https://www.facebook.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}
-              >
+              <MuiLink href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
                 <FacebookIcon fontSize="medium" />
               </MuiLink>
             </Box>
 
-            {/* Copy sin botón */}
-            <Box
-              sx={{
-                borderTop: "1px dashed rgba(255,255,255,0.45)",
-                pt: 2,
-                pb: 3,
-              }}
-            >
+            {/* Copy */}
+            <Box sx={{ borderTop: "1px dashed rgba(255,255,255,0.45)", pt: 2, pb: 3 }}>
               <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.92)", fontWeight: 600 }}>
                 © 2025 Guzmán Ripoll — Todos los derechos reservados
               </Typography>
@@ -193,7 +83,7 @@ export default function Footer() {
         </Box>
       </Box>
 
-      {/* ===== Desktop/Tablet (md+) — tu bloque original sin tocar ===== */}
+      {/* ===== Desktop/Tablet (md+) ===== */}
       <Box sx={{ display: { xs: "none", md: "block" } }}>
         <Box sx={{ width: "100%", backgroundColor: "#000", zIndex: "1000", position: "relative" }}>
           <Box
@@ -208,10 +98,11 @@ export default function Footer() {
               py: 8,
             }}
           >
+            {/* Hero + CTA (fila 1) */}
             <Box
               sx={{
                 gridColumn: "1 / 5",
-                gridRow: "1 / 1",
+                gridRow: "1",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "start",
@@ -260,12 +151,8 @@ export default function Footer() {
               </Button>
             </Box>
 
-            <Box
-              sx={{
-                gridColumn: "7 / 13",
-                gridRow: "1 / 1",
-              }}
-            >
+            {/* Formulario (fila 1, derecha) */}
+            <Box sx={{ gridColumn: "7 / 13", gridRow: "1" }}>
               <Box sx={{ display: "flex", width: "100%" }}>
                 <Box component="form" noValidate autoComplete="off">
                   <Box
@@ -354,8 +241,8 @@ export default function Footer() {
               </Box>
             </Box>
 
-            {/* Columnas de información - ahora en row 2 */}
-            <Box sx={{ gridColumn: "1 / 4", gridRow: "2 / 2", mt: 6 }}>
+            {/* ===== Fila 2: columnas de información (ajustadas) ===== */}
+            <Box sx={{ gridColumn: "1 / 3", gridRow: "2", mt: 6 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
                 DESCUBRÍ
               </Typography>
@@ -375,7 +262,8 @@ export default function Footer() {
               </List>
             </Box>
 
-            <Box sx={{ gridColumn: "4 / 7", gridRow: "2 / 2", mt: 6 }}>
+            {/* CONTACTOS: columna 3-5 */}
+            <Box sx={{ gridColumn: "3 / 6", gridRow: "2", mt: 6 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
                 CONTACTOS
               </Typography>
@@ -388,38 +276,14 @@ export default function Footer() {
               </List>
             </Box>
 
-            <Box sx={{ gridColumn: "7 / 13", gridRow: "2 / 2", mt: 6 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
-                DIRECCIÓN
-              </Typography>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box>
-                  <Typography sx={{ color: "#B0B0B0", fontSize: "14px" }}>Av. Franklin Delano Roosevelt</Typography>
-                  <Typography sx={{ color: "#B0B0B0", fontSize: "14px" }}>20100, Punta del Este.</Typography>
-                </Box>
-                <Box>
-                  <MuiLink component={RouterLink} to="#" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" }, fontSize: "14px" }}>
-                    Back to top ↑
-                  </MuiLink>
-                </Box>
-              </Box>
-            </Box>
-
             {/* Divider */}
-            <Box sx={{ gridColumn: "1 / 13", gridRow: "3 / 3" }}>
+            <Box sx={{ gridColumn: "1 / 13", gridRow: "3" }}>
               <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.15)", borderStyle: "dotted", borderWidth: "1px", my: 6 }} />
             </Box>
 
-            {/* Bottom section */}
-            <Box sx={{ gridColumn: "1 / 13", gridRow: "4 / 4" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: 4,
-                }}
-              >
+            {/* Bottom */}
+            <Box sx={{ gridColumn: "1 / 13", gridRow: "4" }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 4 }}>
                 {/* Logo */}
                 <Box display="flex" alignItems="center">
                   <Box component="img" src="/images/GR_9_Isologo_Blanco.png" alt="Guzmán Ripoll" sx={{ height: 32, width: "auto" }} />

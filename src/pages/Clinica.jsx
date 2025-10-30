@@ -7,7 +7,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ResultsPortfolioSection } from "../components/clinica/ResultsPortfolioSection"
-import LightenText from "../components/magicText/LightenText"
+import { BlurText } from "../components/animations/BlurScrollEffect"
+import "../components/animations/blur-scroll-effect.css"
 import Footer from "../components/UI/Footer"
 import About from "../components/clinica/about"
 import Conexion from "../components/clinica/conexion"
@@ -37,10 +38,6 @@ export default function Clinica({ id }) {
     '/images/logo-scpreu.png',
   ];
 
-
-
-  const clinicaText = `Nuestro propósito es ser la marca de cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.`
-
   return (
     <Box id={id} sx={{ position: "relative", backgroundColor: "white",
       overflowX: { xs: "hidden", md: "visible" },
@@ -64,7 +61,7 @@ export default function Clinica({ id }) {
       }}>
 
       {/* Content Container */}
-      <Box sx={{
+       <Box sx={{
         position: "relative",
         zIndex: 1,
         // AQUÍ ESTÁ EL CAMBIO PRINCIPAL - AUMENTÉ EL MARGIN TOP
@@ -82,8 +79,8 @@ export default function Clinica({ id }) {
 
       }}>
         
-        {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION */}
-        <Box sx={{
+        {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION CON BLUR */}
+       <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / -1' },
           gridRow: '1 / 1',
           // AQUÍ PUEDES AGREGAR MÁS ESPACIO INTERNO SI LO NECESITAS
@@ -95,11 +92,57 @@ export default function Clinica({ id }) {
             sx={{
               py: 8,
               backgroundColor: "#fff",
-              width: "90vw",
-              maxWidth: "110%",
             }}
           >
-            <LightenText homeText={clinicaText} disableLightingEffect={true} />
+            <Box sx={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "repeat(12, 1fr)",
+              columnGap: { xs: "25px", md: "20px" },
+            }}>
+           <BlurText effect={1}></BlurText>
+              {/* Primera línea - Arranca en columna 4 con sangría en desktop, full width en mobile */}
+              <Box sx={{
+                gridColumn: { xs: '1 / 13', md: '4 / 12' },
+              }}>
+                <Typography
+                  component="div"
+                  sx={{
+                    fontFamily: theme.typography.fontFamily,
+                    fontSize: { xs: "1.75rem", md: "68px" },
+                    lineHeight: { xs: 1.3, md: 1.2 },
+                    fontWeight: 400,
+                    color: 'black',
+                  }}
+                >
+                  <BlurText effect={1} className="">
+                    Nuestro propósito es ser la marca de
+                  </BlurText>
+                </Typography>
+              </Box>
+
+              {/* Segunda parte del texto - FULL WIDTH en todas las pantallas */}
+              <Box sx={{
+                gridColumn: { xs: '1 / 13', md: '1 / 13' },
+                mt: { xs: 2, md: 0 },
+              }}>
+                <Typography
+                  component="div"
+                  sx={{
+                    fontFamily: theme.typography.fontFamily,
+                    fontSize: { xs: "1.75rem", md: "64px" },
+                    lineHeight: { xs: 1.3, md: 1.2 },
+                    fontWeight: 400,
+                    color: 'black',
+                    width: '100%',
+                  }}
+                >
+                  <BlurText effect={1}>
+                    cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.
+                  </BlurText>
+                </Typography>
+              </Box>
+            </Box>
           </Box>
         </Box>
 
@@ -107,6 +150,7 @@ export default function Clinica({ id }) {
         <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 13' },
           gridRow: '2 / 2',
+          mt: { xs: 6, md: 0 },
         }}>
           {/* Results Section */}
             <ResultsPortfolioSection size="large" py="py-0" />

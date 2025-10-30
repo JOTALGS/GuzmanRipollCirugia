@@ -188,11 +188,11 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                 background: "white",
                 zIndex: -1
               } }}>
-      <Box ref={resultadosTitleRef} sx={{ 
-        mb: 4, 
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "space-between" 
+      <Box ref={resultadosTitleRef} sx={{
+        mb: 4,
+        display: { xs: "none", md: "flex" },
+        alignItems: "center",
+        justifyContent: "space-between"
       }}>
         <Typography variant="h2" sx={sectionTitleStyle}>
           RESULTADOS
@@ -223,38 +223,37 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
               }}
             >
               {portfolioItems.map((item, index) => (
-                <Box 
-                  key={index} 
+                <Box
+                  key={index}
                   onClick={handleCardClick}
                   sx={{
-                    minWidth: {xs: '300px', md:  '700px'},
-                    maxWidth: {xs: '300px', md:  '700px'},
-                    maxHeight: {xs: '1000px', md: '1000px'},
+                    minWidth: {xs: '280px', md:  '700px'},
+                    maxWidth: {xs: '280px', md:  '700px'},
                     flexShrink: 0
                   }}
                 >
                   <Box className="group" sx={{ p: '4px' }}>
-                    <Card sx={{  
-                      borderRadius: '16px', 
-                      border: 'none', 
+                    <Card sx={{
+                      borderRadius: '16px',
+                      border: 'none',
                       bgcolor: theme.palette.grey[200],
                       boxShadow: 'none'
                     }}>
-                      <CardContent sx={{ 
+                      <CardContent sx={{
                         position: 'relative',
-                        width: '700px',
-                        height: '600px',
+                        width: { xs: '280px', md: '700px' },
+                        height: { xs: '350px', md: '600px' },
                         p: 0
                       }}>
-                        <img 
-                          src={item.imgSrc || "/placeholder.svg"} 
-                          alt={item.title} 
+                        <img
+                          src={item.imgSrc || "/placeholder.svg"}
+                          alt={item.title}
                           layout="fill"
                           objectFit="cover"
                         />
                       </CardContent>
                     </Card>
-                    <Box sx={{ pt: '16px', textAlign: 'center' }}>
+                    <Box sx={{ pt: '16px', textAlign: { xs: 'left', md: 'center' } }}>
                       <Typography variant="h6" sx={{ fontWeight: 600 }}>
                         {item.title}
                       </Typography>

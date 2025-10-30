@@ -18,7 +18,7 @@ export default function Especialistas() {
         alignItems: 'center'
       }}>
         
-        <img src={"/images/bias.png"} alt="scroll" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <img src={"/images/image.png"} alt="scroll" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </Box>
 
       {/* Right side - Content */}

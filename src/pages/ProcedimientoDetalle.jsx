@@ -7,6 +7,23 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+// Custom hook para detectar mobile
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return isMobile
+}
+
 // Data completa de procedimientos
 const procedimientosData = {
   "01": {
@@ -229,6 +246,8 @@ const AnimatedCard = ({ children, delay = 0 }) => {
 
 export default function ProcedimientoDetalle() {
   const [currentId, setCurrentId] = useState("01")
+  const [navOpen, setNavOpen] = useState(false)
+  const isMobile = useIsMobile()
   const sectionRef = useRef(null)
   const maskRef = useRef(null)
   const numberRef = useRef(null)
@@ -240,7 +259,7 @@ export default function ProcedimientoDetalle() {
   const approachRef = useRef(null)
   const infoRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
-  
+
   const procedimiento = procedimientosData[currentId]
 
   useEffect(() => {
@@ -407,32 +426,129 @@ export default function ProcedimientoDetalle() {
 
   return (
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
-      {/* Selector */}
+      {/* Navigation Menu - Frosted Glass Bottom Nav */}
       <div style={{
         position: "fixed",
-        top: "20px",
-        right: "20px",
+        bottom: isMobile ? "20px" : "30px",
+        left: "50%",
+        transform: "translateX(-50%)",
         zIndex: 1000,
-        background: "rgba(255,255,255,0.9)",
-        padding: "10px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "12px",
+        width: isMobile ? "calc(100% - 40px)" : "auto",
+        maxWidth: isMobile ? "500px" : "none"
       }}>
-        <select 
-          value={currentId} 
-          onChange={(e) => setCurrentId(e.target.value)}
+        {/* Menu Items - Slide Up */}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          opacity: navOpen ? 1 : 0,
+          transform: navOpen ? "translateY(0)" : "translateY(20px)",
+          pointerEvents: navOpen ? "auto" : "none",
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          maxHeight: navOpen ? "400px" : "0px",
+          overflowY: "auto",
+          padding: navOpen ? "12px" : "0",
+          background: navOpen ? "rgba(255, 255, 255, 0.85)" : "transparent",
+          backdropFilter: navOpen ? "blur(20px) saturate(180%)" : "blur(0px)",
+          WebkitBackdropFilter: navOpen ? "blur(20px) saturate(180%)" : "blur(0px)",
+          border: navOpen ? "1px solid rgba(255, 255, 255, 0.4)" : "1px solid transparent",
+          borderRadius: "16px",
+          boxShadow: navOpen ? "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)" : "none",
+          width: isMobile ? "100%" : "auto",
+          minWidth: isMobile ? "100%" : "280px"
+        }}>
+          {Object.entries(procedimientosData).map(([id, proc]) => (
+            <button
+              key={id}
+              onClick={() => {
+                setCurrentId(id)
+                setNavOpen(false)
+              }}
+              style={{
+                padding: "12px 20px",
+                background: currentId === id
+                  ? "rgba(0, 129, 199, 0.15)"
+                  : "rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                border: currentId === id
+                  ? "1.5px solid rgba(0, 129, 199, 0.4)"
+                  : "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "12px",
+                color: currentId === id ? "#0081C7" : "#333",
+                fontSize: "14px",
+                fontWeight: currentId === id ? 600 : 500,
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                textAlign: "left",
+                width: "100%",
+                fontFamily: "Poppins, sans-serif",
+                letterSpacing: "-0.01em"
+              }}
+              onMouseEnter={(e) => {
+                if (currentId !== id) {
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.5)"
+                  e.currentTarget.style.transform = "translateX(4px)"
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (currentId !== id) {
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.3)"
+                  e.currentTarget.style.transform = "translateX(0)"
+                }
+              }}
+            >
+              {proc.number} - {proc.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Toggle Button - Always Visible */}
+        <button
+          onClick={() => setNavOpen(!navOpen)}
           style={{
-            padding: "8px 12px",
-            borderRadius: "6px",
-            border: "1px solid #ddd",
-            fontSize: "14px",
-            cursor: "pointer"
+            padding: isMobile ? "12px 24px" : "14px 28px",
+            background: "rgba(255, 255, 255, 0.9)",
+            backdropFilter: "blur(25px) saturate(200%)",
+            WebkitBackdropFilter: "blur(25px) saturate(200%)",
+            border: "1.5px solid rgba(255, 255, 255, 0.5)",
+            borderRadius: "20px",
+            color: "#111",
+            fontSize: isMobile ? "13px" : "14px",
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
+            fontFamily: "Poppins, sans-serif",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            letterSpacing: "-0.01em",
+            width: isMobile ? "100%" : "auto",
+            justifyContent: "center"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-2px)"
+            e.currentTarget.style.boxShadow = "0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6)"
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0)"
+            e.currentTarget.style.boxShadow = "0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)"
           }}
         >
-          {Object.entries(procedimientosData).map(([id, proc]) => (
-            <option key={id} value={id}>{proc.number} - {proc.title}</option>
-          ))}
-        </select>
+          <span>{navOpen ? "Cerrar" : "Cambiar Procedimiento"}</span>
+          <span style={{
+            transform: navOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s ease",
+            display: "inline-block"
+          }}>
+            ▲
+          </span>
+        </button>
       </div>
 
       {/* HERO SECTION */}
@@ -471,22 +587,26 @@ export default function ProcedimientoDetalle() {
             alignItems: "center",
           }}
         >
-          <div style={{ 
-            width: "100%", 
+          <div style={{
+            width: "100%",
             position: "relative",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0 70px"
+            justifyContent: isMobile ? "center" : "space-between",
+            padding: isMobile ? "0 20px" : "0 70px",
+            gap: isMobile ? "40px" : "0"
           }}>
-            <div>
+            <div style={{
+              textAlign: isMobile ? "center" : "left",
+              order: isMobile ? 1 : 0
+            }}>
               <h1
                 ref={numberRef}
                 style={{
                   color: "#111",
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "74px",
+                  fontSize: isMobile ? "64px" : "74px",
                   fontWeight: 600,
                   lineHeight: 0.9,
                   opacity: 0.95,
@@ -499,9 +619,10 @@ export default function ProcedimientoDetalle() {
 
             <div
               style={{
-                textAlign: "right",
-                maxWidth: "35%",
+                textAlign: isMobile ? "center" : "right",
+                maxWidth: isMobile ? "100%" : "35%",
                 lineHeight: 1.5,
+                order: isMobile ? 2 : 0
               }}
             >
               <span
@@ -530,7 +651,7 @@ export default function ProcedimientoDetalle() {
                 style={{
                   color: "#111",
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "4rem",
+                  fontSize: isMobile ? "2.5rem" : "4rem",
                   fontWeight: 600,
                   lineHeight: 1.1,
                   marginBottom: "28px",
@@ -546,7 +667,7 @@ export default function ProcedimientoDetalle() {
                 style={{
                   color: "rgba(0,0,0,0.7)",
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "1.2rem",
+                  fontSize: isMobile ? "1rem" : "1.2rem",
                   fontWeight: 400,
                   marginBottom: "24px",
                   marginTop: 0
@@ -560,7 +681,7 @@ export default function ProcedimientoDetalle() {
                 style={{
                   color: "rgba(0,0,0,0.65)",
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "1rem",
+                  fontSize: isMobile ? "0.9rem" : "1rem",
                   fontWeight: 400,
                   lineHeight: 1.65,
                   letterSpacing: "-0.01em",
@@ -575,19 +696,19 @@ export default function ProcedimientoDetalle() {
       </section>
 
       {/* BENEFITS SECTION - Columnas 3 a 11 */}
-      <section ref={benefitsRef} style={{ backgroundColor: "white", padding: "80px 0" }}>
+      <section ref={benefitsRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
           columnGap: "20px",
-          margin: "0 70px",
+          margin: isMobile ? "0 20px" : "0 70px",
         }}>
-          <div style={{ gridColumn: "3 / 11" }}>
+          <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
             <h2
               className="section-title"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "2.625rem",
+                fontSize: isMobile ? "2rem" : "2.625rem",
                 fontWeight: 300,
                 color: "#111",
                 lineHeight: 1.1,
@@ -609,7 +730,7 @@ export default function ProcedimientoDetalle() {
             }}>
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
                 gap: "0.5rem",
               }}>
                 {benefitsData.slice(0, 3).map((benefit, index) => (
@@ -660,7 +781,10 @@ export default function ProcedimientoDetalle() {
                 ))}
               </div>
 
-              <div style={{ marginTop: "0.5rem" }}>
+              <div style={{
+                marginTop: "0.5rem",
+                gridColumn: isMobile ? "span 2" : "auto"
+              }}>
                 <AnimatedCard delay={0.6}>
                   <div
                     style={{
@@ -712,19 +836,19 @@ export default function ProcedimientoDetalle() {
       </section>
 
       {/* NUESTRO ACERCAMIENTO SECTION - Columnas 3 a 11 */}
-      <section ref={approachRef} style={{ backgroundColor: "white", padding: "80px 0" }}>
+      <section ref={approachRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
           columnGap: "20px",
-          margin: "0 70px",
+          margin: isMobile ? "0 20px" : "0 70px",
         }}>
-          <div style={{ gridColumn: "3 / 11" }}>
+          <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
             <h2
               className="section-title"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "2.625rem",
+                fontSize: isMobile ? "2rem" : "2.625rem",
                 fontWeight: 300,
                 color: "#111",
                 lineHeight: 1.1,
@@ -744,12 +868,14 @@ export default function ProcedimientoDetalle() {
               backgroundColor: "#F0F0F0",
               padding: "0.5rem",
             }}>
+              {/* Primera fila: 3 cards en desktop, 2 en mobile */}
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
                 gap: "0.5rem",
+                marginBottom: "0.5rem"
               }}>
-                {approachData.map((item, index) => (
+                {approachData.slice(0, 3).map((item, index) => (
                   <AnimatedCard key={index} delay={index * 0.15}>
                     <div
                       style={{
@@ -758,6 +884,75 @@ export default function ProcedimientoDetalle() {
                         padding: "1.75rem",
                         transition: "background-color 0.3s ease",
                         cursor: "default",
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
+                    >
+                      <div style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "4px",
+                        marginBottom: "12px",
+                        height: "18px"
+                      }}>
+                        {Array.from({ length: item.dots }).map((_, i) => (
+                          <div key={i} style={{
+                            width: "7px",
+                            height: "7px",
+                            backgroundColor: "#111",
+                            borderRadius: "50%"
+                          }} />
+                        ))}
+                      </div>
+
+                      <h3 style={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
+                        fontWeight: 400,
+                        color: "#111",
+                        marginBottom: "12px",
+                        marginTop: 0,
+                        textAlign: "left"
+                      }}>
+                        {item.title}
+                      </h3>
+
+                      <p style={{
+                        color: "#666",
+                        lineHeight: 1.6,
+                        fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
+                        margin: 0,
+                        textAlign: "left"
+                      }}>
+                        {item.text}
+                      </p>
+                    </div>
+                  </AnimatedCard>
+                ))}
+              </div>
+
+              {/* Segunda fila: 2 cards en desktop, 2 en mobile */}
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+                gap: "0.5rem"
+              }}>
+                {approachData.slice(3, 5).map((item, index) => (
+                  <AnimatedCard key={index + 3} delay={(index + 3) * 0.15}>
+                    <div
+                      style={{
+                        backgroundColor: "#DCDCDC",
+                        borderRadius: "1rem",
+                        padding: "1.75rem",
+                        transition: "background-color 0.3s ease",
+                        cursor: "default",
+                        gridColumn: isMobile ? "span 1" : (index === 1 ? "span 2" : "span 1"),
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column"
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
@@ -810,20 +1005,20 @@ export default function ProcedimientoDetalle() {
       </section>
 
       {/* INFORMACIÓN DEL PROCEDIMIENTO - Columnas 3 a 11 */}
-      <section ref={infoRef} style={{ backgroundColor: "white", padding: "80px 0" }}>
+      <section ref={infoRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
           columnGap: "20px",
-          margin: "0 70px",
+          margin: isMobile ? "0 20px" : "0 70px",
         }}>
-          
-          <div style={{ gridColumn: "3 / 11" }}>
+
+          <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
             <h2
               className="section-title"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "2.625rem",
+                fontSize: isMobile ? "2rem" : "2.625rem",
                 fontWeight: 300,
                 color: "#111",
                 marginBottom: "48px",
@@ -836,7 +1031,7 @@ export default function ProcedimientoDetalle() {
 
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
               gap: "24px",
               marginBottom: "48px"
             }}>
@@ -1064,7 +1259,7 @@ export default function ProcedimientoDetalle() {
               <div style={{ marginTop: "48px" }}>
                 <h3 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.75rem" : "2.5rem",
                   fontWeight: 300,
                   color: "#111",
                   marginBottom: "40px",
@@ -1083,7 +1278,7 @@ export default function ProcedimientoDetalle() {
                 }}>
                   <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(280px, 1fr))",
                     gap: "0.5rem",
                   }}>
                     {procedimiento.tecnologias.map((tech, index) => (
@@ -1132,7 +1327,7 @@ export default function ProcedimientoDetalle() {
               <div style={{ marginTop: "48px" }}>
                 <h3 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.75rem" : "2.5rem",
                   fontWeight: 300,
                   color: "#111",
                   marginBottom: "40px",
@@ -1151,7 +1346,7 @@ export default function ProcedimientoDetalle() {
                 }}>
                   <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(280px, 1fr))",
                     gap: "0.5rem",
                   }}>
                     {procedimiento.subprocedimientos.map((sub, index) => (
@@ -1200,7 +1395,7 @@ export default function ProcedimientoDetalle() {
               <div style={{ marginTop: "48px" }}>
                 <h3 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.75rem" : "2.5rem",
                   fontWeight: 300,
                   color: "#111",
                   marginBottom: "40px",
@@ -1219,7 +1414,7 @@ export default function ProcedimientoDetalle() {
                 }}>
                   <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(240px, 1fr))",
                     gap: "0.5rem",
                   }}>
                     {procedimiento.process.map((step, index) => (

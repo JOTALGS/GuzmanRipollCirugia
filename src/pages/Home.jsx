@@ -21,10 +21,10 @@ export default function Home({ toggleTheme }) {
         position: 'relative',
       }}
       >
-        <section className="absolute">
-          <ScrollStage  />
+      <section className="absolute">
+        <ScrollStage  />
 
-        </section>
+      </section>
 
       <IntroHome />
       

@@ -1,3 +1,4 @@
+'use client';
 import { Box, Typography } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import ClipTopButton from "../buttons/clipTopButton";
@@ -9,6 +10,7 @@ export default function IntroHome() {
   const videoRef = useRef(null);
   const inteligenteBoxRef = useRef(null);
   const inteligenteTextRef = useRef(null);
+  const isMobile = window.innerWidth <= 768;
   
   useEffect(() => {
     if (biasVideoRef.current) {
@@ -36,8 +38,10 @@ export default function IntroHome() {
       const text = inteligenteTextRef.current;
       
       // Get the final dimensions from the text
+      const wOffset = isMobile? 50 : 110;
+
       const finalHeight = text.offsetHeight + 15;
-      const finalWidth = text.offsetWidth + 110; // Adding padding (8px on each side)
+      const finalWidth = text.offsetWidth + wOffset; // Adding padding (8px on each side)
       
       // Reset to initial state
       gsap.set(box, {
@@ -88,12 +92,11 @@ export default function IntroHome() {
         display: "grid",
         backgroundColor: "transparent",
         gridTemplateColumns: "repeat(12, 1fr)",
-        // Use padding instead of marginInline for better control
         paddingX: { xs: "15px", sm: "30px", md: "50px", lg: "70px" },
         columnGap: { xs: "15px", sm: "20px" },
         paddingTop: { xs: "120px", sm: "140px", md: "160px", lg: "180px", xl: "200px" },
         paddingBottom: { xs: "30px", md: "60px" },
-        overflow: "hidden", // Prevent horizontal scroll
+        overflow: "hidden",
         "& > section": {
           gridColumn: "1 / -1",
         },
@@ -127,13 +130,12 @@ export default function IntroHome() {
             lg: '1 / 10', 
             xl: '1 / 8' 
           },
-          
           backgroundColor: "transparent",
           gridRow: '1',
           zIndex: 100,
           display: 'flex',
           flexDirection: 'column',
-          textAlign: { xs: 'center', sm: 'center', md: 'center', lg: 'left' },
+          textAlign: { xs: 'left', sm: 'left', md: 'left', lg: 'left' },
           alignItems: { xs: 'center', sm: 'center', md: 'center', lg: 'flex-start' },
           justifyContent: 'flex-start',
           marginBottom: { xs: '30px', sm: '40px', md: '50px' },
@@ -143,7 +145,7 @@ export default function IntroHome() {
           fontFamily={'Poppins'} 
           sx={{ 
             fontSize: { 
-              xs: 'clamp(32px, 8vw, 40px)',
+              xs: 'clamp(26px, 7vw, 30px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
               lg: 'clamp(55px, 5vw, 65px)',
@@ -151,18 +153,21 @@ export default function IntroHome() {
             },
             width: '100%',
             color: 'textSecondary',
-            letterSpacing: { xs: '-1px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
+            letterSpacing: { xs: '-1.5px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
             lineHeight: 1.1,
             alignItems: 'center',
             display: 'flex',
+            flexWrap: 'nowrap',
+            whiteSpace: 'nowrap',
+            gap: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px'},
           }}
         >
           Cirugía mamaria{' '}
           <Box 
             ref={inteligenteBoxRef}
             sx={{
-              display: 'inline-block',
-              paddingX: '8px',
+              display: 'inline-flex',
+              paddingX: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px'},
               borderRadius: '7px',
               backgroundColor: 'rgba(255, 255, 255, 0.5)',
               backdropFilter: 'blur(15px) saturate(50%)',
@@ -171,8 +176,8 @@ export default function IntroHome() {
               textAlign: 'center',
               justifyContent: 'center',
               alignItems: 'center',
-              marginLeft: '8px',
               alignContent: 'center',
+              flexShrink: 0,
             }}
           >
             <Typography 
@@ -185,18 +190,19 @@ export default function IntroHome() {
                 letterSpacing: 'inherit',
                 fontWeight: 'semibold',
                 lineHeight: 1.2,
+                whiteSpace: 'nowrap',
               }}
             >
               inteligente
             </Typography>
-          </Box>,
+          </Box>
         </Typography>
 
         <Typography 
           fontFamily={'Poppins'} 
           sx={{ 
             fontSize: { 
-              xs: 'clamp(32px, 8vw, 40px)',
+              xs: 'clamp(26px, 7vw, 30px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
               lg: 'clamp(55px, 5vw, 65px)',
@@ -205,7 +211,7 @@ export default function IntroHome() {
             width: '100%',
             color: 'textSecondary',
             textTransform: 'capitalize',
-            letterSpacing: { xs: '-1px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
+            letterSpacing: { xs: '-1.5px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
             lineHeight: 1.1,
           }}
         >
@@ -217,7 +223,7 @@ export default function IntroHome() {
       <Box
         sx={{
           gridColumn: { xs: '1 / 13', md: '10 / 13' },
-          gridRow: { xs: '2', md: '1' },
+          gridRow: { xs: '4', md: '1' },
           display: 'none',
           flexDirection: 'row',
           textAlign: { xs: 'left', md: 'right' },
@@ -255,14 +261,14 @@ export default function IntroHome() {
             md: '1 / 6',
             lg: '1 / 5'
           },
-          gridRow: { xs: '3', md: '2' },
+          gridRow: { xs: '2', md: '2' },
           display: 'flex',
           zIndex: 1,
           flexDirection: 'column',
           alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
           justifyContent: 'flex-start',
-          marginTop: { xs: '5px', md: 'auto' },
-          marginBottom: { xs: '30px', md: '0px' },
+          marginTop: { xs: 'auto', md: 'auto' },
+          marginBottom: { xs: '0px', md: '0px' },
         }}
       >
         <Typography 
@@ -349,12 +355,12 @@ export default function IntroHome() {
           },
           zIndex: 1,
           position: 'relative',
-          gridRow: { xs: '2', md: '2' },
-          padding: { xs: '0px', md: '7px' },
+          gridRow: { xs: '3', md: '2' },
+          padding: { xs: '7px', md: '7px' },
           borderTopLeftRadius: { xs: '20px', md: '28px' },
           borderTopRightRadius: { xs: '20px', md: '28px' },
-          borderBottomLeftRadius: { xs: '20px', md: '12px' },
-          borderBottomRightRadius: { xs: '20px', md: '12px' },
+          borderBottomLeftRadius: { xs: '10px', md: '12px' },
+          borderBottomRightRadius: { xs: '10px', md: '12px' },
 
           backdropFilter: 'blur(30px) saturate(100%)',
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -362,11 +368,11 @@ export default function IntroHome() {
           display: 'flex',
           flexDirection: 'column',
           gap: '4px',
-          alignItems: { xs: 'center', md: 'flex-start' },
-          justifyContent: { xs: 'center', md: 'flex-end' },
-          marginTop: { xs: '20%', md: '180px' },
-          marginBottom: { xs: '20px', sm: '30px', md: '0px' },
-          // Remove negative margins that cause overflow
+          alignItems: { xs: 'flex-start', md: 'flex-start' },
+          justifyContent: { xs: 'flex-end', md: 'flex-end' },
+          marginTop: { xs: 'auto', sm: 'auto', md: 'auto' },
+          height: 'fit-content',
+          marginBottom: { xs: '20px', sm: '0px', md: '0px' },
           marginX: { xs: 0, md: 0 },
         }}
       >
@@ -387,7 +393,10 @@ export default function IntroHome() {
             backdropFilter: 'blur(30px) saturate(200%)',
             backgroundColor: 'rgba(255, 255, 255, 0.15)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: { xs: '16px', sm: '20px', md: '24px' },
+            borderTopLeftRadius: { xs: '16px', sm: '20px', md: '24px' },
+            borderTopRightRadius: { xs: '16px', sm: '20px', md: '24px' },
+            borderBottomLeftRadius: { xs: '6px', sm: '6px', md: '6px' },
+            borderBottomRightRadius: { xs: '6px', sm: '6px', md: '6px' },
             boxShadow: `
               0 8px 32px rgba(0, 0, 0, 0.1),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -428,33 +437,33 @@ export default function IntroHome() {
           />
         </Box>
         
-                  {/* Visualización 3D - Inside video */}
-          <Typography
-            fontFamily={'Poppins'}
-            sx={{
-              fontSize: { 
-                xs: 'clamp(9px, 2.5vw, 10px)',
-                md: 'clamp(10px, 1.5vw, 12px)'
-              },
-              position: 'relative',
-              color: 'white',
-              fontWeight: '300',
-              letterSpacing: '0.5px',
-              textTransform: 'uppercase',
-              textAlign: 'center',
-              textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-              backdropFilter: 'blur(6px)',
-              padding: { 
-                xs: 'clamp(2px, 1vw, 3px) clamp(8px, 2vw, 10px)',
-                md: 'clamp(3px, 0.8vw, 4px) clamp(12px, 1.5vw, 14px)'
-              },
-              zIndex: 100,
-              borderRadius: '6px',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            Visualización 3D
-          </Typography>
+        {/* Visualización 3D - Inside video */}
+        <Typography
+          fontFamily={'Poppins'}
+          sx={{
+            fontSize: { 
+              xs: 'clamp(9px, 2.5vw, 10px)',
+              md: 'clamp(10px, 1.5vw, 12px)'
+            },
+            position: 'relative',
+            color: 'white',
+            fontWeight: '300',
+            letterSpacing: '0.5px',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(6px)',
+            padding: { 
+              xs: 'clamp(2px, 1vw, 3px) clamp(8px, 2vw, 10px)',
+              md: 'clamp(3px, 0.8vw, 4px) clamp(12px, 1.5vw, 14px)'
+            },
+            zIndex: 100,
+            borderRadius: '6px',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          Visualización 3D
+        </Typography>
       </Box>
 
       {/* Texto (Scroll) */}

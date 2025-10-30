@@ -64,7 +64,9 @@ const ProcedureNumber = styled(Typography)({
 const MoreButton = styled(Button)(({ theme }) => ({
   fontSize: '0.75rem',
   color: theme.palette.text.disabled,
-  padding: 0,
+  width: '50%',
+  border: '2px solid #4b4b4bff',
+  borderRadius: '150px',
   textTransform: 'none',
   '&:hover': {
     backgroundColor: 'transparent',
@@ -189,7 +191,7 @@ export default function Home() {
         sx={{
           position: "relative",
           zIndex: 1,
-          height: { xs: "100vh", md: "360vh" },
+          height: { xs: "100vh", md: "260vh" },
           display: "grid",
           marginBottom: { xs: '80px', md: '100px', lg: '100px', xl: '150px' },
           backgroundColor: "#fff",
@@ -268,7 +270,7 @@ export default function Home() {
             key={`name-${index}`}
             sx={{
               marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '3 / 6', md: '5 / 7' },
+              gridColumn: { xs: '3 / 6', md: '4 / 7' },
               maxHeight: { xs: '300px', sm: '350px' },
               gridRow: `${index + 2} / ${index + 2}`,
               display: 'flex',
@@ -291,7 +293,8 @@ export default function Home() {
             className={`procedure-item-${index}`}
             sx={{
               marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '5 / 13', md: '7 / 13' },
+              gridColumn: { xs: '5 / 13', md: '6 / 13' },
+              height: { xs: '300px', sm: '420px' },
               gridRow: `${index + 2} / ${index + 2}`,
               display: 'flex',
               flexDirection: 'row',
@@ -300,7 +303,7 @@ export default function Home() {
               justifyContent: 'start',
               gap: '20px',
               position: 'relative',
-              paddingBottom: { xs: '30px', md: '60px' },
+              paddingBottom: { xs: '30px', md: '20px' },
             }}
           >
             {/* Image outside container */}
@@ -309,7 +312,7 @@ export default function Home() {
               src={procedure.image || "/placeholder.svg"}
               alt={procedure.name}
               sx={{
-                width: { xs: '100%', sm: '40%' },
+                width: { xs: '100%', sm: '41.8%' },
                 height: { xs: '200px', sm: 'auto' },
                 objectFit: 'cover',
                 borderRadius: { xs: "8px", md: "10px" }
@@ -363,50 +366,54 @@ export default function Home() {
                 borderRadius: { xs: "8px", md: "10px" },
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
                 height: '100%',
               }}>
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontSize: { xs: '20px', md: '24px' }, fontWeight: 500, mb: 2, color: 'textPrimary', fontFamily: 'Poppins', textAlign: 'left' }}
+                  sx={{ fontSize: { xs: '20px', md: '24px', lg: '28px', xl: '32px' }, mb: 2, color: 'textPrimary', fontFamily: 'Poppins', textAlign: 'left' }}
                 >
                   {procedure.title}
                 </Typography>
+                <Box>
 
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', mb: 3, flexGrow: 1 }}>
-                  {procedure.specialties.map((specialty, idx) => (
-                    <Typography
-                      key={idx}
-                      variant="caption"
-                      sx={{ color: 'text.disabled', display: 'block', fontSize: '13px', textAlign: 'left' }}
-                    >
-                      {specialty}
-                    </Typography>
-                  ))}
-                </Box>
+                  
+                  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', mb: 3, flexGrow: 1 }}>
+                    {procedure.specialties.map((specialty, idx) => (
+                      <Typography
+                        key={idx}
+                        variant="caption"
+                        sx={{ color: 'text.primary', fontFamily: 'Poppins', display: 'block', fontSize: '16px', textAlign: 'left' }}
+                      >
+                        {specialty}
+                      </Typography>
+                    ))}
+                  </Box>
 
-                <Box sx={{ display: 'flex', justifyContent: 'flex-start', width: '100%', mt: 'auto' }}>
-                  <MoreButton
-                    component={RouterLink}
-                    to={`/procedimiento/${procedure.number}`}
-                    sx={{
-                      backgroundColor: 'transparent',
-                      color: '#000',
-                      borderRadius: { xs: "6px", md: "8px" },
-                      textTransform: 'none',
-                      py: { xs: 0.8, md: 1 },
-                      px: 0,
-                      fontSize: { xs: "13px", md: "14px" },
-                      fontWeight: 500,
-                      textDecoration: 'underline',
-                      textUnderlineOffset: '3px',
-                      '&:hover': {
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-start', width: '100%', mt: 'auto' }}>
+                    <MoreButton
+                      component={RouterLink}
+                      to={`/procedimiento/${procedure.number}`}
+                      sx={{
                         backgroundColor: 'transparent',
-                        opacity: 0.7,
-                      },
-                    }}
-                  >
-                    Ver Más →
-                  </MoreButton>
+                        color: '#000',
+                        borderRadius: { xs: "6px", md: "90px" },
+                        textTransform: 'none',
+                        py: { xs: 0.8, md: 2 },
+                        px: { xs: 2.5, md: 3.5 },
+                        fontSize: { xs: "13px", md: "14px" },
+                        fontWeight: 500,
+                        textDecoration: 'underline',
+                        textUnderlineOffset: '3px',
+                        '&:hover': {
+                          backgroundColor: 'transparent',
+                          opacity: 0.7,
+                        },
+                      }}
+                    >
+                      Ver Más →
+                    </MoreButton>
+                  </Box>
                 </Box>
               </Box>
             </Box>

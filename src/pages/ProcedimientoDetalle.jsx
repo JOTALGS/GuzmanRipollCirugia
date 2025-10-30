@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useLayoutEffect, useState, useEffect } from "react"
-import { useParams, Link as RouterLink } from "react-router-dom"
+import { useParams, Link as RouterLink, useLocation } from "react-router-dom"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import { Box, Typography, Button, Container, Chip } from "@mui/material"
@@ -19,6 +19,7 @@ const procedimientosData = {
     subtitle: "Aumento, Reducción & Reconstrucción",
     category: "Especialización Principal",
     imageSrc: "/images/image.png",
+    catchPhrase: "Procedimientos seguros y personalizados para lograr resultados naturales y armoniosos.",
     description: "El aumento mamario mediante la colocación de implantes o prótesis mamarias es el procedimiento quirúrgico más realizado a nivel mundial según las estadísticas internacionales. Es un procedimiento seguro y con resultados predecibles cuando es realizado por cirujanos plásticos avezados.",
     objetivo: "Aumento de tamaño mamario, corrección de deformidades, asimetrías, malformaciones congénitas.",
     specs: {
@@ -75,28 +76,147 @@ const procedimientosData = {
         description: "Microagujas con radiofrecuencia que penetran hasta 4mm estimulando colágeno, elastina y ácido hialurónico para renovación profunda."
       }
     ]
+  },
+  "03": {
+    number: "03", 
+    title: "Cirugía Estética Nasal",
+    subtitle: "BodyTite & Morpheus8",
+    category: "Contorno Corporal",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Tecnología de vanguardia para remodelación corporal avanzada con resultados inmediatos y recuperación optimizada.",
+    description: "Tecnología avanzada de remodelación corporal que combina BodyTite (radiofrequencia asistida) con Morpheus8 para contornear y definir tu figura ideal con mínima invasión y máximos resultados.",
+    objetivo: "Remodelación corporal avanzada, eliminación de grasa localizada y tensado de piel simultáneo.",
+    specs: {
+      tipo: "Ambulatoria, cirugía del día",
+      lugar: "Block quirúrgico", 
+      anestesia: "Local con sedación o general",
+      duracion: "2-3 horas aproximadamente"
+    },
+    tecnica: "BodyTite utiliza radiofrequencia asistida para licuar la grasa mientras tensa la piel simultáneamente. Morpheus8 combina microagujas con radiofrequencia para estimular colágeno y mejorar textura cutánea en profundidad hasta 4mm.",
+    recuperacion: "Reposo laboral de 7-10 días. Uso de faja compresiva por 4-6 semanas. Resultados visibles inmediatos que mejoran por 6 meses.",
+    tecnologias: [
+      {
+        name: "BodyTite RFAL",
+        description: "Radiofrequency-Assisted Liposuction que combina liposucción con radiofrecuencia para tensar piel y remover grasa en una sola sesión."
+      },
+      {
+        name: "Morpheus8",
+        description: "Microagujas con radiofrecuencia que penetran hasta 4mm estimulando colágeno, elastina y ácido hialurónico para renovación profunda."
+      }
+    ]
+  },
+  "04": {
+    number: "04", 
+    title: "Remodelación Abdominal Completa",
+    subtitle: "BodyTite & Morpheus8",
+    category: "Contorno Corporal",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Tecnología de vanguardia para remodelación corporal avanzada con resultados inmediatos y recuperación optimizada.",
+    description: "Tecnología avanzada de remodelación corporal que combina BodyTite (radiofrequencia asistida) con Morpheus8 para contornear y definir tu figura ideal con mínima invasión y máximos resultados.",
+    objetivo: "Remodelación corporal avanzada, eliminación de grasa localizada y tensado de piel simultáneo.",
+    specs: {
+      tipo: "Ambulatoria, cirugía del día",
+      lugar: "Block quirúrgico", 
+      anestesia: "Local con sedación o general",
+      duracion: "2-3 horas aproximadamente"
+    },
+    tecnica: "BodyTite utiliza radiofrequencia asistida para licuar la grasa mientras tensa la piel simultáneamente. Morpheus8 combina microagujas con radiofrequencia para estimular colágeno y mejorar textura cutánea en profundidad hasta 4mm.",
+    recuperacion: "Reposo laboral de 7-10 días. Uso de faja compresiva por 4-6 semanas. Resultados visibles inmediatos que mejoran por 6 meses.",
+    tecnologias: [
+      {
+        name: "BodyTite RFAL",
+        description: "Radiofrequency-Assisted Liposuction que combina liposucción con radiofrecuencia para tensar piel y remover grasa en una sola sesión."
+      },
+      {
+        name: "Morpheus8",
+        description: "Microagujas con radiofrecuencia que penetran hasta 4mm estimulando colágeno, elastina y ácido hialurónico para renovación profunda."
+      }
+    ]
+  },
+  "05": {
+    number: "05", 
+    title: "Rejuvenecimiento de la Mirada",
+    subtitle: "BodyTite & Morpheus8",
+    category: "Contorno Corporal",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Tecnología de vanguardia para remodelación corporal avanzada con resultados inmediatos y recuperación optimizada.",
+    description: "Tecnología avanzada de remodelación corporal que combina BodyTite (radiofrequencia asistida) con Morpheus8 para contornear y definir tu figura ideal con mínima invasión y máximos resultados.",
+    objetivo: "Remodelación corporal avanzada, eliminación de grasa localizada y tensado de piel simultáneo.",
+    specs: {
+      tipo: "Ambulatoria, cirugía del día",
+      lugar: "Block quirúrgico", 
+      anestesia: "Local con sedación o general",
+      duracion: "2-3 horas aproximadamente"
+    },
+    tecnica: "BodyTite utiliza radiofrequencia asistida para licuar la grasa mientras tensa la piel simultáneamente. Morpheus8 combina microagujas con radiofrequencia para estimular colágeno y mejorar textura cutánea en profundidad hasta 4mm.",
+    recuperacion: "Reposo laboral de 7-10 días. Uso de faja compresiva por 4-6 semanas. Resultados visibles inmediatos que mejoran por 6 meses.",
+    tecnologias: [
+      {
+        name: "BodyTite RFAL",
+        description: "Radiofrequency-Assisted Liposuction que combina liposucción con radiofrecuencia para tensar piel y remover grasa en una sola sesión."
+      },
+      {
+        name: "Morpheus8",
+        description: "Microagujas con radiofrecuencia que penetran hasta 4mm estimulando colágeno, elastina y ácido hialurónico para renovación profunda."
+      }
+    ]
   }
 }
 
 export default function ProcedimientoDetalle() {
   const { id } = useParams()
+  const location = useLocation()
   const sectionRef = useRef(null)
   const maskRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
 
-  console.log("Procedimiento ID:", id)
   const procedimiento = procedimientosData[id]
-  console.log("Procedimiento:", procedimiento)
+
+  // SOLUCIÓN AGRESIVA: Scroll forzado múltiple
+  useEffect(() => {
+    // Desactivar scroll automático del navegador
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Scroll inmediato
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Múltiples intentos de scroll
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Intentos en diferentes momentos
+    scrollToTop();
+    setTimeout(scrollToTop, 0);
+    setTimeout(scrollToTop, 10);
+    setTimeout(scrollToTop, 50);
+    setTimeout(scrollToTop, 100);
+    setTimeout(scrollToTop, 200);
+
+    return () => {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, [id, location.pathname]);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [id]);
 
   useEffect(() => {
+    if (!procedimiento) return;
+    
     const img = new Image()
     img.src = procedimiento.imageSrc
     img.onload = () => setImageLoaded(true)
-  }, [procedimiento.imageSrc])
+  }, [procedimiento])
 
   useLayoutEffect(() => {
     if (!imageLoaded) return
@@ -121,11 +241,29 @@ export default function ProcedimientoDetalle() {
       })
     }, sectionRef)
 
+    // Refresh después de crear la animación
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
     return () => {
       ctx.revert()
       ScrollTrigger.getAll().forEach((st) => st.kill())
     }
-  }, [imageLoaded])
+  }, [imageLoaded, id])
+
+  if (!procedimiento) {
+    return (
+      <Box sx={{ 
+        minHeight: "100vh", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center" 
+      }}>
+        <Typography>Procedimiento no encontrado</Typography>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -263,7 +401,8 @@ export default function ProcedimientoDetalle() {
                   fontSize: { xs: "0.9rem", md: "1rem" },
                   fontWeight: 400,
                   lineHeight: 1.65,
-                  letterSpacing: "-0.01em"
+                  letterSpacing: "-0.01em",
+                  px: { xs: "10px", md: "0px" }
                 }}
               >
                 {procedimiento.catchPhrase}

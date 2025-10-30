@@ -8,6 +8,7 @@ import Testimonios from "../components/home/Testimonios";
 import Especialistas from "../components/home/Especialistas";
 import Faq from "../components/home/faq";
 import Footer from "../components/UI/Footer";
+import ScrollStage from "../components/home/general/ScrollStage";
 
 export default function Home({ toggleTheme }) {
   const [isPinned, setIsPinned] = useState(true)
@@ -17,8 +18,13 @@ export default function Home({ toggleTheme }) {
       sx={{
         minHeight: '100vh',
         backgroundColor: 'background.default',
+        position: 'relative',
       }}
-    >
+      >
+        <section className="absolute">
+          <ScrollStage  />
+
+        </section>
 
       <IntroHome />
       

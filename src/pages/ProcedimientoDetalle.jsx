@@ -593,20 +593,37 @@ export default function ProcedimientoDetalle() {
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
-            justifyContent: isMobile ? "center" : "space-between",
-            padding: isMobile ? "0 20px" : "0 70px",
-            gap: isMobile ? "40px" : "0"
+            justifyContent: "space-between",
+            px: { xs: "0px", md: "70px" },
           }}>
-            <div style={{
-              textAlign: isMobile ? "center" : "left",
-              order: isMobile ? 1 : 0
-            }}>
-              <h1
-                ref={numberRef}
-                style={{
+            {/* Botón Volver */}
+            <Button
+              component={RouterLink}
+              to="/procedimientos"
+              startIcon={<ArrowBackIcon />}
+              sx={{
+                position: "absolute",
+                top: { xs: -200, md: -250 },
+                left: 0,
+                color: "#111",
+                textTransform: "none",
+                fontWeight: 500,
+                fontSize: "15px",
+                "&:hover": { bgcolor: "rgba(0,0,0,0.05)" },
+                zIndex: 20
+              }}
+            >
+              Volver a Procedimientos
+            </Button>
+
+            {/* IZQUIERDA: Número más pequeño */}
+            <Box>
+              <Typography
+                variant="h1"
+                sx={{
                   color: "#111",
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: isMobile ? "64px" : "74px",
+                  fontFamily: "Poppins",
+                  fontSize: { xs: "5rem", md: "8rem", lg: "74px" },
                   fontWeight: 600,
                   lineHeight: 0.9,
                   opacity: 0.95,
@@ -614,15 +631,16 @@ export default function ProcedimientoDetalle() {
                 }}
               >
                 {procedimiento.number}
-              </h1>
-            </div>
+              </Typography>
+            </Box>
 
-            <div
-              style={{
-                textAlign: isMobile ? "center" : "right",
-                maxWidth: isMobile ? "100%" : "35%",
-                lineHeight: 1.5,
-                order: isMobile ? 2 : 0
+            {/* DERECHA: Título menos bold + Catch Phrase con más espacio */}
+            <Box
+              sx={{
+                textAlign: {xs: 'center', md: "right"},
+                maxWidth: { xs: "100%", md: "45%", lg: "35%" },
+                lineHeight: { xs: 1.1, md: 1.5 },
+                mt: { xs: "20px", md: "0px" }
               }}
             >
               <span
@@ -638,9 +656,8 @@ export default function ProcedimientoDetalle() {
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   fontWeight: 500,
-                  marginBottom: "20px",
-                  padding: "6px 16px",
-                  borderRadius: "16px"
+                  mb: { xs: 0.5, md: 2.5},
+                  height: "26px"
                 }}
               >
                 {procedimiento.category}
@@ -654,9 +671,8 @@ export default function ProcedimientoDetalle() {
                   fontSize: isMobile ? "2.5rem" : "4rem",
                   fontWeight: 600,
                   lineHeight: 1.1,
-                  marginBottom: "28px",
-                  letterSpacing: "-0.02em",
-                  marginTop: 0
+                  mb: { xs: 1, md: 3.5},
+                  letterSpacing: "-0.02em"
                 }}
               >
                 {procedimiento.title}
@@ -690,7 +706,7 @@ export default function ProcedimientoDetalle() {
               >
                 {procedimiento.catchPhrase}
               </p>
-            </div>
+            </Box>
           </div>
         </div>
       </section>

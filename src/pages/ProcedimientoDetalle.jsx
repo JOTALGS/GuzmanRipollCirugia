@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Button, Box, Typography } from "@mui/material"
-import { Link as RouterLink } from "react-router-dom"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+"use client"
+
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react"
+import { useParams, Link as RouterLink, useLocation } from "react-router-dom"
+import gsap from "gsap"
+import ScrollTrigger from "gsap/dist/ScrollTrigger"
+import { Box, Typography, Button } from "@mui/material"
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import Footer from "../components/UI/Footer"
 
 if (typeof window !== "undefined") {
@@ -27,15 +29,108 @@ const useIsMobile = () => {
   return isMobile
 }
 
+// Componente AnimatedCard para animaciones de entrada
+const AnimatedCard = ({ children, delay = 0 }) => {
+  const cardRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current)
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current)
+      }
+    }
+  }, [])
+
+  return (
+    <div
+      ref={cardRef}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+        transition: `all 0.6s ease ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+// Data de beneficios
+const benefitsData = [
+  {
+    dots: 3,
+    title: "Resultados Naturales",
+    description: "Técnicas avanzadas que garantizan resultados armoniosos y acordes a tu anatomía."
+  },
+  {
+    dots: 4,
+    title: "Seguridad Certificada",
+    description: "Procedimientos realizados en instalaciones de primer nivel con los más altos estándares de seguridad."
+  },
+  {
+    dots: 2,
+    title: "Recuperación Optimizada",
+    description: "Protocolos de cuidado postoperatorio diseñados para una recuperación más rápida y cómoda."
+  },
+  {
+    dots: 5,
+    title: "Atención Personalizada",
+    description: "Cada procedimiento es único y adaptado a tus objetivos estéticos y necesidades específicas."
+  }
+]
+
+// Data de acercamiento
+const approachData = [
+  {
+    dots: 3,
+    title: "Consulta Inicial",
+    text: "Evaluación completa de tus expectativas, anatomía y estado de salud para diseñar un plan personalizado."
+  },
+  {
+    dots: 4,
+    title: "Planificación 3D",
+    text: "Simulación avanzada de resultados esperados utilizando tecnología de visualización tridimensional."
+  },
+  {
+    dots: 2,
+    title: "Procedimiento Quirúrgico",
+    text: "Cirugía realizada con precisión técnica en instalaciones certificadas con equipo de última generación."
+  },
+  {
+    dots: 5,
+    title: "Seguimiento Continuo",
+    text: "Acompañamiento personalizado durante todo el proceso de recuperación y resultados finales."
+  },
+  {
+    dots: 6,
+    title: "Garantía de Satisfacción",
+    text: "Compromiso con tu bienestar y satisfacción, con controles regulares hasta lograr el resultado óptimo deseado."
+  }
+]
+
 // Data completa de procedimientos
 const procedimientosData = {
   "01": {
     number: "01",
-    title: "Aumento Mamario",
-    subtitle: "Implantes Mamarios",
-    category: "Cirugía Mamaria",
-    imageSrc: "/images/imagen5.png",
-    catchPhrase: "Realza tu figura con seguridad y resultados naturales diseñados específicamente para ti.",
+    title: "Cirugía Mamaria",
+    subtitle: "Aumento, Reducción & Reconstrucción",
+    category: "Especialización Principal",
+    imageSrc: "/images/image.png",
+    catchPhrase: "Procedimientos seguros y personalizados para lograr resultados naturales y armoniosos.",
     description: "El aumento mamario mediante la colocación de implantes o prótesis mamarias es el procedimiento quirúrgico más realizado a nivel mundial según las estadísticas internacionales. Es un procedimiento seguro y con resultados predecibles cuando es realizado por cirujanos plásticos avezados.",
     objetivo: "Aumento de tamaño mamario, corrección de deformidades, asimetrías, malformaciones congénitas.",
     specs: {
@@ -94,163 +189,64 @@ const procedimientosData = {
     ]
   },
   "03": {
-    number: "03",
-    title: "Rinoplastia",
-    subtitle: "Refinamiento Nasal",
+    number: "03", 
+    title: "Cirugía Estética Nasal",
+    subtitle: "Rinoplastia & Septoplastia",
     category: "Cirugía Facial",
-    imageSrc: "/images/imagen5.png",
-    catchPhrase: "Refinamiento nasal que respeta tu armonía facial natural mediante técnicas ultraprecisas.",
-    description: "Refinamiento nasal que respeta tu armonía facial natural mediante técnicas ultraprecisas para lograr resultados naturales y proporcionales.",
-    objetivo: "Corrección de deformidades nasales, mejora de la función respiratoria y armonización con el resto del rostro.",
-    specs: {
-      tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico",
-      anestesia: "General",
-      duracion: "2-3 horas aproximadamente"
-    },
-    tecnica: "Técnica ultraprecisa respetando estructuras naturales. Puede ser abierta o cerrada según el caso. Se moldea cartílago y hueso para crear la forma deseada manteniendo función respiratoria.",
-    recuperacion: "7-10 días de reposo con retiro de férula a los 7 días. Inflamación gradual que mejora en 6-12 meses para ver resultado definitivo.",
-    process: [
-      {
-        step: "01",
-        title: "Análisis Facial",
-        description: "Estudio de proporciones y armonía facial completa con simulación 3D."
-      },
-      {
-        step: "02", 
-        title: "Planificación",
-        description: "Diseño personalizado respetando características únicas del paciente."
-      },
-      {
-        step: "03",
-        title: "Cirugía",
-        description: "Técnica ultraprecisa respetando estructuras anatómicas."
-      },
-      {
-        step: "04",
-        title: "Seguimiento",
-        description: "Control evolutivo hasta lograr el resultado definitivo."
-      }
-    ]
-  },
-  "04": {
-    number: "04",
-    title: "Abdominoplastia", 
-    subtitle: "Remodelación Abdominal",
-    category: "Contorno Corporal",
-    imageSrc: "/images/imagen5.png",
-    catchPhrase: "Remodelación abdominal completa para un torso firme y definido con resultados duraderos.",
-    description: "Remodelación abdominal completa para un torso firme y definido, eliminando exceso de piel y tensando músculos abdominales.",
-    objetivo: "Eliminación de exceso cutáneo, tensado de músculos abdominales separados y creación de contorno abdominal armonioso.",
-    specs: {
-      tipo: "Ambulatoria o con internación breve",
-      lugar: "Block quirúrgico",
-      anestesia: "General", 
-      duracion: "3-4 horas aproximadamente"
-    },
-    tecnica: "Resección de exceso cutáneo-graso y plicatura de músculos rectos abdominales. Reposicionamiento de ombligo. Puede combinarse con liposucción para optimizar contorno.",
-    recuperacion: "Reposo laboral por 10-14 días. Uso de faja compresiva por 6 semanas. Evitar ejercicios abdominales por 2 meses.",
-    process: [
-      {
-        step: "01",
-        title: "Evaluación",
-        description: "Análisis de la pared abdominal, diástasis muscular y exceso de piel."
-      },
-      {
-        step: "02",
-        title: "Planificación", 
-        description: "Diseño personalizado del contorno abdominal ideal."
-      },
-      {
-        step: "03",
-        title: "Procedimiento",
-        description: "Remoción de exceso y reconstrucción muscular."
-      },
-      {
-        step: "04", 
-        title: "Recuperación",
-        description: "Protocolo especializado de rehabilitación."
-      }
-    ]
-  },
-  "05": {
-    number: "05",
-    title: "Blefaroplastia",
-    subtitle: "Rejuvenecimiento Ocular", 
-    category: "Cirugía Facial",
-    imageSrc: "/images/imagen5.png",
-    catchPhrase: "Rejuvenecimiento de la mirada con técnica microquirúrgica para resultados naturales.",
-    description: "Rejuvenecimiento de la mirada eliminando signos de envejecimiento mediante técnica microquirúrgica para resultados naturales.",
-    objetivo: "Eliminación de bolsas palpebrales, exceso cutáneo y corrección de párpados caídos para rejuvenecer la mirada.",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Armonía facial perfecta mediante técnicas quirúrgicas precisas y resultados naturales duraderos.",
+    description: "La rinoplastia es un procedimiento quirúrgico diseñado para mejorar la forma y función de la nariz, logrando armonía con las demás características faciales mientras se respeta la identidad única de cada paciente.",
+    objetivo: "Corrección estética y funcional de la nariz, mejora de la armonía facial, solución de problemas respiratorios.",
     specs: {
       tipo: "Ambulatoria, cirugía del día",
       lugar: "Block quirúrgico", 
-      anestesia: "Local con sedación",
+      anestesia: "General",
+      duracion: "2-3 horas aproximadamente"
+    },
+    tecnica: "Técnica abierta o cerrada según el caso, con remodelación de estructuras óseas y cartilaginosas. Puede incluir septoplastia para corrección funcional respiratoria.",
+    recuperacion: "Férula nasal por 7-10 días. Inflamación inicial disminuye en 2-3 semanas. Resultado definitivo visible a los 12 meses."
+  },
+  "04": {
+    number: "04", 
+    title: "Remodelación Abdominal Completa",
+    subtitle: "Abdominoplastia & Liposucción",
+    category: "Contorno Corporal",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Recupera tu silueta ideal con procedimientos avanzados que combinan eliminación de grasa y tensado de piel.",
+    description: "La abdominoplastia es un procedimiento integral que elimina el exceso de piel y grasa abdominal, repara la musculatura y redefine el contorno corporal para lograr un abdomen firme y tonificado.",
+    objetivo: "Eliminación de exceso de piel y grasa abdominal, corrección de diástasis de rectos, mejora del contorno corporal.",
+    specs: {
+      tipo: "Ambulatoria o con internación de 24h",
+      lugar: "Block quirúrgico", 
+      anestesia: "General",
+      duracion: "3-4 horas aproximadamente"
+    },
+    tecnica: "Incisión horizontal baja, eliminación de exceso de piel y grasa, reparación muscular, reposicionamiento del ombligo. Puede combinarse con liposucción.",
+    recuperacion: "Reposo relativo por 2 semanas. Uso de faja compresiva por 6-8 semanas. Retorno progresivo a actividades en 4-6 semanas."
+  },
+  "05": {
+    number: "05", 
+    title: "Rejuvenecimiento de la Mirada",
+    subtitle: "Blefaroplastia & Lifting Facial",
+    category: "Cirugía Facial",
+    imageSrc: "/images/imagen5.jpg",
+    catchPhrase: "Revitaliza tu expresión con procedimientos que devuelven juventud y frescura a tu mirada.",
+    description: "La blefaroplastia elimina el exceso de piel y grasa en los párpados, reduciendo bolsas y flacidez para lograr una mirada más juvenil, descansada y expresiva.",
+    objetivo: "Rejuvenecimiento de la región periocular, eliminación de bolsas y exceso de piel en párpados, mejora de la expresión facial.",
+    specs: {
+      tipo: "Ambulatoria, cirugía del día",
+      lugar: "Block quirúrgico", 
+      anestesia: "Local con sedación o general",
       duracion: "1-2 horas aproximadamente"
     },
-    tecnica: "Técnica microquirúrgica con incisiones en pliegues naturales. Puede ser superior, inferior o combinada. Remoción o reposicionamiento de grasa orbital.",
-    recuperacion: "5-7 días de reposo. Compresas frías primeras 48hs. Cicatrices imperceptibles que maduran en 3-6 meses.",
-    process: [
-      {
-        step: "01",
-        title: "Consulta",
-        description: "Evaluación del área ocular y planificación del tratamiento."
-      },
-      {
-        step: "02",
-        title: "Diseño", 
-        description: "Marcación precisa de incisiones para cicatrices imperceptibles."
-      },
-      {
-        step: "03",
-        title: "Cirugía",
-        description: "Técnica microquirúrgica para resultados naturales."
-      },
-      {
-        step: "04",
-        title: "Recuperación",
-        description: "Cuidados específicos para una cicatrización óptima."
-      }
-    ]
+    tecnica: "Incisiones ocultas en pliegues naturales de párpados superiores e inferiores. Eliminación de exceso de piel, grasa y reposicionamiento de tejidos.",
+    recuperacion: "Hematomas desaparecen en 7-10 días. Uso de compresas frías primeras 48 horas. Resultado definitivo visible en 2-3 meses."
   }
 }
 
-const AnimatedCard = ({ children, delay = 0 }) => {
-  const cardRef = useRef(null)
-
-  useEffect(() => {
-    if (!cardRef.current) return
-
-    const element = cardRef.current
-    
-    gsap.fromTo(element, 
-      {
-        y: 60,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: delay,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: element,
-          start: "top 85%",
-          end: "bottom 20%",
-          toggleActions: "play none none none",
-        }
-      }
-    )
-  }, [delay])
-
-  return <div ref={cardRef}>{children}</div>
-}
-
 export default function ProcedimientoDetalle() {
-  const [currentId, setCurrentId] = useState("01")
-  const [navOpen, setNavOpen] = useState(false)
-  const isMobile = useIsMobile()
+  const { id } = useParams()
+  const location = useLocation()
   const sectionRef = useRef(null)
   const maskRef = useRef(null)
   const numberRef = useRef(null)
@@ -262,18 +258,57 @@ export default function ProcedimientoDetalle() {
   const approachRef = useRef(null)
   const infoRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
+  const isMobile = useIsMobile()
+  const [navOpen, setNavOpen] = useState(false)
+  const [currentId, setCurrentId] = useState(id)
 
-  const procedimiento = procedimientosData[currentId]
+  const procedimiento = procedimientosData[currentId] || procedimientosData[id]
+
+  // SOLUCIÓN AGRESIVA: Scroll forzado múltiple
+  useEffect(() => {
+    // Desactivar scroll automático del navegador
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Scroll inmediato
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Múltiples intentos de scroll
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Intentos en diferentes momentos
+    scrollToTop();
+    setTimeout(scrollToTop, 0);
+    setTimeout(scrollToTop, 10);
+    setTimeout(scrollToTop, 50);
+    setTimeout(scrollToTop, 100);
+    setTimeout(scrollToTop, 200);
+
+    return () => {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, [currentId, location.pathname]);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [currentId]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [currentId])
-
-  useEffect(() => {
+    if (!procedimiento) return;
+    
     const img = new Image()
     img.src = procedimiento.imageSrc
     img.onload = () => setImageLoaded(true)
-  }, [procedimiento.imageSrc])
+  }, [procedimiento])
 
   useEffect(() => {
     if (!imageLoaded) return
@@ -370,62 +405,29 @@ export default function ProcedimientoDetalle() {
 
     }, sectionRef)
 
+    // Refresh después de crear la animación
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
     return () => {
       ctx.revert()
       ScrollTrigger.getAll().forEach((st) => st.kill())
     }
   }, [imageLoaded, currentId])
 
-  const benefitsData = [
-    {
-      dots: 2,
-      title: "Resultados Predecibles",
-      description: "Nos enfocamos en lograr resultados naturales y armoniosos, cumpliendo con las expectativas de cada paciente."
-    },
-    {
-      dots: 1,
-      title: "Diseño Personalizado",
-      description: "Cada tratamiento es único y se adapta a tus características físicas y objetivos estéticos personales."
-    },
-    {
-      dots: 3,
-      title: "Tecnología Avanzada",
-      description: "Utilizamos las técnicas más modernas y equipamiento de última generación para garantizar tu seguridad."
-    },
-    {
-      dots: 4,
-      title: "Atención Integral",
-      description: "Acompañamiento completo desde la consulta inicial hasta el seguimiento post-operatorio para asegurar tu bienestar."
-    }
-  ]
-
-  const approachData = [
-    { 
-      dots: 1, 
-      title: "Consulta personalizada",
-      text: "Conocemos tus expectativas, anatomía y antecedentes clínicos. Definimos juntos el mejor enfoque para lograr un resultado natural y seguro."
-    },
-    {
-      dots: 2,
-      title: "Diseño del procedimiento", 
-      text: "Se estudian proporciones, medidas y proyección ideales según tu estructura corporal. Todo el plan se define de forma individualizada."
-    },
-    {
-      dots: 3,
-      title: "Precisión y cuidado",
-      text: "Utilizamos tecnología avanzada y protocolos internacionales para garantizar seguridad y resultados armónicos."
-    },
-    {
-      dots: 4,
-      title: "Seguimiento cercano",
-      text: "Te acompañamos durante el proceso postoperatorio, con controles programados y asistencia personalizada."
-    },
-    {
-      dots: 5,
-      title: "Armonía y confianza",
-      text: "Buscamos resultados equilibrados, que realcen tu figura respetando tu anatomía y bienestar general."
-    }
-  ]
+  if (!procedimiento) {
+    return (
+      <Box sx={{ 
+        minHeight: "100vh", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center" 
+      }}>
+        <Typography>Procedimiento no encontrado</Typography>
+      </Box>
+    );
+  }
 
   return (
     <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
@@ -597,7 +599,6 @@ export default function ProcedimientoDetalle() {
             flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
             justifyContent: "space-between",
-            px: { xs: "0px", md: "70px" },
           }}>
             {/* Botón Volver */}
             <Button
@@ -606,8 +607,8 @@ export default function ProcedimientoDetalle() {
               startIcon={<ArrowBackIcon />}
               sx={{
                 position: "absolute",
-                top: { xs: -200, md: -250 },
-                left: 0,
+                top: { xs: 20, md: 30 },
+                left: { xs: 20, md: 70 },
                 color: "#111",
                 textTransform: "none",
                 fontWeight: 500,
@@ -620,13 +621,14 @@ export default function ProcedimientoDetalle() {
             </Button>
 
             {/* IZQUIERDA: Número más pequeño */}
-            <Box>
+            <Box sx={{ ml: { xs: 0, md: "70px" } }}>
               <Typography
+                ref={numberRef}
                 variant="h1"
                 sx={{
                   color: "#111",
                   fontFamily: "Poppins",
-                  fontSize: { xs: "5rem", md: "8rem", lg: "74px" },
+                  fontSize: { xs: "5rem", md: "8rem", lg: "10rem" },
                   fontWeight: 600,
                   lineHeight: 0.9,
                   opacity: 0.95,
@@ -640,10 +642,12 @@ export default function ProcedimientoDetalle() {
             {/* DERECHA: Título menos bold + Catch Phrase con más espacio */}
             <Box
               sx={{
-                textAlign: {xs: 'center', md: "right"},
-                maxWidth: { xs: "100%", md: "45%", lg: "35%" },
+                textAlign: { xs: 'center', md: "right" },
+                maxWidth: { xs: "90%", md: "45%", lg: "35%" },
                 lineHeight: { xs: 1.1, md: 1.5 },
-                mt: { xs: "20px", md: "0px" }
+                mt: { xs: "20px", md: "0px" },
+                mr: { xs: 0, md: "70px" },
+                mx: { xs: "auto", md: 0 }
               }}
             >
               <span
@@ -659,8 +663,9 @@ export default function ProcedimientoDetalle() {
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   fontWeight: 500,
-                  mb: { xs: 0.5, md: 2.5},
-                  height: "26px"
+                  padding: "6px 14px",
+                  borderRadius: "20px",
+                  marginBottom: "16px"
                 }}
               >
                 {procedimiento.category}
@@ -674,7 +679,8 @@ export default function ProcedimientoDetalle() {
                   fontSize: isMobile ? "2.5rem" : "4rem",
                   fontWeight: 600,
                   lineHeight: 1.1,
-                  mb: { xs: 1, md: 3.5},
+                  marginBottom: "16px",
+                  marginTop: "0",
                   letterSpacing: "-0.02em"
                 }}
               >
@@ -704,7 +710,8 @@ export default function ProcedimientoDetalle() {
                   fontWeight: 400,
                   lineHeight: 1.65,
                   letterSpacing: "-0.01em",
-                  margin: 0
+                  margin: 0,
+                  padding: isMobile ? "0 10px" : "0"
                 }}
               >
                 {procedimiento.catchPhrase}

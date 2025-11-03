@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import gsap from 'gsap';
 
-// Vertex Shader with subtle organic deformation
+// Vertex Shader con morfeo de esfera a rosa abstracta
 const vertexShader = `
 uniform float uTime;
 uniform float uFrequency;
@@ -16,38 +17,97 @@ varying float vDistortion;
 void main() {
   float t = uTime * 0.25; // Velocidad de animación más lenta
   
-  // Ciclo suave y continuo de deformación sutil
-  float cycle = mod(t, 8.0);
-  float morphProgress = sin(cycle * 0.785398) * 0.5 + 0.5; // Oscila suavemente entre 0 y 1
+  // Ciclo extendido: 0-1.5 esfera, 1.5-4 transición a rosa, 4-8 rosa, 8-10.5 transición a esfera, 10.5-12 esfera
+  float cycle = mod(t, 12.0);
+  float morphProgress = 0.0;
+  
+  if (cycle < 1.5) {
+    // Esfera
+    morphProgress = 0.0;
+  } else if (cycle < 4.0) {
+    // Transición lenta a rosa (2.5 segundos)
+    morphProgress = smoothstep(0.0, 1.0, (cycle - 1.5) / 2.5);
+  } else if (cycle < 8.0) {
+    // Forma de rosa (4 segundos)
+    morphProgress = 1.0;
+  } else if (cycle < 10.5) {
+    // Transición lenta de vuelta a esfera (2.5 segundos)
+    morphProgress = 1.0 - smoothstep(0.0, 1.0, (cycle - 8.0) / 2.5);
+  } else {
+    // Esfera final
+    morphProgress = 0.0;
+  }
   
   // Coordenadas esféricas
   float radius = length(position);
   float theta = atan(position.z, position.x);
   float phi = acos(clamp(position.y / radius, -1.0, 1.0));
   
-  // Deformación sutil y orgánica
-  float subtleWave = sin(theta * 5.0 + t * 0.5) * 0.15;
-  float verticalWave = sin(phi * 3.0 + t * 0.3) * 0.12;
+  // Alargamiento vertical (forma más elongada)
+  float verticalStretch = 1.5;
   
-  // Ondulación suave sin formar pétalos pronunciados
-  float organicDistortion = subtleWave + verticalWave;
+  // Capas de pétalos (múltiples ondulaciones radiales)
+  float petalCount = 8.0; // Número de pétalos
+  float petalLayer1 = sin(theta * petalCount + t * 0.5) * 0.4;
+  float petalLayer2 = sin(theta * petalCount * 1.5 + t * 0.3) * 0.25;
+  float petalLayer3 = sin(theta * petalCount * 0.5 - t * 0.4) * 0.3;
   
-  // Deformación muy sutil en dirección normal
-  vec3 subtleDeform = normal * organicDistortion * morphProgress;
+  // Variación vertical de los pétalos (más pronunciado en el centro)
+  float verticalInfluence = sin(position.y * 2.0 + t) * 0.3;
+  float centerBulge = smoothstep(-0.3, 0.3, position.y) * (1.0 - smoothstep(0.3, 0.8, abs(position.y)));
   
-  // Interpolación entre esfera y deformación sutil
-  vec3 deformation = subtleDeform * uStrength * 0.6; // Aumentado para más deformación
+  // Ondulaciones espirales
+  float spiral = sin(phi * 5.0 + theta * 2.0 + t) * 0.2;
   
-  // Sin movimiento vertical
+  // Combinar capas de pétalos
+  float petalDeform = (petalLayer1 + petalLayer2 + petalLayer3) * centerBulge;
+  petalDeform += spiral * 0.5;
+  petalDeform += verticalInfluence;
+  
+  // Deformación radial (pétalos se expanden hacia afuera)
+  vec3 radialDir = normalize(vec3(position.x, 0.0, position.z));
+  vec3 roseDeform = normal * petalDeform * 1.2;
+  roseDeform += radialDir * petalDeform * 0.8;
+  
+  // Estiramiento vertical
+  roseDeform.y *= verticalStretch;
+  
+  // Agregar textura orgánica con ondulaciones más pequeñas
+  float organicNoise = sin(position.x * 8.0 + t) * sin(position.y * 8.0 - t) * sin(position.z * 8.0 + t * 0.5);
+  roseDeform += normal * organicNoise * 0.15;
+  
+  // Interpolación entre esfera y rosa
+  vec3 deformation = roseDeform * morphProgress * uStrength;
+  
+  // Movimiento vertical durante transiciones (más sutil y con delay)
   float verticalMovement = 0.0;
   
+  if (cycle >= 1.5 && cycle < 4.0) {
+    // Transición a rosa
+    float totalTransition = (cycle - 1.5) / 2.5;
+    
+    // Delay de 1 segundo (0.4 del progreso de transición)
+    if (totalTransition > 0.4) {
+      float delayedProgress = (totalTransition - 0.4) / 0.6;
+      verticalMovement = -smoothstep(0.0, 1.0, delayedProgress) * 0.15;
+    }
+  } else if (cycle >= 4.0 && cycle < 8.0) {
+    // Posición baja mientras está en forma de rosa
+    verticalMovement = -0.15;
+  } else if (cycle >= 8.0 && cycle < 10.5) {
+    // Subiendo durante transición de vuelta a esfera
+    float transitionProgress = (cycle - 8.0) / 2.5;
+    verticalMovement = -0.15 + (smoothstep(0.0, 1.0, transitionProgress) * 0.15);
+  }
+  
   // Ondulación base sutil
-  float waveDistortion = sin(position.y * uFrequency + t) * uAmplitude * 0.05;
+  float waveDistortion = sin(position.y * uFrequency + t) * uAmplitude * 0.08;
   
   vec3 pos = position + deformation + normal * waveDistortion;
+  pos.y += verticalMovement;
   
-  // Distorsión para el color (más sutil)
-  vDistortion = length(deformation) * 0.8 + abs(waveDistortion) * 2.0 + abs(organicDistortion) * 0.4;
+  // Distorsión para el color
+  vDistortion = length(deformation) * 0.6 + abs(waveDistortion) + abs(petalDeform) * 0.3;
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
 }

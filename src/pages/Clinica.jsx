@@ -7,8 +7,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ResultsPortfolioSection } from "../components/clinica/ResultsPortfolioSection"
-import { BlurText } from "../components/animations/BlurScrollEffect"
-import "../components/animations/blur-scroll-effect.css"
+// IMPORT CAMBIADO - Ahora usa BlurScrollEffect-Styled
+import BlurScrollEffect from "../components/animations/BlurScrollEffect-Styled"
 import Footer from "../components/UI/Footer"
 import About from "../components/clinica/about"
 import Conexion from "../components/clinica/conexion"
@@ -46,7 +46,6 @@ export default function Clinica({ id }) {
       position: "absolute",
       top: 0,
       right: -120,
-
       width: "180vw",
       height: "600vh",
       background: "white",
@@ -64,9 +63,7 @@ export default function Clinica({ id }) {
        <Box sx={{
         position: "relative",
         zIndex: 1,
-        // AQUÍ ESTÁ EL CAMBIO PRINCIPAL - AUMENTÉ EL MARGIN TOP
-        // mt: "100px" → ORIGINAL
-        mt: { xs: "150px", md: "350px" }, // ← NUEVO VALOR CON RESPONSIVE
+        mt: { xs: "150px", md: "350px" },
         display: "grid",
         backgroundColor: "white",
         gridTemplateColumns: "repeat(12, 1fr)",
@@ -76,15 +73,12 @@ export default function Clinica({ id }) {
           gridColumn: "1 / -1",
         },
         overflow: "hidden"
-
       }}>
         
         {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION CON BLUR */}
        <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / -1' },
           gridRow: '1 / 1',
-          // AQUÍ PUEDES AGREGAR MÁS ESPACIO INTERNO SI LO NECESITAS
-          // py: 8 → ya existe en la sección, pero puedes aumentarlo
         }}>
           {/* Clinic Description Section */}
           <Box
@@ -100,7 +94,6 @@ export default function Clinica({ id }) {
               gridTemplateColumns: "repeat(12, 1fr)",
               columnGap: { xs: "25px", md: "20px" },
             }}>
-           <BlurText effect={1}></BlurText>
               {/* Primera línea - Arranca en columna 4 con sangría en desktop, full width en mobile */}
               <Box sx={{
                 gridColumn: { xs: '1 / 13', md: '4 / 12' },
@@ -115,9 +108,9 @@ export default function Clinica({ id }) {
                     color: 'black',
                   }}
                 >
-                  <BlurText effect={1} className="">
+                  <BlurScrollEffect>
                     Nuestro propósito es ser la marca de
-                  </BlurText>
+                  </BlurScrollEffect>
                 </Typography>
               </Box>
 
@@ -137,9 +130,9 @@ export default function Clinica({ id }) {
                     width: '100%',
                   }}
                 >
-                  <BlurText effect={1}>
+                  <BlurScrollEffect>
                     cirugía estética que rehumaniza la medicina, utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.
-                  </BlurText>
+                  </BlurScrollEffect>
                 </Typography>
               </Box>
             </Box>

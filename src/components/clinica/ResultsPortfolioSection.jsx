@@ -53,6 +53,7 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
   const resultadosTitleRef = useRef(null)
   const doctorTitleRef = useRef(null)
   const humanConnectionTitleRef = useRef(null)
+  const autoScrollRef = useRef(null)
 
   useEffect(() => {
     const elements = [
@@ -145,10 +146,43 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
   }, []);
 
 
+  // Auto-scroll effect - constant smooth rotation
   useEffect(() => {
-    if (!api || !lenis) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    let animationFrameId;
+    const scrollSpeed = 0.5; // pixels per frame
+
+    const autoScroll = () => {
+      if (!isDragging && container) {
+        container.scrollLeft += scrollSpeed;
+
+        // Reset to beginning when reaching the end
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+          container.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(autoScroll);
+    };
+
+    animationFrameId = requestAnimationFrame(autoScroll);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [isDragging]);
+
+  // Smooth scroll effect on page scroll
+  useEffect(() => {
+    if (!lenis) return;
 
     const handleScroll = ({ scroll }) => {
+      const container = containerRef.current;
+      if (!container) return;
+
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
 
       scrollTimeout.current = setTimeout(() => {
@@ -156,14 +190,12 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
         const scrollThreshold = 20;
 
         if (Math.abs(scrollDelta) > scrollThreshold) {
-          if (scrollDelta > 0) {
-            api.scrollNext();
-          } else {
-            api.scrollPrev();
-          }
+          // Smooth scroll the carousel based on page scroll
+          const scrollAmount = scrollDelta * 0.5;
+          container.scrollLeft += scrollAmount;
           lastScrollY.current = scroll;
         }
-      }, 100);
+      }, 50);
     };
 
     lenis.on("scroll", handleScroll);
@@ -172,40 +204,34 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
       lenis.off("scroll", handleScroll);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
-  }, [api, lenis]);
+  }, [lenis]);
 
 
   return (
-    <Box component="section" ref={heroTextRef}  sx={{ py: 8, backgroundColor: "white",
-              ':after': {
-                content: '""',
-                position: "absolute",
-                top: 0,
-                right: -120,
-    
-                width: "100vw",
-                height: "100vh",
-                background: "white",
-                zIndex: -1
-              } }}>
-      <Box ref={resultadosTitleRef} sx={{
-        mb: 4,
-        display: { xs: "none", md: "flex" },
-        alignItems: "center",
-        justifyContent: "space-between"
-      }}>
-        <Typography variant="h2" sx={sectionTitleStyle}>
-          RESULTADOS
-        </Typography>
-      </Box>
-      <Box component="section" sx={{ 
+    <Box
+      component="section"
+      ref={heroTextRef}
+      sx={{
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        width: '100vw',
+        maxWidth: '100vw',
+        py: { xs: 4, md: 6 },
+        backgroundColor: "white",
+        overflow: 'hidden'
+      }}
+    >
+      <Box component="section" sx={{
         width: '100%',
         position: 'relative'
       }}>
         <Box>
           {/* Custom carousel implementation */}
           <Box className="results-carousel" sx={{ width: '100%' }}>
-            <Box 
+            <Box
               ref={containerRef}
               onMouseDown={startDrag}
               onMouseMove={duringDrag}
@@ -219,7 +245,9 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                 '&::-webkit-scrollbar': { display: 'none' },
                 py: 1,
                 cursor: isDragging ? 'grabbing' : 'grab',
-                userSelect: 'none'
+                userSelect: 'none',
+                scrollBehavior: 'smooth',
+                paddingLeft: '16px'
               }}
             >
               {portfolioItems.map((item, index) => (
@@ -227,8 +255,8 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                   key={index}
                   onClick={handleCardClick}
                   sx={{
-                    minWidth: {xs: '280px', md:  '700px'},
-                    maxWidth: {xs: '280px', md:  '700px'},
+                    minWidth: {xs: '280px', md:  '900px'},
+                    maxWidth: {xs: '280px', md:  '900px'},
                     flexShrink: 0
                   }}
                 >
@@ -241,8 +269,8 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                     }}>
                       <CardContent sx={{
                         position: 'relative',
-                        width: { xs: '280px', md: '700px' },
-                        height: { xs: '350px', md: '600px' },
+                        width: { xs: '280px', md: '900px' },
+                        height: { xs: '350px', md: '50vh' },
                         p: 0
                       }}>
                         <img
@@ -253,14 +281,6 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                         />
                       </CardContent>
                     </Card>
-                    <Box sx={{ pt: '16px', textAlign: { xs: 'left', md: 'center' } }}>
-                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" sx={{ color: theme.palette.grey[500] }}>
-                        {item.subtitle}
-                      </Typography>
-                    </Box>
                   </Box>
                 </Box>
               ))}

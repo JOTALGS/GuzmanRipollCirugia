@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { CarouselItem } from "./carousel-item"
+import Footer from "../UI/Footer"
 
 const originalItems = [
   { title: "LIPOASPIRACIÓN", subtitle: "(BodyTite, Morpheus8)" },
@@ -26,12 +27,13 @@ export function ResultsCarousel() {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [viewportWidth, setViewportWidth] = useState(0)
   const [itemWidth, setItemWidth] = useState(430)
+  const [isMobile, setIsMobile] = useState(false)
   const x = useMotionValue(0)
   const [isDragging, setIsDragging] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const getPositionX = (index: number) => {
-    const firstItemOffset = 70
+    const firstItemOffset = isMobile ? 20 : 70
     const totalOffset = firstItemOffset + index * (itemWidth + GUTTER)
     return -totalOffset
   }
@@ -41,6 +43,7 @@ export function ResultsCarousel() {
       if (viewportRef.current) {
         const w = viewportRef.current.offsetWidth
         setViewportWidth(w)
+        setIsMobile(w <= 768)
 
         const gridWidth = w - 140
         const calculatedWidth = Math.max(300, (gridWidth / 12) * 4)
@@ -104,32 +107,78 @@ export function ResultsCarousel() {
     })
   }
 
-  return (
-    <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
-      <div
-        style={{
-          paddingLeft: "70px",
-          paddingRight: "70px",
-          paddingTop: "40px",
-          paddingBottom: "20px",
-          maxWidth: "1920px",
-          margin: "0 auto",
-        }}
-      >
-        <p
+  // MOBILE VERSION - Static vertical scroll
+  if (isMobile) {
+    return (
+      <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
+        {/* Header con título y subtítulo */}
+        <div
           style={{
-            color: "#000000",
-            lineHeight: "1.7",
-            fontWeight: "600",
-            fontSize: "20px",
-            fontFamily: "Poppins, sans-serif",
-            margin: 0,
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            paddingTop: "40px",
+            paddingBottom: "40px",
           }}
         >
-          RESULTADOS
-        </p>
-      </div>
+          <h1
+            style={{
+              color: "#000000",
+              lineHeight: "1.2",
+              fontWeight: "700",
+              fontSize: "48px",
+              fontFamily: "Poppins, sans-serif",
+              margin: "0 0 8px 0",
+              textAlign: "left",
+              letterSpacing: "-1px",
+            }}
+          >
+            RESULTADOS
+          </h1>
+          <p
+            style={{
+              color: "#000000",
+              fontSize: "16px",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "400",
+              margin: 0,
+              textAlign: "left",
+            }}
+          >
+            Pacientes - 2013/2024
+          </p>
+        </div>
 
+        {/* Grid estático vertical */}
+        <div
+          style={{
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            paddingBottom: "40px",
+          }}
+        >
+          {originalItems.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                marginBottom: index < originalItems.length - 1 ? "40px" : "0",
+                width: "100%",
+              }}
+            >
+              <CarouselItem item={item} index={index} itemWidth={viewportWidth - 40} isMobile={true} />
+            </div>
+          ))}
+        </div>
+
+        {/* Footer solo en mobile */}
+        <Footer />
+      </div>
+    )
+  }
+
+  // DESKTOP VERSION - Horizontal carousel
+  return (
+    <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
+      {/* Desktop arrows */}
       <div
         style={{
           paddingLeft: "70px",
@@ -208,6 +257,7 @@ export function ResultsCarousel() {
         </div>
       </div>
 
+      {/* Desktop carousel */}
       <div
         style={{
           position: "relative",
@@ -262,6 +312,7 @@ export function ResultsCarousel() {
         </motion.div>
       </div>
 
+      {/* Desktop footer */}
       <div
         style={{
           paddingLeft: "70px",
@@ -271,8 +322,8 @@ export function ResultsCarousel() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          paddingTop: "48px",
-          paddingBottom: "80px",
+          paddingTop: "80px",
+          paddingBottom: "100px",
         }}
       >
         <span

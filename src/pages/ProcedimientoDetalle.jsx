@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Button, Box, Typography } from "@mui/material"
+import { Link as RouterLink } from "react-router-dom"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import Footer from "../components/UI/Footer"
 
 if (typeof window !== "undefined") {

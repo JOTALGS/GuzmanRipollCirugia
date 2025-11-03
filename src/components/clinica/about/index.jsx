@@ -53,7 +53,7 @@ export default function About() {
       textAlign: "start",
       zIndex: 1,
       }}>
-        <svg viewBox="0 0 24 24" width={"48"} height={"48"} fill="black" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+        <svg viewBox="0 0 24 24" width={"72"} height={"72"} fill="black" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
       </Box>
       <Box sx={{
       gridColumn: { xs: '3 / 13', md: '4 / 13' },
@@ -74,10 +74,10 @@ export default function About() {
           fontSize: "20px",
           fontWeight: 600,
           color: "textPrimary",
-          textAlign: "center",
+          textAlign: "left",
           py: 20,
           mb: 2,
-          gridColumn: { xs: "1 / 13", md: "3 / 4"},
+          gridColumn: { xs: "1 / 13", md: "4 / 6"},
           gridRow: '5 / 5',
           zIndex: 1,
         }}
@@ -88,15 +88,18 @@ export default function About() {
       gridColumn: { xs: '1 / 13', md: '6 / 11' },
       gridRow: '5 / 5',
       display: "flex",
+      flexDirection: "column",
       textAlign: "start",
-      zIndex: 1
+      zIndex: 1,
+      maxWidth: "100%",
+      overflow: "hidden"
       }}>
         {/* Doctor Profile Section */}
-        <Box component="section" sx={{ py: 20, px: 1, backgroundColor: "white" }}>
+        <Box component="section" sx={{ py: 20, px: 0, backgroundColor: "white", width: "100%", maxWidth: "100%" }}>
           <Typography variant="body1" sx={{ fontFamily: "Poppins", fontSize: { xs: "25px", md: "20px"}, fontWeight: 600, color: "black", mb: 2 }}>
               Dr. Guzman Ripoll
           </Typography>
-          
+
           <Typography variant="body1" sx={bodyTextStyle}>
               El Dr. Guzman Ripoll, es un Cirujano Plástico, Reconstructivo y Estético. .Certificado con títulos de Doctor en Medicina (CLAEH, Uruguay), Especialista en Cirugía Plástica, Reparadora y Estética (Universidad de la República, Uruguay)y Maestría en Cirugía Mamaria, Reconstructiva y Estética (Universitat de Barcelona).
           </Typography>
@@ -125,7 +128,7 @@ export default function About() {
 const doctorTitleStyle = {
   fontFamily: "Poppins",
   fontWeight: 400,
-  fontSize: { xs: "2.1rem", md: "3.5rem" },
+  fontSize: { xs: "2.1rem", md: "3.8rem" },
   lineHeight: 1.1,
   letterSpacing: "-0.03em",
   color: "text.primary"
@@ -137,5 +140,8 @@ const bodyTextStyle = {
   fontWeight: 400,
   color: "text.secondary",
   lineHeight: 1.8,
-  paddingRight: { xs: "0px", md: "100px"}
+  paddingRight: { xs: "0px", md: "0px"},
+  maxWidth: "100%",
+  wordWrap: "break-word",
+  overflowWrap: "break-word"
 }

@@ -6,12 +6,15 @@ interface CarouselItemProps {
   item: { title: string; subtitle: string }
   index: number
   itemWidth: number
+  isMobile?: boolean
 }
 
 const ITEM_HEIGHT = 525
+const ITEM_HEIGHT_MOBILE = 380
 
-export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
+export function CarouselItem({ item, index, itemWidth, isMobile = false }: CarouselItemProps) {
   const { title: itemTitle, subtitle: itemSubtitle } = item
+  const itemHeight = isMobile ? ITEM_HEIGHT_MOBILE : ITEM_HEIGHT
 
   return (
     <div
@@ -26,7 +29,7 @@ export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
       <div
         style={{
           width: "100%",
-          height: `${ITEM_HEIGHT}px`,
+          height: `${itemHeight}px`,
           borderRadius: "4px",
           overflow: "hidden",
           position: "relative",
@@ -52,7 +55,7 @@ export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
       </div>
 
       {/* Título y subtítulo */}
-      <div style={{ paddingTop: "16px", width: "100%" }}>
+      <div style={{ paddingTop: "16px", width: "100%", textAlign: "left" }}>
         <h3
           style={{
             color: "black",
@@ -63,6 +66,7 @@ export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
             lineHeight: 1.4,
             margin: "0 0 4px 0",
             fontFamily: "Poppins, sans-serif",
+            textAlign: "left",
           }}
         >
           {itemTitle}
@@ -76,6 +80,7 @@ export function CarouselItem({ item, index, itemWidth }: CarouselItemProps) {
             lineHeight: 1.4,
             margin: 0,
             fontFamily: "Poppins, sans-serif",
+            textAlign: "left",
           }}
         >
           {itemSubtitle}

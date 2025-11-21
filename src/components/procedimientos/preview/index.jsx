@@ -281,7 +281,7 @@ export default function Home() {
               paddingTop: '20px',
             }}
           >
-            <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: { xs: '15px', md: '1.125rem'}, textAlign: 'left' }}>
+            <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: { xs: '15px', md: '1.125rem'}, textAlign: 'left', fontWeight: 700 }}>
               {procedure.name}
             </Typography>
           </Box>
@@ -517,7 +517,7 @@ export default function Home() {
                 sx={{
                   color: 'text.secondary',
                   fontSize: { xs: '1.25rem', sm: '1.25rem' },
-                  fontWeight: { xs: 600, sm: 400 },
+                  fontWeight: 700,
                   flex: 1
                 }}
               >

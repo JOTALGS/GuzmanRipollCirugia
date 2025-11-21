@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -63,61 +63,65 @@ export default function Conexion() {
       {/* IMAGEN - Arriba en móvil, izquierda en desktop */}
       <Box sx={{
           gridColumn: { xs: '1 / 13', md: '1 / 7' },
-          gridRow: { xs: '8 / 8', md: '8 / 8' },
-          padding: { xs: "0px", md: "50px" },
-          paddingLeft: { xs: "0px", md: "0px" },
-          paddingRight: { xs: "0px", md: "100px" },
+          gridRow: { xs: '9 / 9', md: '9 / 9' },
+          position: "relative",
+          left: { xs: 0, md: "-70px" },
+          width: { xs: "100vw", md: "calc(100% + 50px)" },
+          height: { xs: "60vh", md: "100vh" },
+          marginBottom: { xs: 0, md: 12 },
           zIndex: 1,
           order: { xs: 1, md: 1 },
         }}>
-            <Grid item xs={12} md={6}>
-              <Box sx={{
-                borderRadius: { xs: 8, md: 2 },
-                overflow: "hidden",
-                aspectRatio: "1/1",
-                backgroundImage: 'url("/images/imagen5.jpg")',
-                backgroundSize: "cover",
-                width: { xs: "100vw", md: "auto" },
-                marginLeft: { xs: "calc(-1 * var(--grid-margin, 15px))", md: "0" },
-              }}>
-              </Box>
-            </Grid>
+          <Box sx={{
+            borderRadius: { xs: 8, md: 2 },
+            overflow: "hidden",
+            height: "100%",
+            backgroundImage: 'url("/images/imagen5.jpg")',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            marginLeft: { xs: "calc(-1 * var(--grid-margin, 15px))", md: "0" },
+          }}>
+          </Box>
         </Box>
 
       {/* TEXTO - Abajo en móvil, derecha en desktop */}
       <Box sx={{
           gridColumn: { xs: '1 / 13', md: '7 / 13' },
-          gridRow: { xs: '9 / 9', md: '8 / 8' },
+          gridRow: { xs: '10 / 10', md: '9 / 9' },
           zIndex: 1,
           order: { xs: 2, md: 2 },
+          py: { xs: 8, md: 0 },
         }}>
           {/* Human Connection Section */}
-          <Box component="section"  sx={{ py: 8, px: {xs: 2, md: 6}, backgroundColor: "white"}}>
-            <Grid container spacing={6} alignItems="start">
-              <Grid item xs={12} md={6} sx={{ textAlign: "start" }}>
-                <Typography ref={humanConnectionTitleRef} variant="h2" sx={sectionTitle}>
-                  Conexión humana
-                </Typography>
+          <Box component="section" sx={{ backgroundColor: "white", width: "100%" }}>
+            <Typography ref={humanConnectionTitleRef} variant="h2" sx={{
+              ...sectionTitle,
+              px: { xs: 2, md: 0 }
+            }}>
+              Conexión humana
+            </Typography>
 
-                <Box sx={{ mt: 6, display: "flex", flexDirection: "column", gap: 4 }}>
-                  {humanConnectionPoints.map((point, index) => (
-                    <Box key={index} sx={{ display: "flex", gap: 3 }}>
-                      <Typography variant="body1" sx={pointNumberStyle}>
-                        0{index + 1}.
-                      </Typography>
-                      <Box sx={{ padding: { xs: "0px", md: "30px" }, paddingRight: { xs: "0px", md: "200px"}, paddingTop: "0px" }}>
-                        <Typography variant="h3" sx={pointTitleStyle}>
-                          {point.title}
-                        </Typography>
-                        <Typography variant="body1" sx={pointDescriptionStyle}>
-                          {point.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  ))}
+            <Box sx={{ mt: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+              {humanConnectionPoints.map((point, index) => (
+                <Box key={index} sx={{
+                  display: "flex",
+                  gap: { xs: 3, md: 4 },
+                  px: { xs: 2, md: 0 }
+                }}>
+                  <Typography variant="body1" sx={pointNumberStyle}>
+                    0{index + 1}.
+                  </Typography>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="h3" sx={pointTitleStyle}>
+                      {point.title}
+                    </Typography>
+                    <Typography variant="body1" sx={pointDescriptionStyle}>
+                      {point.description}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Grid>
-            </Grid>
+              ))}
+            </Box>
           </Box>
         </Box>
     </>
@@ -126,27 +130,35 @@ export default function Conexion() {
 
 const sectionTitle = {
   fontFamily: "Poppins",
-  fontSize: { xs: "2.5rem", md: "3.5rem" },
-  color: "text.primary"
+  fontSize: { xs: "2.5rem", md: "4rem" },
+  fontWeight: 400,
+  color: "text.primary",
+  lineHeight: 1.2,
+  textAlign: "left"
 }
 
 const pointNumberStyle = {
   fontFamily: "Poppins",
   fontSize: "1.25rem",
   color: "text.primary",
-  minWidth: "40px"
+  minWidth: "50px",
+  fontWeight: 300
 }
 
 const pointTitleStyle = {
   fontFamily: "Poppins",
-  fontSize: "1.25rem",
-  fontWeight: 600,
-  color: "text.primary"
+  fontSize: "1.5rem",
+  fontWeight: 700,
+  color: "text.primary",
+  mb: 1,
+  textAlign: "left"
 }
 
 const pointDescriptionStyle = {
-  mt: 1,
+  mt: 1.5,
   fontSize: "1rem",
   color: "text.secondary",
-  lineHeight: 1.6
+  lineHeight: 1.7,
+  fontWeight: 400,
+  textAlign: "left"
 }

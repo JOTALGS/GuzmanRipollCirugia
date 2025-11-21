@@ -91,8 +91,8 @@ export default function ConoceMasHome() {
         display: "grid",
         backgroundColor: "background.default",
         gridTemplateColumns: "repeat(12, 1fr)",
-        marginInline: { xs: "15px", md: "70px" },
-        columnGap: { xs: "20px", md: "20px" },
+        marginInline: { xs: "20px", md: "70px" },
+        columnGap: { xs: "16px", md: "20px" },
         "& > section": { gridColumn: "1 / -1" }
       }}
     >

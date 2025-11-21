@@ -35,24 +35,35 @@ export function GridDebugger({
   show: externalShow,
 }: GridDebuggerProps = {}) {
   const [internalShow, setInternalShow] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      const result = window.matchMedia("(max-width: 767px)").matches
+      console.log("[v0] Grid Debugger - Initial mobile check:", result, "Width:", window.innerWidth)
+      return result
+    }
+    return false
+  })
+
   // Usar el estado externo si se proporciona, sino usar el interno
   const showGrid = externalShow !== undefined ? externalShow : internalShow
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+    const mediaQuery = window.matchMedia("(max-width: 767px)")
+
+    const checkMobile = (e?: MediaQueryListEvent) => {
+      const matches = e ? e.matches : mediaQuery.matches
+      console.log("[v0] Grid Debugger - Mobile check:", matches, "Width:", window.innerWidth)
+      setIsMobile(matches)
     }
 
     // Verificar inicialmente
     checkMobile()
 
-    // Agregar listener para cambios de tamaño
-    window.addEventListener('resize', checkMobile)
+    // Agregar listener para cambios de tamaño usando matchMedia
+    mediaQuery.addEventListener("change", checkMobile)
 
     return () => {
-      window.removeEventListener('resize', checkMobile)
+      mediaQuery.removeEventListener("change", checkMobile)
     }
   }, [])
 
@@ -62,20 +73,25 @@ export function GridDebugger({
       const handleKeyDown = (e: KeyboardEvent) => {
         const keyMatch = e.key.toLowerCase() === toggleKey.toLowerCase()
         const modifierMatch = requireShift ? e.shiftKey : true
-        
+
         if (keyMatch && modifierMatch) {
           e.preventDefault()
-          setInternalShow((prev) => !prev)
+          setInternalShow((prev) => {
+            const newState = !prev
+            console.log("[v0] Grid Debugger - Toggle:", newState ? "ACTIVADO" : "DESACTIVADO", "Mobile:", isMobile)
+            return newState
+          })
         }
       }
 
       window.addEventListener("keydown", handleKeyDown)
+      console.log("[v0] Grid Debugger cargado - Presiona Shift + G para activar")
 
       return () => {
         window.removeEventListener("keydown", handleKeyDown)
       }
     }
-  }, [toggleKey, requireShift, externalShow])
+  }, [toggleKey, requireShift, externalShow, isMobile])
 
   if (!showGrid) {
     return null
@@ -85,6 +101,11 @@ export function GridDebugger({
   const mobileColumns = 4
   const mobilePadding = "15px"
   const mobileGap = "20px"
+
+  console.log(
+    "[v0] Grid Debugger - Rendering:",
+    isMobile ? `${mobileColumns} columnas (móvil)` : `${columns} columnas (desktop)`,
+  )
 
   // Generar las clases CSS dinámicamente
   const containerStyle = {
@@ -99,21 +120,12 @@ export function GridDebugger({
   return (
     <>
       {/* Contenedor de la rejilla que se superpone a toda la página */}
-      <div 
-        className="pointer-events-none fixed inset-0"
-        style={{ zIndex }}
-      >
+      <div className="pointer-events-none fixed inset-0" style={{ zIndex }}>
         {/* Contenedor que replica el layout principal */}
-        <div 
-          className="mx-auto grid h-full"
-          style={containerStyle}
-        >
+        <div className="mx-auto grid h-full" style={containerStyle}>
           {/* Genera las columnas visuales */}
           {Array.from({ length: isMobile ? mobileColumns : columns }).map((_, i) => (
-            <div
-              key={i}
-              className={`h-full w-full ${columnColor}`}
-            />
+            <div key={i} className={`h-full w-full ${columnColor}`} />
           ))}
         </div>
       </div>
@@ -123,29 +135,26 @@ export function GridDebugger({
         className="pointer-events-none fixed top-4 left-4 rounded bg-black/80 px-3 py-2 text-white text-sm font-mono"
         style={{ zIndex: zIndex + 1 }}
       >
-        Grid Debug: {isMobile ? `${mobileColumns} (mobile)` : `${columns} (desktop)`} cols | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
+        Grid Debug: {isMobile ? `${mobileColumns} cols (móvil)` : `${columns} cols (desktop)`} |{" "}
+        {requireShift ? "Shift+" : ""}
+        {toggleKey.toUpperCase()} to toggle
       </div>
     </>
   )
 }
 
 // Hook personalizado para usar el grid debugger
-export function useGridDebugger(options?: Omit<GridDebuggerProps, 'show'>) {
+export function useGridDebugger(options?: Omit<GridDebuggerProps, "show">) {
   const [showGrid, setShowGrid] = useState(false)
 
-  const toggleGrid = () => setShowGrid(prev => !prev)
-  
-  const GridDebuggerComponent = () => (
-    <GridDebugger 
-      {...options} 
-      show={showGrid} 
-    />
-  )
-  
+  const toggleGrid = () => setShowGrid((prev) => !prev)
+
+  const GridDebuggerComponent = () => <GridDebugger {...options} show={showGrid} />
+
   return {
     showGrid,
     toggleGrid,
-    GridDebugger: GridDebuggerComponent
+    GridDebugger: GridDebuggerComponent,
   }
 }
 
@@ -153,50 +162,22 @@ export function useGridDebugger(options?: Omit<GridDebuggerProps, 'show'>) {
 export const GridDebuggerPresets = {
   // Bootstrap-like grid
   Bootstrap: (props?: Partial<GridDebuggerProps>) => (
-    <GridDebugger
-      columns={12}
-      maxWidth="1200px"
-      paddingX="15px"
-      gap="30px"
-      columnColor="bg-blue-500/10"
-      {...props}
-    />
+    <GridDebugger columns={12} maxWidth="1200px" paddingX="15px" gap="30px" columnColor="bg-blue-500/10" {...props} />
   ),
 
   // Tailwind container
   Tailwind: (props?: Partial<GridDebuggerProps>) => (
-    <GridDebugger
-      columns={12}
-      maxWidth="1280px"
-      paddingX="2rem"
-      gap="1rem"
-      columnColor="bg-cyan-500/10"
-      {...props}
-    />
+    <GridDebugger columns={12} maxWidth="1280px" paddingX="2rem" gap="1rem" columnColor="bg-cyan-500/10" {...props} />
   ),
 
   // Custom design system (como el del proyecto)
   Custom: (props?: Partial<GridDebuggerProps>) => (
-    <GridDebugger
-      columns={12}
-      maxWidth="1920px"
-      paddingX="70px"
-      gap="20px"
-      columnColor="bg-red-500/10"
-      {...props}
-    />
+    <GridDebugger columns={12} maxWidth="1920px" paddingX="70px" gap="20px" columnColor="bg-red-500/10" {...props} />
   ),
 
   // Mobile-first (siempre 4 columnas en móvil, 12 en desktop)
   MobileFirst: (props?: Partial<GridDebuggerProps>) => (
-    <GridDebugger
-      columns={12}
-      maxWidth="1920px"
-      paddingX="70px"
-      gap="20px"
-      columnColor="bg-green-500/10"
-      {...props}
-    />
+    <GridDebugger columns={12} maxWidth="1920px" paddingX="70px" gap="20px" columnColor="bg-green-500/10" {...props} />
   ),
 }
 
@@ -208,14 +189,11 @@ export function GridDebuggerDemo() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Grid Debugger Demo</h1>
-        
+
         <div className="bg-white rounded-lg p-6 shadow-md mb-6">
           <h2 className="text-xl font-semibold mb-4">Controles</h2>
-          <button
-            onClick={toggleGrid}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            {showGrid ? 'Ocultar' : 'Mostrar'} Grid Debugger
+          <button onClick={toggleGrid} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+            {showGrid ? "Ocultar" : "Mostrar"} Grid Debugger
           </button>
           <p className="mt-2 text-sm text-gray-600">
             También puedes usar <kbd className="px-2 py-1 bg-gray-200 rounded">Shift + G</kbd> para alternar

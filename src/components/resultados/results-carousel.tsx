@@ -4,7 +4,8 @@ import { useRef, useState, useEffect } from "react"
 import { motion, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { CarouselItem } from "./carousel-item"
-import Footer from "../UI/Footer"
+// @ts-ignore - Footer is a .jsx file
+import Footer from "../UI/Footer.jsx"
 
 const originalItems = [
   { title: "LIPOASPIRACIÓN", subtitle: "(BodyTite, Morpheus8)" },
@@ -116,8 +117,8 @@ export function ResultsCarousel() {
           style={{
             paddingLeft: "20px",
             paddingRight: "20px",
-            paddingTop: "40px",
-            paddingBottom: "40px",
+            paddingTop: "75px",
+            paddingBottom: "80px",
           }}
         >
           <h1
@@ -137,10 +138,11 @@ export function ResultsCarousel() {
           <p
             style={{
               color: "#000000",
-              fontSize: "16px",
+              fontSize: "20px",
               fontFamily: "Poppins, sans-serif",
-              fontWeight: "400",
+              fontWeight: "500",
               margin: 0,
+              paddingTop: "25px",
               textAlign: "left",
             }}
           >
@@ -153,7 +155,7 @@ export function ResultsCarousel() {
           style={{
             paddingLeft: "20px",
             paddingRight: "20px",
-            paddingBottom: "40px",
+            paddingBottom: "120px",
           }}
         >
           {originalItems.map((item, index) => (

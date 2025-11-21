@@ -219,7 +219,8 @@ const TestimoniosCarousel = () => {
   const getTransformValue = () => {
     if (!containerRef.current) return 0;
     const containerWidth = containerRef.current.offsetWidth;
-    const cardWidth = containerWidth / cardsToShow;
+    // En móvil, el ancho de cada card incluye el margin de 16px
+    const cardWidth = isMobile ? containerWidth + 16 : containerWidth / cardsToShow;
     // Calculate the desired offset based on currentIndex and drag
     const desired = (currentIndex * cardWidth) - dragOffset;
 
@@ -241,29 +242,30 @@ const TestimoniosCarousel = () => {
   const progress = getProgressWidth();
 
   return (
-    <Box 
+    <Box
       ref={sectionRef}
-      sx={{ 
-        padding: { xs: '40px 0', md: '80px 0' }, 
+      sx={{
+        padding: { xs: '80px 0 40px 0', md: '80px 0' },
         width: '100%',
         backgroundColor: '#ffffffff'
       }}
     >
-      <div style={{ 
-        maxWidth: '1820px', 
-        margin: '0 auto', 
-        padding: '0 20px'
+      <div style={{
+        maxWidth: '1920px',
+        margin: '0 auto',
+        paddingLeft: isMobile ? '20px' : '70px',
+        paddingRight: isMobile ? '20px' : '70px'
       }}>
         {/* Header */}
-        <Box 
+        <Box
           className="testimonios-header"
-          sx={{ 
-            display: 'flex', 
-            width: { xs: '100%', md: '50%' }, 
-            textAlign: 'start', 
-            flexDirection: 'column', 
-            alignItems: 'flex-start', 
-            marginBottom: { xs: '48px', md: '64px' } 
+          sx={{
+            display: 'flex',
+            width: { xs: '100%', md: '50%' },
+            textAlign: 'start',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            marginBottom: { xs: '60px', md: '64px' }
           }}
         >
           <Typography 
@@ -323,38 +325,38 @@ const TestimoniosCarousel = () => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <div 
+            <div
               ref={carouselRef}
-              style={{ 
+              style={{
                 display: 'flex',
                 transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                 transform: `translateX(${getTransformValue()}px)`,
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none',
-                paddingInline: '20px',
-                marginInline: '50px',
+                paddingInline: isMobile ? '0' : '0',
+                marginInline: isMobile ? '0' : '0',
               }}
             >
               {testimonios.map((testimonio, index) => (
                 <div
                   key={index}
                   style={{
-                    width: `${isMobile ? (155 / cardsToShow) : (100 / cardsToShow)}%`,
+                    width: isMobile ? '100%' : `${100 / cardsToShow}%`,
                     flex: 'none',
                     minHeight: '310px',
-                    padding: '0 12px',
-                    boxSizing: 'border-box'
+                    padding: isMobile ? '0' : '0 12px',
+                    boxSizing: 'border-box',
+                    marginRight: isMobile && index < testimonios.length - 1 ? '16px' : '0'
                   }}
                 >
-                  <div 
+                  <div
                     style={{
                       height: 'auto',
-                      minHeight: window.innerWidth < 768 ? '280px' : '280px',
+                      minHeight: window.innerWidth < 768 ? '340px' : '280px',
                       borderRadius: '12px',
-                      padding: '32px',
+                      padding: window.innerWidth < 768 ? '28px' : '32px',
                       display: 'flex',
                       textAlign: 'left',
-
                       flexDirection: 'column',
                       justifyContent: 'center',
                       backgroundColor: '#F8F8F8',
@@ -362,8 +364,9 @@ const TestimoniosCarousel = () => {
                       transition: 'all 0.3s ease',
                       position: 'relative',
                       border: '1px solid rgba(229, 231, 235, 0.3)',
-                      maxWidth: '500px',
-                      maxHeight: '280px',
+                      maxWidth: isMobile ? 'none' : '500px',
+                      width: '100%',
+                      maxHeight: window.innerWidth < 768 ? 'none' : '280px',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -376,8 +379,8 @@ const TestimoniosCarousel = () => {
                   >
                     {/* Quote */}
                     <div style={{ marginBottom: '24px' }}>
-                      <p style={{ 
-                        fontSize: window.innerWidth < 768 ? '15px' : '16px',
+                      <p style={{
+                        fontSize: window.innerWidth < 768 ? '16px' : '16px',
                         color: '#374151',
                         lineHeight: '1.7',
                         margin: 0,
@@ -415,11 +418,11 @@ const TestimoniosCarousel = () => {
       </div>
 
       {/* Progress Bar */}
-      <div 
+      <div
         className="testimonios-progress"
-        style={{ 
+        style={{
           width: '100%',
-          padding: '0 70px',
+          padding: isMobile ? '0 20px' : '0 70px',
           display: 'flex',
           alignItems: 'center',
           gap: '20px'

@@ -8,7 +8,7 @@ import Testimonios from "../components/home/Testimonios";
 import Especialistas from "../components/home/Especialistas";
 import Faq from "../components/home/faq";
 import Footer from "../components/UI/Footer";
-import ScrollStage from "../components/home/general/ScrollStage";
+// import ScrollStage from "../components/home/general/ScrollStage"; // ← COMENTADO
 
 export default function Home({ toggleTheme }) {
   const [isPinned, setIsPinned] = useState(true)
@@ -21,11 +21,8 @@ export default function Home({ toggleTheme }) {
         position: 'relative',
       }}
       >
-      <section className="absolute">
-        <ScrollStage  />
-
-      </section>
-
+      {/* ELIMINADA LA SECCIÓN CON ScrollStage */}
+      
       <IntroHome />
       
       <ConoceMasHome />

@@ -4,8 +4,6 @@ import { useLocation, Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { useLenis } from "@studio-freight/react-lenis"
 import { Box, useMediaQuery } from "@mui/material"
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
 
 export default function NavBar() {
   const [timeParts, setTimeParts] = useState({ hour: "00", minute: "00", second: "00", period: "PDE" })
@@ -14,14 +12,13 @@ export default function NavBar() {
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width:900px)')
   
-  // Determinar página activa específica
   const getActivePage = () => {
     if (location.pathname === "/" || location.pathname === "/inicio") return "Inicio"
     if (location.pathname === "/clinica") return "Clínica"
     if (location.pathname === "/procedimientos") return "Procedimientos"
     if (location.pathname === "/resultados") return "Resultados"
     if (location.pathname === "/contacto") return "Contacto"
-    return "Inicio" // default
+    return "Inicio"
   }
 
   const active = getActivePage()
@@ -35,7 +32,6 @@ export default function NavBar() {
     { name: "Resultados", path: "/resultados" },
   ]
 
-  // Reloj en tiempo real con segundos
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date()
@@ -52,7 +48,6 @@ export default function NavBar() {
     return () => clearInterval(timer)
   }, [])
 
-  // Detección de fondo mejorada
   useEffect(() => {
     const detectBackground = () => {
       const tempElement = document.createElement('div')
@@ -90,17 +85,14 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Animación del underline
   useEffect(() => {
     if (!isMobile) {
       if (active === "Contacto") {
         const contactEl = document.querySelector('[data-link="Contacto"]')
         if (contactEl) {
-          const rect = contactEl.getBoundingClientRect()
-          const navRect = contactEl.closest('nav').getBoundingClientRect()
           setUnderline({ 
             width: contactEl.offsetWidth, 
-            left: contactEl.offsetLeft - navRect.left
+            left: contactEl.offsetLeft
           })
         }
       } else {
@@ -115,7 +107,6 @@ export default function NavBar() {
     }
   }, [active, isMobile])
 
-  // Smooth scroll con Lenis
   const lenis = useLenis()
   const onNavClick = (e, href) => {
     if (href.startsWith("#")) {
@@ -130,7 +121,7 @@ export default function NavBar() {
   const navbarStyle = {
     position: 'fixed',
     top: 0,
-    zIndex: 50,
+    zIndex: 9999,
     width: '100%',
     backgroundColor: 'transparent',
     mixBlendMode: isMenuOpen && isMobile ? 'normal' : 'difference',
@@ -311,9 +302,9 @@ export default function NavBar() {
             </div>
           </Box>
 
-          {/* Hamburger Menu */}
+          {/* Menu/Close Button - Mobile */}
           <Box sx={{
-            gridColumn: '11 / 13',
+            gridColumn: '10 / 13',
             display: { xs: 'flex', md: 'none' },
             justifyContent: 'flex-end',
             alignItems: 'center'
@@ -328,15 +319,38 @@ export default function NavBar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: isMenuOpen ? 'white' : 'inherit'
+                color: isMenuOpen ? 'white' : 'inherit',
+                fontFamily: 'Poppins, sans-serif',
+                fontWeight: '500',
+                fontSize: '18px',
+                letterSpacing: '-0.54px',
+                position: 'relative',
+                overflow: 'hidden',
+                width: '60px',
+                height: '30px'
               }}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? (
-                <CloseIcon sx={{ fontSize: 28 }} />
-              ) : (
-                <MenuIcon sx={{ fontSize: 28 }} />
-              )}
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={isMenuOpen ? 'close' : 'menu'}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ 
+                    duration: 0.4,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }}
+                  style={{
+                    position: 'absolute',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {isMenuOpen ? 'Close' : 'Menu'}
+                </motion.span>
+              </AnimatePresence>
             </button>
           </Box>
         </Box>
@@ -346,35 +360,45 @@ export default function NavBar() {
       <AnimatePresence>
         {isMenuOpen && isMobile && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ y: '-100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ 
+              duration: 0.6,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
             style={{
               position: 'fixed',
               top: 0,
               left: 0,
               width: '100%',
               height: '100vh',
-              backgroundColor: 'rgba(0, 0, 0, 0.95)',
-              zIndex: 49,
+              backgroundColor: '#000000',
+              zIndex: 9998,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingTop: '80px'
+              paddingTop: '80px',
+              paddingBottom: '60px',
+              overflow: 'hidden'
             }}
           >
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ 
+                delay: 0.3,
+                duration: 0.5,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
               style={{
                 color: 'white',
                 fontFamily: 'Poppins, sans-serif',
-                fontSize: '14px',
-                marginBottom: '40px',
-                opacity: 0.7
+                fontSize: '16px',
+                marginBottom: '50px',
+                opacity: 0.7,
+                fontWeight: '400'
               }}
             >
               {`${timeParts.hour}:${timeParts.minute}:${timeParts.second} ${timeParts.period}`}
@@ -384,14 +408,20 @@ export default function NavBar() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '30px'
+              gap: '28px',
+              flex: 1,
+              justifyContent: 'center'
             }}>
               {[...menuLinks, { name: "Contacto", path: "/contacto" }].map((link, index) => (
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
+                  transition={{ 
+                    delay: 0.3 + index * 0.08,
+                    duration: 0.5,
+                    ease: [0.25, 0.1, 0.25, 1]
+                  }}
                 >
                   <Link
                     to={link.path}
@@ -400,34 +430,75 @@ export default function NavBar() {
                       color: 'white',
                       textDecoration: 'none',
                       fontFamily: 'Poppins, sans-serif',
-                      fontWeight: '500',
-                      fontSize: '24px',
-                      letterSpacing: '-0.5px',
+                      fontWeight: '700',
+                      fontSize: '46px',
+                      letterSpacing: '-2.5px',
                       position: 'relative',
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      textTransform: 'uppercase',
+                      opacity: active === link.name ? 1 : 0.45,
+                      transition: 'opacity 0.3s ease',
+                      lineHeight: '1'
                     }}
                   >
                     {link.name}
-                    {active === link.name && (
-                      <motion.div
-                        layoutId="mobile-underline"
-                        style={{
-                          position: 'absolute',
-                          bottom: '-4px',
-                          left: 0,
-                          right: 0,
-                          height: '2px',
-                          backgroundColor: 'white'
-                        }}
-                        initial={{ width: 0 }}
-                        animate={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
                   </Link>
                 </motion.div>
               ))}
             </nav>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                delay: 0.7,
+                duration: 0.5,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              style={{
+                display: 'flex',
+                gap: '40px',
+                marginTop: '40px'
+              }}
+            >
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: '500',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: 'white',
+                  textDecoration: 'none',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: '500',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
+              >
+                Instagram
+              </a>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

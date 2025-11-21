@@ -65,8 +65,8 @@ export default function VerMasProcedimientosHome() {
         display: { xs: 'flex', md: 'grid' },
         flexDirection: { xs: 'column', md: 'row' },
         gridTemplateColumns: { xs: 'none', md: 'repeat(12, 1fr)' },
-        columnGap: { xs: '0px', md: '20px' },
-        paddingInline: { xs: '15px', md: '70px' },
+        columnGap: { xs: '16px', md: '20px' },
+        paddingInline: { xs: '20px', md: '70px' },
       }}
     >
       {/* Primer elemento */}

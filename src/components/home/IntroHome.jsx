@@ -1,7 +1,6 @@
 'use client';
 import { Box, Typography } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
-import ClipTopButton from "../buttons/clipTopButton";
 import { gsap } from "gsap";
 
 export default function IntroHome() {
@@ -102,33 +101,110 @@ export default function IntroHome() {
         },
       }}
     > 
-      {/* Background Image - Fixed positioning for better scaling */}
+      {/* BASE BACKGROUND - Deep Blue */}
       <Box
         sx={{
           width: "100%",
           height: "100%",
-          backgroundImage: 'url("/images/imagen5.jpg")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
           zIndex: 0,
+          backgroundColor: "#191968",
+        }}
+      />
+
+      {/* VIGNETTE EFFECT - Darker edges */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0,
+          background: `
+            radial-gradient(ellipse 120% 100% at 50% 50%, transparent 0%, transparent 35%, rgba(10, 13, 31, 0.3) 55%, rgba(10, 13, 31, 0.6) 75%, rgba(5, 7, 15, 0.85) 100%)
+          `,
+        }}
+      />
+
+      {/* SVG Circle Background - Decorative element - debe estar arriba del gradiente */}
+      <Box
+        sx={{
+          position: "absolute",
+          width: { xs: "800px", md: "3200px" },
+          height: { xs: "800px", md: "1800px" },
+          top: { xs: "-200px", md: "-900px" },
+          left: { xs: "50%", md: "-300px" },
+          transform: { xs: "translateX(-50%)", md: "none" },
+          zIndex: 0,
+          pointerEvents: "none",
+          opacity: { xs: 0.6, md: 0.9 },
+        }}
+      >
+        {/* Primary circle */}
+        <Box
+          sx={{
+            position: "absolute",
+            width: { xs: "100%", md: "120%" },
+            height: "100%",
+            borderRadius: "50%",
+            border: {
+              xs: "1px solid rgba(255, 255, 255, 0.3)",
+              md: "1px solid rgba(255, 255, 255, 0.57)"
+            },
+          }}
+        />
+      </Box>
+
+      {/* SMOOTH GRADIENT LAYERS - Techno Blue spots */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0,
+          background: `
+            radial-gradient(circle 800px at 15% 70%, rgba(0, 129, 199, 0.65) 0%, rgba(0, 129, 199, 0.45) 15%, rgba(0, 129, 199, 0.28) 30%, rgba(0, 129, 199, 0.15) 45%, rgba(0, 129, 199, 0.06) 60%, transparent 75%),
+            radial-gradient(circle 750px at 88% 25%, rgba(0, 129, 199, 0.60) 0%, rgba(0, 129, 199, 0.42) 18%, rgba(0, 129, 199, 0.26) 35%, rgba(0, 129, 199, 0.13) 50%, rgba(0, 129, 199, 0.05) 65%, transparent 80%)
+          `,
+        }}
+      />
+
+      {/* SUBTLE NOISE TEXTURE */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1,
+          opacity: 0.02,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
 
       {/* Título Principal */}
       <Box
         sx={{
-          gridColumn: { 
-            xs: '1 / 13', 
+          gridColumn: {
+            xs: '1 / 13',
             sm: '1 / 13',
-            md: '1 / 13', 
-            lg: '1 / 10', 
-            xl: '1 / 8' 
+            md: '1 / 13',
+            lg: '1 / 10',
+            xl: '1 / 8'
           },
           backgroundColor: "transparent",
           gridRow: '1',
@@ -136,15 +212,15 @@ export default function IntroHome() {
           display: 'flex',
           flexDirection: 'column',
           textAlign: { xs: 'left', sm: 'left', md: 'left', lg: 'left' },
-          alignItems: { xs: 'center', sm: 'center', md: 'center', lg: 'flex-start' },
+          alignItems: { xs: 'flex-start', sm: 'flex-start', md: 'flex-start', lg: 'flex-start' },
           justifyContent: 'flex-start',
-          marginBottom: { xs: '30px', sm: '40px', md: '50px' },
+          marginBottom: { xs: '20px', sm: '40px', md: '50px' },
         }}
       >
-        <Typography 
-          fontFamily={'Poppins'} 
-          sx={{ 
-            fontSize: { 
+        <Typography
+          fontFamily={'Poppins'}
+          sx={{
+            fontSize: {
               xs: 'clamp(26px, 7vw, 30px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
@@ -163,45 +239,37 @@ export default function IntroHome() {
           }}
         >
           Cirugía mamaria{' '}
-          <Box 
-            ref={inteligenteBoxRef}
+          <Typography
+            ref={inteligenteTextRef}
+            component="span"
+            fontFamily={'Poppins'}
             sx={{
-              display: 'inline-flex',
-              paddingX: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px'},
-              borderRadius: '7px',
-              backgroundColor: 'rgba(255, 255, 255, 0.5)',
-              backdropFilter: 'blur(15px) saturate(50%)',
-              border: '0.5px solid rgba(255, 255, 255, 0.15)',
-              verticalAlign: 'bottom',
-              textAlign: 'center',
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignContent: 'center',
-              flexShrink: 0,
+              fontSize: 'inherit',
+              color: 'textAccent',
+              letterSpacing: 'inherit',
+              fontWeight: 'semibold',
+              lineHeight: 1.2,
+              whiteSpace: 'nowrap',
             }}
           >
-            <Typography 
-              ref={inteligenteTextRef}
-              component="span" 
-              fontFamily={'Poppins'} 
-              sx={{ 
-                fontSize: 'inherit',
-                color: 'textAccent',
-                letterSpacing: 'inherit',
-                fontWeight: 'semibold',
-                lineHeight: 1.2,
-                whiteSpace: 'nowrap',
-              }}
-            >
-              inteligente
-            </Typography>
-          </Box>
+            inteligente
+          </Typography>
+          <Typography
+            component="span"
+            sx={{
+              fontSize: 'inherit',
+              color: 'textAccent',
+              letterSpacing: 'inherit',
+            }}
+          >
+            ,
+          </Typography>
         </Typography>
 
-        <Typography 
-          fontFamily={'Poppins'} 
-          sx={{ 
-            fontSize: { 
+        <Typography
+          fontFamily={'Poppins'}
+          sx={{
+            fontSize: {
               xs: 'clamp(26px, 7vw, 30px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
@@ -210,12 +278,11 @@ export default function IntroHome() {
             },
             width: '100%',
             color: 'textSecondary',
-            textTransform: 'capitalize',
             letterSpacing: { xs: '-1.5px', sm: '-1.5px', md: '-2px', lg: '-2.5px', xl: '-3px' },
             lineHeight: 1.1,
           }}
         >
-          conexión humana
+          conexión humana.
         </Typography>
       </Box>
 
@@ -255,9 +322,9 @@ export default function IntroHome() {
       {/* Contenedor del párrafo y botón */}
       <Box
         sx={{
-          gridColumn: { 
+          gridColumn: {
             xs: '1 / 13',
-            sm: '1 / 13', 
+            sm: '1 / 13',
             md: '1 / 6',
             lg: '1 / 5'
           },
@@ -265,24 +332,24 @@ export default function IntroHome() {
           display: 'flex',
           zIndex: 1,
           flexDirection: 'column',
-          alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
+          alignItems: { xs: 'flex-start', sm: 'flex-start', md: 'flex-start' },
           justifyContent: 'flex-start',
           marginTop: { xs: 'auto', md: 'auto' },
           marginBottom: { xs: '0px', md: '0px' },
         }}
       >
-        <Typography 
-          color="white" 
-          fontFamily={'Poppins'} 
+        <Typography
+          color="#E9E9E9"
+          fontFamily={'Poppins'}
           sx={{
-            fontSize: { 
+            fontSize: {
               xs: 'clamp(13px, 3.5vw, 14px)',
               sm: 'clamp(14px, 3vw, 15px)',
               md: 'clamp(16px, 2vw, 18px)',
               lg: 'clamp(18px, 1.8vw, 20px)'
             },
-            textAlign: { xs: 'center', sm: 'center', md: 'left' },
-            marginBottom: { xs: '16px', sm: '18px', md: '20px' },
+            textAlign: { xs: 'left', sm: 'left', md: 'left' },
+            marginBottom: { xs: '20px', sm: '18px', md: '20px' },
             letterSpacing: { xs: '-0.3px', md: '-0.5px', lg: '-0.8px' },
             lineHeight: 1.5,
             fontWeight: 400,
@@ -295,58 +362,97 @@ export default function IntroHome() {
         <Box sx={{
           display: 'flex',
           gap: { xs: '12px', sm: '16px', md: '20px' },
-          flexWrap: 'wrap',
-          justifyContent: { xs: 'center', sm: 'center', md: 'flex-start' },
-          width: { xs: '150%', md: '100%'},
-          '& .clip-top-button': {
-            backdropFilter: 'blur(40px) saturate(200%)',
-            backgroundColor: 'rgba(255, 255, 255, 0.12)',
-            border: '1px solid rgba(255, 255, 255, 0.18)',
-            borderRadius: '8px',
-            padding: { 
-              xs: 'clamp(8px, 2vw, 10px) clamp(20px, 5vw, 24px)',
-              md: 'clamp(10px, 1.5vw, 12px) clamp(24px, 3vw, 28px)'
-            },
+          flexWrap: 'nowrap',
+          justifyContent: { xs: 'flex-start', md: 'flex-start' },
+          width: '100%',
+          flexDirection: 'row',
+          '& .primary-button, & .secondary-button': {
+            flex: 1,
             cursor: 'pointer',
             transition: 'all 0.3s ease',
             fontFamily: 'Poppins',
-            fontWeight: '500',
-            fontSize: { 
-              xs: 'clamp(13px, 3.5vw, 14px)',
+            fontWeight: '400',
+            fontSize: {
+              xs: 'clamp(14px, 3.8vw, 15px)',
               md: 'clamp(14px, 1.8vw, 15px)'
             },
             letterSpacing: '-0.2px',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: `
-              0 8px 32px rgba(0, 0, 0, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-            `,
+            padding: {
+              xs: 'clamp(12px, 3vw, 14px) clamp(16px, 4vw, 20px)',
+              md: 'clamp(10px, 1.5vw, 12px) clamp(24px, 3vw, 28px)'
+            },
+          },
+          '& .primary-button': {
+            backgroundColor: '#E9E9E9',
+            border: 'none',
+            borderRadius: '0px',
+            color: '#000',
+            boxShadow: 'none',
             '&:hover': {
-              backdropFilter: 'blur(45px) saturate(220%)',
-              backgroundColor: 'rgba(255, 255, 255, 0.18)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
+              backgroundColor: '#d9d9d9',
               transform: 'translateY(-2px)',
-              boxShadow: `
-                0 12px 40px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.05)
-              `
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
+            }
+          },
+          '& .secondary-button': {
+            position: 'relative',
+            border: 'none',
+            backgroundColor: 'transparent',
+            backdropFilter: 'none',
+            boxShadow: 'none',
+            overflow: 'hidden',
+            color: 'white',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%)',
+            },
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%)',
+            },
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(10px)',
+              transform: 'translateY(-2px)',
+              boxShadow: 'none',
+              '&::before, &::after': {
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%)',
+              }
             }
           }
         }}>
-          <ClipTopButton className="clip-top-button">
+          <Box
+            component="button"
+            className="primary-button"
+          >
             Conoce Más
-          </ClipTopButton>
+          </Box>
+          <Box
+            component="button"
+            className="secondary-button"
+          >
+            Ver Procedimientos
+          </Box>
         </Box>
       </Box>
 
       {/* Contenedor del video */}
       <Box
         sx={{
-          gridColumn: { 
+          gridColumn: {
             xs: '1 / 13',
             sm: '1 / 13',
             md: '7 / 12',
@@ -370,9 +476,9 @@ export default function IntroHome() {
           gap: '4px',
           alignItems: { xs: 'flex-start', md: 'flex-start' },
           justifyContent: { xs: 'flex-end', md: 'flex-end' },
-          marginTop: { xs: 'auto', sm: 'auto', md: 'auto' },
+          marginTop: { xs: '30px', sm: 'auto', md: 'auto' },
           height: 'fit-content',
-          marginBottom: { xs: '20px', sm: '0px', md: '0px' },
+          marginBottom: { xs: '30px', sm: '0px', md: '0px' },
           marginX: { xs: 0, md: 0 },
         }}
       >
@@ -473,16 +579,16 @@ export default function IntroHome() {
           gridRow: { xs: '4', md: '2' },
           display: 'flex',
           zIndex: 1,
-          alignItems: { xs: 'center', md: 'flex-end' },
-          justifyContent: { xs: 'center', md: 'flex-end' },
+          alignItems: { xs: 'flex-end', md: 'flex-end' },
+          justifyContent: { xs: 'flex-end', md: 'flex-end' },
           marginTop: { xs: '-15%', md: '0px' },
         }}
       >
-        <Typography 
-          color="#ffffff" 
-          fontFamily={'Poppins'} 
-          sx={{ 
-            fontSize: { 
+        <Typography
+          color="#ffffff"
+          fontFamily={'Poppins'}
+          sx={{
+            fontSize: {
               xs: 'clamp(14px, 4vw, 16px)',
               sm: 'clamp(16px, 3.5vw, 18px)',
               md: 'clamp(18px, 2vw, 20px)'

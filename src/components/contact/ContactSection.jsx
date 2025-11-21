@@ -40,7 +40,7 @@ export function ContactSection({ id }) {
         py: { xs: '100px', md: '100px' }, // mayor separación superior
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
-        columnGap: { xs: '10px', md: '20px' },
+        columnGap: { xs: '16px', md: '20px' },
         rowGap: { xs: '70px', md: '80px' },
       }}
     >
@@ -55,9 +55,10 @@ export function ContactSection({ id }) {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: '30px', md: '34px' },
-            fontWeight: 600,
+            fontSize: { xs: '48px', md: '34px' },
+            fontWeight: 700,
             fontFamily: 'Poppins',
+            paddingTop: { xs: '75px', md: '34px' },
             color: '#000',
             lineHeight: 1.2,
           }}

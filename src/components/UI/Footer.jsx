@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
   Box,
   Container,
@@ -10,7 +10,6 @@ import {
   ListItemText,
   Button,
   TextField,
-  Divider,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -24,59 +23,218 @@ import LogoGR from "/images/GR_6_Iso+Nombre_Blanco.png";
 import StandaloneMarqueeAnimation from "../animations/standalone-marquee-animation"; // <- ajusta la ruta si hace falta
 
 export default function Footer() {
+  const location = useLocation();
+
   return (
     <Box sx={{ width: "100%", bgcolor: "#000", color: "#fff", position: "relative", zIndex: 1000 }}>
-      {/* ===== Mobile (xs–sm) — reemplazo total por tu animación ===== */}
+      {/* ===== Mobile (xs–sm) ===== */}
       <Box sx={{ display: { xs: "block", md: "none" } }}>
         <Box sx={{ background: "#000", position: "relative", overflow: "hidden" }}>
-          <Container maxWidth="lg" sx={{ pt: 8, pb: 3 }}>
-            {/* Logo */}
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
-              <Box component="img" src={LogoGR} alt="Guzmán Ripoll" sx={{ height: 44, width: "auto" }} />
-            </Box>
+          <Container maxWidth="lg" sx={{ pt: 6, pb: 4, px: 3 }}>
+            {/* INICIO */}
+            <MuiLink
+              component={RouterLink}
+              to="/"
+              underline="none"
+              sx={{
+                display: "block",
+                mb: 1.5,
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                pb: 1.5
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 500,
+                  fontSize: "24px",
+                  textAlign: "left",
+                  color: "#fff",
+                  letterSpacing: "0px",
+                  "&:hover": { opacity: 0.8 }
+                }}
+              >
+                INICIO
+              </Typography>
+            </MuiLink>
 
-            {/* ⬇️ Tu animación (sustituye la cinta infinita rota) */}
+            {/* CLÍNICA */}
+            <MuiLink
+              component={RouterLink}
+              to="/clinica"
+              underline="none"
+              sx={{
+                display: "block",
+                mb: 1.5,
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                pb: 1.5
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 500,
+                  fontSize: "24px",
+                  textAlign: "left",
+                  color: "#fff",
+                  letterSpacing: "0px",
+                  "&:hover": { opacity: 0.8 }
+                }}
+              >
+                CLÍNICA
+              </Typography>
+            </MuiLink>
+
+            {/* PROCEDIMIENTOS */}
+            <MuiLink
+              component={RouterLink}
+              to="/procedimientos"
+              underline="none"
+              sx={{
+                display: "block",
+                mb: 1.5,
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                pb: 1.5
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 500,
+                  fontSize: "24px",
+                  textAlign: "left",
+                  color: "#fff",
+                  letterSpacing: "0px",
+                  "&:hover": { opacity: 0.8 }
+                }}
+              >
+                PROCEDIMIENTOS
+              </Typography>
+            </MuiLink>
+
+            {/* CONTACTO con flecha */}
+            <MuiLink
+              component={RouterLink}
+              to="/contacto"
+              underline="none"
+              sx={{
+                display: "block",
+                mb: 6,
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                pb: 1.5
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 500,
+                  fontSize: "24px",
+                  textAlign: "left",
+                  color: "#fff",
+                  letterSpacing: "0px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  "&:hover": { opacity: 0.8 }
+                }}
+              >
+                <Box component="span">→</Box> CONTACTO
+              </Typography>
+            </MuiLink>
+
+            {/* Contáctanos */}
             <Box sx={{ mb: 4 }}>
-              <StandaloneMarqueeAnimation />
-            </Box>
-
-            {/* Mail grande y legible */}
-            <Box sx={{ textAlign: "center", mb: 3 }}>
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 400,
+                  mb: 0.5,
+                  fontSize: "18px",
+                  textAlign: "left",
+                  color: "#fff"
+                }}
+              >
+                Contáctanos
+              </Typography>
               <MuiLink
                 href="mailto:info@guzmanripoll.com"
+                underline="none"
                 sx={{
+                  fontFamily: 'Poppins',
                   color: "#fff",
-                  textDecoration: "underline",
-                  textDecorationThickness: "2px",
-                  textUnderlineOffset: "6px",
-                  fontSize: { xs: 24, sm: 28 },
-                  fontWeight: 700,
-                  lineHeight: 1.5,
-                  display: "inline-block",
-                  "&:hover": { opacity: 0.9 },
+                  fontSize: "18px",
+                  fontWeight: 400,
+                  "&:hover": { opacity: 0.8 }
                 }}
               >
                 info@guzmanripoll.com
               </MuiLink>
             </Box>
 
-            {/* Redes */}
-            <Box sx={{ display: "flex", justifyContent: "center", gap: 2.5, mb: 3.5 }}>
-              <MuiLink href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
-                <InstagramIcon fontSize="medium" />
-              </MuiLink>
-              <MuiLink href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
-                <LinkedInIcon fontSize="medium" />
-              </MuiLink>
-              <MuiLink href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" sx={{ color: "#fff", "&:hover": { opacity: 0.8 } }}>
-                <FacebookIcon fontSize="medium" />
-              </MuiLink>
+            {/* Dirección */}
+            <Box sx={{ mb: 6 }}>
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 400,
+                  mb: 0.5,
+                  fontSize: "18px",
+                  textAlign: "left",
+                  color: "#fff"
+                }}
+              >
+                Dirección
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  color: "#fff",
+                  fontSize: "18px",
+                  lineHeight: 1.6,
+                  fontWeight: 400,
+                  textAlign: "left"
+                }}
+              >
+                Ave. Roosevelt,
+                <br />
+                20100 Punta del Este
+              </Typography>
             </Box>
 
-            {/* Copy */}
-            <Box sx={{ borderTop: "1px dashed rgba(255,255,255,0.45)", pt: 2, pb: 3 }}>
-              <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.92)", fontWeight: 600 }}>
-                © 2025 Guzmán Ripoll — Todos los derechos reservados
+            {/* Logo */}
+            <Box sx={{ mb: 6, display: "flex", justifyContent: "flex-end" }}>
+              <Box
+                component="img"
+                src={LogoGR}
+                alt="Guzmán Ripoll"
+                sx={{
+                  height: 60,
+                  width: "auto"
+                }}
+              />
+            </Box>
+
+            {/* Copyright */}
+            <Box sx={{ textAlign: "right" }}>
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  color: "#fff",
+                  fontWeight: 400,
+                  fontSize: "14px"
+                }}
+              >
+                © Guzmán Ripoll
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: 'Poppins',
+                  color: "#fff",
+                  fontWeight: 400,
+                  fontSize: "14px"
+                }}
+              >
+                2025 Todos los Derechos Reservados
               </Typography>
             </Box>
           </Container>
@@ -98,10 +256,10 @@ export default function Footer() {
               py: 8,
             }}
           >
-            {/* Hero + CTA (fila 1) */}
+            {/* Hero + CTA (fila 1) - ahora con una columna más de ancho */}
             <Box
               sx={{
-                gridColumn: "1 / 5",
+                gridColumn: "1 / 6",
                 gridRow: "1",
                 display: "flex",
                 flexDirection: "column",
@@ -113,21 +271,21 @@ export default function Footer() {
                 <Typography
                   color="white"
                   fontFamily={"Poppins"}
-                  fontSize={{ md: "45px", xl: "55px" }}
+                  fontSize={{ md: "45px", xl: "70px" }}
                   sx={{ width: "100%", letterSpacing: "-3px", lineHeight: 1.1 }}
                 >
                   Lista para
                   <Typography
                     component="span"
                     fontFamily={"Poppins"}
-                    fontSize={{ md: "45px", xl: "55px" }}
+                    fontSize={{ md: "45px", xl: "70px" }}
                     sx={{ color: "textAccent", letterSpacing: "-3px" }}
                   >
                     {" "}
-                    Renovar
+                    renovar
                   </Typography>
                   <br />
-                  tu Imagen
+                  tu imagen?
                 </Typography>
               </Box>
 
@@ -152,7 +310,7 @@ export default function Footer() {
             </Box>
 
             {/* Formulario (fila 1, derecha) */}
-            <Box sx={{ gridColumn: "7 / 13", gridRow: "1" }}>
+            <Box sx={{ gridColumn: "8 / 13", gridRow: "1" }}>
               <Box sx={{ display: "flex", width: "100%" }}>
                 <Box component="form" noValidate autoComplete="off">
                   <Box
@@ -242,8 +400,8 @@ export default function Footer() {
             </Box>
 
             {/* ===== Fila 2: columnas de información (ajustadas) ===== */}
-            <Box sx={{ gridColumn: "1 / 3", gridRow: "2", mt: 6 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+            <Box sx={{ gridColumn: "1 / 3", gridRow: "2", mt: -8 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, fontSize: "20px", textAlign: "left" }}>
                 DESCUBRÍ
               </Typography>
               <List disablePadding dense>
@@ -252,43 +410,72 @@ export default function Footer() {
                   { to: "/clinica", text: "Clínica" },
                   { to: "/tratamientos", text: "Tratamientos" },
                   { to: "/contacto", text: "Contacto" },
-                ].map((link) => (
-                  <ListItem key={link.text} disablePadding sx={{ mb: 1 }}>
-                    <MuiLink component={RouterLink} to={link.to} underline="none" sx={{ color: "#B0B0B0", "&:hover": { color: "#fff" } }}>
-                      <ListItemText primary={link.text} primaryTypographyProps={{ fontSize: "14px" }} />
-                    </MuiLink>
-                  </ListItem>
-                ))}
+                ].map((link) => {
+                  const isActive = location.pathname === link.to;
+                  return (
+                    <ListItem key={link.text} disablePadding sx={{ mb: 1.5 }}>
+                      <MuiLink
+                        component={RouterLink}
+                        to={link.to}
+                        underline="none"
+                        sx={{
+                          color: isActive ? "#fff" : "#B0B0B0",
+                          fontSize: "16px",
+                          fontWeight: isActive ? 600 : 500,
+                          "&:hover": { color: "#fff" }
+                        }}
+                      >
+                        {link.text}
+                      </MuiLink>
+                    </ListItem>
+                  );
+                })}
               </List>
             </Box>
 
-            {/* CONTACTOS: columna 3-5 */}
-            <Box sx={{ gridColumn: "3 / 6", gridRow: "2", mt: 6 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "14px" }}>
+            {/* CONTACTOS: columna 3-6 */}
+            <Box sx={{ gridColumn: "3 / 6", gridRow: "2", mt: -8 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, fontSize: "20px", textAlign: "left" }}>
                 CONTACTOS
               </Typography>
               <List disablePadding dense>
                 {["Instagram", "Facebook", "+598.99.016.358", "info@guzmanripoll.com"].map((item) => (
-                  <ListItem key={item} disablePadding sx={{ color: "#B0B0B0", mb: 1, fontSize: "14px" }}>
+                  <ListItem key={item} disablePadding sx={{ color: "#B0B0B0", mb: 1.5, fontSize: "16px", fontWeight: 500 }}>
                     {item}
                   </ListItem>
                 ))}
               </List>
             </Box>
 
-            {/* Divider */}
-            <Box sx={{ gridColumn: "1 / 13", gridRow: "3" }}>
-              <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.15)", borderStyle: "dotted", borderWidth: "1px", my: 6 }} />
+            {/* UBICACIÓN: debajo de DESCUBRÍ, alineada a la izquierda */}
+            <Box sx={{ gridColumn: "1 / 3", gridRow: "3", mt: 0 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, fontSize: "20px", textAlign: "left" }}>
+                UBICACIÓN
+              </Typography>
+              <Typography sx={{ color: "#B0B0B0", fontSize: "16px", lineHeight: 1.6, fontWeight: 500, textAlign: "left" }}>
+                Punta del Este, Uruguay
+              </Typography>
             </Box>
 
-            {/* Bottom */}
-            <Box sx={{ gridColumn: "1 / 13", gridRow: "4" }}>
+            {/* Bottom - sin divider */}
+            <Box sx={{ gridColumn: "1 / 13", gridRow: "4", mt: 12 }}>
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 4 }}>
                 {/* Logo */}
                 <Box display="flex" alignItems="center">
                   <Box component="img" src="/images/GR_9_Isologo_Blanco.png" alt="Guzmán Ripoll" sx={{ height: 32, width: "auto" }} />
                 </Box>
 
+                {/* Textos del copyright con más bold */}
+                <Box display="flex" gap={4}>
+                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px", fontWeight: 700 }}>
+                    Todos los Derechos Reservados.
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px", fontWeight: 700 }}>
+                    Copyright ©2025 Guzman Ripoll
+                  </Typography>
+                </Box>
+
+                {/* LinkedIn */}
                 <MuiLink
                   href="#"
                   target="_blank"
@@ -306,15 +493,6 @@ export default function Footer() {
                 >
                   <LinkedInIcon fontSize="small" />
                 </MuiLink>
-
-                <Box display="flex" gap={4}>
-                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-                    Todos los Derechos Reservados.
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: "#B0B0B0", fontSize: "12px" }}>
-                    Copyright ©2025 Guzman Ripoll
-                  </Typography>
-                </Box>
               </Box>
             </Box>
           </Box>

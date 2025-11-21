@@ -10,7 +10,7 @@ interface CarouselItemProps {
 }
 
 const ITEM_HEIGHT = 525
-const ITEM_HEIGHT_MOBILE = 380
+const ITEM_HEIGHT_MOBILE = 400
 
 export function CarouselItem({ item, index, itemWidth, isMobile = false }: CarouselItemProps) {
   const { title: itemTitle, subtitle: itemSubtitle } = item
@@ -30,7 +30,7 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
         style={{
           width: "100%",
           height: `${itemHeight}px`,
-          borderRadius: "4px",
+          borderRadius: "12px",
           overflow: "hidden",
           position: "relative",
           background: "linear-gradient(to bottom, #B8BABB, #B0B2B3, #A9ABAC)",
@@ -59,10 +59,8 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
         <h3
           style={{
             color: "black",
-            fontSize: "13px",
-            fontWeight: 600,
-            textTransform: "uppercase",
-            letterSpacing: "0.02em",
+            fontSize: "18px",
+            fontWeight: 500,
             lineHeight: 1.4,
             margin: "0 0 4px 0",
             fontFamily: "Poppins, sans-serif",
@@ -74,9 +72,8 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
         <p
           style={{
             color: "black",
-            fontSize: "13px",
-            fontWeight: 400,
-            letterSpacing: "0.02em",
+            fontSize: "16px",
+            fontWeight: 500,
             lineHeight: 1.4,
             margin: 0,
             fontFamily: "Poppins, sans-serif",

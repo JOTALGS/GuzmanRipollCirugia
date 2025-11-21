@@ -37,28 +37,59 @@ const NavButtons = () => (
   </Box>
 );
 
-// 🎛️ GRID DEBUGGER COMPONENT
+// 🎛️ GRID DEBUGGER COMPONENT CON DETECCIÓN MÓVIL
 function GridDebugger({
   columns = 12,
   maxWidth = "1920px",
   paddingX = "70px",
   gap = "20px",
-  columnColor = "rgba(239, 68, 68, 0.1)", // red-500/10 equivalent
+  columnColor = "rgba(239, 68, 68, 0.1)",
   toggleKey = "g",
   requireShift = true,
   zIndex = 9999,
 } = {}) {
   const [showGrid, setShowGrid] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(max-width: 767px)").matches;
+    }
+    return false;
+  });
 
+  // Detectar cambios en el tamaño de pantalla
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+
+    const checkMobile = (e) => {
+      const matches = e ? e.matches : mediaQuery.matches;
+      console.log("📱 Grid Debugger - Mobile check:", matches, "Width:", window.innerWidth);
+      setIsMobile(matches);
+    };
+
+    // Verificar inicialmente
+    checkMobile();
+
+    // Agregar listener para cambios
+    mediaQuery.addEventListener("change", checkMobile);
+
+    return () => {
+      mediaQuery.removeEventListener("change", checkMobile);
+    };
+  }, []);
+
+  // Manejar el atajo de teclado
   useEffect(() => {
     const handleKeyDown = (e) => {
       const keyMatch = e.key.toLowerCase() === toggleKey.toLowerCase();
       const modifierMatch = requireShift ? e.shiftKey : true;
-      
+
       if (keyMatch && modifierMatch) {
         e.preventDefault();
-        setShowGrid((prev) => !prev);
-        console.log(`🎛️ Grid Debug ${!showGrid ? 'ACTIVADO' : 'DESACTIVADO'}`);
+        setShowGrid((prev) => {
+          const newState = !prev;
+          console.log(`🎛️ Grid Debug ${newState ? 'ACTIVADO' : 'DESACTIVADO'} - Móvil: ${isMobile}`);
+          return newState;
+        });
       }
     };
 
@@ -67,20 +98,35 @@ function GridDebugger({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [toggleKey, requireShift, showGrid]);
+  }, [toggleKey, requireShift, isMobile]);
 
   if (!showGrid) {
     return null;
   }
 
+  // Configuración para móvil
+  const mobileColumns = 4;
+  const mobilePadding = "20px";  // Márgenes laterales en móvil
+  const mobileGap = "16px";      // Gutter entre columnas en móvil
+
+  const currentColumns = isMobile ? mobileColumns : columns;
+  const currentPadding = isMobile ? mobilePadding : paddingX;
+  const currentGap = isMobile ? mobileGap : gap;
+  const currentMaxWidth = isMobile ? "100%" : maxWidth;
+
+  console.log(
+    "🎛️ Grid Debugger - Rendering:",
+    isMobile ? `${mobileColumns} columnas (móvil)` : `${columns} columnas (desktop)`
+  );
+
   // Estilos del contenedor
   const containerStyle = {
-    maxWidth,
-    paddingLeft: paddingX,
-    paddingRight: paddingX,
-    gap,
+    maxWidth: currentMaxWidth,
+    paddingLeft: currentPadding,
+    paddingRight: currentPadding,
+    gap: currentGap,
     display: 'grid',
-    gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
     zIndex,
     height: '100%',
     margin: '0 auto',
@@ -128,7 +174,7 @@ function GridDebugger({
         {/* Contenedor que replica el layout principal */}
         <div style={containerStyle}>
           {/* Genera las columnas visuales */}
-          {Array.from({ length: columns }).map((_, i) => (
+          {Array.from({ length: currentColumns }).map((_, i) => (
             <div key={i} style={columnStyle} />
           ))}
         </div>
@@ -136,7 +182,7 @@ function GridDebugger({
 
       {/* Indicador visual en la esquina */}
       <div style={indicatorStyle}>
-        Grid Debug: {columns} cols | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
+        Grid Debug: {isMobile ? `${mobileColumns} cols (móvil)` : `${columns} cols (desktop)`} | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
       </div>
     </>
   );

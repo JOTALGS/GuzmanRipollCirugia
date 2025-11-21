@@ -76,8 +76,8 @@ export default function CTAhome() {
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
         flexDirection: { xs: 'column', md: 'row' },
-        columnGap: { xs: '25px', md: '20px' },
-        paddingInline: { xs: '15px', md: '70px' },
+        columnGap: { xs: '16px', md: '20px' },
+        paddingInline: { xs: '20px', md: '70px' },
         marginBottom: { xs: '6vh', md: '0vh' },
       }}
     >
@@ -97,7 +97,7 @@ export default function CTAhome() {
         {/* TEXTO SUPERIOR PEQUEÑO */}
         <Typography 
           fontFamily={'Red Hat Display'} 
-          fontSize={{ xs: '12px', md: '16px', xl: '16px' }} 
+          fontSize={{ xs: '14px', md: '16px', xl: '16px' }} 
           sx={{ 
             fontWeight: '500', 
             width: { xs: '60%', md: '30%'}, 
@@ -123,7 +123,7 @@ export default function CTAhome() {
             {/* LÍNEA 1: "Diseñados para" */}
             <Typography 
               fontFamily={'Poppins'} 
-              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
               sx={{ 
                 width: '100%', 
                 color: 'background', 
@@ -150,7 +150,7 @@ export default function CTAhome() {
               <Typography 
                 component="span" 
                 fontFamily={'Poppins'} 
-                fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+                fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
                 sx={{ 
                   color: 'textAccent', 
                   letterSpacing: '-3px',
@@ -165,7 +165,7 @@ export default function CTAhome() {
             {/* LÍNEA 3: "Resultados" */}
             <Typography 
               fontFamily={'Poppins'} 
-              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
+              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
               sx={{ 
                 width: '100%', 
                 color: 'background', 
@@ -181,7 +181,7 @@ export default function CTAhome() {
           {/* TEXTO DESCRIPTIVO */}
           <Typography 
             fontFamily={'Poppins'} 
-            fontSize={{ xs: '12px', md: '16px', xl: '16px' }} 
+            fontSize={{ xs: '14px', md: '16px', xl: '16px' }} 
             component="p" 
             sx={{ 
               width: '80%', 
@@ -213,37 +213,37 @@ export default function CTAhome() {
         justifyContent: "space-between",
         alignItems: "flex-end",
         flexWrap: "wrap",
-        marginTop: { xs: '-50px' , md: '100px' }
+        marginTop: { xs: '-40px' , md: '100px' }
       }}>
 
         {[
-          { 
-            title: "Confianza", 
+          {
+            title: "Confianza",
             number: "1",
-            image: "/images/maxi1.png", 
+            image: "/images/maxi1.png",
             subtitle: "Tu seguridad es nuestra prioridad",
-            text: "Nuestra sólida trayectoria y experiencia avalan cada procedimiento, brindándote total confianza desde el primer momento."
+            text: "Nuestra sólida trayectoria y experiencia avalan cada procedimiento. Trabajamos con los más altos estándares de seguridad, brindándote total confianza desde la primera consulta."
           },
-          { 
-            title: "Simulación", 
+          {
+            title: "Simulación",
             number: "2",
-            image: "/images/maxi2.png", 
+            image: "/images/maxi2.png",
             subtitle: "Visualiza tu cambio antes de operar",
-            text: "La tecnología Crisalix genera una simulación 3D detallada para que puedas conocer tu aspecto postoperatorio antes de la cirugía."
+            text: "La tecnología Crisalix genera una simulación 3D detallada de tu procedimiento. Visualiza tu aspecto postoperatorio antes de tomar cualquier decisión."
           },
-          { 
-            title: "Técnologia", 
+          {
+            title: "Técnologia",
             number: "3",
-            image: "/images/maxi3.png", 
-            subtitle: "Procedimientos de vanguardia adaptados a ti",
-            text: "Empleamos técnicas de última generación, diseñadas a medida para garantizar resultados precisos, seguros y de apariencia natural."
+            image: "/images/maxi3.png",
+            subtitle: "Procedimientos de vanguardia",
+            text: "Empleamos técnicas de última generación diseñadas a medida para cada paciente. Nuestro enfoque combina precisión técnica con criterio estético para resultados naturales."
           },
-          { 
-            title: "Recuperación", 
+          {
+            title: "Recuperación",
             number: "4",
-            image: "technology-image.jpg", 
+            image: "/images/imagen3.jpg",
             subtitle: "Cuidado integral post cirugía",
-            text: "Contarás con un plan de seguimiento personalizado y asesoría continua para una recuperación óptima y sin complicaciones."
+            text: "Contarás con un plan de seguimiento personalizado y asesoría continua. Nuestro equipo te acompaña en cada etapa para una recuperación óptima."
           }
         ].map((card, index) => (
           <Box key={index} sx={{
@@ -288,7 +288,7 @@ export default function CTAhome() {
                   ml: 4,
                   marginLeft: "40px",
                   fontSize: "1.2rem",
-                  fontWeight: "100",
+                  fontWeight: "200",
                   lineHeight: '1.7', // EDITAR AQUÍ - Line height título de card
                 }}>
                   {card.title}
@@ -296,27 +296,27 @@ export default function CTAhome() {
               </Box>
 
               {/* IMAGEN */}
-              <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: 3, mb: 4 }}>
                 <img src={card.image} style={{ width: "50%", height: "300px", objectFit: "contain" }} />
               </Box>
 
             </Box>
 
             {/* CONTENIDO DE CARD */}
-            <Box sx={{ mt: 2, width: "75%" }}>
-              <Box sx={{ 
+            <Box sx={{ mt: 4, width: { xs: "100%", md: "80%" } }}>
+              <Box sx={{
                 fontWeight: 600,
-                fontSize: "1.1rem",
+                fontSize: { xs: '18px', md: '18px', xl: '18px' },
                 lineHeight: '1.1', // EDITAR AQUÍ - Line height subtítulo
                 textAlign: "start",
               }}>
                 {card.subtitle}
               </Box>
-              <Box sx={{ 
+              <Box sx={{
                 mt: 1,
                 fontSize: "0.9rem",
-                fontWeight: 300,
-                lineHeight: '1.2', // EDITAR AQUÍ - Line height texto de card
+                fontWeight: 500,
+                lineHeight: '1.5', // EDITAR AQUÍ - Line height texto de card
                 textAlign: "start",
               }}>
                 {card.text}

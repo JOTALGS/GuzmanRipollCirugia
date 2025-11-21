@@ -54,15 +54,24 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
         </div>
       </div>
 
-      {/* Título y subtítulo */}
-      <div style={{ paddingTop: "16px", width: "100%", textAlign: "left" }}>
+      {/* Título y subtítulo en layout horizontal */}
+      <div
+        style={{
+          paddingTop: "12px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          paddingBottom: "10px",
+        }}
+      >
         <h3
           style={{
             color: "black",
             fontSize: "18px",
             fontWeight: 500,
             lineHeight: 1.4,
-            margin: "0 0 4px 0",
+            margin: 0,
             fontFamily: "Poppins, sans-serif",
             textAlign: "left",
           }}
@@ -72,17 +81,26 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
         <p
           style={{
             color: "black",
-            fontSize: "16px",
+            fontSize: "14px",
             fontWeight: 500,
             lineHeight: 1.4,
             margin: 0,
             fontFamily: "Poppins, sans-serif",
-            textAlign: "left",
+            textAlign: "right",
           }}
         >
           {itemSubtitle}
         </p>
       </div>
+
+      {/* Línea separadora negra */}
+      <div
+        style={{
+          width: "100%",
+          height: "0.2px",
+          backgroundColor: "black",
+        }}
+      />
     </div>
   )
 }

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { 
+import {
   Box,
   Typography,
   TextField,
   Button,
-  IconButton,
   Grid
 } from '@mui/material';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Footer from '../UI/Footer';
 
 export function ContactSection({ id }) {
   const [formData, setFormData] = useState({
@@ -265,53 +264,9 @@ export function ContactSection({ id }) {
         </Box>
       </Box>
 
-      {/* === FOOTER === */}
-      <Box
-        sx={{
-          gridColumn: '1 / 13',
-          textAlign: 'left',
-          mt: { xs: '100px', md: '80px' },
-        }}
-      >
-        <IconButton
-          href="https://linkedin.com/company/guzman-ripoll"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            bgcolor: '#000',
-            color: '#fff',
-            width: { xs: '40px', md: '36px' },
-            height: { xs: '40px', md: '36px' },
-            borderRadius: '4px',
-            mb: { xs: '14px', md: '8px' },
-            '&:hover': { bgcolor: '#333' },
-          }}
-        >
-          <LinkedInIcon sx={{ fontSize: { xs: '18px', md: '16px' } }} />
-        </IconButton>
-
-        <Typography
-          sx={{
-            fontSize: { xs: '14px', md: '13px' },
-            color: '#111',
-            fontFamily: 'Poppins',
-            fontWeight: 500,
-            mb: '4px',
-          }}
-        >
-          Todos los Derechos Reservados.
-        </Typography>
-
-        <Typography
-          sx={{
-            fontSize: { xs: '14px', md: '13px' },
-            color: '#111',
-            fontFamily: 'Poppins',
-            fontWeight: 500,
-          }}
-        >
-          © 2025 Guzman Ripoll
-        </Typography>
+      {/* Footer móvil importado */}
+      <Box sx={{ gridColumn: '1 / 13', mt: { xs: '40px', md: '80px' }, mx: { xs: '-20px', md: 0 } }}>
+        <Footer variant="contact" />
       </Box>
     </Box>
   );

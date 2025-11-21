@@ -134,29 +134,69 @@ export default function IntroHome() {
       />
 
       {/* SVG Circle Background - Decorative element - debe estar arriba del gradiente */}
+      {/* CÍRCULO DECORATIVO - Ajusta estos valores para cambiar el tamaño y posición del círculo de fondo */}
       <Box
         sx={{
           position: "absolute",
-          width: { xs: "800px", md: "3200px" },
-          height: { xs: "800px", md: "1800px" },
-          top: { xs: "-200px", md: "-900px" },
-          left: { xs: "50%", md: "-300px" },
+          // width: ancho del círculo
+          // height: alto del círculo
+          width: {
+            xs: "800px",          // móviles
+            md: "2800px",         // tablets y pantallas medianas (reducido de 3200px para dar más espacio)
+            lg: "3400px",         // pantallas grandes (más grande para pantallas grandes)
+            xl: "3800px"          // pantallas extra grandes (MacBook Pro y superiores)
+          },
+          height: {
+            xs: "800px",          // móviles
+            md: "1600px",         // tablets y pantallas medianas (reducido de 1800px)
+            lg: "1900px",         // pantallas grandes
+            xl: "2100px"          // pantallas extra grandes
+          },
+          // top: distancia desde arriba (negativo = fuera de pantalla)
+          top: {
+            xs: "-200px",         // móviles
+            md: "-800px",         // pantallas medianas (menos negativo = más visible)
+            lg: "-900px",         // pantallas grandes
+            xl: "-1000px"         // pantallas extra grandes
+          },
+          // left: distancia desde la izquierda (negativo = más a la izquierda)
+          left: {
+            xs: "50%",            // móviles (centrado)
+            md: "-200px",         // pantallas medianas (menos negativo = más hacia el centro)
+            lg: "-350px",         // pantallas grandes
+            xl: "-400px"          // pantallas extra grandes
+          },
           transform: { xs: "translateX(-50%)", md: "none" },
           zIndex: 0,
           pointerEvents: "none",
-          opacity: { xs: 0.6, md: 0.9 },
+          // opacity: transparencia del círculo (0.6 = 60% visible)
+          opacity: {
+            xs: 0.6,              // móviles
+            md: 0.85,             // pantallas medianas (reducido de 0.9 para menos brillo)
+            lg: 0.9,              // pantallas grandes
+            xl: 0.95              // pantallas extra grandes
+          },
         }}
       >
         {/* Primary circle */}
         <Box
           sx={{
             position: "absolute",
-            width: { xs: "100%", md: "120%" },
+            // width del círculo interno (120% = más grande que el contenedor)
+            width: {
+              xs: "100%",         // móviles
+              md: "110%",         // pantallas medianas (reducido de 120% para menos apretado)
+              lg: "115%",         // pantallas grandes
+              xl: "120%"          // pantallas extra grandes
+            },
             height: "100%",
             borderRadius: "50%",
+            // border: grosor y color del borde del círculo
             border: {
-              xs: "1px solid rgba(255, 255, 255, 0.3)",
-              md: "1px solid rgba(255, 255, 255, 0.57)"
+              xs: "1px solid rgba(255, 255, 255, 0.3)",    // móviles
+              md: "1px solid rgba(255, 255, 255, 0.5)",    // pantallas medianas (reducido de 0.57)
+              lg: "1px solid rgba(255, 255, 255, 0.55)",   // pantallas grandes
+              xl: "1px solid rgba(255, 255, 255, 0.57)"    // pantallas extra grandes
             },
           }}
         />
@@ -489,11 +529,14 @@ export default function IntroHome() {
           sx={{
             width: '100%',
             maxWidth: { xs: '100%', md: '100%' },
+            // ALTURA DEL VIDEO - Ajusta estos valores para cambiar la altura del video que se mueve con hover
+            // xs: móviles pequeños, sm: tablets, md: pantallas medianas, lg: pantallas grandes
+            // clamp(mínimo, preferido, máximo)
             height: {
-              xs: 'clamp(180px, 40vw, 220px)',
-              sm: 'clamp(220px, 35vw, 280px)',
-              md: 'clamp(200px, 25vh, 300px)',
-              lg: 'clamp(250px, 28vh, 350px)'
+              xs: 'clamp(150px, 35vw, 180px)',    // Reducido de 180-220 a 150-180 en móviles
+              sm: 'clamp(180px, 30vw, 220px)',    // Reducido de 220-280 a 180-220 en tablets
+              md: 'clamp(180px, 22vh, 250px)',    // Reducido de 200-300 a 180-250 en pantallas medianas
+              lg: 'clamp(200px, 24vh, 280px)'     // Reducido de 250-350 a 200-280 en pantallas grandes
             },
             aspectRatio: { md: '16/9' },
             backdropFilter: 'blur(30px) saturate(200%)',

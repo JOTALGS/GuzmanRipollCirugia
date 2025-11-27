@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Vertex Shader with subtle organic deformation
+// Vertex Shader with timed organic deformation
 const vertexShader = `
 uniform float uTime;
 uniform float uFrequency;
@@ -14,11 +14,20 @@ varying float vDistortion;
 #define PI 3.14159265359
 
 void main() {
-  float t = uTime * 0.25; // Velocidad de animación más lenta
+  float t = uTime;
   
-  // Ciclo suave y continuo de deformación sutil
-  float cycle = mod(t, 8.0);
-  float morphProgress = sin(cycle * 0.785398) * 0.5 + 0.5; // Oscila suavemente entre 0 y 1
+  // 20 second loop: 15s sphere + 5s deformation
+  float loopDuration = 20.0;
+  float cycleTime = mod(t, loopDuration);
+  
+  // morphProgress: 0 for first 15s, then smoothly goes to 1 and back to 0 over 5s
+  float morphProgress = 0.0;
+  if (cycleTime > 15.0) {
+    float deformTime = cycleTime - 15.0; // 0 to 5
+    // Smooth sine wave: 0 -> 1 -> 0 over 5 seconds
+    // sin goes from 0 to 1 to 0 smoothly over the full period
+    morphProgress = sin((deformTime / 5.0) * PI);
+  }
   
   // Coordenadas esféricas
   float radius = length(position);

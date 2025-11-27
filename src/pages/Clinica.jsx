@@ -37,20 +37,10 @@ export default function Clinica({ id }) {
     <Box id={id} sx={{
       position: "relative",
       backgroundColor: "white",
-      overflowX: "hidden", // Siempre oculto el overflow horizontal
+      overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
-    ':after': {
-      content: '""',
-      position: "absolute",
-      top: 0,
-      right: -120,
-      width: "180vw",
-      height: "600vh",
-      background: "white",
-      overflow: "hidden",
-      zIndex: 0
-    } }}>
+    }}>
 
       <Box sx={{
         backgroundColor: 'white',
@@ -73,7 +63,9 @@ export default function Clinica({ id }) {
         "& > section": {
           gridColumn: "1 / -1",
         },
-        overflow: "hidden"
+        overflow: "hidden",
+        width: "100%",
+        maxWidth: "100%"
 
       }}>
 
@@ -154,8 +146,8 @@ export default function Clinica({ id }) {
             width: '100%',
           }}>
             {logos.map((logo, index) => {
-              // Desktop: cada logo ocupa 3 columnas (1-3, 4-6, 7-9, 10-12)
-              // Móvil: cada logo ocupa 2 columnas (1-2, 3-4, 1-2, 3-4)
+              // Desktop: cada logo ocupa 3 columnas (1-4, 4-7, 7-10, 10-13)
+              // Móvil: cada logo ocupa 2 columnas (1-3, 3-5 en primera fila, 1-3, 3-5 en segunda fila)
               const mobileCol = index % 2 === 0 ? '1 / 3' : '3 / 5';
               const desktopCol = `${index * 3 + 1} / ${index * 3 + 4}`;
 

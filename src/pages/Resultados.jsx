@@ -3,9 +3,9 @@ import { ResultsCarousel } from "../components/resultados/results-carousel";
 
 export default function Resultados() {
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: 'white', 
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: 'white',
       color: 'black',
       margin: 0,
       padding: 0

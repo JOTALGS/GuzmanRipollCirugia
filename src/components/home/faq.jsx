@@ -1,11 +1,10 @@
 "use client"
 
 import { useState } from "react";
-import { Add as Plus, Close as X } from "@mui/icons-material";
-import { 
+import { Add as Plus } from "@mui/icons-material";
+import {
   Box,
   Typography,
-  Button,
   IconButton,
   Divider,
   Collapse
@@ -76,31 +75,31 @@ export default function Faq() {
         gridRow: '1 / 1',
         mx: { xs: 1, md: 4 },
       }}>
-          
+
         <Box sx={{
           mb: "80px",
           textAlign: 'start',
         }}>
-          <Typography 
-            variant="h2" 
-            component="h1" 
-            sx={{ 
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{
               fontWeight: 400,
               fontFamily: 'Poppins, sans-serif',
-              color: 'text.primary', 
-              mb: 1 
+              color: 'text.primary',
+              mb: 1
             }}
           >
             Tenes Dudas?
           </Typography>
-          <Typography 
-            variant="h2" 
-            component="h2" 
-            sx={{ 
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{
               fontWeight: 400,
               fontFamily: 'Poppins, sans-serif',
-              color: 'textAccent', 
-              mb: 2 
+              color: 'textAccent',
+              mb: 2
             }}
           >
             Tenemos respuestas
@@ -116,24 +115,25 @@ export default function Faq() {
         gridColumn: '1 / 13',
         gridRow: '2 / 2',
         mx: { xs: 1, md: 4 },
+        mb: { xs: 4, md: 6 },
       }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {faqItems.map((item) => (
             <Box key={item.id}>
               <Divider />
-              <Box sx={{ 
+              <Box sx={{
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'space-between',
                 py: 2
               }}>
                 <Box sx={{ display: 'flex', gap: 2, flex: 1 }}>
-                  <Typography 
-                    variant="body" 
+                  <Typography
+                    variant="body"
                     color="textPrimary"
-                    sx={{ mt: 0.5, fontWeight: 'bold', marginLeft: '20px' }}
+                    sx={{ mt: 0.5, fontWeight: 'bold', marginLeft: '20px', fontSize: { xs: '20px', md: '24px' } }}
                   >
-                    {item.id.toString().padStart(2, "0")}.
+                    {item.id}.
                   </Typography>
                   <Box sx={{ width: '82%', marginLeft: 'auto', textAlign: 'start' }}>
                     <Typography
@@ -144,10 +144,15 @@ export default function Faq() {
                       {item.question}
                     </Typography>
                     <Collapse in={expandedItem === item.id}>
-                      <Typography 
-                        variant="body1" 
-                        color="textSecondary" 
-                        sx={{ fontSize: { xs: '16px', md: '20px' }, lineHeight: 1.75, pb: 2 }}
+                      <Typography
+                        variant="body1"
+                        color="textSecondary"
+                        sx={{
+                          fontSize: { xs: '16px', md: '20px' },
+                          lineHeight: 1.75,
+                          pb: 2,
+                          maxWidth: { xs: '100%', md: 'calc(100% - 150px)' }
+                        }}
                       >
                         {item.answer}
                       </Typography>
@@ -157,14 +162,16 @@ export default function Faq() {
                 <IconButton
                   onClick={() => toggleItem(item.id)}
                   size="small"
-                  sx={{ 
-                    ml: 1, 
-                    height: 32, 
+                  sx={{
+                    ml: 1,
+                    height: 32,
                     width: 32,
-                    '&:hover': { backgroundColor: 'action.hover' } 
+                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transform: expandedItem === item.id ? 'rotate(45deg)' : 'rotate(0deg)',
+                    '&:hover': { backgroundColor: 'transparent' }
                   }}
                 >
-                  {expandedItem === item.id ? <X fontSize="small" /> : <Plus fontSize="small" />}
+                  <Plus fontSize="small" />
                 </IconButton>
               </Box>
             </Box>

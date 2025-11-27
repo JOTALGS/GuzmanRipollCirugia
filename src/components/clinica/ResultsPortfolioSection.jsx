@@ -213,12 +213,12 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
       ref={heroTextRef}
       sx={{
         position: 'relative',
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
-        width: '100vw',
-        maxWidth: '100vw',
+        left: { xs: 'calc(-20px - 8px)', md: '50%' },
+        right: { xs: 'calc(-20px - 8px)', md: '50%' },
+        marginLeft: { xs: 0, md: '-50vw' },
+        marginRight: { xs: 0, md: '-50vw' },
+        width: { xs: 'calc(100% + 40px + 16px)', md: '100vw' },
+        maxWidth: { xs: 'calc(100% + 40px + 16px)', md: '100vw' },
         py: { xs: 4, md: 6 },
         backgroundColor: "white",
         overflow: 'hidden'
@@ -247,7 +247,8 @@ export function ResultsPortfolioSection({ size = "default", py = "64px" }) {
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none',
                 scrollBehavior: 'smooth',
-                paddingLeft: '16px'
+                paddingLeft: { xs: '20px', md: '16px' },
+                paddingRight: { xs: '20px', md: '16px' }
               }}
             >
               {portfolioItems.map((item, index) => (

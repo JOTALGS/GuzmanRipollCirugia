@@ -16,10 +16,13 @@ export function CarouselItem({ item, index, itemWidth, isMobile = false }: Carou
   const { title: itemTitle, subtitle: itemSubtitle } = item
   const itemHeight = isMobile ? ITEM_HEIGHT_MOBILE : ITEM_HEIGHT
 
+  // Si itemWidth es 0, usar 100% (para grid layout)
+  const width = itemWidth === 0 ? "100%" : `${itemWidth}px`
+
   return (
     <div
       style={{
-        width: `${itemWidth}px`,
+        width: width,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

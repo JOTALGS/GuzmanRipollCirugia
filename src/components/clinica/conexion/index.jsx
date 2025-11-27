@@ -65,8 +65,8 @@ export default function Conexion() {
           gridColumn: { xs: '1 / 13', md: '1 / 7' },
           gridRow: { xs: '9 / 9', md: '9 / 9' },
           position: "relative",
-          left: { xs: 0, md: "-70px" },
-          width: { xs: "100vw", md: "calc(100% + 50px)" },
+          left: { xs: "-20px", md: "-70px" },
+          width: { xs: "calc(100% + 40px)", md: "calc(100% + 50px)" },
           height: { xs: "60vh", md: "100vh" },
           marginBottom: { xs: 0, md: 12 },
           zIndex: 1,
@@ -79,7 +79,6 @@ export default function Conexion() {
             backgroundImage: 'url("/images/imagen5.jpg")',
             backgroundSize: "cover",
             backgroundPosition: "center",
-            marginLeft: { xs: "calc(-1 * var(--grid-margin, 15px))", md: "0" },
           }}>
           </Box>
         </Box>
@@ -91,12 +90,14 @@ export default function Conexion() {
           zIndex: 1,
           order: { xs: 2, md: 2 },
           py: { xs: 8, md: 0 },
+          maxWidth: "100%",
+          overflow: "hidden",
         }}>
           {/* Human Connection Section */}
-          <Box component="section" sx={{ backgroundColor: "white", width: "100%" }}>
+          <Box component="section" sx={{ backgroundColor: "white", width: "100%", maxWidth: "100%" }}>
             <Typography ref={humanConnectionTitleRef} variant="h2" sx={{
               ...sectionTitle,
-              px: { xs: 2, md: 0 }
+              px: { xs: 0, md: 0 }
             }}>
               Conexión humana
             </Typography>
@@ -106,12 +107,13 @@ export default function Conexion() {
                 <Box key={index} sx={{
                   display: "flex",
                   gap: { xs: 3, md: 4 },
-                  px: { xs: 2, md: 0 }
+                  px: { xs: 0, md: 0 },
+                  maxWidth: "100%",
                 }}>
                   <Typography variant="body1" sx={pointNumberStyle}>
                     0{index + 1}.
                   </Typography>
-                  <Box sx={{ flex: 1 }}>
+                  <Box sx={{ flex: 1, maxWidth: "100%", overflow: "hidden" }}>
                     <Typography variant="h3" sx={pointTitleStyle}>
                       {point.title}
                     </Typography>

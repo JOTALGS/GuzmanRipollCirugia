@@ -67,10 +67,12 @@ export default function About() {
       flexDirection: "column",
       textAlign: "start",
       zIndex: 1,
+      maxWidth: "100%",
+      overflow: "hidden",
       }}>
         <svg viewBox="0 0 24 24" width={"72"} height={"72"} fill="black" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
       </Box>
-      
+
       {/* (Liderazgo) - Alineado a la primera columna en móvil */}
       <Box
         variant="body1"
@@ -88,7 +90,8 @@ export default function About() {
           gridColumn: { xs: "1 / 13", md: "4 / 6"},
           gridRow: { xs: '4 / 4', md: '5 / 5' },
           zIndex: 1,
-          // SIN padding extra - el grid ya tiene el margen de 20px
+          maxWidth: "100%",
+          overflow: "hidden",
         }}
       >
         (Liderazgo)

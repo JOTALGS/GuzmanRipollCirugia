@@ -15,7 +15,7 @@ export default function NavBar() {
   const getActivePage = () => {
     if (location.pathname === "/" || location.pathname === "/inicio") return "Inicio"
     if (location.pathname === "/clinica") return "Clínica"
-    if (location.pathname === "/procedimientos") return "Procedimientos"
+    if (location.pathname === "/procedimientos" || location.pathname.startsWith("/procedimiento/")) return "Procedimientos"
     if (location.pathname === "/resultados") return "Resultados"
     if (location.pathname === "/contacto") return "Contacto"
     return "Inicio"
@@ -160,20 +160,24 @@ export default function NavBar() {
           letterSpacing: '-0.54px'
         }}>
           {/* Logo */}
-          <Box sx={{ 
+          <Box sx={{
             gridColumn: { xs: '1 / 7', md: '1 / 3'},
             display: 'flex',
             alignItems: 'center'
           }}>
-            <Link to="/" style={{ 
-              display: 'flex', 
+            <Link to="/" style={{
+              display: 'flex',
               alignItems: 'center',
               textDecoration: 'none'
             }}>
-              <img 
-                src={isDarkBackground || (isMenuOpen && isMobile) ? "/images/GR_6_Iso+Nombre_Blanco.png" : "/images/GR_6_Iso+Nombre.png"}
-                alt="Guzmán Ripoll Logo" 
-                style={{ 
+              <img
+                src={
+                  isMobile
+                    ? (isMenuOpen ? "/images/GR_9_Isologo_Blanco.png" : "/images/GR_9_Isologo.png")
+                    : (isDarkBackground ? "/images/GR_6_Iso+Nombre_Blanco.png" : "/images/GR_6_Iso+Nombre.png")
+                }
+                alt="Guzmán Ripoll Logo"
+                style={{
                   height: 'auto',
                   width: 'auto',
                   maxHeight: '40px'
@@ -395,7 +399,7 @@ export default function NavBar() {
               style={{
                 color: 'white',
                 fontFamily: 'Poppins, sans-serif',
-                fontSize: '16px',
+                fontSize: '18px',
                 marginBottom: '50px',
                 opacity: 0.7,
                 fontWeight: '400'

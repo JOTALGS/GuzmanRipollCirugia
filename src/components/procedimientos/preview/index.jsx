@@ -68,9 +68,14 @@ const MoreButton = styled(Button)(({ theme }) => ({
   border: '2px solid #4b4b4bff',
   borderRadius: '150px',
   textTransform: 'none',
+  transition: 'all 0.2s ease, filter 0.15s ease',
   '&:hover': {
     backgroundColor: 'transparent',
     color: theme.palette.text.secondary,
+  },
+  '&:active': {
+    filter: 'blur(1.5px)',
+    transform: 'scale(0.97)',
   },
 }));
 
@@ -203,9 +208,20 @@ export default function Home() {
           },
         }}
       >
+        {/* Línea divisoria superior */}
         <Box
           sx={{
-            marginTop: { xs: '80px', md: '100px', lg: '100px', xl: '100px' },
+            gridColumn: '1 / 13',
+            gridRow: '1 / 1',
+            height: '1px',
+            backgroundColor: '#D0D0D0',
+            marginTop: { xs: '60px', md: '100px' },
+          }}
+        />
+
+        <Box
+          sx={{
+            marginTop: { xs: '70px', md: '115px' },
             gridColumn: { xs: '1 / 13', md: '1 / 8' },
             gridRow: '1 / 1',
             display: 'flex',
@@ -215,16 +231,52 @@ export default function Home() {
             justifyContent: 'start',
           }}
         >
-          <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', mb: 3, color: 'textPrumary' }}>
-            SERVICIOS
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2.5 }}>
+            <Box
+              sx={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: '#0066cc',
+                animation: 'pulse 2s ease-in-out infinite',
+                '@keyframes pulse': {
+                  '0%, 100%': {
+                    opacity: 1,
+                    transform: 'scale(1)',
+                  },
+                  '50%': {
+                    opacity: 0.6,
+                    transform: 'scale(1.2)',
+                  },
+                },
+              }}
+            />
+            <Typography variant="body2" component="span" sx={{ fontSize: { xs: '11px', md: '12px' }, fontWeight: 500, color: '#000000ff', letterSpacing: '0.05em' }}>
+              PROCEDIMIENTOS
+            </Typography>
+          </Box>
+          <Typography
+            variant="h4"
+            sx={{
+              color: '#111',
+              fontWeight: 500,
+              fontSize: { xs: '1.5rem', md: '54px' },
+              lineHeight: 1,
+              textAlign: 'left',
+              mb: 2.5,
+              maxWidth: { xs: '100%', md: 'calc(5 * (100% / 7) + 4 * 17px)' }
+            }}
+          >
+            Excelencia quirúrgica con enfoque humano
           </Typography>
           <Typography
             variant="body1"
             sx={{
               color: 'text.secondary',
-              maxWidth: '600px',
-              lineHeight: 1.7,
-              textAlign: 'left'
+              maxWidth: { xs: '100%', md: 'calc(3 * (100% / 7) + 2 * 17px)' },
+              lineHeight: 1.25,
+              textAlign: 'left',
+              fontSize: { xs: '0.9rem', md: '18px' }
             }}
           >
             Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica
@@ -247,7 +299,7 @@ export default function Home() {
               justifyContent: 'start',
               paddingTop: '20px',
               position: 'relative',
-              ':before': index > 0 ? {
+              ':before': {
                 content: '""',
                 position: 'absolute',
                 top: '-30px',
@@ -256,7 +308,7 @@ export default function Home() {
                 height: '1px',
                 backgroundColor: '#D0D0D0',
                 zIndex: 0,
-              } : {},
+              },
             }}
           >
             <ProcedureNumber variant="h2" sx={{ fontSize: { xs: '30px', md: '60px' } }} color="text.primary">
@@ -293,7 +345,7 @@ export default function Home() {
             className={`procedure-item-${index}`}
             sx={{
               marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '5 / 13', md: '6 / 13' },
+              gridColumn: { xs: '5 / 13', md: '8 / 13' },
               height: { xs: '300px', sm: '420px' },
               gridRow: `${index + 2} / ${index + 2}`,
               display: 'flex',
@@ -301,7 +353,7 @@ export default function Home() {
               textAlign: 'left',
               alignItems: 'stretch',
               justifyContent: 'start',
-              gap: '20px',
+              gap: { xs: '20px', md: '17px' },
               position: 'relative',
               paddingBottom: { xs: '30px', md: '20px' },
             }}
@@ -312,10 +364,11 @@ export default function Home() {
               src={procedure.image || "/placeholder.svg"}
               alt={procedure.name}
               sx={{
-                width: { xs: '100%', sm: '41.8%' },
+                width: { xs: '100%', sm: '38%' },
                 height: { xs: '200px', sm: 'auto' },
                 objectFit: 'cover',
-                borderRadius: { xs: "8px", md: "10px" }
+                borderRadius: { xs: "8px", md: "10px" },
+                flexShrink: 0
               }}
             />
 
@@ -434,34 +487,68 @@ export default function Home() {
         paddingBottom: { xs: '40px', sm: '60px' },
       }}
     >
+      {/* Línea divisoria superior */}
+      <Box
+        sx={{
+          height: '1px',
+          backgroundColor: '#D0D0D0',
+          marginTop: { xs: '60px', sm: '80px' },
+          marginBottom: { xs: '30px', sm: '40px' },
+        }}
+      />
+
       {/* Header Section */}
       <Box
         sx={{
-          marginTop: { xs: '80px', sm: '100px' },
           marginBottom: { xs: '40px', sm: '60px' },
           textAlign: 'left',
         }}
       >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+          <Box
+            sx={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              backgroundColor: '#0066cc',
+              animation: 'pulse 2s ease-in-out infinite',
+              '@keyframes pulse': {
+                '0%, 100%': {
+                  opacity: 1,
+                  transform: 'scale(1)',
+                },
+                '50%': {
+                  opacity: 0.6,
+                  transform: 'scale(1.2)',
+                },
+              },
+            }}
+          />
+          <Typography variant="body2" component="span" sx={{ fontSize: '11px', fontWeight: 500, color: '#666', letterSpacing: '0.05em' }}>
+            PROCEDIMIENTOS
+          </Typography>
+        </Box>
         <Typography
-          variant="h5"
-          component="h1"
+          variant="h3"
           sx={{
-            fontWeight: 'bold',
+            color: '#111',
+            fontWeight: 600,
+            fontSize: { xs: '2rem', sm: '2.2rem' },
+            lineHeight: 1.2,
+            textAlign: 'left',
             mb: 2,
-            color: 'textPrimary',
-            fontSize: { xs: '1.5rem', sm: '1.75rem' },
-            textAlign: 'left'
+            width: '100%',
+            maxWidth: '100%'
           }}
         >
-          SERVICIOS
+          Excelencia quirúrgica con enfoque humano
         </Typography>
         <Typography
           variant="body1"
           sx={{
             color: 'text.secondary',
             lineHeight: 1.7,
-            fontSize: { xs: '0.95rem', sm: '1rem' },
-            maxWidth: { sm: '600px' },
+            fontSize: { xs: '0.9rem', sm: '1rem' },
             textAlign: 'left'
           }}
         >
@@ -476,12 +563,19 @@ export default function Home() {
           <Box
             key={index}
             sx={{
-              borderBottom: index < procedures.length - 1 ? '2px dotted' : 'none',
-              borderColor: '#BDBDBD',
               paddingBottom: { xs: 4, sm: 6 },
               position: 'relative',
             }}
           >
+            {/* Línea divisoria sólida arriba de cada procedimiento */}
+            <Box
+              sx={{
+                height: '1px',
+                backgroundColor: '#D0D0D0',
+                marginBottom: { xs: 3, sm: 4 },
+              }}
+            />
+
             {/* Number and Name Row */}
             <Box
               sx={{
@@ -490,15 +584,6 @@ export default function Home() {
                 gap: 2,
                 mb: 3,
                 position: 'relative',
-                '::before': index > 0 ? {
-                  content: '""',
-                  position: 'absolute',
-                  top: { xs: '-20px', sm: '-16px' },
-                  left: 0,
-                  right: 0,
-                  height: '1px',
-                  //backgroundImage: 'repeating-linear-gradient(to right, #D0D0D0 0, #D0D0D0 6px, transparent 6px, transparent 12px)',
-                } : {}
               }}
             >
               <Typography
@@ -560,7 +645,8 @@ export default function Home() {
                       fontWeight: 500,
                       mb: 2,
                       color: 'textPrimary',
-                      fontFamily: 'Poppins'
+                      fontFamily: 'Poppins',
+                      textAlign: 'left'
                     }}
                   >
                     {procedure.title}
@@ -582,7 +668,8 @@ export default function Home() {
                         sx={{
                           color: 'text.disabled',
                           display: 'block',
-                          fontSize: { xs: '0.75rem', sm: '0.813rem' }
+                          fontSize: { xs: '0.75rem', sm: '0.813rem' },
+                          textAlign: 'left'
                         }}
                       >
                         {specialty}

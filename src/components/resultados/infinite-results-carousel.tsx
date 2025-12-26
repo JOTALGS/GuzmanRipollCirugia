@@ -231,7 +231,6 @@ export function InfiniteResultsCarousel() {
             letterSpacing: "-2px",
           }}
         >
-          RESULTADOS
         </h1>
       </div>
 

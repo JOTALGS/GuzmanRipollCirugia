@@ -102,7 +102,7 @@ export function ResultsCarousel() {
                 width: "100%",
               }}
             >
-              <CarouselItem item={item} index={index} itemWidth={viewportWidth - 40} isMobile={true} />
+              <CarouselItem item={item} index={index} itemWidth={window.innerWidth - 40} isMobile={true} />
             </div>
           ))}
         </div>
@@ -148,8 +148,7 @@ export function ResultsCarousel() {
                 letterSpacing: "-2px",
               }}
             >
-              RESULTADOS
-            </h1>
+              </h1>
             <p
               style={{
                 color: "#000000",
@@ -165,8 +164,22 @@ export function ResultsCarousel() {
             </p>
           </div>
 
-          {/* Espacio vacío - siguientes 6 columnas */}
-          <div style={{ gridColumn: "span 6" }}></div>
+          {/* Scroll text a la derecha - siguientes 6 columnas */}
+          <div style={{ gridColumn: "span 6", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+            <p
+              style={{
+                color: "#000000",
+                fontSize: "20px",
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: "500",
+                margin: 0,
+                paddingTop: "25px",
+                textAlign: "right",
+              }}
+            >
+              (scroll)
+            </p>
+          </div>
 
           {/* Items del grid - cada uno ocupa 6 columnas */}
           {originalItems.map((item, index) => (

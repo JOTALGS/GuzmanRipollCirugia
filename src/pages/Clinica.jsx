@@ -12,6 +12,7 @@ import "../components/animations/blur-scroll-effect.css"
 import Footer from "../components/UI/Footer"
 import About from "../components/clinica/about"
 import Conexion from "../components/clinica/conexion"
+import StatsSection from "../components/procedimientos/StatsSection.tsx"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -169,6 +170,17 @@ export default function Clinica({ id }) {
           }}>
             {/* Results Section */}
             <ResultsPortfolioSection size="large" py="py-0" />
+          </Box>
+
+          {/* Stats Section - Antes del cirujano */}
+          <Box sx={{
+            gridColumn: { xs: '1 / 13', md: '1 / 13' },
+            mt: { xs: 6, md: 0 },
+          }}>
+            <StatsSection
+              title={{ line1: "Clínica de", line2: "Excelencia" }}
+              description="Instalaciones de primer nivel equipadas con tecnología de vanguardia para garantizar tu seguridad y comodidad."
+            />
           </Box>
 
           <About />

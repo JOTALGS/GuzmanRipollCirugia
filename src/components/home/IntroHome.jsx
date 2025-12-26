@@ -141,20 +141,20 @@ export default function IntroHome() {
           // width: ancho del círculo
           // height: alto del círculo
           width: {
-            xs: "800px",          // móviles
+            xs: "2400px",         // móviles - MUCHO más grande para solo ver curvatura
             md: "2800px",         // tablets y pantallas medianas (reducido de 3200px para dar más espacio)
             lg: "3400px",         // pantallas grandes (más grande para pantallas grandes)
             xl: "3800px"          // pantallas extra grandes (MacBook Pro y superiores)
           },
           height: {
-            xs: "800px",          // móviles
+            xs: "2400px",         // móviles - MUCHO más grande para solo ver curvatura
             md: "1600px",         // tablets y pantallas medianas (reducido de 1800px)
             lg: "1900px",         // pantallas grandes
-            xl: "2100px"          // pantallas extra grandes
+            xl: "1900px"          // pantallas extra grandes
           },
           // top: distancia desde arriba (negativo = fuera de pantalla)
           top: {
-            xs: "-200px",         // móviles
+            xs: "-700px",         // móviles - más arriba para que solo se vea la curvatura inferior
             md: "-800px",         // pantallas medianas (menos negativo = más visible)
             lg: "-900px",         // pantallas grandes
             xl: "-1000px"         // pantallas extra grandes
@@ -171,7 +171,7 @@ export default function IntroHome() {
           pointerEvents: "none",
           // opacity: transparencia del círculo (0.6 = 60% visible)
           opacity: {
-            xs: 0.6,              // móviles
+            xs: 0.7,              // móviles - un poco más visible
             md: 0.85,             // pantallas medianas (reducido de 0.9 para menos brillo)
             lg: 0.9,              // pantallas grandes
             xl: 0.95              // pantallas extra grandes
@@ -193,7 +193,7 @@ export default function IntroHome() {
             borderRadius: "50%",
             // border: grosor y color del borde del círculo
             border: {
-              xs: "1px solid rgba(255, 255, 255, 0.3)",    // móviles
+              xs: "1px solid rgba(255, 255, 255, 0.4)",    // móviles - un poco más visible
               md: "1px solid rgba(255, 255, 255, 0.5)",    // pantallas medianas (reducido de 0.57)
               lg: "1px solid rgba(255, 255, 255, 0.55)",   // pantallas grandes
               xl: "1px solid rgba(255, 255, 255, 0.57)"    // pantallas extra grandes

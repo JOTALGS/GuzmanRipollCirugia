@@ -3,7 +3,12 @@
     "allow": [
       "Bash(npm run dev:*)",
       "Bash(git checkout:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(del \"c:\\Users\\nicov\\2025\\GuzmanRipollCirugia\\src\\components\\procedimientos\\StatsSection.jsx\")",
+      "Bash(del \"c:\\Users\\nicov\\2025\\GuzmanRipollCirugia\\src\\components\\procedimientos\\ProcessSteps.jsx\")",
+      "Bash(del \"c:\\Users\\nicov\\2025\\GuzmanRipollCirugia\\src\\components\\UI\\Footer\\index.js\")",
+      "Bash(del \"c:\\Users\\nicov\\2025\\GuzmanRipollCirugia\\src\\components\\animations\\EnhancedTextReveal.jsx\")"
     ],
     "deny": [],
     "ask": []

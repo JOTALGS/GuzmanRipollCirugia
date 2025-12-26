@@ -4,9 +4,9 @@ import React, { useRef, useLayoutEffect, useState, useEffect } from "react"
 import { useParams, Link as RouterLink, useLocation } from "react-router-dom"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
-import { Box, Typography, Button } from "@mui/material"
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, Typography } from "@mui/material"
 import Footer from "../components/UI/Footer"
+import ProcessSteps from "../components/procedimientos/ProcessSteps.tsx"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -256,13 +256,30 @@ export default function ProcedimientoDetalle() {
   const catchPhraseRef = useRef(null)
   const benefitsRef = useRef(null)
   const approachRef = useRef(null)
-  const infoRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
   const isMobile = useIsMobile()
   const [navOpen, setNavOpen] = useState(false)
   const [currentId, setCurrentId] = useState(id)
+  const [scrollEnabled, setScrollEnabled] = useState(false)
 
   const procedimiento = procedimientosData[currentId] || procedimientosData[id]
+
+  // Prevenir scroll hasta que termine la animación inicial
+  useEffect(() => {
+    // Bloquear scroll al inicio
+    document.body.style.overflow = 'hidden'
+
+    // Habilitar scroll después de 2 segundos (tiempo de la animación inicial)
+    const timer = setTimeout(() => {
+      document.body.style.overflow = 'auto'
+      setScrollEnabled(true)
+    }, 2000)
+
+    return () => {
+      clearTimeout(timer)
+      document.body.style.overflow = 'auto'
+    }
+  }, [currentId])
 
   // SOLUCIÓN AGRESIVA: Scroll forzado múltiple
   useEffect(() => {
@@ -317,25 +334,23 @@ export default function ProcedimientoDetalle() {
     ScrollTrigger.getAll().forEach(st => st.kill())
 
     const ctx = gsap.context(() => {
-      // Animación del Hero con blur
-      gsap.set(maskRef.current, {
-        clipPath: "inset(35% 25% 35% 25%)",
-      })
-
-      const heroTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top", 
-          scrub: true,
-          pin: true,
-          pinSpacing: false,
+      // Animación de scroll reveal de la imagen - empieza mucho más chica
+      gsap.fromTo(
+        maskRef.current,
+        {
+          clipPath: "inset(35% 35% 35% 35%)",
         },
-      }).to(maskRef.current, {
-        clipPath: "inset(0%)",
-        ease: "power2.inOut",
-        duration: 1,
-      })
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.5,
+          },
+        }
+      )
 
       // Animaciones blur del texto del hero - MÁS LENTAS
       const textTimeline = gsap.timeline({ delay: 0.5 })
@@ -377,11 +392,11 @@ export default function ProcedimientoDetalle() {
       }, "-=0.8")
 
       // Animación de títulos de secciones - MÁS LENTAS Y CON MEJOR CONFIGURACIÓN
-      gsap.utils.toArray([benefitsRef.current, approachRef.current, infoRef.current]).forEach((section) => {
+      gsap.utils.toArray([benefitsRef.current, approachRef.current]).forEach((section) => {
         if (section) {
           const title = section.querySelector('.section-title')
           if (title) {
-            gsap.fromTo(title, 
+            gsap.fromTo(title,
               {
                 y: 50,
                 opacity: 0,
@@ -587,7 +602,7 @@ export default function ProcedimientoDetalle() {
           style={{
             position: "absolute",
             inset: 0,
-            zIndex: 1,
+            zIndex: 4,
             display: "flex",
             alignItems: "center",
           }}
@@ -600,27 +615,7 @@ export default function ProcedimientoDetalle() {
             alignItems: "center",
             justifyContent: "space-between",
           }}>
-            {/* Botón Volver */}
-            <Button
-              component={RouterLink}
-              to="/procedimientos"
-              startIcon={<ArrowBackIcon />}
-              sx={{
-                position: "absolute",
-                top: { xs: 20, md: 30 },
-                left: { xs: 20, md: 70 },
-                color: "#111",
-                textTransform: "none",
-                fontWeight: 500,
-                fontSize: "15px",
-                "&:hover": { bgcolor: "rgba(0,0,0,0.05)" },
-                zIndex: 20
-              }}
-            >
-              Volver a Procedimientos
-            </Button>
-
-            {/* IZQUIERDA: Número más pequeño */}
+            {/* IZQUIERDA: Número más ancho y menos bold */}
             <Box sx={{ ml: { xs: 0, md: "70px" } }}>
               <Typography
                 ref={numberRef}
@@ -628,26 +623,29 @@ export default function ProcedimientoDetalle() {
                 sx={{
                   color: "#111",
                   fontFamily: "Poppins",
-                  fontSize: { xs: "5rem", md: "8rem", lg: "10rem" },
-                  fontWeight: 600,
+                  fontSize: { xs: "5rem", md: "8rem", lg: "12rem" },
+                  fontWeight: 300,
                   lineHeight: 0.9,
                   opacity: 0.95,
-                  margin: 0
+                  margin: 0,
+                  letterSpacing: "-0.02em"
                 }}
               >
                 {procedimiento.number}
               </Typography>
             </Box>
 
-            {/* DERECHA: Título menos bold + Catch Phrase con más espacio */}
+            {/* DERECHA: Título más ancho y menos bold + Catch Phrase con más espacio */}
             <Box
               sx={{
                 textAlign: { xs: 'center', md: "right" },
-                maxWidth: { xs: "90%", md: "45%", lg: "35%" },
+                maxWidth: { xs: "90%", md: "55%", lg: "45%" },
                 lineHeight: { xs: 1.1, md: 1.5 },
                 mt: { xs: "20px", md: "0px" },
-                mr: { xs: 0, md: "70px" },
-                mx: { xs: "auto", md: 0 }
+                mr: { xs: "auto", md: "70px" },
+                ml: { xs: "auto", md: "auto" },
+                pr: { xs: 2, md: 0 },
+                pl: { xs: 2, md: 0 }
               }}
             >
               <span
@@ -676,8 +674,8 @@ export default function ProcedimientoDetalle() {
                 style={{
                   color: "#111",
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: isMobile ? "2.5rem" : "4rem",
-                  fontWeight: 600,
+                  fontSize: isMobile ? "2.5rem" : "4.5rem",
+                  fontWeight: 400,
                   lineHeight: 1.1,
                   marginBottom: "16px",
                   marginTop: "0",
@@ -722,7 +720,7 @@ export default function ProcedimientoDetalle() {
       </section>
 
       {/* BENEFITS SECTION - Columnas 3 a 11 */}
-      <section ref={benefitsRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
+      <section ref={benefitsRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0", position: "relative", zIndex: 1 }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
@@ -756,7 +754,7 @@ export default function ProcedimientoDetalle() {
             }}>
               <div style={{
                 display: "grid",
-                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
                 gap: "0.5rem",
               }}>
                 {benefitsData.slice(0, 3).map((benefit, index) => (
@@ -809,7 +807,7 @@ export default function ProcedimientoDetalle() {
 
               <div style={{
                 marginTop: "0.5rem",
-                gridColumn: isMobile ? "span 2" : "auto"
+                gridColumn: "auto"
               }}>
                 <AnimatedCard delay={0.6}>
                   <div
@@ -861,18 +859,17 @@ export default function ProcedimientoDetalle() {
         </div>
       </section>
 
-      {/* NUESTRO ACERCAMIENTO SECTION - Columnas 3 a 11 */}
-      <section ref={approachRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          columnGap: "20px",
-          margin: isMobile ? "0 20px" : "0 70px",
-        }}>
-          <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
-            <h2
-              className="section-title"
-              style={{
+      {/* SUBPROCEDIMIENTOS - Solo para Cirugía Mamaria */}
+      {procedimiento.subprocedimientos && (
+        <section style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0", position: "relative", zIndex: 1 }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, 1fr)",
+            columnGap: "20px",
+            margin: isMobile ? "0 20px" : "0 70px",
+          }}>
+            <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
+              <h2 style={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: isMobile ? "2rem" : "2.625rem",
                 fontWeight: 300,
@@ -882,693 +879,72 @@ export default function ProcedimientoDetalle() {
                 marginBottom: "48px",
                 marginTop: 0,
                 textAlign: "left"
-              }}
-            >
-              Nuestro Acercamiento
-            </h2>
-
-            <div style={{
-              position: "relative",
-              borderRadius: "1.5rem",
-              border: "1px solid rgba(0, 0, 0, 0.06)",
-              backgroundColor: "#F0F0F0",
-              padding: "0.5rem",
-            }}>
-              {/* Primera fila: 3 cards en desktop, 2 en mobile */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
-                gap: "0.5rem",
-                marginBottom: "0.5rem"
               }}>
-                {approachData.slice(0, 3).map((item, index) => (
-                  <AnimatedCard key={index} delay={index * 0.15}>
-                    <div
-                      style={{
-                        backgroundColor: "#DCDCDC",
-                        borderRadius: "1rem",
-                        padding: "1.75rem",
-                        transition: "background-color 0.3s ease",
-                        cursor: "default",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column"
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                    >
-                      <div style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "4px",
-                        marginBottom: "12px",
-                        height: "18px"
-                      }}>
-                        {Array.from({ length: item.dots }).map((_, i) => (
-                          <div key={i} style={{
-                            width: "7px",
-                            height: "7px",
-                            backgroundColor: "#111",
-                            borderRadius: "50%"
-                          }} />
-                        ))}
-                      </div>
+                Tipos de Cirugía Mamaria
+              </h2>
 
-                      <h3 style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                        fontWeight: 400,
-                        color: "#111",
-                        marginBottom: "12px",
-                        marginTop: 0,
-                        textAlign: "left"
-                      }}>
-                        {item.title}
-                      </h3>
-
-                      <p style={{
-                        color: "#666",
-                        lineHeight: 1.6,
-                        fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                        margin: 0,
-                        textAlign: "left"
-                      }}>
-                        {item.text}
-                      </p>
-                    </div>
-                  </AnimatedCard>
-                ))}
-              </div>
-
-              {/* Segunda fila: 2 cards en desktop, 2 en mobile */}
               <div style={{
-                display: "grid",
-                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
-                gap: "0.5rem"
+                position: "relative",
+                borderRadius: "1.5rem",
+                border: "1px solid rgba(0, 0, 0, 0.06)",
+                backgroundColor: "#F0F0F0",
+                padding: "0.5rem",
               }}>
-                {approachData.slice(3, 5).map((item, index) => (
-                  <AnimatedCard key={index + 3} delay={(index + 3) * 0.15}>
-                    <div
-                      style={{
-                        backgroundColor: "#DCDCDC",
-                        borderRadius: "1rem",
-                        padding: "1.75rem",
-                        transition: "background-color 0.3s ease",
-                        cursor: "default",
-                        gridColumn: isMobile ? "span 1" : (index === 1 ? "span 2" : "span 1"),
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column"
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                    >
-                      <div style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: "4px",
-                        marginBottom: "12px",
-                        height: "18px"
-                      }}>
-                        {Array.from({ length: item.dots }).map((_, i) => (
-                          <div key={i} style={{
-                            width: "7px",
-                            height: "7px",
-                            backgroundColor: "#111",
-                            borderRadius: "50%"
-                          }} />
-                        ))}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
+                  gap: "0.5rem",
+                }}>
+                  {procedimiento.subprocedimientos.map((subproc, index) => (
+                    <AnimatedCard key={index} delay={index * 0.15}>
+                      <div
+                        style={{
+                          backgroundColor: "#DCDCDC",
+                          borderRadius: "1rem",
+                          padding: "1.75rem",
+                          transition: "background-color 0.3s ease",
+                          cursor: "default",
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#CFCFCF"}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
+                      >
+                        <h3 style={{
+                          fontFamily: "Poppins, sans-serif",
+                          fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
+                          fontWeight: 400,
+                          color: "#111",
+                          marginBottom: "12px",
+                          marginTop: 0,
+                          textAlign: "left"
+                        }}>
+                          {subproc.name}
+                        </h3>
+                        <p style={{
+                          color: "#666",
+                          lineHeight: 1.6,
+                          fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
+                          margin: 0,
+                          textAlign: "left",
+                          flexGrow: 1
+                        }}>
+                          {subproc.description}
+                        </p>
                       </div>
-
-                      <h3 style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                        fontWeight: 400,
-                        color: "#111",
-                        marginBottom: "12px",
-                        marginTop: 0,
-                        textAlign: "left"
-                      }}>
-                        {item.title}
-                      </h3>
-
-                      <p style={{
-                        color: "#666",
-                        lineHeight: 1.6,
-                        fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                        margin: 0,
-                        textAlign: "left"
-                      }}>
-                        {item.text}
-                      </p>
-                    </div>
-                  </AnimatedCard>
-                ))}
+                    </AnimatedCard>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* INFORMACIÓN DEL PROCEDIMIENTO - Columnas 3 a 11 */}
-      <section ref={infoRef} style={{ backgroundColor: "white", padding: isMobile ? "60px 0" : "80px 0" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          columnGap: "20px",
-          margin: isMobile ? "0 20px" : "0 70px",
-        }}>
-
-          <div style={{ gridColumn: isMobile ? "1 / -1" : "3 / 11" }}>
-            <h2
-              className="section-title"
-              style={{
-                fontFamily: "Poppins, sans-serif",
-                fontSize: isMobile ? "2rem" : "2.625rem",
-                fontWeight: 300,
-                color: "#111",
-                marginBottom: "48px",
-                marginTop: 0,
-                textAlign: "left"
-              }}
-            >
-              Información del Procedimiento
-            </h2>
-
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
-              gap: "24px",
-              marginBottom: "48px"
-            }}>
-              {/* Description */}
-              <AnimatedCard delay={0}>
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div
-                    style={{
-                      backgroundColor: "#DCDCDC",
-                      borderRadius: "1rem",
-                      padding: "1.75rem",
-                      transition: "background-color 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                  >
-                    <h4 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "24px",
-                      marginTop: 0,
-                      textAlign: "left"
-                    }}>
-                      Descripción
-                    </h4>
-                    <p style={{
-                      color: "#666",
-                      lineHeight: 1.6,
-                      fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                      marginBottom: "24px",
-                      marginTop: 0,
-                      textAlign: "left"
-                    }}>
-                      {procedimiento.description}
-                    </p>
-                    <h6 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "16px",
-                      fontSize: "1rem",
-                      textAlign: "left"
-                    }}>
-                      Objetivo
-                    </h6>
-                    <p style={{
-                      color: "#666",
-                      lineHeight: 1.6,
-                      fontSize: "0.9rem",
-                      margin: 0,
-                      textAlign: "left"
-                    }}>
-                      {procedimiento.objetivo}
-                    </p>
-                  </div>
-                </div>
-              </AnimatedCard>
-
-              {/* Specs */}
-              <AnimatedCard delay={0.15}>
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div
-                    style={{
-                      backgroundColor: "#DCDCDC",
-                      borderRadius: "1rem",
-                      padding: "1.75rem",
-                      transition: "background-color 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                  >
-                    <h4 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "24px",
-                      marginTop: 0,
-                      textAlign: "left"
-                    }}>
-                      Especificaciones
-                    </h4>
-
-                    <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '24px',
-                    }}>
-                      {Object.entries(procedimiento.specs).map(([key, value]) => (
-                        <div key={key}>
-                          <p style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontWeight: 400,
-                            color: "#000",
-                            textTransform: "capitalize",
-                            fontSize: "0.95rem",
-                            marginBottom: "8px",
-                            marginTop: 0,
-                            textAlign: "left"
-                          }}>
-                            {key.replace('_', ' ')}
-                          </p>
-                          <p style={{
-                            color: "#666",
-                            fontSize: "0.9rem",
-                            margin: 0,
-                            textAlign: "left"
-                          }}>
-                            {value}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </AnimatedCard>
-
-              {/* Tecnica */}
-              <AnimatedCard delay={0.3}>
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div
-                    style={{
-                      backgroundColor: "#DCDCDC",
-                      borderRadius: "1rem",
-                      padding: "1.75rem",
-                      transition: "background-color 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                  >
-                    <h4 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "24px",
-                      marginTop: 0,
-                      textAlign: "left"
-                    }}>
-                      Técnica
-                    </h4>
-                    <p style={{
-                      color: "#666",
-                      lineHeight: 1.6,
-                      fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                      margin: 0,
-                      textAlign: "left"
-                    }}>
-                      {procedimiento.tecnica}
-                    </p>
-                  </div>
-                </div>
-              </AnimatedCard>
-
-              {/* Recuperacion */}
-              <AnimatedCard delay={0.45}>
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div
-                    style={{
-                      backgroundColor: "#DCDCDC",
-                      borderRadius: "1rem",
-                      padding: "1.75rem",
-                      transition: "background-color 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                  >
-                    <h4 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "24px",
-                      marginTop: 0,
-                      textAlign: "left"
-                    }}>
-                      Recuperación
-                    </h4>
-                    <p style={{
-                      color: "#666",
-                      lineHeight: 1.6,
-                      fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                      margin: 0,
-                      textAlign: "left"
-                    }}>
-                      {procedimiento.recuperacion}
-                    </p>
-                  </div>
-                </div>
-              </AnimatedCard>
-            </div>
-
-            {/* Tecnologías */}
-            {procedimiento.tecnologias && (
-              <div style={{ marginTop: "48px" }}>
-                <h3 style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: isMobile ? "1.75rem" : "2.5rem",
-                  fontWeight: 300,
-                  color: "#111",
-                  marginBottom: "40px",
-                  marginTop: 0,
-                  textAlign: "left",
-                }}>
-                  Tecnologías Avanzadas
-                </h3>
-
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "0.5rem",
-                  }}>
-                    {procedimiento.tecnologias.map((tech, index) => (
-                      <AnimatedCard key={index} delay={index * 0.15}>
-                        <div
-                          style={{
-                            backgroundColor: "#DCDCDC",
-                            borderRadius: "1rem",
-                            padding: "1.75rem",
-                            transition: "background-color 0.3s ease",
-                            cursor: "default",
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                        >
-                          <h5 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                            fontWeight: 400,
-                            color: "#000",
-                            marginBottom: "12px",
-                            marginTop: 0,
-                            textAlign: "left"
-                          }}>
-                            {tech.name}
-                          </h5>
-                          <p style={{
-                            color: "#666",
-                            lineHeight: 1.6,
-                            fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                            margin: 0,
-                            textAlign: "left"
-                          }}>
-                            {tech.description}
-                          </p>
-                        </div>
-                      </AnimatedCard>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Subprocedimientos */}
-            {procedimiento.subprocedimientos && (
-              <div style={{ marginTop: "48px" }}>
-                <h3 style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: isMobile ? "1.75rem" : "2.5rem",
-                  fontWeight: 300,
-                  color: "#111",
-                  marginBottom: "40px",
-                  marginTop: 0,
-                  textAlign: "left",
-                }}>
-                  Tipos de Cirugía Mamaria
-                </h3>
-
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "0.5rem",
-                  }}>
-                    {procedimiento.subprocedimientos.map((sub, index) => (
-                      <AnimatedCard key={index} delay={index * 0.15}>
-                        <div
-                          style={{
-                            backgroundColor: "#DCDCDC",
-                            borderRadius: "1rem",
-                            padding: "1.75rem",
-                            transition: "background-color 0.3s ease",
-                            cursor: "default",
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                        >
-                          <h6 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-                            fontWeight: 400,
-                            color: "#000",
-                            marginBottom: "12px",
-                            marginTop: 0,
-                            textAlign: "left"
-                          }}>
-                            {sub.name}
-                          </h6>
-                          <p style={{
-                            color: "#666",
-                            lineHeight: 1.6,
-                            fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                            margin: 0,
-                            textAlign: "left"
-                          }}>
-                            {sub.description}
-                          </p>
-                        </div>
-                      </AnimatedCard>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Process */}
-            {procedimiento.process && (
-              <div style={{ marginTop: "48px" }}>
-                <h3 style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: isMobile ? "1.75rem" : "2.5rem",
-                  fontWeight: 300,
-                  color: "#111",
-                  marginBottom: "40px",
-                  marginTop: 0,
-                  textAlign: "left",
-                }}>
-                  Proceso del Tratamiento
-                </h3>
-
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(240px, 1fr))",
-                    gap: "0.5rem",
-                  }}>
-                    {procedimiento.process.map((step, index) => (
-                      <AnimatedCard key={index} delay={index * 0.15}>
-                        <div
-                          style={{
-                            backgroundColor: "#DCDCDC",
-                            borderRadius: "1rem",
-                            padding: "1.75rem",
-                            transition: "background-color 0.3s ease",
-                            cursor: "default",
-                            textAlign: "center"
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                        >
-                          <h4 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "2rem",
-                            fontWeight: 700,
-                            color: "#75909F",
-                            marginBottom: "16px",
-                            marginTop: 0,
-                            opacity: 0.7
-                          }}>
-                            {step.step}
-                          </h4>
-                          <h6 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontWeight: 400,
-                            color: "#000",
-                            marginBottom: "16px",
-                            fontSize: "1.2rem",
-                            marginTop: 0
-                          }}>
-                            {step.title}
-                          </h6>
-                          <p style={{
-                            fontSize: "0.9rem",
-                            lineHeight: 1.6,
-                            color: "#666",
-                            margin: 0
-                          }}>
-                            {step.description}
-                          </p>
-                        </div>
-                      </AnimatedCard>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* CTA */}
-            <div style={{ marginTop: "64px" }}>
-              <AnimatedCard delay={0}>
-                <div style={{
-                  position: "relative",
-                  borderRadius: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  backgroundColor: "#F0F0F0",
-                  padding: "0.5rem",
-                }}>
-                  <div
-                    style={{
-                      backgroundColor: "#DCDCDC",
-                      borderRadius: "1rem",
-                      padding: "48px",
-                      textAlign: "center",
-                      transition: "background-color 0.3s ease",
-                      cursor: "default",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#D5D5D5"}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#DCDCDC"}
-                  >
-                    <h4 style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                      fontWeight: 400,
-                      color: "#000",
-                      marginBottom: "24px",
-                      marginTop: 0
-                    }}>
-                      ¿Listo para transformar tu imagen?
-                    </h4>
-                    <p style={{
-                      color: "#666",
-                      lineHeight: 1.6,
-                      fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                      marginBottom: "32px",
-                      maxWidth: "700px",
-                      margin: "0 auto 32px",
-                    }}>
-                      Agenda tu consulta personalizada y descubre cómo podemos ayudarte a lograr tus objetivos estéticos.
-                    </p>
-                    <button
-                      style={{
-                        background: "rgba(0, 129, 199, 0.8)",
-                        backdropFilter: "blur(10px)",
-                        WebkitBackdropFilter: "blur(10px)",
-                        border: "1px solid rgba(255, 255, 255, 0.2)",
-                        color: "white",
-                        padding: "16px 48px",
-                        fontSize: "clamp(0.875rem, 1.5vw, 1rem)",
-                        fontWeight: 600,
-                        borderRadius: "1rem",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease"
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(0, 112, 181, 0.9)"
-                        e.currentTarget.style.transform = "translateY(-2px)"
-                        e.currentTarget.style.boxShadow = "0 8px 25px rgba(0, 129, 199, 0.4)"
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(0, 129, 199, 0.8)"
-                        e.currentTarget.style.transform = "translateY(0)"
-                        e.currentTarget.style.boxShadow = "none"
-                      }}
-                    >
-                      Agendar Consulta
-                    </button>
-                  </div>
-                </div>
-              </AnimatedCard>
-            </div>
-          </div>
-        </div>
+      {/* PROCESS STEPS SECTION */}
+      <section ref={approachRef} style={{ backgroundColor: "white", position: "relative", zIndex: 1 }}>
+        <ProcessSteps />
       </section>
 
       <Footer />

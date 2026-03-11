@@ -41,6 +41,7 @@ const linkStyles = {
   position: "relative",
   display: "block",
   width: "fit-content",
+  my: 0.6,
   textDecoration: "none",
   "&::after": {
     content: '""',
@@ -80,10 +81,27 @@ export default function Footer() {
           bgcolor: COLORS.cardBg,
           borderRadius: { xs: "20px", md: "24px" },
           overflow: "hidden",
+          // --- GLASS EFFECT ---
+          // 1. Gradient Background (Light source direction)
+          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%)",
+
+          // 2. The Frost
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)", // Safari support
+
+          // 3. Border & Shape
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+
+          // 4. The Occlusion/Depth Shadows
+          boxShadow: `
+    0 8px 32px 0 rgba(0, 0, 0, 0.15),          /* Ambient Shadow */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),  /* Inner Ring */
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5)   /* Top Highlight */
+  `
         }}
       >
         {/* ===== Mobile ===== */}
-        <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <Box sx={{ display: { xs: "block", md: "none", mx: "auto" } }}>
           <Box sx={{ px: "24px", pt: "32px", pb: "24px" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 4 }}>
               <Box
@@ -145,22 +163,22 @@ export default function Footer() {
                     </Typography>
                   )
                 )}
+                <Box sx={{ mt: 1 }}>
+                  <Typography sx={{ ...titleStyles, fontSize: "13px" }}>Legal</Typography>
+                  {legalLinks.map((link) => (
+                    <MuiLink
+                      key={link.to}
+                      component={RouterLink}
+                      to={link.to}
+                      underline="none"
+                      sx={{ ...linkStyles, fontSize: "12px" }}
+                    >
+                      {link.text}
+                    </MuiLink>
+                  ))}
+                </Box>
               </Box>
 
-              <Box sx={{ ml: 4 }}>
-                <Typography sx={{ ...titleStyles, fontSize: "13px" }}>Legal</Typography>
-                {legalLinks.map((link) => (
-                  <MuiLink
-                    key={link.to}
-                    component={RouterLink}
-                    to={link.to}
-                    underline="none"
-                    sx={{ ...linkStyles, fontSize: "12px" }}
-                  >
-                    {link.text}
-                  </MuiLink>
-                ))}
-              </Box>
             </Box>
 
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>

@@ -140,6 +140,7 @@ export default function CTACard({
             </Typography>
           </Box>
 
+
           {/* Content group - Logo + Title + Button */}
           <Box sx={{
             display: "flex",

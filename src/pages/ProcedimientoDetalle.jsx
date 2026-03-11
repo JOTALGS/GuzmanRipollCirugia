@@ -147,7 +147,7 @@ const procedimientosData = {
         description: "El descenso del tejido mamario, producto del adelgazamiento, cambios hormonales del embarazo y lactancia, además de los cambios debidos al envejecimiento, se denomina ptosis mamaria."
       },
       {
-        name: "Reducción Mamaria", 
+        name: "Reducción Mamaria",
         description: "La hipertrofia mamaria es la condición en la cual las mamas tienen un volumen excesivo para la complexión global de la mujer."
       },
       {
@@ -161,7 +161,7 @@ const procedimientosData = {
     ]
   },
   "02": {
-    number: "02", 
+    number: "02",
     title: "Lipoescultura VASER",
     subtitle: "BodyTite & Morpheus8",
     category: "Contorno Corporal",
@@ -171,7 +171,7 @@ const procedimientosData = {
     objetivo: "Remodelación corporal avanzada, eliminación de grasa localizada y tensado de piel simultáneo.",
     specs: {
       tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico", 
+      lugar: "Block quirúrgico",
       anestesia: "Local con sedación o general",
       duracion: "2-3 horas aproximadamente"
     },
@@ -189,7 +189,7 @@ const procedimientosData = {
     ]
   },
   "03": {
-    number: "03", 
+    number: "03",
     title: "Cirugía Estética Nasal",
     subtitle: "Rinoplastia & Septoplastia",
     category: "Cirugía Facial",
@@ -199,7 +199,7 @@ const procedimientosData = {
     objetivo: "Corrección estética y funcional de la nariz, mejora de la armonía facial, solución de problemas respiratorios.",
     specs: {
       tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico", 
+      lugar: "Block quirúrgico",
       anestesia: "General",
       duracion: "2-3 horas aproximadamente"
     },
@@ -207,7 +207,7 @@ const procedimientosData = {
     recuperacion: "Férula nasal por 7-10 días. Inflamación inicial disminuye en 2-3 semanas. Resultado definitivo visible a los 12 meses."
   },
   "04": {
-    number: "04", 
+    number: "04",
     title: "Remodelación Abdominal Completa",
     subtitle: "Abdominoplastia & Liposucción",
     category: "Contorno Corporal",
@@ -217,7 +217,7 @@ const procedimientosData = {
     objetivo: "Eliminación de exceso de piel y grasa abdominal, corrección de diástasis de rectos, mejora del contorno corporal.",
     specs: {
       tipo: "Ambulatoria o con internación de 24h",
-      lugar: "Block quirúrgico", 
+      lugar: "Block quirúrgico",
       anestesia: "General",
       duracion: "3-4 horas aproximadamente"
     },
@@ -225,7 +225,7 @@ const procedimientosData = {
     recuperacion: "Reposo relativo por 2 semanas. Uso de faja compresiva por 6-8 semanas. Retorno progresivo a actividades en 4-6 semanas."
   },
   "05": {
-    number: "05", 
+    number: "05",
     title: "Rejuvenecimiento de la Mirada",
     subtitle: "Blefaroplastia & Lifting Facial",
     category: "Cirugía Facial",
@@ -235,7 +235,7 @@ const procedimientosData = {
     objetivo: "Rejuvenecimiento de la región periocular, eliminación de bolsas y exceso de piel en párpados, mejora de la expresión facial.",
     specs: {
       tipo: "Ambulatoria, cirugía del día",
-      lugar: "Block quirúrgico", 
+      lugar: "Block quirúrgico",
       anestesia: "Local con sedación o general",
       duracion: "1-2 horas aproximadamente"
     },
@@ -321,7 +321,7 @@ export default function ProcedimientoDetalle() {
 
   useEffect(() => {
     if (!procedimiento) return;
-    
+
     const img = new Image()
     img.src = procedimiento.imageSrc
     img.onload = () => setImageLoaded(true)
@@ -354,7 +354,7 @@ export default function ProcedimientoDetalle() {
 
       // Animaciones blur del texto del hero - MÁS LENTAS
       const textTimeline = gsap.timeline({ delay: 0.5 })
-      
+
       textTimeline.from(numberRef.current, {
         opacity: 0,
         filter: "blur(20px)",
@@ -362,34 +362,34 @@ export default function ProcedimientoDetalle() {
         duration: 1.5,
         ease: "power3.out"
       })
-      .from(categoryRef.current, {
-        opacity: 0,
-        filter: "blur(10px)",
-        y: 20,
-        duration: 1.2,
-        ease: "power3.out"
-      }, "-=1.2")
-      .from(titleRef.current, {
-        opacity: 0,
-        filter: "blur(15px)",
-        y: 30,
-        duration: 1.5,
-        ease: "power3.out"
-      }, "-=1.1")
-      .from(subtitleRef.current, {
-        opacity: 0,
-        filter: "blur(10px)",
-        y: 20,
-        duration: 1.2,
-        ease: "power3.out"
-      }, "-=1.0")
-      .from(catchPhraseRef.current, {
-        opacity: 0,
-        filter: "blur(8px)",
-        y: 15,
-        duration: 1,
-        ease: "power3.out"
-      }, "-=0.8")
+        .from(categoryRef.current, {
+          opacity: 0,
+          filter: "blur(10px)",
+          y: 20,
+          duration: 1.2,
+          ease: "power3.out"
+        }, "-=1.2")
+        .from(titleRef.current, {
+          opacity: 0,
+          filter: "blur(15px)",
+          y: 30,
+          duration: 1.5,
+          ease: "power3.out"
+        }, "-=1.1")
+        .from(subtitleRef.current, {
+          opacity: 0,
+          filter: "blur(10px)",
+          y: 20,
+          duration: 1.2,
+          ease: "power3.out"
+        }, "-=1.0")
+        .from(catchPhraseRef.current, {
+          opacity: 0,
+          filter: "blur(8px)",
+          y: 15,
+          duration: 1,
+          ease: "power3.out"
+        }, "-=0.8")
 
       // Animación de títulos de secciones - MÁS LENTAS Y CON MEJOR CONFIGURACIÓN
       gsap.utils.toArray([benefitsRef.current, approachRef.current]).forEach((section) => {
@@ -433,11 +433,11 @@ export default function ProcedimientoDetalle() {
 
   if (!procedimiento) {
     return (
-      <Box sx={{ 
-        minHeight: "100vh", 
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "center" 
+      <Box sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}>
         <Typography>Procedimiento no encontrado</Typography>
       </Box>
@@ -465,6 +465,8 @@ export default function ProcedimientoDetalle() {
           display: "flex",
           flexDirection: "column",
           gap: "8px",
+
+          // Animation Props
           opacity: navOpen ? 1 : 0,
           transform: navOpen ? "translateY(0)" : "translateY(20px)",
           pointerEvents: navOpen ? "auto" : "none",
@@ -472,12 +474,29 @@ export default function ProcedimientoDetalle() {
           maxHeight: navOpen ? "400px" : "0px",
           overflowY: "auto",
           padding: navOpen ? "12px" : "0",
-          background: navOpen ? "rgba(255, 255, 255, 0.85)" : "transparent",
-          backdropFilter: navOpen ? "blur(20px) saturate(180%)" : "blur(0px)",
-          WebkitBackdropFilter: navOpen ? "blur(20px) saturate(180%)" : "blur(0px)",
-          border: navOpen ? "1px solid rgba(255, 255, 255, 0.4)" : "1px solid transparent",
+
+          // 1. Gradient Background: Simulates light hitting the surface (Top-Left to Bottom-Right)
+          background: navOpen
+            ? "linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%)"
+            : "transparent",
+
+          // 2. Strong Blur: Keeps the frosted look
+          backdropFilter: navOpen ? "blur(17px) saturate(160%)" : "blur(0px)",
+          WebkitBackdropFilter: navOpen ? "blur(17px) saturate(160%)" : "blur(0px)",
+
+          // 3. Subtle Border: Defines the edges without being too harsh
+          border: navOpen ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid transparent",
           borderRadius: "16px",
-          boxShadow: navOpen ? "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)" : "none",
+
+          // 4. Complex Shadows: The secret sauce for "Occlusion" and Depth
+          boxShadow: navOpen
+            ? `
+      0 8px 32px 0 rgba(0, 0, 0, 0.15),          /* Deep ambient shadow (Occlusion) */
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),  /* Inner ring for thickness */
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.5)   /* Top "Spec" highlight (Reflection) */
+      `
+            : "none",
+
           width: isMobile ? "100%" : "auto",
           minWidth: isMobile ? "100%" : "280px"
         }}>
@@ -947,7 +966,9 @@ export default function ProcedimientoDetalle() {
         <ProcessSteps />
       </section>
 
-      <Footer />
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <Footer />
+      </Box>
     </div>
   )
 }

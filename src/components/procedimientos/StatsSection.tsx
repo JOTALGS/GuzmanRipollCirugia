@@ -189,7 +189,7 @@ export default function StatsSection({
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: { xs: "1fr", md: "7fr 5fr" },
+                gridTemplateColumns: { xs: "1fr", md: "5fr 5fr" },
                 columnGap: `${GRID.gutter}px`,
                 mb: { xs: 5, md: 7 },
                 alignItems: "start",
@@ -234,9 +234,9 @@ export default function StatsSection({
                   {description}
                 </Typography>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2 }}>
                   {/* Stacked avatars */}
-                  <Box sx={{ display: "flex", ml: 1 }}>
+                  <Box sx={{ display: "flex" }}>
                     {[1, 2, 3, 4].map((_, i) => (
                       <Box
                         key={i}
@@ -435,7 +435,7 @@ export default function StatsSection({
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: { xs: "flex-start", md: "flex-start" },
+                    alignItems: { xs: "flex-start", md: "center" },
                     textAlign: { xs: "left", md: "left" },
                   }}
                 >

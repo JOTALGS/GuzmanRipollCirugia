@@ -30,7 +30,7 @@ export function ContactSection({ id }) {
   };
 
   return (
-    <Box 
+    <Box
       id={id}
       sx={{
         bgcolor: '#F2F2F2',
@@ -202,7 +202,6 @@ export function ContactSection({ id }) {
         <Box component="form" onSubmit={handleSubmit}>
           {[
             { id: 'firstName', label: 'Primer Nombre*', placeholder: 'Ingresa tu primer nombre', required: true },
-            { id: 'lastName', label: 'Apellido*', placeholder: 'Ingresa tu apellido', required: true },
             { id: 'email', label: 'E-mail*', placeholder: 'Ingresa tu dirección de mail', required: true, type: 'email' },
             { id: 'phone', label: 'Número de celular (Opcional)', placeholder: 'Ingresa tu número de celular', type: 'tel' },
             { id: 'message', label: 'Mensaje/Aspiraciones*', placeholder: 'Escribí un mensaje...', required: true, multiline: true, rows: 3 },
@@ -264,10 +263,8 @@ export function ContactSection({ id }) {
         </Box>
       </Box>
 
-      {/* Footer móvil importado */}
-      <Box sx={{ gridColumn: '1 / 13', mt: { xs: '40px', md: '80px' }, mx: { xs: '-20px', md: 0 } }}>
-        <Footer variant="contact" />
-      </Box>
     </Box>
+
   );
 }
+

@@ -54,6 +54,7 @@ export default function Clinica({ id }) {
       overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
+      zIndex: 1,
       ':after': {
         content: '""',
         position: "absolute",
@@ -260,7 +261,9 @@ export default function Clinica({ id }) {
         </Box>
       </Box>
 
-      <Footer />
+      <Box sx={{ position: "relative", zIndex: 100 }}>
+        <Footer />
+      </Box>
     </Box>
   )
 }

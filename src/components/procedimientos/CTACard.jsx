@@ -1,190 +1,149 @@
 import { Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function BlurButton({ children, sx, ...props }) {
-  const [isPressed, setIsPressed] = useState(false);
-
-  return (
-    <Box
-      component="span"
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setTimeout(() => setIsPressed(false), 150)}
-      onMouseLeave={() => setIsPressed(false)}
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 0.8,
-        backgroundColor: "#ffffff",
-        color: "#0a0a0a",
-        px: { xs: 1.8, md: 2 },
-        py: { xs: 0.9, md: 1 },
-        borderRadius: "6px",
-        fontSize: { xs: "0.65rem", md: "0.7rem" },
-        fontWeight: 500,
-        letterSpacing: "0.03em",
-        textTransform: "uppercase",
-        cursor: "pointer",
-        transition: "all 0.2s ease, filter 0.15s ease",
-        fontFamily: "Poppins, sans-serif",
-        filter: isPressed ? "blur(1.5px)" : "blur(0px)",
-        transform: isPressed ? "scale(0.97)" : "scale(1)",
-        "&:hover": {
-          backgroundColor: "#e5e5e5",
-        },
-        ...sx,
-      }}
-      {...props}
-    >
-      {children}
-      <ArrowForwardIcon sx={{ fontSize: 13 }} />
-    </Box>
-  );
-}
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CTACard({
   title = "¿Lista para dar el primer paso?",
   buttonText = "Agendar consulta",
-  badgeText = "Agenda tu cita",
-  linkText = "Contactar",
   href = "/contacto",
   logoSrc = "/images/GR_9_Isologo_Blanco.png",
 }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(containerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <Box
       sx={{
-        // ESPACIO ENTRE ÚLTIMO PROCEDIMIENTO Y CTA CARD
-        // Aumenta o disminuye estos valores para ajustar el espacio superior (NO afecta el footer)
-        // xs: móviles, md: desktop
-        pt: { xs: 10, md: 20 },
-        pb: { xs: 8, md: 12 },
+        width: "100%",
+        mx: "auto",
+        position: "relative",
+        mt: { xs: 8, md: 12 },
+        mb: { xs: 8, md: 12 },
         px: { xs: "20px", md: "70px" },
-        backgroundColor: "#ffffff",
       }}
     >
-      {/* Grid de 12 columnas */}
       <Box
+        ref={containerRef}
+        component={RouterLink}
+        to={href}
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          columnGap: "20px",
-          maxWidth: "1920px",
-          margin: "0 auto",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          justifyContent: { xs: "center", md: "space-between" },
+          backgroundColor: "#2563EB",
+          borderRadius: { xs: "20px", md: "24px" },
+          position: "relative",
+          overflow: "hidden",
+          textDecoration: "none",
+          color: "white",
+          boxShadow: "0 20px 40px -10px rgba(37, 99, 235, 0.4)",
+          minHeight: { xs: "240px", md: "180px" },
+          px: { xs: 4, md: 8 },
+          py: { xs: 6, md: 6 },
+          textAlign: { xs: "center", md: "left" },
         }}
       >
-        {/* Card ocupa 4 columnas */}
+        {/* Content */}
         <Box
-          component={RouterLink}
-          to={href}
           sx={{
-            gridColumn: { xs: "1 / -1", md: "1 / 5" },
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundColor: "#0a0a0a",
-            borderRadius: "24px",
-            p: { xs: 5, md: 6 },
-            minHeight: { xs: "400px", md: "550px" },
-            textDecoration: "none",
-            color: "inherit",
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            "&:hover": {
-              transform: "translateY(-4px)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-            },
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "center",
+            gap: { xs: 3, md: 4 },
+            zIndex: 2,
+            width: "100%",
+            position: "relative",
+            justifyContent: { xs: "center", md: "flex-start" },
           }}
         >
-          {/* Header */}
-          <Box
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              mb: "auto",
+              fontFamily: "Poppins, sans-serif",
+              fontSize: { xs: "18px", md: "22px" },
+              fontWeight: 500,
+              color: "#ffffff",
+              letterSpacing: "-0.01em",
+              lineHeight: 1.3,
+              maxWidth: { md: "600px" },
+              textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Box
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  backgroundColor: "#0066cc",
-                }}
-              />
-              <Typography
-                sx={{
-                  fontSize: "0.85rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "#0066cc",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                {badgeText}
-              </Typography>
-            </Box>
-            <Typography
-              sx={{
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-                color: "#ffffff",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              {linkText}
-            </Typography>
-          </Box>
+            {title}
+          </Typography>
 
-          {/* Content group - Logo + Title + Button */}
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start"
-          }}>
-            {/* Logo */}
-            <Box sx={{ mb: { xs: 3, md: 4 }, width: 56, height: 56 }}>
-              <Box
-                component="img"
-                src={logoSrc}
-                alt="Guzmán Ripoll Cirugía"
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-              />
-            </Box>
-
-            {/* Title */}
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 400,
-                fontSize: { xs: "1.75rem", md: "2.5rem" },
-                lineHeight: 1.2,
-                color: "#ffffff",
-                mb: { xs: 3, md: 4 },
-                fontFamily: "Poppins, sans-serif",
-                textAlign: "left",
-              }}
-            >
-              {title.split("\n").map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i < title.split("\n").length - 1 && <br />}
-                </span>
-              ))}
-            </Typography>
-
-            {/* Button */}
-            <BlurButton>{buttonText}</BlurButton>
+          {/* Button */}
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 1,
+              backgroundColor: "#ffffff",
+              color: "#2563EB",
+              px: { xs: 2.5, md: 3 },
+              py: { xs: 1.2, md: 1.5 },
+              borderRadius: "8px",
+              fontSize: { xs: "13px", md: "14px" },
+              fontWeight: 600,
+              letterSpacing: "0.02em",
+              fontFamily: "Poppins, sans-serif",
+              transition: "all 0.25s ease",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
+              },
+            }}
+          >
+            {buttonText}
+            <ArrowForwardIcon sx={{ fontSize: 16 }} />
           </Box>
         </Box>
+
+        {/* Watermark Logo — centered on mobile, cut-off right on desktop */}
+        <Box
+          component="img"
+          src={logoSrc}
+          alt=""
+          sx={{
+            position: "absolute",
+            // Mobile: centered in the card
+            top: { xs: "50%", md: "50%" },
+            left: { xs: "50%", md: "auto" },
+            right: { xs: "auto", md: "-10%" },
+            transform: { xs: "translate(-50%, -50%)", md: "translateY(-50%)" },
+            width: { xs: "85%", md: "55%" },
+            height: "auto",
+            opacity: { xs: 0.15, md: 0.2 },
+            zIndex: 1,
+            pointerEvents: "none",
+            filter: "brightness(0) invert(1)",
+          }}
+        />
       </Box>
     </Box>
   );

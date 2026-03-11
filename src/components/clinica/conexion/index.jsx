@@ -6,39 +6,37 @@ import { Box, Typography } from "@mui/material"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Conexion() {
-  const heroTextRef = useRef(null)
-  const resultadosTitleRef = useRef(null)
-  const doctorTitleRef = useRef(null)
   const humanConnectionTitleRef = useRef(null)
+  const pointsRef = useRef([])
 
   useEffect(() => {
-    const elements = [
-      { ref: heroTextRef, y: 50 },
-      { ref: resultadosTitleRef, y: 30 },
-      { ref: doctorTitleRef, y: 50 },
-      { ref: humanConnectionTitleRef, y: 50 }
-    ]
+    // Reset points ref array to ensure clean start
+    pointsRef.current = pointsRef.current.slice(0, 3);
 
-    const animations = elements.map(el =>
+    const elements = [humanConnectionTitleRef.current, ...pointsRef.current]
+
+    elements.forEach((el, index) => {
+      if (!el) return
+
       gsap.fromTo(
-        el.ref.current,
-        { opacity: 0, y: el.y },
+        el,
+        { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
           duration: 1,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: el.ref.current,
+            trigger: el,
             start: "top 85%",
             toggleActions: "play none none none"
-          }
+          },
+          delay: index * 0.1 // Stagger effect
         }
       )
-    )
+    })
 
     return () => {
-      animations.forEach(anim => anim.scrollTrigger?.kill())
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
   }, [])
@@ -63,7 +61,6 @@ export default function Conexion() {
       {/* IMAGEN - Arriba en móvil, izquierda en desktop */}
       <Box sx={{
         gridColumn: { xs: '1 / 13', md: '1 / 7' },
-        gridRow: { xs: '9 / 9', md: '9 / 9' },
         position: "relative",
         height: { xs: "60vh", md: "75vh" },
         marginBottom: { xs: 0, md: 12 },
@@ -84,44 +81,46 @@ export default function Conexion() {
 
       {/* TEXTO - Abajo en móvil, derecha en desktop */}
       <Box sx={{
-          gridColumn: { xs: '1 / 13', md: '7 / 13' },
-          gridRow: { xs: '10 / 10', md: '9 / 9' },
-          zIndex: 1,
-          order: { xs: 2, md: 2 },
-          py: { xs: 8, md: 0 },
-        }}>
-          {/* Human Connection Section */}
-          <Box component="section" sx={{ backgroundColor: "white", width: "100%" }}>
-            <Typography ref={humanConnectionTitleRef} variant="h2" sx={{
-              ...sectionTitle,
-              px: { xs: 2, md: 0 }
-            }}>
-              Conexión humana
-            </Typography>
+        gridColumn: { xs: '1 / 13', md: '7 / 13' },
+        zIndex: 1,
+        order: { xs: 2, md: 2 },
+        py: { xs: 8, md: 0 },
+      }}>
+        {/* Human Connection Section */}
+        <Box component="section" sx={{ backgroundColor: "white", width: "100%" }}>
+          <Typography ref={humanConnectionTitleRef} variant="h2" sx={{
+            ...sectionTitle,
+            px: { xs: 2, md: 0 }
+          }}>
+            Conexión humana
+          </Typography>
 
-            <Box sx={{ mt: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-              {humanConnectionPoints.map((point, index) => (
-                <Box key={index} sx={{
+          <Box sx={{ mt: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+            {humanConnectionPoints.map((point, index) => (
+              <Box
+                key={index}
+                ref={el => pointsRef.current[index] = el}
+                sx={{
                   display: "flex",
                   gap: { xs: 3, md: 4 },
                   px: { xs: 2, md: 0 }
                 }}>
-                  <Typography variant="body1" sx={pointNumberStyle}>
-                    0{index + 1}.
+                <Typography variant="body1" sx={pointNumberStyle}>
+                  0{index + 1}.
+                </Typography>
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h3" sx={pointTitleStyle}>
+                    {point.title}
                   </Typography>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h3" sx={pointTitleStyle}>
-                      {point.title}
-                    </Typography>
-                    <Typography variant="body1" sx={pointDescriptionStyle}>
-                      {point.description}
-                    </Typography>
-                  </Box>
+                  <Typography variant="body1" sx={pointDescriptionStyle}>
+                    {point.description}
+                  </Typography>
                 </Box>
-              ))}
-            </Box>
+              </Box>
+            ))}
           </Box>
         </Box>
+      </Box>
     </>
   );
 }

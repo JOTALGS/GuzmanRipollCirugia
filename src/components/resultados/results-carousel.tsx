@@ -82,7 +82,7 @@ export function ResultsCarousel() {
               textAlign: "left",
             }}
           >
-            Pacientes - 2013/2024
+            CASOS SELECCIONADOS
           </p>
         </div>
 
@@ -134,8 +134,8 @@ export function ResultsCarousel() {
             rowGap: "40px",
           }}
         >
-          {/* Título a la izquierda - primeras 6 columnas */}
-          <div style={{ gridColumn: "span 6", paddingTop: "75px", paddingBottom: "80px" }}>
+          {/* Título a la izquierda - primeras 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px" }}>
             <h1
               style={{
                 color: "#000000",
@@ -146,38 +146,57 @@ export function ResultsCarousel() {
                 margin: "0 0 8px 0",
                 textAlign: "left",
                 letterSpacing: "-2px",
+                display: "none", // Ocultamos el título anterior
               }}
             >
-              </h1>
+            </h1>
             <p
               style={{
                 color: "#000000",
                 fontSize: "20px",
                 fontFamily: "Poppins, sans-serif",
-                fontWeight: "500",
+                fontWeight: "600", // Bold
                 margin: 0,
                 paddingTop: "25px",
                 textAlign: "left",
+                textTransform: "uppercase",
               }}
             >
-              Pacientes - 2018/2025
+              CASOS SELECCIONADOS
             </p>
           </div>
 
-          {/* Scroll text a la derecha - siguientes 6 columnas */}
-          <div style={{ gridColumn: "span 6", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          {/* Centro - '01' - siguientes 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
+            <p
+              style={{
+                color: "#D1D5DB", // Light gray
+                fontSize: "20px",
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: "600",
+                margin: 0,
+                paddingTop: "25px",
+                textAlign: "center",
+              }}
+            >
+              01
+            </p>
+          </div>
+
+          {/* Scroll text a la derecha - siguientes 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <p
               style={{
                 color: "#000000",
                 fontSize: "20px",
                 fontFamily: "Poppins, sans-serif",
-                fontWeight: "500",
+                fontWeight: "600", // Bold
                 margin: 0,
                 paddingTop: "25px",
                 textAlign: "right",
               }}
             >
-              (scroll)
+              17 - 26&apos;
             </p>
           </div>
 

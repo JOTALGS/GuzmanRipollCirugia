@@ -6,13 +6,13 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ResultsPortfolioSection } from "../components/clinica/ResultsPortfolioSection"
+
 import { BlurText } from "../components/animations/BlurScrollEffect"
 import "../components/animations/blur-scroll-effect.css"
 import Footer from "../components/UI/Footer"
 import About from "../components/clinica/about"
 import Conexion from "../components/clinica/conexion"
-import StatsSection from "../components/procedimientos/StatsSection.tsx"
+import { PurposeSection } from "../components/clinica/PurposeSection"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -23,6 +23,11 @@ export default function Clinica({ id }) {
   const doctorTitleRef = useRef(null)
   const humanConnectionTitleRef = useRef(null)
   const typographyRef = useRef(null)
+  const heroContainerRef = useRef(null)
+  const stickyTextRef = useRef(null)
+  const imageRef = useRef(null)
+  const headlineRef = useRef(null)
+  const [showContent, setShowContent] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
@@ -40,6 +45,53 @@ export default function Clinica({ id }) {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (!heroContainerRef.current || !stickyTextRef.current || !imageRef.current) return;
+
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 900px)", () => {
+      ScrollTrigger.create({
+        trigger: imageRef.current,
+        start: "top 100px", // Precise start to match headline spacing better
+        end: () => `bottom ${100 + stickyTextRef.current.offsetHeight}px`, // Ends precisely when image bottom aligns with text bottom
+        pin: stickyTextRef.current,
+        pinSpacing: false,
+        scrub: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      });
+    });
+
+    return () => mm.revert();
+  }, []);
+
+  // Intro Animation useEffect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowContent(true)
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1.2 } })
+
+      tl.fromTo(headlineRef.current,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, delay: 0.2 }
+      )
+        .fromTo(stickyTextRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0 },
+          "-=0.8"
+        )
+        .fromTo(imageRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0 },
+          "-=1"
+        )
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, []);
+
   const logos = [
     { src: '/images/logo-apaisado.png', alt: 'Logo 1' },
     { src: '/images/logo-scpreu.png', alt: 'Logo 2' },
@@ -54,17 +106,6 @@ export default function Clinica({ id }) {
       overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
-      ':after': {
-        content: '""',
-        position: "absolute",
-        top: 0,
-        right: -120,
-        width: "180vw",
-        height: "600vh",
-        background: "white",
-        overflow: "hidden",
-        zIndex: 0
-      }
     }}>
 
       <Box sx={{
@@ -75,11 +116,103 @@ export default function Clinica({ id }) {
         zIndex: 0,
       }}>
 
-        {/* Content Container */}
+        <Box
+          ref={heroContainerRef}
+          sx={{
+            position: "relative",
+            zIndex: 1,
+            mt: { xs: "280px", md: "330px" }, // AJUSTAR AQUI: Espacio blanco arriba del título
+            px: { xs: "20px", md: "70px" },
+            backgroundColor: "white",
+            width: "100%",
+            textAlign: "left"
+          }}
+        >
+          {/* Big Bold Headline */}
+          <Typography
+            ref={headlineRef}
+            variant="h1"
+            sx={{
+              fontFamily: "Poppins, sans-serif",
+              fontSize: { xs: "32px", md: "72px" },
+              fontWeight: 600,
+              lineHeight: 1.2,
+              mb: { xs: "40px", md: "40px" },
+              letterSpacing: "-0.04em",
+              maxWidth: "1100px",
+              textAlign: "left",
+              opacity: 0,
+            }}
+          >
+            Somos la clínica de cirugía mamaria que rehumaniza la medicina estética.
+          </Typography>
+
+          <Box sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
+            gap: { xs: "40px", md: "0" },
+            alignItems: "start",
+            position: "relative"
+          }}>
+            {/* Left Column: GSAP Pinned Paragraph */}
+            <Box
+              ref={stickyTextRef}
+              sx={{
+                gridColumn: { xs: "1 / -1", md: "1 / 7" },
+                opacity: 0,
+                order: { xs: 2, md: 0 }, // Subtext last on mobile
+              }}
+            >
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "18px", md: "24px" },
+                lineHeight: 1.3,
+                color: "#000",
+                fontWeight: 500,
+                textAlign: "left",
+                maxWidth: { md: "520px" }
+              }}>
+                Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan
+                precisión tecnológica con un cuidado humano excepcional. Trabajamos con planificación cuidadosa y atención al detalle en cada etapa.
+                Creamos un entorno cómodo, profesional y serio, con contención y orientación constante desde la primera consulta hasta el postoperatorio.
+              </Typography>
+            </Box>
+
+            {/* Right Column: Large Image */}
+            <Box
+              ref={imageRef}
+              sx={{
+                gridColumn: { xs: "1 / -1", md: "7 / 13" },
+                opacity: 0,
+                order: { xs: 1, md: 0 }, // Image after title on mobile
+              }}
+            >
+              <Box sx={{
+                width: "100%",
+                height: { xs: "400px", md: "900px" }, // Reduced height as requested
+                overflow: "hidden",
+                borderRadius: "2px",
+                position: "relative"
+              }}>
+                <img
+                  src="/images/imagen5.jpg"
+                  alt="Clínica Guzmán Ripoll"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
+                  }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Content Container for following sections */}
         <Box sx={{
           position: "relative",
           zIndex: 1,
-          mt: { xs: "150px", md: "350px" },
+          mt: { xs: "60px", md: "140px" },
           display: "grid",
           backgroundColor: "white",
           gridTemplateColumns: "repeat(12, 1fr)",
@@ -88,107 +221,15 @@ export default function Clinica({ id }) {
           "& > section": {
             gridColumn: "1 / -1",
           },
-          overflow: "hidden"
-
         }}>
+          {/* 01 NUESTRO PROPÓSITO */}
+          <PurposeSection />
 
-          {/* SECCIÓN DEL PRIMER PÁRRAFO - CLÍNICA DESCRIPTION CON BLUR */}
-          <Box sx={{
-            gridColumn: { xs: '1 / 12', md: '1 / -1' },
-            gridRow: '1 / 1',
-          }}>
-            {/* Clinic Description Section */}
-            <Box
-              component="section"
-              sx={{
-                py: 8,
-                backgroundColor: "#fff",
-              }}
-            >
-              <Box sx={{
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: { xs: "repeat(4, 1fr)", md: "repeat(12, 1fr)" },
-                columnGap: { xs: "16px", md: "20px" },
-              }}>
-                {/* Todo el párrafo completo */}
-                <Box sx={{
-                  gridColumn: { xs: '1 / 5', md: '1 / 13' },
-                  px: { xs: 0, md: 0 },
-                  maxWidth: '100%',
-                  overflow: 'hidden',
-                  position: 'relative',
-                }}>
-                  <Typography
-                    ref={typographyRef}
-                    onMouseMove={handleMouseMove}
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
-                    sx={{
-                      fontFamily: theme.typography.fontFamily,
-                      fontSize: { xs: "30px", md: "64px" },
-                      lineHeight: { xs: 1.4, md: 1.2 },
-                      fontWeight: { xs: 500, md: 500 },
-                      textAlign: 'left',
-                      wordWrap: 'break-word',
-                      overflowWrap: 'break-word',
-                      hyphens: 'auto',
-                      maxWidth: '100%',
-                      textIndent: { xs: 'calc(25% + 8px)', md: 'calc(25% + 10px)' },
-                      position: 'relative',
-                      cursor: 'default',
-                      background: isHovering
-                        ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, 
-                            #3b82f6 0%, 
-                            #1e40af 20%, 
-                            #1e293b 40%, 
-                            #0f172a 60%, 
-                            #000000 100%)`
-                        : 'linear-gradient(to right, #000000, #000000)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      color: 'transparent',
-                      transition: 'none',
-                      willChange: 'background',
-                    }}
-                  >
-                    Nuestro propósito es ser la marca de cirugía estética que rehumaniza la medicina,
-                    utilizando los últimos hallazgos tecnológicos para hacer nuestra tarea más sostenible
-                    y eficiente, sin perder el toque humano como pilar para mejorar el bienestar de nuestros pacientes.
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
 
-          {/* RESTO DE LAS SECCIONES... */}
-          <Box sx={{
-            gridColumn: { xs: '1 / 13', md: '1 / 13' },
-            gridRow: '2 / 2',
-            mt: { xs: 6, md: 0 },
-          }}>
-            {/* Results Section */}
-            <ResultsPortfolioSection size="large" py="py-0" />
-          </Box>
-
-          {/* Stats Section - Antes del cirujano */}
-          <Box sx={{
-            gridColumn: { xs: '1 / 13', md: '1 / 13' },
-            mt: { xs: 6, md: 0 },
-          }}>
-            <StatsSection
-              title={{ line1: "Clínica de", line2: "Excelencia" }}
-              description="Instalaciones de primer nivel equipadas con tecnología de vanguardia para garantizar tu seguridad y comodidad."
-            />
-          </Box>
-
-          <About />
 
           {/* LOGO GRID - Logos separados con gutter entre ellos */}
           <Box sx={{
             gridColumn: { xs: '1 / 13', md: '1 / 13' },
-            gridRow: { xs: '8 / 8', md: '7 / 7' },
             zIndex: 1,
             width: '100%',
             py: { xs: "40px", md: "80px" },
@@ -203,8 +244,6 @@ export default function Clinica({ id }) {
               zIndex: 0,
             }}>
               {logos.map((logo, index) => {
-                // Desktop: cada logo ocupa 3 columnas (1-3, 4-6, 7-9, 10-12)
-                // Móvil: cada logo ocupa 2 columnas (1-3, 3-5, 1-3, 3-5)
                 const mobileCol = index % 2 === 0 ? '1 / 3' : '3 / 5';
                 const desktopCol = `${index * 3 + 1} / ${index * 3 + 4}`;
 
@@ -257,6 +296,7 @@ export default function Clinica({ id }) {
           </Box>
 
           <Conexion />
+          <About />
         </Box>
       </Box>
 

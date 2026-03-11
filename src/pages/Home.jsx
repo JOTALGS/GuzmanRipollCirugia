@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import IntroHome from "../components/home/IntroHome";
+import NewHero from "../components/home/NewHero";
 import ConoceMasHome from "../components/home/ConoceMasHome";
 import VerMasProcedimientosHome from "../components/home/VerMasProcedimientosHome";
 import CTAhome from "../components/home/CTAhome";
@@ -8,37 +8,38 @@ import Testimonios from "../components/home/Testimonios";
 import Especialistas from "../components/home/Especialistas";
 import Faq from "../components/home/faq";
 import Footer from "../components/UI/Footer";
-// import ScrollStage from "../components/home/general/ScrollStage"; // ← COMENTADO
 
 export default function Home({ toggleTheme }) {
   const [isPinned, setIsPinned] = useState(true)
-  
+
   return (
     <Box
       sx={{
         minHeight: '100vh',
         backgroundColor: 'background.default',
-        position: 'relative',
       }}
-      >
-      {/* ELIMINADA LA SECCIÓN CON ScrollStage */}
-      
-      <IntroHome />
-      
-      <ConoceMasHome />
+    >
+      {/* Hero Section pinned to bottom */}
+      <Box sx={{ position: 'sticky', top: 0, zIndex: 0 }}>
+        <NewHero />
+      </Box>
 
-      <VerMasProcedimientosHome />
-      
-      <CTAhome />
+      {/* Content scrolling over the Hero */}
+      <Box sx={{ position: 'relative', zIndex: 10, backgroundColor: 'white' }}>
+        <ConoceMasHome />
 
-      <Testimonios />
+        <VerMasProcedimientosHome />
 
-      <Especialistas />
+        <CTAhome />
 
-      <Faq />
+        <Testimonios />
 
-      <Footer />
-      
+        <Especialistas />
+
+        <Faq />
+
+        <Footer />
+      </Box>
     </Box>
   );
 }

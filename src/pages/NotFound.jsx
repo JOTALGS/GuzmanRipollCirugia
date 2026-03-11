@@ -1,123 +1,126 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function NotFound() {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        height: "100vh",
         backgroundColor: "#000",
         color: "#fff",
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
         overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
+        gridTemplateRows: "auto auto 1fr",
+        columnGap: "20px",
+        px: { xs: "20px", md: "70px" },
+        pt: { xs: "100px", md: "120px" },
+        pb: { xs: "40px", md: "60px" },
       }}
     >
-      {/* Container con grid de 12 columnas */}
+      {/* Row 1: Description text — columns 7-8 only (2 cols max) */}
       <Box
         sx={{
-          px: { xs: "20px", md: "70px" },
-          py: { xs: "100px", md: "120px" },
-          minHeight: "100vh",
-          position: "relative",
-
-          /* === Grid 12 columnas === */
-          display: "grid",
-          gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
-          columnGap: "20px",
-          rowGap: { xs: "24px", md: "32px" },
-          alignContent: "center",
+          gridColumn: { xs: "1 / 8", md: "7 / 9" },
+          gridRow: "1",
+          mb: { xs: 1, md: 2 },
         }}
       >
-        {/* Texto superior derecho */}
-        <Box
+        <Typography
           sx={{
-            position: "absolute",
-            top: { xs: "30px", md: "80px" },
-            right: { xs: "20px", md: "670px" },
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "14px", md: "18px" },
+            fontWeight: 300,
+            lineHeight: 1.5,
+            color: "rgba(255,255,255,0.45)",
             textAlign: "left",
-            maxWidth: { xs: "200px", md: "280px" },
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "13px", md: "15px" },
-              fontWeight: 300,
-              lineHeight: 1.5,
-              color: "#B0B0B0",
-              mb: 2,
-            }}
-          >
-            Lorem Impsum lore Impsum lore lore Impsum lor
-          </Typography>
-          <Button
-            component={RouterLink}
-            to="/contacto"
-            endIcon={<ArrowDownwardIcon sx={{ fontSize: "14px !important" }} />}
-            sx={{
-              color: "#fff",
-              textTransform: "none",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "13px", md: "14px" },
-              fontWeight: 400,
-              p: 0,
-              minWidth: "auto",
-              textDecoration: "underline",
-              textUnderlineOffset: "4px",
-              textDecorationThickness: "1px",
-              "&:hover": { backgroundColor: "transparent", opacity: 0.7 },
-              "& .MuiButton-endIcon": { ml: "6px" },
-            }}
-          >
-            Get in touch
-          </Button>
-        </Box>
+          La página que buscas no existe o fue movida a otra ubicación.
+        </Typography>
+      </Box>
 
-        {/* 404 - Arranca en columna 5 (md+) */}
+      {/* Row 2: Button — columns 7-8 */}
+      <Box
+        sx={{
+          gridColumn: { xs: "1 / 8", md: "7 / 9" },
+          gridRow: "2",
+          mb: { xs: 4, md: 0 },
+        }}
+      >
         <Box
+          component={RouterLink}
+          to="/contacto"
           sx={{
-            gridColumn: { xs: "1 / -1", md: "5 / 13" },
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            color: "#fff",
+            textDecoration: "underline",
+            textUnderlineOffset: "4px",
+            textDecorationThickness: "1px",
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "13px", md: "14px" },
+            fontWeight: 400,
+            transition: "opacity 0.2s ease",
+            "&:hover": { opacity: 0.7 },
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "140px", sm: "220px", md: "320px", lg: "400px" },
-              fontWeight: 600,
-              lineHeight: 1.2,
-              letterSpacing: "-0.04em",
-              color: "#fff",
-              textShadow: "0 0 80px rgba(255,255,255,0.1)",
-            }}
-          >
-            404
-          </Typography>
+          Contáctanos
+          <ArrowForwardIcon sx={{ fontSize: 14 }} />
         </Box>
+      </Box>
 
-        {/* "Esta Escena No Existe" - se queda a la izquierda */}
-        <Box
+      {/* Row 3: 404 number — starts at column 7 */}
+      <Box
+        sx={{
+          gridColumn: { xs: "1 / -1", md: "7 / 13" },
+          gridRow: { xs: "3", md: "3" },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: { xs: "center", md: "flex-start" },
+        }}
+      >
+        <Typography
           sx={{
-            gridColumn: { xs: "1 / -1", md: "1 / span 6" },
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "140px", sm: "200px", md: "280px", lg: "360px" },
+            fontWeight: 600,
+            lineHeight: 1,
+            letterSpacing: "-0.04em",
+            color: "#fff",
+            textAlign: { xs: "center", md: "left" },
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "36px", sm: "52px", md: "72px", lg: "120px" },
-              fontWeight: 500,
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-              color: "#fff",
-            }}
-          >
-            Esta Escena
-            <br />
-            No Existe
-          </Typography>
-        </Box>
+          404
+        </Typography>
+      </Box>
+
+      {/* "Esta Escena No Existe" — columns 1-6, bottom-left, spans rows 2-3 */}
+      <Box
+        sx={{
+          gridColumn: { xs: "1 / -1", md: "1 / 7" },
+          gridRow: { xs: "4", md: "2 / 4" },
+          display: "flex",
+          alignItems: "flex-end",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "36px", sm: "48px", md: "72px", lg: "100px" },
+            fontWeight: 500,
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            textAlign: "left",
+          }}
+        >
+          Esta Escena
+          <br />
+          No Existe
+        </Typography>
       </Box>
     </Box>
   );

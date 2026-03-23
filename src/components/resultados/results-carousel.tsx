@@ -21,33 +21,23 @@ const originalItems = [
 ]
 
 export function ResultsCarousel() {
-  const [itemWidth, setItemWidth] = useState(430)
   const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      const w = window.innerWidth
-      setIsMobile(w <= 768)
-
-      if (!isMobile) {
-        const maxWidth = Math.min(w, 1920)
-        const gridWidth = maxWidth - 140 // padding left + right
-        const columnWidth = gridWidth / 12
-        // Cada item ocupa 6 columnas - 10px de gutter (20px / 2)
-        const calculatedWidth = columnWidth * 6 - 10
-        setItemWidth(Math.max(300, calculatedWidth))
-      }
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [isMobile])
+ 
+   useEffect(() => {
+     const handleResize = () => {
+       const w = window.innerWidth
+       setIsMobile(w <= 768)
+     }
+ 
+     handleResize()
+     window.addEventListener("resize", handleResize)
+     return () => window.removeEventListener("resize", handleResize)
+   }, [])
 
   // MOBILE VERSION - Static vertical scroll
   if (isMobile) {
     return (
-      <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
+      <div style={{ width: "100%", backgroundColor: "#F2F2F2", overflow: "hidden" }}>
         {/* Header con título y subtítulo */}
         <div
           style={{
@@ -61,28 +51,29 @@ export function ResultsCarousel() {
             style={{
               color: "#000000",
               lineHeight: "1.2",
-              fontWeight: "700",
-              fontSize: "48px",
+              fontWeight: "400",
+              fontSize: "28px",
               fontFamily: "Poppins, sans-serif",
               margin: "0 0 8px 0",
               textAlign: "left",
-              letterSpacing: "-1px",
+              letterSpacing: "-0.5px",
             }}
           >
-            RESULTADOS
+            Resultados
           </h1>
           <p
             style={{
               color: "#000000",
-              fontSize: "20px",
+              fontSize: "16px",
               fontFamily: "Poppins, sans-serif",
-              fontWeight: "500",
+              fontWeight: "400",
               margin: 0,
-              paddingTop: "25px",
+              paddingTop: "16px",
               textAlign: "left",
+              opacity: 0.5,
             }}
           >
-            CASOS SELECCIONADOS
+            Casos seleccionados
           </p>
         </div>
 
@@ -108,14 +99,14 @@ export function ResultsCarousel() {
         </div>
 
         {/* Footer solo en mobile */}
-        <Footer />
+        <Footer variant="contact" />
       </div>
     )
   }
 
   // DESKTOP VERSION - Grid 2 columns (6 columnas cada uno)
   return (
-    <div style={{ width: "100%", backgroundColor: "white" }}>
+    <div style={{ width: "100%", backgroundColor: "#F2F2F2" }}>
       {/* Grid de 12 columnas */}
       <div
         style={{

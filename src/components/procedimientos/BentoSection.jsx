@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material"
 import { ArrowUpRight } from "lucide-react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { useState } from "react"
 
 /**
@@ -169,7 +169,7 @@ export default function BentoSection() {
           {/* Card 1 - Large */}
           <Box
             component={Link}
-            href={bentoItems[0].link}
+            to={bentoItems[0].link}
             sx={{
               backgroundColor: "#e5e5e5",
               borderRadius: "24px",
@@ -234,7 +234,7 @@ export default function BentoSection() {
           {/* Card 2 - Small (Cirugía Mamaria) */}
           <Box
             component={Link}
-            href={bentoItems[1].link}
+            to={bentoItems[1].link}
             sx={{
               backgroundColor: "#e5e5e5",
               borderRadius: "24px",
@@ -305,7 +305,7 @@ export default function BentoSection() {
           {/* Card 3 - Small */}
           <Box
             component={Link}
-            href={bentoItems[2].link}
+            to={bentoItems[2].link}
             sx={{
               backgroundColor: "#e5e5e5",
               borderRadius: "24px",
@@ -367,7 +367,7 @@ export default function BentoSection() {
           {/* Card 4 - Large */}
           <Box
             component={Link}
-            href={bentoItems[3].link}
+            to={bentoItems[3].link}
             sx={{
               backgroundColor: "#e5e5e5",
               borderRadius: "24px",

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { Box, Grid, Typography, IconButton, useTheme } from "@mui/material"
+import { useLocation } from "react-router-dom"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 import { gsap } from "gsap"
@@ -17,6 +18,7 @@ import { PurposeSection } from "../components/clinica/PurposeSection"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Clinica({ id }) {
+  const location = useLocation()
   const theme = useTheme()
   const heroTextRef = useRef(null)
   const resultadosTitleRef = useRef(null)
@@ -102,14 +104,14 @@ export default function Clinica({ id }) {
   return (
     <Box id={id} sx={{
       position: "relative",
-      backgroundColor: "white",
+      backgroundColor: "#f5f5f5",
       overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
     }}>
 
       <Box sx={{
-        backgroundColor: 'white',
+        backgroundColor: '#f5f5f5',
         width: "100%",
         maxWidth: "100vw",
         overflowX: "hidden",
@@ -123,7 +125,7 @@ export default function Clinica({ id }) {
             zIndex: 1,
             mt: { xs: "280px", md: "330px" }, // AJUSTAR AQUI: Espacio blanco arriba del título
             px: { xs: "20px", md: "70px" },
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             width: "100%",
             textAlign: "left"
           }}
@@ -166,7 +168,7 @@ export default function Clinica({ id }) {
               <Typography sx={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: { xs: "18px", md: "24px" },
-                lineHeight: 1.3,
+                lineHeight: 1.5,
                 color: "#000",
                 fontWeight: 500,
                 textAlign: "left",
@@ -195,7 +197,7 @@ export default function Clinica({ id }) {
                 position: "relative"
               }}>
                 <img
-                  src="/images/imagen5.jpg"
+                  src="/images/Paper Texture@2160p.png"
                   alt="Clínica Guzmán Ripoll"
                   style={{
                     width: "100%",
@@ -214,7 +216,7 @@ export default function Clinica({ id }) {
           zIndex: 1,
           mt: { xs: "60px", md: "140px" },
           display: "grid",
-          backgroundColor: "white",
+          backgroundColor: "transparent",
           gridTemplateColumns: "repeat(12, 1fr)",
           marginInline: { xs: "20px", md: "70px" },
           columnGap: { xs: "16px", md: "20px" },
@@ -233,6 +235,7 @@ export default function Clinica({ id }) {
             zIndex: 1,
             width: '100%',
             py: { xs: "40px", md: "80px" },
+            backgroundColor: 'transparent',
           }}>
             <Box sx={{
               display: 'grid',
@@ -260,9 +263,9 @@ export default function Clinica({ id }) {
                       justifyContent: 'center',
                       padding: { xs: '30px 15px', md: '60px 40px' },
                       minHeight: { xs: '120px', md: '200px' },
-                      border: '1px solid rgba(0, 0, 0, 0.1)',
-                      backgroundColor: '#fff',
-                      overflow: 'visible',
+                      border: '1px solid rgba(0, 0, 0, 0.06)',
+                      backgroundColor: '#ffffff',
+                      overflow: 'hidden',
                       zIndex: 1,
                       position: 'relative',
                     }}
@@ -272,21 +275,21 @@ export default function Clinica({ id }) {
                       alt={logo.alt}
                       style={{
                         maxWidth: '100%',
-                        maxHeight: '60px',
+                        maxHeight: index === 2 ? '80px' : '60px',
                         width: 'auto',
                         height: 'auto',
                         objectFit: 'contain',
-                        filter: 'grayscale(100%)',
-                        opacity: 0.7,
+                        filter: 'grayscale(100%) brightness(1.1)',
+                        opacity: 0.6,
                         transition: 'all 0.3s ease',
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.filter = 'grayscale(0%)';
+                        e.target.style.filter = 'grayscale(0%) brightness(1)';
                         e.target.style.opacity = '1';
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.filter = 'grayscale(100%)';
-                        e.target.style.opacity = '0.7';
+                        e.target.style.filter = 'grayscale(100%) brightness(1.1)';
+                        e.target.style.opacity = '0.6';
                       }}
                     />
                   </Box>

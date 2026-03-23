@@ -133,7 +133,7 @@ const LoadingScreen = ({ onComplete }) => {
         justifyContent: "space-between",
         zIndex: 9999,
         opacity: fadeOut ? 0 : 1,
-        transition: "opacity 0.5s ease-out",
+        transition: "opacity 400ms var(--ease-out)",
         pointerEvents: fadeOut ? "none" : "auto",
       }}
     >

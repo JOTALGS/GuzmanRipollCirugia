@@ -1,12 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../components/UI/Footer";
 import MedicalProcedures from "../components/procedimientos/preview";
 import CTACard from "../components/procedimientos/CTACard";
 
 export default function Procedimientos({ toggleTheme }) {
-  const [isPinned, setIsPinned] = useState(true)
-
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,7 +16,11 @@ export default function Procedimientos({ toggleTheme }) {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: 'background.default',
+        backgroundColor: '#F2F2F2',
+        overflowX: 'hidden',
+        position: 'relative',
+        width: '100%',
+        maxWidth: '100vw',
       }}
     >
       <MedicalProcedures />

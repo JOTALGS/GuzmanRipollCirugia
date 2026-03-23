@@ -409,7 +409,10 @@ export default function IntroHome() {
           '& .primary-button, & .secondary-button': {
             flex: 1,
             cursor: 'pointer',
-            transition: 'all 0.3s ease',
+            transition: 'transform 160ms var(--ease-out), background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out)',
+            '&:active': {
+              transform: 'scale(0.97)',
+            },
             fontFamily: 'Poppins',
             fontWeight: '400',
             fontSize: {
@@ -551,7 +554,7 @@ export default function IntroHome() {
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
               inset 0 -1px 0 rgba(0, 0, 0, 0.1)
             `,
-            transition: 'all 0.3s ease-in-out',
+            transition: 'transform 200ms var(--ease-out), border-color 200ms var(--ease-out), background-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out)',
             position: 'relative',
             overflow: 'hidden',
             cursor: 'pointer',

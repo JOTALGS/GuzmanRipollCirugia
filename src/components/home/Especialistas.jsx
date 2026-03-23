@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Grid, Typography, Container } from '@mui/material';
-import { RotateCcw, Network, Globe } from 'lucide-react';
+import { Sparkles, Brain, Zap, HeartHandshake, Activity, Shield } from 'lucide-react';
 
 export default function Especialistas() {
   return (
     <Box sx={{ 
       minHeight: '80vh', 
-      bgcolor: 'grey.100',
+      bgcolor: '#F2F2F2',
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' } // Responsive layout
     }}>
@@ -22,10 +22,10 @@ export default function Especialistas() {
       </Box>
 
       {/* Right side - Content */}
-      <Box sx={{ 
-        flex: 0.6, 
-        bgcolor: 'grey.900', 
-        color: 'white', 
+      <Box sx={{
+        flex: 0.6,
+        bgcolor: '#0A0A0A', // Fondo más negro
+        color: 'white',
         p: 4,
         display: 'flex',
         flexDirection: 'column',
@@ -33,12 +33,16 @@ export default function Especialistas() {
       }}>
         {/* Header text */}
         <Box sx={{ mb: 4 }}>
-          <Typography 
-            variant="overline" 
-            sx={{ 
-              color: 'primary.light', 
-              letterSpacing: '0.1em',
-              fontSize: '0.75rem',
+          <Typography
+            variant="overline"
+            sx={{
+              fontFamily: 'Red Hat Display',
+              color: '#E9E9E9',
+              letterSpacing: '0.08em',
+              fontSize: '0.8rem',
+              fontWeight: 500,
+              textAlign: 'left',
+              display: 'block',
             }}
           >
             HISTORIA CLÍNICA, SIMULACIONES 3D Y TÉCNICAS DE VANGUARDIA PARA ACOMPAÑARTE EN CADA PASO.
@@ -47,25 +51,27 @@ export default function Especialistas() {
 
       <Box>{/* Main heading */}
         <Box sx={{ mb: 6 }}>
-          <Typography 
-            variant="h2" 
-            sx={{ 
-              fontWeight: 300, 
-              lineHeight: 1.2,
+          <Typography
+            variant="h2"
+            sx={{
+              fontFamily: 'Poppins',
+              fontWeight: 400,  // Reducido de 500 a 400
+              lineHeight: 1.1,
               textAlign: 'start',
-              fontSize: { xs: '2.5rem', md: '3rem' }
+              fontSize: { xs: '2.5rem', md: '3.5rem' }
             }}
           >
             Especialistas en
           </Typography>
-          <Typography 
-            variant="h2" 
-            sx={{ 
-              fontWeight: 300, 
-              lineHeight: 1.2,
-              color: 'primary.light',
+          <Typography
+            variant="h2"
+            sx={{
+              fontFamily: 'Poppins',
+              fontWeight: 400,  // Reducido de 500 a 400
+              lineHeight: 1.1,
+              color: '#0081C7',
               textAlign: 'start',
-              fontSize: { xs: '2.5rem', md: '3rem' }
+              fontSize: { xs: '2.5rem', md: '3.5rem' }
             }}
           >
             Cirugía Mamaria
@@ -87,35 +93,45 @@ export default function Especialistas() {
               gap: 3,
               p: 2,
               borderTop: '1px solid',
-              borderColor: 'grey.700',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
               // Add this to create vertical separators
               '& > *:not(:last-child)': {
                 borderRight: '1px solid',
-                borderColor: 'grey.700',
+                borderColor: 'rgba(255, 255, 255, 0.08)',
                 paddingRight: 3,
               }
             }}>
             <Box sx={{ width: "70%", textAlign: 'start' }}>
-              <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
+              <Typography variant="h6" sx={{
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                mb: 0.5,
+                fontSize: '1.1rem'
+              }}>
                 Procedimientos personalizados
               </Typography>
-              <Typography variant="body2" sx={{ color: 'grey.400' }}>
+              <Typography variant="body2" sx={{
+                fontFamily: 'Red Hat Display',
+                color: '#9CA3AF',
+                fontSize: '0.95rem'
+              }}>
                 Cada plan es único, como vos
               </Typography>
             </Box>
             <Box sx={{ width: "30%", display: 'flex', justifyContent: 'center' }}>
-              <Box sx={{ 
+              <Box sx={{
                 flexShrink: 0,
                 width: 48,
                 height: 48,
                 border: '1px solid',
-                borderColor: 'grey.600',
+                borderColor: 'rgba(0, 129, 199, 0.3)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, rgba(0, 129, 199, 0.05), rgba(0, 129, 199, 0.1))'
               }}>
-                <RotateCcw size={20} color="#9CA3AF" />
+                <HeartHandshake size={22} color="#0081C7" />
               </Box>
             </Box>
           </Box>
@@ -128,35 +144,45 @@ export default function Especialistas() {
               gap: 3,
               p: 2,
               borderTop: '1px solid',
-              borderColor: 'grey.700',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
               // Add this to create vertical separators
               '& > *:not(:last-child)': {
                 borderRight: '1px solid',
-                borderColor: 'grey.700',
+                borderColor: 'rgba(255, 255, 255, 0.08)',
                 paddingRight: 3,
               }
             }}>
             <Box sx={{ width: "70%", textAlign: 'start' }}>
-              <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
+              <Typography variant="h6" sx={{
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                mb: 0.5,
+                fontSize: '1.1rem'
+              }}>
                 Cirugía inteligente
               </Typography>
-              <Typography variant="body2" sx={{ color: 'grey.400' }}>
+              <Typography variant="body2" sx={{
+                fontFamily: 'Red Hat Display',
+                color: '#9CA3AF',
+                fontSize: '0.95rem'
+              }}>
                 Integramos inteligencia artificial y tecnología 3D.
               </Typography>
             </Box>
             <Box sx={{ width: "30%", display: 'flex', justifyContent: 'center' }}>
-              <Box sx={{ 
+              <Box sx={{
                 flexShrink: 0,
                 width: 48,
                 height: 48,
                 border: '1px solid',
-                borderColor: 'grey.600',
+                borderColor: 'rgba(0, 129, 199, 0.3)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, rgba(0, 129, 199, 0.05), rgba(0, 129, 199, 0.1))'
               }}>
-                <Network size={20} color="#9CA3AF" />
+                <Brain size={22} color="#0081C7" />
               </Box>
             </Box>
           </Box>
@@ -169,35 +195,45 @@ export default function Especialistas() {
               gap: 3,
               p: 2,
               borderTop: '1px solid',
-              borderColor: 'grey.700',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
               // Add this to create vertical separators
               '& > *:not(:last-child)': {
                 borderRight: '1px solid',
-                borderColor: 'grey.700',
+                borderColor: 'rgba(255, 255, 255, 0.08)',
                 paddingRight: 3,
               }
             }}>
             <Box sx={{ width: "70%", textAlign: 'start' }}>
-              <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
+              <Typography variant="h6" sx={{
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                mb: 0.5,
+                fontSize: '1.1rem'
+              }}>
                 Técnicas de vanguardia
               </Typography>
-              <Typography variant="body2" sx={{ color: 'grey.400' }}>
+              <Typography variant="body2" sx={{
+                fontFamily: 'Red Hat Display',
+                color: '#9CA3AF',
+                fontSize: '0.95rem'
+              }}>
                 Métodos innovadores para optimizar tu recuperación.
               </Typography>
             </Box>
             <Box sx={{ width: "30%", display: 'flex', justifyContent: 'center' }}>
-              <Box sx={{ 
+              <Box sx={{
                 flexShrink: 0,
                 width: 48,
                 height: 48,
                 border: '1px solid',
-                borderColor: 'grey.600',
+                borderColor: 'rgba(0, 129, 199, 0.3)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, rgba(0, 129, 199, 0.05), rgba(0, 129, 199, 0.1))'
               }}>
-                <Globe size={20} color="#9CA3AF" />
+                <Sparkles size={22} color="#0081C7" />
               </Box>
             </Box>
           </Box>

@@ -17,6 +17,10 @@ export default function Home({ toggleTheme }) {
       sx={{
         minHeight: '100vh',
         backgroundColor: 'background.default',
+        overflowX: 'hidden',
+        position: 'relative',
+        width: '100%',
+        maxWidth: '100vw',
       }}
     >
       {/* Hero Section pinned to bottom */}
@@ -25,7 +29,7 @@ export default function Home({ toggleTheme }) {
       </Box>
 
       {/* Content scrolling over the Hero */}
-      <Box sx={{ position: 'relative', zIndex: 10, backgroundColor: 'white' }}>
+      <Box sx={{ position: 'relative', zIndex: 10, backgroundColor: '#F2F2F2' }}>
         <ConoceMasHome />
 
         <VerMasProcedimientosHome />

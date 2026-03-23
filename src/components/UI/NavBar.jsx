@@ -10,6 +10,8 @@ export default function NavBar() {
   const [isDarkBackground, setIsDarkBackground] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMenuEffectiveOpen, setIsMenuEffectiveOpen] = useState(false)
+  const [isInHero, setIsInHero] = useState(false)
+  const [isProcDropdownOpen, setIsProcDropdownOpen] = useState(false)
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width:900px)')
 
@@ -30,6 +32,13 @@ export default function NavBar() {
     { name: "Clínica", path: "/clinica" },
     { name: "Procedimientos", path: "/procedimientos" },
     { name: "Resultados", path: "/resultados" },
+  ]
+
+  const procedureSubLinks = [
+    { name: "Cirugía Mamaria", path: "/procedimiento/01" },
+    { name: "Lipoescultura VASER", path: "/procedimiento/02" },
+    { name: "Abdominoplastia", path: "/procedimiento/03" },
+    { name: "Blefaroplastia", path: "/procedimiento/04" },
   ]
 
   useEffect(() => {
@@ -85,6 +94,23 @@ export default function NavBar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Detect if we're in the hero section on the home page
+  useEffect(() => {
+    const isHomePage = location.pathname === "/" || location.pathname === "/inicio"
+    if (!isHomePage) {
+      setIsInHero(false)
+      return
+    }
+
+    const checkHero = () => {
+      setIsInHero(window.scrollY < window.innerHeight * 0.85)
+    }
+
+    checkHero()
+    window.addEventListener('scroll', checkHero)
+    return () => window.removeEventListener('scroll', checkHero)
+  }, [location.pathname])
+
   useEffect(() => {
     if (!isMobile) {
       if (active === "Contacto") {
@@ -124,7 +150,7 @@ export default function NavBar() {
     zIndex: 9999,
     width: '100%',
     backgroundColor: 'transparent',
-    mixBlendMode: isMenuOpen && isMobile ? 'normal' : 'difference',
+    mixBlendMode: (isMenuOpen && isMobile) || isInHero ? 'normal' : 'difference',
     color: 'white'
   }
 
@@ -195,7 +221,7 @@ export default function NavBar() {
                 style={{
                   height: 'auto',
                   width: 'auto',
-                  maxHeight: '35px'
+                  maxHeight: '40px'
                 }}
               />
             </Link>
@@ -423,35 +449,143 @@ export default function NavBar() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               gap: '20px',
-              width: '100%'
+              width: '100%',
+              textAlign: 'left'
             }}>
               {[...menuLinks, { name: "Contacto", path: "/contacto" }].map((link, index) => (
-                <div key={link.name} style={{ overflow: 'hidden' }}>
+                <div key={link.name} style={{ overflow: 'hidden', width: '100%', textAlign: 'left' }}>
                   <motion.div
                     initial={{ y: '100%' }}
                     animate={{ y: 0 }}
                     transition={{
-                      delay: 0.4 + index * 0.1,
-                      duration: 0.8,
-                      ease: [0.76, 0, 0.24, 1]
+                      delay: 0.2 + index * 0.08, // Start slightly earlier but faster overlap
+                      duration: 0.6,
+                      ease: [0.22, 1, 0.36, 1] // Quicker snap ease
                     }}
                   >
-                    <Link
-                      to={link.path}
-                      onClick={(e) => onNavClick(e, link.path)}
-                      style={{
-                        color: 'black',
-                        textDecoration: 'none',
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: '500',
-                        fontSize: '40px',
-                        letterSpacing: '-1px',
-                        display: 'block',
-                        lineHeight: '1.1'
-                      }}
-                    >
-                      {link.name}
-                    </Link>
+                    {link.name === "Procedimientos" ? (
+                      <>
+                        <div
+                          onClick={() => setIsProcDropdownOpen(!isProcDropdownOpen)}
+                          style={{
+                            color: 'black',
+                            textDecoration: 'none',
+                            fontFamily: 'Poppins, sans-serif',
+                            fontWeight: '500',
+                            fontSize: '40px',
+                            letterSpacing: '-1px',
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            lineHeight: '1.1',
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                            textAlign: 'left'
+                          }}
+                        >
+                          {link.name}
+                          <span style={{
+                            fontSize: '14px',
+                            fontWeight: '400',
+                            opacity: 0.4,
+                            marginLeft: '6px',
+                            verticalAlign: 'super',
+                            lineHeight: 1,
+                          }}>4</span>
+                          <motion.span
+                            animate={{ rotate: isProcDropdownOpen ? 180 : 0 }}
+                            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                            style={{
+                              marginLeft: '12px',
+                              fontSize: '20px',
+                              display: 'inline-block',
+                              opacity: 0.35,
+                            }}
+                          >
+                            ▾
+                          </motion.span>
+                        </div>
+                        <AnimatePresence>
+                          {isProcDropdownOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                              style={{ overflow: 'hidden', paddingLeft: '4px', marginTop: '12px' }}
+                            >
+                              {procedureSubLinks.map((sub, subIndex) => (
+                                <Link
+                                  key={sub.path}
+                                  to={sub.path}
+                                  onClick={(e) => {
+                                    onNavClick(e, sub.path)
+                                    setIsProcDropdownOpen(false)
+                                  }}
+                                  style={{
+                                    color: 'black',
+                                    textDecoration: 'none',
+                                    fontFamily: 'Poppins, sans-serif',
+                                    fontWeight: '400',
+                                    fontSize: '18px',
+                                    letterSpacing: '0px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    lineHeight: '1.2',
+                                    padding: '8px 0',
+                                    opacity: 0.6,
+                                  }}
+                                >
+                                  <span style={{ fontSize: '12px', opacity: 0.4, fontWeight: 500 }}>0{subIndex + 1}</span>
+                                  {sub.name}
+                                </Link>
+                              ))}
+                              <Link
+                                to="/procedimientos"
+                                onClick={(e) => {
+                                  onNavClick(e, '/procedimientos')
+                                  setIsProcDropdownOpen(false)
+                                }}
+                                style={{
+                                  color: 'black',
+                                  textDecoration: 'none',
+                                  fontFamily: 'Poppins, sans-serif',
+                                  fontWeight: '500',
+                                  fontSize: '14px',
+                                  letterSpacing: '0px',
+                                  display: 'block',
+                                  lineHeight: '1.2',
+                                  padding: '10px 0 0 0',
+                                  opacity: 0.35,
+                                  borderTop: '1px solid rgba(0,0,0,0.08)',
+                                  marginTop: '4px',
+                                }}
+                              >
+                                Ver todos →
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        to={link.path}
+                        onClick={(e) => onNavClick(e, link.path)}
+                        style={{
+                          color: 'black',
+                          textDecoration: 'none',
+                          fontFamily: 'Poppins, sans-serif',
+                          fontWeight: '500',
+                          fontSize: '40px',
+                          letterSpacing: '-1px',
+                          display: 'block',
+                          lineHeight: '1.1',
+                          textAlign: 'left'
+                        }}
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </motion.div>
                 </div>
               ))}
@@ -468,12 +602,12 @@ export default function NavBar() {
               {['Instagram', 'LinkedIn'].map((social, index) => (
                 <div key={social} style={{ overflow: 'hidden' }}>
                   <motion.div
-                    initial={{ y: '100%' }}
-                    animate={{ y: 0 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      delay: 0.8 + index * 0.1,
-                      duration: 0.8,
-                      ease: [0.76, 0, 0.24, 1]
+                      delay: 0.6 + index * 0.1,
+                      duration: 0.4,
+                      ease: "easeOut"
                     }}
                   >
                     <a

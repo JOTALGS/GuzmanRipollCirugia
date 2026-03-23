@@ -54,15 +54,16 @@ export function ContactSection({ id }) {
         <Typography
           variant="h1"
           sx={{
-            fontSize: { xs: '48px', md: '34px' },
-            fontWeight: 700,
+            fontSize: { xs: '28px', md: '34px' },
+            fontWeight: { xs: 400, md: 700 },
             fontFamily: 'Poppins',
             paddingTop: { xs: '75px', md: '34px' },
             color: '#000',
             lineHeight: 1.2,
+            letterSpacing: { xs: '-0.02em', md: '0' },
           }}
         >
-          CONTACTO
+          Contacto
         </Typography>
       </Box>
 
@@ -265,7 +266,7 @@ export function ContactSection({ id }) {
       </Box>
 
       {/* Footer móvil importado */}
-      <Box sx={{ gridColumn: '1 / 13', mt: { xs: '40px', md: '80px' }, mx: { xs: '-20px', md: 0 } }}>
+      <Box sx={{ gridColumn: '1 / 13', mt: { xs: '40px', md: '80px' }, mx: { xs: '-20px', md: '-70px' } }}>
         <Footer variant="contact" />
       </Box>
     </Box>

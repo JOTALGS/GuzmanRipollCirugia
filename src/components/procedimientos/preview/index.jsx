@@ -17,52 +17,64 @@ if (typeof window !== 'undefined') {
 export default function MedicalProcedures() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const headerRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const labelRef = useRef(null);
+  const sectionRef = useRef(null);
+  const introRef = useRef(null);
 
   const procedures = [
     {
-      number: "01",
-      name: "Aumento Mamario",
-      image: "/images/imagen3.jpg",
-      description: "Procedimiento personalizado para lograr un resultado natural y armónico con tu figura.",
+      id: "01",
+      number: "001",
+      name: "Cirugía Mamaria",
+      image: "/images/implantes.png",
+      description: "Procedimientos destinados a mejorar la forma, el volumen y la posición de las mamas mediante técnicas personalizadas.",
+      listTitle: "Incluye",
+      items: [
+        "Aumento mamario con implantes",
+        "Mastopexia",
+        "Reducción mamaria",
+        "Recambio de implantes",
+        "Reconstrucción mamaria"
+      ]
     },
     {
-      number: "02",
+      id: "02",
+      number: "002",
       name: "Lipoescultura VASER",
-      image: "/images/imagen3.jpg",
-      description: "Definición corporal de alta precisión con tecnología ultrasónica y radiofrecuencia.",
+      image: "/images/maxi2.png",
+      description: "Remodelación corporal mediante eliminación de grasa localizada utilizando tecnología avanzada.",
+      listTitle: "Tecnologías",
+      items: [
+        "VASER Liposuction",
+        "Morpheus RF"
+      ]
     },
     {
-      number: "03",
-      name: "Rinoplastia",
-      image: "/images/imagen3.jpg",
-      description: "Remodelación nasal funcional y estética con resultados naturales.",
-    },
-    {
-      number: "04",
+      id: "03",
+      number: "003",
       name: "Abdominoplastia",
-      image: "/images/imagen3.jpg",
-      description: "Restauración de la pared abdominal con técnicas avanzadas de contorno.",
+      image: "/images/imagen4.jpg",
+      description: "Procedimiento quirúrgico que permite remodelar el abdomen eliminando exceso de piel y grasa.",
+      listTitle: null,
+      items: []
     },
     {
-      number: "05",
+      id: "04",
+      number: "004",
       name: "Blefaroplastia",
-      image: "/images/imagen3.jpg",
-      description: "Cirugía de párpados para una mirada más descansada y juvenil.",
+      image: "/images/imagen5.jpg",
+      description: "Cirugía estética de los párpados que elimina exceso de piel y bolsas de grasa.",
+      listTitle: null,
+      items: []
     },
   ];
 
-  const headlineText = "Excelencia quirúrgica con enfoque humano";
-  const headlineWords = headlineText.split(" ");
-
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const wordElements = gsap.utils.toArray(".proc-headline-word");
+      // Intro headline words
+      const wordElements = gsap.utils.toArray(".proc-word");
       if (wordElements.length > 0) {
         gsap.fromTo(wordElements,
-          { y: "110%", opacity: 0 },
+          { y: "100%", opacity: 0 },
           {
             y: "0%",
             opacity: 1,
@@ -70,7 +82,7 @@ export default function MedicalProcedures() {
             ease: "power3.out",
             stagger: 0.03,
             scrollTrigger: {
-              trigger: headerRef.current,
+              trigger: introRef.current,
               start: "top 80%",
               toggleActions: "play none none none",
             }
@@ -78,113 +90,104 @@ export default function MedicalProcedures() {
         );
       }
 
-      const fadeElements = [labelRef.current, subtitleRef.current].filter(Boolean);
-      if (fadeElements.length > 0) {
-        gsap.fromTo(fadeElements,
-          { y: 40, opacity: 0 },
+      // Cards stagger
+      const cards = gsap.utils.toArray(".proc-card");
+      if (cards.length > 0) {
+        gsap.fromTo(cards,
+          { y: 50, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 1,
+            duration: 0.9,
             ease: "power3.out",
-            stagger: 0.2,
+            stagger: 0.1,
             scrollTrigger: {
-              trigger: headerRef.current,
-              start: "top 80%",
+              trigger: ".proc-grid",
+              start: "top 85%",
               toggleActions: "play none none none",
-            },
-            delay: 0.3,
+            }
           }
         );
       }
-
-      gsap.fromTo(".proc-card",
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: {
-            trigger: ".proc-grid",
-            start: "top 85%",
-            toggleActions: "play none none none",
-          }
-        }
-      );
-    });
+    }, sectionRef);
 
     return () => ctx.revert();
   }, [isMobile]);
 
+  const headlineText = "Excelencia quirúrgica con enfoque humano";
+  const headlineWords = headlineText.split(" ");
+
   return (
     <Box
+      ref={sectionRef}
       sx={{
         position: "relative",
         zIndex: 1,
-        backgroundColor: "#fff",
-        px: { xs: "20px", md: "70px" },
-        pt: { xs: "100px", md: "120px" },
+        backgroundColor: "#F2F2F2",
+        pt: { xs: "80px", md: "140px" },
         pb: { xs: "60px", md: "100px" },
       }}
     >
-      {/* Header */}
+      {/* Espacio vacío en móviles en lugar del título */}
+      <Box sx={{ display: { xs: "block", md: "none" }, height: "40px" }} />
+      {/* ═══════════════════════════════════════════════
+          INTRO — Editorial layout like clinica
+          ═══════════════════════════════════════════════ */}
       <Box
-        ref={headerRef}
+        ref={introRef}
         sx={{
+          px: { xs: "20px", md: "70px" },
           display: "grid",
           gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
           columnGap: "20px",
-          mb: { xs: "48px", md: "80px" },
+          mb: { xs: "60px", md: "120px" },
         }}
       >
-        <Box
-          ref={labelRef}
-          sx={{
-            gridColumn: "1 / 13",
-            display: "flex",
-            alignItems: "baseline",
-            gap: { xs: "10px", md: "16px" },
-            mb: { xs: "24px", md: "40px" },
-          }}
-        >
+        {/* Label — left */}
+        <Box sx={{
+          gridColumn: { xs: "1 / -1", md: "1 / 4" },
+          display: "flex",
+          alignItems: "baseline",
+          gap: "12px",
+          mb: { xs: "24px", md: 0 },
+        }}>
           <Typography sx={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "14px", md: "18px" },
+            fontSize: { xs: "14px", md: "16px" },
             fontWeight: 500,
-            color: "rgba(0, 0, 0, 0.37)",
+            color: "rgba(0,0,0,0.35)",
             lineHeight: 1,
           }}>
             (01)
           </Typography>
           <Typography sx={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "14px", md: "18px" },
+            fontSize: { xs: "14px", md: "16px" },
             fontWeight: 500,
-            color: "black",
+            color: "#000",
             textTransform: "uppercase",
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.01em",
             lineHeight: 1,
           }}>
-            PROCEDIMIENTOS
+            Nuestro proceso
           </Typography>
         </Box>
 
-        <Box sx={{ gridColumn: { xs: "1 / 13", md: "1 / 10" }, mb: { xs: "24px", md: 0 } }}>
+        {/* Headline — center */}
+        <Box sx={{ gridColumn: { xs: "1 / -1", md: "4 / 11" }, mb: { xs: "24px", md: 0 } }}>
           <Typography sx={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "36px", md: "72px", lg: "76px" },
+            fontSize: { xs: "32px", md: "56px", lg: "64px" },
             fontWeight: 500,
             lineHeight: 1.08,
-            letterSpacing: "-0.05em",
+            letterSpacing: "-0.04em",
             color: "black",
             textAlign: "left",
             overflow: "hidden",
           }}>
             {headlineWords.map((word, i) => (
               <Box component="span" key={i} sx={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", mr: "0.25em" }}>
-                <Box component="span" className="proc-headline-word" sx={{ display: "inline-block", willChange: "transform" }}>
+                <Box component="span" className="proc-word" sx={{ display: "inline-block", willChange: "transform" }}>
                   {word}
                 </Box>
               </Box>
@@ -192,187 +195,181 @@ export default function MedicalProcedures() {
           </Typography>
         </Box>
 
-        <Box ref={subtitleRef} sx={{ gridColumn: { xs: "1 / 13", md: "8 / 13" }, mt: { md: "20px" } }}>
+        {/* Description — right */}
+        <Box sx={{ gridColumn: { xs: "1 / -1", md: "9 / 13" }, mt: { md: "8px" } }}>
           <Typography sx={{
             fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "18px", md: "24px" },
-            lineHeight: 1.35,
-            color: "#000",
-            fontWeight: 500,
+            fontSize: { xs: "16px", md: "17px" },
+            lineHeight: 1.55,
+            color: "rgba(0,0,0,0.5)",
+            fontWeight: 600,
             textAlign: "left",
           }}>
-            Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica
-            con un cuidado humano excepcional.
+            Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica con un cuidado humano excepcional.
           </Typography>
         </Box>
       </Box>
 
-      {/* ─── Procedure Grid (Portfolio Style) ─────────────── */}
+      {/* ═══════════════════════════════════════════════
+          PROCEDURE CARDS — Clean grid
+          ═══════════════════════════════════════════════ */}
       <Box
         className="proc-grid"
         sx={{
+          px: { xs: "20px", md: "70px" },
           display: "grid",
           gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-          gap: { xs: "24px", md: "20px" },
+          gap: { xs: "16px", md: "20px" },
         }}
       >
-        {procedures.map((procedure, index) => (
+        {procedures.map((procedure) => (
           <Box
-            key={index}
-            component={RouterLink}
-            to={`/procedimiento/${procedure.number}`}
+            key={procedure.id}
             className="proc-card"
+            component={RouterLink}
+            to={`/procedimiento/${procedure.id}`}
             sx={{
+              textDecoration: "none",
+              color: "inherit",
               display: "flex",
               flexDirection: "column",
-              textDecoration: "none",
-              cursor: "pointer",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "20px",
-              overflow: "hidden",
-              p: { xs: "14px", md: "16px" },
-              pb: { xs: "20px", md: "24px" },
-              transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
-              "&:hover": {
-                backgroundColor: "#efefef",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
-                transform: "translateY(-2px)",
-              },
-              "&:hover .proc-img": {
-                transform: "scale(1.03)",
-              },
-            }}
-          >
-            {/* Number Label */}
-            <Typography sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "12px",
-              fontWeight: 400,
-              color: "rgba(0,0,0,0.35)",
-              letterSpacing: "0.04em",
-              mb: "12px",
-              px: "4px",
-              textAlign: "left",
-            }}>
-              //{procedure.number}
-            </Typography>
-
-            {/* Image */}
-            <Box sx={{
-              position: "relative",
-              width: "100%",
-              paddingTop: "65%",
               overflow: "hidden",
               borderRadius: "14px",
-              mb: "16px",
-              backgroundColor: "#e8e8e8",
+              backgroundColor: { xs: "#EBEBEB", md: "white" },
+              position: "relative",
+              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              /* Subtle top-left glare flash */
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "120px",
+                height: "120px",
+                background: "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.35) 0%, transparent 70%)",
+                zIndex: 2,
+                pointerEvents: "none",
+                borderRadius: "14px 0 0 0",
+              },
+              "&:hover": {
+                backgroundColor: "#efefef",
+              },
+              "&:hover .proc-card-img": {
+                transform: "scale(1.03)",
+              },
+              "&:hover .proc-card-arrow": {
+                transform: "translateX(4px)",
+                color: "#0081C7",
+              }
+            }}
+          >
+            {/* Image */}
+            <Box sx={{
+              width: "100%",
+              height: { xs: "240px", md: "320px", lg: "360px" },
+              overflow: "hidden",
             }}>
               <Box
-                className="proc-img"
+                className="proc-card-img"
                 component="img"
                 src={procedure.image}
                 alt={procedure.name}
                 sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
-                  transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                  display: "block",
+                  transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
                 }}
               />
             </Box>
 
-            {/* Name */}
-            <Typography sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "15px", md: "17px" },
-              fontWeight: 500,
-              color: "#111",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.3,
-              textAlign: "left",
-              px: "4px",
-            }}>
-              {procedure.name}
-            </Typography>
+            {/* Content */}
+            <Box sx={{ p: { xs: "20px", md: "28px" }, display: "flex", flexDirection: "column", flexGrow: 1 }}>
+              {/* Number + Arrow row */}
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "14px" }}>
+                <Typography sx={{
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "#0081C7",
+                  letterSpacing: "0.05em",
+                }}>
+                  //{procedure.number}
+                </Typography>
+                <ArrowForwardIcon
+                  className="proc-card-arrow"
+                  sx={{
+                    color: "rgba(0,0,0,0.15)",
+                    fontSize: 18,
+                    transition: "all 0.3s ease",
+                  }}
+                />
+              </Box>
+
+              {/* Title */}
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "20px", md: "24px" },
+                fontWeight: 500,
+                color: "#111",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.2,
+                textAlign: "left",
+                mb: "12px",
+              }}>
+                {procedure.name}
+              </Typography>
+
+              {/* Description */}
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "13px", md: "14px" },
+                color: "rgba(0,0,0,0.45)",
+                lineHeight: 1.6,
+                fontWeight: 400,
+                textAlign: "left",
+                mb: "auto",
+              }}>
+                {procedure.description}
+              </Typography>
+
+              {/* Items */}
+              {procedure.items && procedure.items.length > 0 && (
+                <Box sx={{ mt: "20px", pt: "16px", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+                  <Typography sx={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: "rgba(0,0,0,0.3)",
+                    mb: "10px",
+                    textAlign: "left",
+                  }}>
+                    {procedure.listTitle}
+                  </Typography>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: "4px 20px" }}>
+                    {procedure.items.map((item, i) => (
+                      <Typography key={i} sx={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "12px",
+                        color: "rgba(0,0,0,0.45)",
+                        fontWeight: 500,
+                        lineHeight: 1.6,
+                        textAlign: "left",
+                      }}>
+                        {item}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
         ))}
       </Box>
 
-      {/* ─── Bottom Nav Bar ──────────────────────── */}
-      <Box sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: { xs: "10px", md: "12px" },
-        mt: { xs: "48px", md: "64px" },
-        pt: { xs: "32px", md: "40px" },
-        borderTop: "1px solid rgba(0,0,0,0.06)",
-      }}>
-        <Box
-          component={RouterLink}
-          to="/contacto"
-          sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            px: { xs: "20px", md: "28px" },
-            py: { xs: "12px", md: "14px" },
-            borderRadius: "10px",
-            backgroundColor: "#2563EB",
-            color: "#fff",
-            textDecoration: "none",
-            fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "13px", md: "14px" },
-            fontWeight: 500,
-            letterSpacing: "-0.01em",
-            border: "1.5px solid #2563EB",
-            transition: "all 0.2s ease",
-            "&:hover": {
-              backgroundColor: "#1d4ed8",
-              borderColor: "#1d4ed8",
-            },
-            "&:active": {
-              transform: "scale(0.98)",
-            },
-          }}
-        >
-          Agendar consulta
-          <ArrowForwardIcon sx={{ fontSize: 15 }} />
-        </Box>
-
-        <Box
-          component={RouterLink}
-          to="/procedimientos"
-          sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            px: { xs: "20px", md: "28px" },
-            py: { xs: "12px", md: "14px" },
-            borderRadius: "10px",
-            backgroundColor: "#fff",
-            color: "#111",
-            textDecoration: "none",
-            fontFamily: "Poppins, sans-serif",
-            fontSize: { xs: "13px", md: "14px" },
-            fontWeight: 500,
-            letterSpacing: "-0.01em",
-            border: "1.5px solid rgba(0,0,0,0.12)",
-            transition: "all 0.2s ease",
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-              borderColor: "rgba(0,0,0,0.2)",
-            },
-            "&:active": {
-              transform: "scale(0.98)",
-            },
-          }}
-        >
-          Ver todos
-        </Box>
-      </Box>
     </Box>
   );
 }

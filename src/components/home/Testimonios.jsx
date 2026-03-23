@@ -247,7 +247,7 @@ const TestimoniosCarousel = () => {
       sx={{
         padding: { xs: '80px 0 40px 0', md: '80px 0' },
         width: '100%',
-        backgroundColor: '#ffffffff'
+        backgroundColor: '#F2F2F2'
       }}
     >
       <div style={{

@@ -132,9 +132,9 @@ export default function About() {
           zIndex: 1,
         }}>
         <Box component="section" sx={{
-          pt: { xs: "20px", md: 0 }, // Removed massive padding since it's not needed with grid gap
+          pt: { xs: "20px", md: 0 }, 
           pb: { xs: "40px", md: 20 },
-          backgroundColor: "white",
+          backgroundColor: "#F2F2F2",
           width: "100%",
         }}>
           <Typography variant="body1" sx={{
@@ -199,7 +199,7 @@ const doctorTitleStyle = {
 
 const bodyTextStyle = {
   fontFamily: "Poppins",
-  fontSize: { xs: "14px", md: "21px" },
+  fontSize: { xs: "18px", md: "21px" }, // 🔺 TAMAÑO TEXTO MOBILE (aumentado de 14px a 18px)
   fontWeight: { xs: 400, md: 500 },
   color: { xs: "#5f6368", md: "text.secondary" },
   lineHeight: { xs: 1.55, md: 1.8 },

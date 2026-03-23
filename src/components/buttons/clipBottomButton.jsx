@@ -29,8 +29,12 @@ const ClipBottomButton = ({children}) => {
             fontSize: '16px',
             fontFamily: 'Poppins',
             cursor: 'pointer',
+            transition: 'transform 160ms var(--ease-out)',
             '&:hover .bg-slide': {
               transform: 'translateY(0%)',
+            },
+            '&:active': {
+              transform: 'scale(0.97)',
             },
           }}
         >
@@ -45,7 +49,7 @@ const ClipBottomButton = ({children}) => {
               height: '100%',
               backgroundColor: '#1b1b1bff',
               transform: 'translateY(-100%)', // Start above the button
-              transition: 'transform 0.3s ease',
+              transition: 'transform 200ms var(--ease-out)',
               zIndex: 1,
             }}
           />
@@ -76,7 +80,7 @@ const ClipBottomButton = ({children}) => {
               color: '#e9e9e9',
               fontSize: { xs: '12px', md: '16px' },
               textWrap: 'nowrap',
-              transition: 'color 0.3s ease',
+              transition: 'color 160ms var(--ease-out)',
               '&:hover': {
                 color: 'white',
               },

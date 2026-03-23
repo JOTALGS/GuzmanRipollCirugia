@@ -5,7 +5,7 @@ export default function Resultados() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: 'white',
+      backgroundColor: '#F2F2F2',
       color: 'black',
       margin: 0,
       padding: 0

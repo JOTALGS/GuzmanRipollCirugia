@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
 import LoadingScreen from "./components/LoadingScreen";
+import MobileFloatingBar from "./components/UI/MobileFloatingBar";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
@@ -216,10 +217,20 @@ const App = () => {
         {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
 
         <ReactLenis root>
-          <Box id="scroll-container" sx={{ textAlign: "center", scrollBehavior: "smooth" }}>
+          <Box id="scroll-container" sx={{
+            textAlign: "center",
+            scrollBehavior: "smooth",
+            overflowX: "hidden",
+            position: "relative",
+            width: "100%",
+            maxWidth: "100vw"
+          }}>
             {/* NavBar fija en la parte superior */}
             <NavBar  toggleTheme={toggleTheme} />
-            
+
+            {/* Barra flotante móvil para agendar consulta */}
+            <MobileFloatingBar />
+
             <Routes>
               <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
               <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />

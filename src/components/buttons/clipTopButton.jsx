@@ -32,10 +32,14 @@ const ClipTopButton = ({ children }) => {
           fontSize: '16px',
           fontFamily: 'Poppins',
           cursor: 'pointer',
+          transition: 'transform 160ms var(--ease-out)',
 
           // When hover anywhere over this box, show the bg-slide and turn text+svg white
           '&:hover .bg-slide': {
             transform: 'translateY(0%)',
+          },
+          '&:active': {
+            transform: 'scale(0.97)',
           },
           '&:hover .text-area': {
             color: 'white',
@@ -52,7 +56,7 @@ const ClipTopButton = ({ children }) => {
             height: '100%',
             backgroundColor: 'gray',
             transform: 'translateY(100%)',
-            transition: 'transform 0.3s ease',
+            transition: 'transform 200ms var(--ease-out)',
             zIndex: 1,
           }}
         />
@@ -64,7 +68,7 @@ const ClipTopButton = ({ children }) => {
             width: '100%',
             height: '100%',
             backgroundColor: '#e9e9e9',
-            transition: 'transform 0.3s ease',
+            transition: 'transform 200ms var(--ease-out)',
             zIndex: 0,
           }}
         />
@@ -84,12 +88,12 @@ const ClipTopButton = ({ children }) => {
             color: 'gray', // base color
             fontSize: { xs: '12px', md: '16px' },
             textWrap: 'nowrap',
-            transition: 'color 0.3s ease',
+            transition: 'color 160ms var(--ease-out)',
             // no &:hover needed here because parent handles it
             // ensure svg inherits this color via fill: currentColor
             '& svg': {
               fill: 'currentColor',
-              transition: 'fill 0.3s ease',
+              transition: 'fill 160ms var(--ease-out)',
             },
           }}
         >

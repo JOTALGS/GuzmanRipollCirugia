@@ -88,56 +88,48 @@ const AnimatedBorderBox = styled(Box)(({ theme }) => ({
 }));
 
 export default function ConoceMasHome() {
-  // Líneas para desktop
-  const conoceMasLines1Desktop = [
-    "Somos una clínica especializada en cirugía",
-    " plástica. Nuestra experiencia refinada reside en canalizar el",
-    " deseo, desde la seguridad corporal al bienestar integral,",
-    "desde tratamientos hasta cirugías reconstructivas."
-  ];
+  // Texto para desktop - párrafo continuo
+  const textDesktop = "El Dr.Guzmán Ripoll es un cirujano plástico especializado en cirugía mamaria estética y reconstructiva, con práctica en Punta del Este.";
 
-  const conoceMasLines2Desktop = [
-    "A lo largo del tiempo, nos hemos convertido en expertos",
-    "en traducir el deseo en confianza, combinando precisión",
-    "tecnológica con un cuidado humano excepcional."
-  ];
-
-  // Texto para mobile - primera línea separada del resto
-  const textPart1First = "Somos una clínica";
-  const textPart1Rest = "especializada en cirugía plástica. Nuestra experiencia refinada reside en canalizar el deseo, desde la seguridad corporal al bienestar integral, desde tratamientos hasta cirugías reconstructivas.";
-  
-  const textPart2 = "A lo largo del tiempo, nos hemos convertido en expertos en traducir el deseo en confianza, combinando precisión tecnológica con un cuidado humano excepcional.";
+  // Texto para mobile - párrafo completo
+  const textMobile = "El Dr.Guzmán Ripoll es un cirujano plástico especializado en cirugía mamaria estética y reconstructiva, con práctica en Punta del Este.";
 
   useEffect(() => {
-    const leftSection = document.getElementById("pin-section");
-    if (!leftSection) return;
+    // Pin de la imagen hasta el párrafo con sangría
+    const imageBox = document.getElementById("sticky-image");
+    const targetParagraph = document.getElementById("main-paragraph");
 
-    const isMobile = () => window.innerWidth <= 768;
-    let scrollTriggerInstance = null;
+    if (imageBox && targetParagraph && window.innerWidth > 768) {
+      // Obtener la altura de la imagen para calcular dónde debe parar
+      const imageHeight = imageBox.offsetHeight;
 
-    const createScrollTrigger = () => {
-      if (scrollTriggerInstance) scrollTriggerInstance.kill();
+      const scrollTriggerInstance = ScrollTrigger.create({
+        trigger: imageBox,
+        start: "top 120px",  // INICIO: Cuando la imagen llega a 120px del top de la ventana
+        endTrigger: targetParagraph,  // REFERENCIA: Usa el párrafo principal como punto de referencia
 
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: leftSection,
-        start: "top 7%",
-        end: isMobile() ? "bottom+=5000% top" : "bottom+=3000% top",
-        pin: false,
+        // FIN DEL STICKY - AJUSTAR ESTE VALOR:
+        // La fórmula es: "top [valor]px"
+        // Donde [valor] = distancia desde el top cuando el párrafo debe liberar la imagen
+        //
+        // Valores de ejemplo para probar:
+        // end: "top 400px",  // La imagen para cuando el párrafo está a 400px del top
+        // end: "top 350px",  // Más arriba (número menor = para antes)
+        // end: "top 450px",  // Más abajo (número mayor = para después)
+        //
+        // VALOR ACTUAL: Intenta que pare cuando el párrafo esté a la altura de la imagen
+        end: "top 375px",  // 🔺 AJUSTAR ESTE VALOR - Reducir para que pare antes (ej: 450), aumentar para que siga más (ej: 550)
+
+        pin: true,
         pinSpacing: false,
-        scrub: true,
-        markers: false,
-        anticipatePin: 1,
+        markers: false,  // 🔺 CAMBIAR A true PARA VER LÍNEAS DE DEBUG (te mostrará dónde empieza y termina)
+        invalidateOnRefresh: true,  // Recalcula en resize
       });
-    };
 
-    createScrollTrigger();
-    const handleResize = () => createScrollTrigger();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      if (scrollTriggerInstance) scrollTriggerInstance.kill();
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        if (scrollTriggerInstance) scrollTriggerInstance.kill();
+      };
+    }
   }, []);
 
   return (
@@ -147,153 +139,188 @@ export default function ConoceMasHome() {
         zIndex: 1,
         height: { xs: "auto", md: "150vh" },
         display: "grid",
-        backgroundColor: "background.default",
+        backgroundColor: "#F2F2F2",
         gridTemplateColumns: "repeat(12, 1fr)",
         marginInline: { xs: "20px", md: "70px" },
         columnGap: { xs: "16px", md: "20px" },
         "& > section": { gridColumn: "1 / -1" }
       }}
     >
-      {/* CTA derecha - SOLO DESKTOP */}
-      <Box
-        sx={{
-          mt: "20px",
-          gridColumn: { xs: "8 / 13", md: "11 / 13" },
-          gridRow: "1 / 2",
-          display: { xs: "none", md: "flex" },
-          alignItems: "start",
-          justifyContent: "end"
-        }}
-      >
-        <div id="pin-section" className="py-8 px-4">
-          <Box component={"a"} href={"/clinica"} sx={{ textDecoration: "none" }}>
-            <AnimatedBorderBox>
-              <Typography
-                color="#000000"
-                fontFamily={"Poppins"}
-                fontSize={{ xs: "15px", md: "16px" }}
-                sx={{ textTransform: "uppercase" }}
-              >
-                Ver nuestros servicios
-              </Typography>
-            </AnimatedBorderBox>
-          </Box>
-        </div>
-      </Box>
 
-      {/* Tarjeta izquierda - SOLO DESKTOP */}
+      {/* Imagen izquierda pegada al margen - SOLO DESKTOP */}
       <Box
+        id="sticky-image"  // ID para el ScrollTrigger
         sx={{
           mt: "20px",
-          gridColumn: { xs: "3 / 7", md: "4 / 6" },
-          gridRow: "1 / 2",
+          gridColumn: { xs: "3 / 7", md: "1 / 3" }, // Columnas 1-3 (2 columnas)
+          gridRow: "1 / 3",  // Extendido para abarcar hasta el párrafo grande
           display: { xs: "none", md: "flex" },
           alignItems: "start",
           justifyContent: "start",
-          position: "relative",
-          borderRadius: "24px",
+          position: "relative",  // Vuelto a relative para que GSAP maneje el pin
+          borderRadius: "8px", // Border radius menor
           overflow: "hidden",
           backdropFilter: "blur(10px)",
           background: "rgba(255, 255, 255, 0.1)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
           boxShadow: "4 8px 6px 0 rgba(31, 38, 135, 0.37)",
-          height: "180px"
+          height: "35vh", // Más altura
+          zIndex: 10  // Para asegurar que quede sobre otros elementos
         }}
       >
         <img
-          src={"/images/bias.png"}
+          src={"/images/Paper Texture@2160p.png"}
           alt="scroll"
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            borderRadius: "24px"
+            borderRadius: "8px"
           }}
         />
       </Box>
 
-      {/* Breadcrumb izquierda - SOLO DESKTOP */}
+      {/* 01 CLÍNICA + Párrafo - columna 7 - SOLO DESKTOP */}
       <Box
         sx={{
           mt: "20px",
-          gridColumn: "1 / 2",
+          gridColumn: "7 / 11", // Columna 7 a la derecha de la imagen
           gridRow: "1 / 2",
-          display: { xs: "none", md: "flex" },
-          alignItems: { xs: "center", md: "start" },
-          justifyContent: "start"
+          display: { xs: "none", md: "block" }
         }}
       >
-        <Typography
-          color="#000000"
-          fontFamily={"Poppins"}
-          fontSize={"16px"}
-          sx={{ textTransform: "uppercase" }}
-        >
-          Clínica
+        {/* 01 CLÍNICA */}
+        <Box sx={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: "10px",
+          mb: 3
+        }}>
+          <Typography component="span" sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "rgba(0, 0, 0, 0.44)",
+            lineHeight: 1
+          }}>
+            01
+          </Typography>
+          <Typography
+            color="#000000"
+            fontFamily={"Poppins"}
+            fontSize={"18px"}
+            sx={{
+              textTransform: "uppercase",
+              fontWeight: 500,
+              letterSpacing: "0.0em",
+              lineHeight: 1
+            }}
+          >
+            Clínica
+          </Typography>
+        </Box>
+
+        {/* Párrafo pequeño igual que mobile */}
+        <Typography sx={{
+          fontFamily: "Poppins",
+          fontSize: "18px",
+          fontWeight: 600,
+          color: "rgb(0, 0, 0)",
+          lineHeight: 1.2,
+          textAlign: "left",
+          mt: 0,
+          // Alineamos la altura del párrafo con la imagen
+          height: "calc(40vh - 70px)", // Restamos el espacio del título
+          display: "flex",
+          alignItems: "flex-end", // Alinea el texto al final
+          pb: 1 // Pequeño padding para alinear con el borde inferior de la imagen
+        }}>
+          Como especialistas en cirugía mamaria, combinamos tecnología avanzada, experiencia médica y atención cercana para brindar una experiencia precisa, segura y humana en cada etapa del proceso.
         </Typography>
       </Box>
 
       {/* ========== DESKTOP LAYOUT ========== */}
       <Box
         sx={{
-          gridColumn: { xs: "1 / -1", md: "1 / 12" },
+          gridColumn: { xs: "1 / -1", md: "1 / 13" }, // 🔺 Ocupa todas las columnas
           gridRow: "2 / 3",
           py: 8,
           display: { xs: "none", md: "block" }
         }}
       >
-        {/* Primera línea con indent */}
-        <Box
+        {/* Párrafo continuo - solo primera línea con sangría */}
+        <Typography
+          id="main-paragraph"  // ID para el ScrollTrigger endpoint
           sx={{
             fontFamily: "Poppins",
-            fontSize: { md: "42px", lg: "52px" },
-            fontWeight: 400,
-            lineHeight: 1.3,
+            fontSize: { md: "42px", lg: "74px" }, // 🔺 TAMAÑO TEXTO DESKTOP (42px tablet, 80px desktop)
+            fontWeight: 500, // 🔺 BOLD TEXTO (400=normal, 500=medium, 600=semibold, 700=bold)
+            lineHeight: 1,
             color: "#000000",
             textAlign: "left",
-            paddingLeft: "calc((100% / 11) * 3)",
+            textIndent: "calc((100% / 12) * 3)", // 🔺 Sangría SOLO en la primera línea
+            mt: 10, // Agregamos margen superior para más espacio blanco arriba
+            mb: 6
           }}
         >
-          <LineReveal 
-            lines={[conoceMasLines1Desktop[0]]} 
-            startIndex={0}
-          />
-        </Box>
-        
-        {/* Resto del primer párrafo sin indent */}
-        <Box
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: { md: "42px", lg: "52px" },
-            fontWeight: 400,
-            lineHeight: 1.3,
-            color: "#000000",
-            textAlign: "left",
-          }}
-        >
-          <LineReveal 
-            lines={conoceMasLines1Desktop.slice(1)} 
-            startIndex={1}
-          />
-        </Box>
+          {textDesktop}
+        </Typography>
 
-        <Box sx={{ height: "80px" }} />
-
-        {/* Segundo párrafo */}
-        <Box
-          sx={{
+        {/* Nuevo párrafo descriptivo - DESKTOP */}
+        <Box sx={{
+          mt: 16,  // Aumentado aún más el margen superior para bajar toda la sección
+          display: "grid",
+          gridTemplateColumns: "repeat(12, 1fr)",
+          columnGap: "20px",
+          width: "100%",
+          alignItems: "start"  // Asegura que los elementos estén alineados al inicio
+        }}>
+          {/* Título en columna 4 - dividido en dos líneas */}
+          <Box sx={{
+            gridColumn: "4 / 6", // Columna 4 a 5 (movido una columna a la derecha)
             fontFamily: "Poppins",
-            fontSize: { md: "42px", lg: "52px" },
-            fontWeight: 400,
-            lineHeight: 1.3,
-            color: "#000000",
+            fontSize: "22px",
+            fontWeight: 600,
+            color: "#000",
             textAlign: "left",
-          }}
-        >
-          <LineReveal 
-            lines={conoceMasLines2Desktop} 
-            startIndex={0}
-          />
+            alignSelf: "start",  // Alinea al inicio del contenedor
+            pt: 0.5  // Pequeño padding para alinear perfectamente con el texto
+          }}>
+            <Typography sx={{
+              fontFamily: "inherit",
+              fontSize: "inherit",
+              fontWeight: "inherit",
+              color: "inherit",
+              lineHeight: 1.2
+            }}>
+              Cirugía plástica
+            </Typography>
+            <Typography sx={{
+              fontFamily: "inherit",
+              fontSize: "inherit",
+              fontWeight: "inherit",
+              color: "inherit",
+              lineHeight: 1.2
+            }}>
+              y estética
+            </Typography>
+          </Box>
+
+          {/* Párrafo empieza en columna 7 (dos columnas más a la derecha para mayor separación) */}
+          <Typography sx={{
+            gridColumn: "7 / 11", // Columnas 7 a 10 (más separación del texto lateral)
+            fontFamily: "Poppins",
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#000",
+            lineHeight: 1.2,
+            textAlign: "left",
+            alignSelf: "start"  // Alinea al inicio del contenedor
+          }}>
+            Nuestra práctica abarca un amplio rango de procedimientos, desde intervenciones no quirúrgicas
+            hasta procesos altamente especializados. Lo que nos distingue es nuestro enfoque humano:
+            priorizamos el acompañamiento cercano y el cuidado integral durante todo el proceso.
+          </Typography>
         </Box>
       </Box>
 
@@ -306,19 +333,60 @@ export default function ConoceMasHome() {
           display: { xs: "block", md: "none" }
         }}
       >
-        {/* Imagen arriba a la izquierda - MOBILE */}
+        {/* 01 CLÍNICA arriba de todo - MOBILE */}
+        <Box sx={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: "10px",
+          mb: 5 // 🔺 SEPARACIÓN entre "01 CLÍNICA" y párrafo (aumentado a 5)
+        }}>
+          <Typography component="span" sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "16px",
+            fontWeight: 500,
+            color: "rgba(0,0,0,0.2)",
+            lineHeight: 1
+          }}>
+            01
+          </Typography>
+          <Typography component="span" sx={{
+            fontFamily: "Poppins",
+            fontSize: "16px",
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: "#000000",
+            letterSpacing: "0.03em",
+            lineHeight: 1
+          }}>
+            Clínica
+          </Typography>
+        </Box>
+
+        {/* Párrafo pequeño extenso arriba de la imagen - MOBILE */}
+        <Typography sx={{
+          fontFamily: "Poppins",
+          fontSize: "16px", // 🔺 TAMAÑO letra párrafo pequeño (ajustá en px)
+          fontWeight: 600, // 🔺 BOLD párrafo pequeño (400=normal, 500=medium, 600=semibold)
+          color: "rgba(0,0,0,0.85)",
+          lineHeight: 1.1, // 🔺 INTERLINEADO párrafo pequeño (aumentado a 1.5)
+          textAlign: "left",
+          mb: 6 // 🔺 SEPARACIÓN entre párrafo e imagen (aumentado a 6)
+        }}>
+         Como especialistas en cirugía mamaria, combinamos precisión médica, innovación tecnológica y un acompañamiento cercano en cada etapa del proceso.
+        </Typography>
+
+        {/* Imagen - MOBILE */}
         <Box
           sx={{
-            width: "45%",
-            maxWidth: "180px",
+            width: "100%", // 🔺 ANCHO completo disponible
             aspectRatio: "1/1",
-            borderRadius: "16px",
+            borderRadius: "10px",
             overflow: "hidden",
-            mb: 8  // 🔺 SEPARACIÓN IMAGEN → CLÍNICA (ajustá: 6=48px, 8=64px, 10=80px)
+            mb: 8 // 🔺 SEPARACIÓN entre imagen y texto grande (ajustá en px)
           }}
         >
           <img
-            src={"/images/bias.png"}
+            src={"/images/Paper Texture@2160p.png"}
             alt="scroll"
             style={{
               width: "100%",
@@ -328,99 +396,48 @@ export default function ConoceMasHome() {
           />
         </Box>
 
-        {/* Primera línea: CLÍNICA + inicio del texto */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: "40px",  // 🔺 SEPARACIÓN CLÍNICA → TEXTO (ajustá en px)
-            mb: 0
-          }}
-        >
-          {/* Label Clínica */}
-          <Typography
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "14px",
-              fontWeight: 500,
-              textTransform: "uppercase",
-              color: "#000000",
-              flexShrink: 0,
-              lineHeight: 1.3,
-              paddingTop: "6px"  // 🔺 ALINEACIÓN VERTICAL de CLÍNICA (subí/bajá)
-            }}
-          >
-            Clínica
-          </Typography>
-          
-          {/* Inicio del texto en la misma línea */}
-          <Typography
-            component="span"
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: "30px",
-              fontWeight: 400,
-              lineHeight: 1.3,
-              color: "#000000",
-              textAlign: "left",
-            }}
-          >
-            {textPart1First}
-          </Typography>
-        </Box>
-
-        {/* Resto del primer párrafo - ocupa todo el ancho */}
+        {/* Texto completo de corrido - sin sangría - MOBILE */}
         <Typography
           sx={{
             fontFamily: "Poppins",
-            fontSize: "30px",
-            fontWeight: 400,
-            lineHeight: 1.3,
-            color: "#000000",
-            textAlign: "left",
-            mb: 4
-          }}
-        >
-          {textPart1Rest}
-        </Typography>
-
-        {/* Segundo párrafo */}
-        <Typography
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: "30px",
-            fontWeight: 400,
-            lineHeight: 1.3,
+            fontSize: "36px",
+            fontWeight: 500,
+            lineHeight: 1.1,
             color: "#000000",
             textAlign: "left",
             mb: 5
           }}
         >
-          {textPart2}
+          {textMobile}
         </Typography>
 
-        {/* CTA Mobile - ALINEADO A LA IZQUIERDA */}
-        <Box sx={{ textAlign: "left" }}>
-          <Box 
-            component={"a"} 
-            href={"/clinica"} 
-            sx={{ 
-              textDecoration: "none",
-              display: "inline-block"
-            }}
-          >
-            <AnimatedBorderBox>
-              <Typography
-                color="#000000"
-                fontFamily={"Poppins"}
-                fontSize={"15px"}
-                fontWeight={400}
-                sx={{ textTransform: "uppercase" }}
-              >
-                Ver nuestros servicios
-              </Typography>
-            </AnimatedBorderBox>
-          </Box>
+        {/* Nuevo párrafo descriptivo - MOBILE */}
+        <Box sx={{
+          mt: 4
+        }}>
+          <Typography sx={{
+            fontFamily: "Poppins",
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "#000",
+            mb: 2,
+            textAlign: "left"
+          }}>
+            Cirugía plástica y estética
+          </Typography>
+
+          <Typography sx={{
+            fontFamily: "Poppins",
+            fontSize: "16px",
+            fontWeight: 600, // Bold 600 también en móvil
+            color: "#000",
+            lineHeight: 1.1,
+            textAlign: "left"
+          }}>
+            Nuestra práctica abarca un amplio rango de procedimientos, desde intervenciones no quirúrgicas
+            hasta procesos altamente especializados. Lo que nos distingue es nuestro enfoque humano:
+            priorizamos el acompañamiento cercano y el cuidado integral durante todo el proceso.
+          </Typography>
         </Box>
       </Box>
     </Box>

@@ -42,7 +42,7 @@ export default function NewHero() {
         width: "100%",
         minHeight: "100vh",
         display: "grid",
-        backgroundColor: "#000000ff",
+        background: "radial-gradient(circle at center, #0081C7 -100%, #191968 40%)",
         gridTemplateColumns: "repeat(12, 1fr)",
         paddingX: { xs: "20px", md: "70px" },
         columnGap: "20px",
@@ -66,167 +66,44 @@ export default function NewHero() {
         }}
       />
 
-      {/* Lado Izquierdo - Imagen */}
+      {/* Lado Izquierdo - Imagen de DNA Dots */}
       <Box
         sx={{
           gridColumn: { xs: "1 / 13", md: "1 / 7" },
-          order: { xs: 2, md: 0 }, // Image below text on mobile
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          order: { xs: 2, md: 1 },
           position: "relative",
-          zIndex: 2,
+          zIndex: 0,
+          // Desktop: Ocupa todo el alto y compensa margins
+          height: { xs: "45vh", md: "calc(100% + 160px)" },
+          marginTop: { xs: 0, md: "-140px" },
+          marginLeft: { xs: "-20px", md: "-70px" },
+          marginBottom: { xs: "-60px", md: "-20px" },
+          marginRight: { xs: "-20px", md: 0 },
+          width: { xs: "calc(100% + 40px)", md: "calc(100% + 70px)" }, // Compensar márgenes
+          overflow: "hidden",
         }}
       >
         <Box
+          component="img"
+          src="/images/dots.png"
+          alt="DNA Patterns"
           sx={{
-            position: "relative",
             width: "100%",
-            maxWidth: { xs: "500px", md: "650px" },
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: { xs: "center", md: "left center" }, // Mejor posicionamiento
+            opacity: 1,
+            display: "block",
+            transform: { md: "scale(1.1)" } // Un poco más de presencia
           }}
-        >
-          {/* Imagen principal */}
-          <Box
-            component="img"
-            src="/images/image 181.png"
-            alt="Cirugía Plástica Estética y Reconstructiva"
-            sx={{
-              width: "100%",
-              height: "auto",
-              objectFit: "contain",
-            }}
-          />
-
-          {/* Label superior con línea punteada diagonal */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: { xs: "20px", md: "40px" },
-              left: { xs: "10px", md: "20px" },
-              zIndex: 3,
-            }}
-          >
-            {/* Línea punteada diagonal hacia abajo-derecha */}
-            {/* PARA MOVER LA LÍNEA:
-                - Ajustar 'top' y 'left' en el sx del Box para la posición inicial.
-                - Ajustar 'width' y 'height' para el tamaño del área de dibujo.
-                - Ajustar x1, y1, x2, y2 en el elemento <line> para la dirección.
-            */}
-            <Box
-              component="svg"
-              sx={{
-                position: "absolute",
-                top: "100%",
-                left: "100%",
-                width: { xs: "80px", md: "120px" },
-                height: { xs: "80px", md: "180px" },
-                overflow: "visible",
-                pointerEvents: "none",
-              }}
-            >
-              <line
-                x1="0"
-                y1="0"
-                x2="70%"
-                y2="100%"
-                stroke="rgba(255, 255, 255, 0.3)"
-                strokeWidth="1"
-                strokeDasharray="4 4"
-              />
-            </Box>
-
-            <Box
-              sx={{
-                backgroundColor: "rgba(65, 60, 55, 0.6)", // Grisaceo amarronado sutil
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
-                padding: "8px 14px",
-                maxWidth: { xs: "140px", md: "180px" },
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Geist Mono', monospace",
-                  fontSize: { xs: "8px", md: "10px" },
-                  color: "white",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                  fontWeight: 400,
-                  lineHeight: 1.4,
-                  textAlign: "left",
-                }}
-              >
-                CONEXIÓN HUMANA Y CUIDADO PERSONALIZADO
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* Label inferior con línea punteada diagonal */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: { xs: "20px", md: "30px" },
-              right: { xs: "10px", md: "10px" },
-              zIndex: 3,
-            }}
-          >
-            {/* Línea punteada diagonal hacia arriba-izquierda (hacia el círculo grande central) */}
-            <Box
-              component="svg"
-              sx={{
-                position: "absolute",
-                bottom: "100%", // Arriba del label
-                right: "100%",  // A la izquierda del label
-                width: { xs: "80px", md: "180px" }, // Más largo para alcanzar el círculo
-                height: { xs: "80px", md: "180px" },
-                overflow: "visible",
-                pointerEvents: "none",
-              }}
-            >
-              <line
-                x1="0"
-                y1="0"
-                x2="100%"
-                y2="100%"
-                stroke="rgba(255, 255, 255, 0.3)"
-                strokeWidth="1"
-                strokeDasharray="4 4"
-              />
-            </Box>
-
-            <Box
-              sx={{
-                backgroundColor: "rgba(65, 60, 55, 0.6)", // Grisaceo amarronado sutil
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
-                padding: "8px 14px",
-                maxWidth: { xs: "140px", md: "180px" },
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Geist Mono', monospace",
-                  fontSize: { xs: "8px", md: "10px" },
-                  color: "white",
-                  letterSpacing: "0.5px",
-                  textTransform: "uppercase",
-                  fontWeight: 400,
-                  lineHeight: 1.4,
-                  textAlign: "left",
-                }}
-              >
-                TECNOLOGÍA AVANZADA E INNOVACIÓN CONSTANTE
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+        />
       </Box>
 
       {/* Lado Derecho - Contenido */}
       <Box
         sx={{
           gridColumn: { xs: "1 / 13", md: "7 / 13" },
-          order: { xs: 1, md: 0 }, // Text above image on mobile
+          order: { xs: 1, md: 2 },
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
@@ -235,7 +112,9 @@ export default function NewHero() {
           zIndex: 2,
           paddingLeft: { xs: "0px", md: "70px" },
           paddingBottom: { xs: "30px", md: "30px" },
-          paddingTop: { xs: "0px", md: "220px" }, // Push content down independently
+          paddingTop: { xs: "40px", md: "220px" },
+          width: "100%",
+          boxSizing: "border-box"
         }}
       >
         {/* Título Principal */}
@@ -243,13 +122,12 @@ export default function NewHero() {
           <Typography
             sx={{
               fontFamily: "'Poppins', sans-serif",
-              fontSize: { xs: "36px", md: "42px", lg: "48px" },
+              fontSize: { xs: "38px", md: "42px", lg: "48px" },
               color: "white",
               fontWeight: 400,
-              lineHeight: { xs: 1.05, md: 0.95 },
+              lineHeight: { xs: 1.1, md: 0.95 },
               letterSpacing: "-1.5px",
               textAlign: "left",
-              mb: "0px" // Removed margin to connect lines
             }}
           >
             Cirugía mamaria{" "}
@@ -267,10 +145,10 @@ export default function NewHero() {
           <Typography
             sx={{
               fontFamily: "'Poppins', sans-serif",
-              fontSize: { xs: "40px", md: "42px", lg: "48px" }, // Larger on mobile
+              fontSize: { xs: "38px", md: "42px", lg: "48px" },
               color: "white",
               fontWeight: 400,
-              lineHeight: { xs: 1.05, md: 0.95 },
+              lineHeight: { xs: 1.1, md: 0.95 },
               letterSpacing: "-1.5px",
               textAlign: "left",
             }}
@@ -279,7 +157,7 @@ export default function NewHero() {
           </Typography>
         </Box>
 
-        {/* Botón "Conoce Mas" - Full Width con fondo blanco */}
+        {/* Botón "Conoce Mas" */}
         <Box sx={{ width: "100%" }}>
           <Box
             ref={buttonRef}
@@ -292,7 +170,6 @@ export default function NewHero() {
               backgroundColor: "white",
               border: "none",
               padding: "18px 48px",
-              letterSpacing: "0px",
               cursor: "pointer",
               fontWeight: 400,
             }}

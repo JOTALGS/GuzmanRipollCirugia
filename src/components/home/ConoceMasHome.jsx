@@ -253,7 +253,7 @@ export default function ConoceMasHome() {
           id="main-paragraph"  // ID para el ScrollTrigger endpoint
           sx={{
             fontFamily: "Poppins",
-            fontSize: { md: "42px", lg: "74px" }, // 🔺 TAMAÑO TEXTO DESKTOP (42px tablet, 80px desktop)
+            fontSize: { md: "42px", lg: "74px" }, // 🔺 TAMAÑO TO DESKTOP (42px tablet, 80px desktop)
             fontWeight: 500, // 🔺 BOLD TEXTO (400=normal, 500=medium, 600=semibold, 700=bold)
             lineHeight: 1,
             color: "#000000",

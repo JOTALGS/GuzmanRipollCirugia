@@ -1,13 +1,15 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Typography, Link as MuiLink } from "@mui/material";
-
-import LogoIso from "/images/GR_9_Isologo.png";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const COLORS = {
-  cardBg: "#E8E8E8",
-  textDark: "#1a1a1a",
-  accent: "#0066cc",
+  textDark: "#000000",
+  textGrey: "#666666",
+  textLightGrey: "#999999",
 };
 
 const navLinks = [
@@ -15,344 +17,278 @@ const navLinks = [
   { to: "/clinica", text: "Clínica" },
   { to: "/procedimientos", text: "Procedimientos" },
   { to: "/resultados", text: "Resultados" },
-  { to: "/contacto", text: "Contacto ↗" },
+  { to: "/contacto", text: "Contacto" },
 ];
 
-const contactInfo = [
-  { text: "+598.99.016.358", type: "text" },
-  { text: "info@guzmanripoll.com", type: "email" },
+const realContactInfo = [
   { text: "Punta del Este, Uruguay", type: "text" },
 ];
 
-const legalLinks = [
-  { to: "/privacidad", text: "Política de privacidad" },
+const phoneInfo = [
+  { text: "+598 99 016 358", type: "phone" },
+];
+
+const emailInfo = [
+  { text: "info@guzmanripoll.com", type: "email" },
 ];
 
 const socialLinks = [
-  { href: "https://instagram.com/guzmanripoll", text: "Instagram" },
-  { href: "https://wa.me/59899016358", text: "WhatsApp" },
-  { href: "https://facebook.com/guzmanripoll", text: "Facebook" },
+  { href: "https://instagram.com/guzmanripoll", text: "instagram" },
+  { href: "https://linkedin.com", text: "linkedin" },
+  { href: "https://facebook.com/guzmanripoll", text: "facebook" },
 ];
 
 const linkStyles = {
-  fontFamily: "Poppins",
-  fontSize: "13px",
-  color: "#1a1a1a",
-  position: "relative",
-  display: "block",
-  width: "fit-content",
-  my: 0.6,
+  fontFamily: "Poppins, sans-serif",
+  fontSize: "16px",
+  color: COLORS.textDark,
   textDecoration: "none",
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    bottom: -2,
-    left: 0,
-    width: "0%",
-    height: "1px",
-    backgroundColor: "#0066cc",
-    transition: "width 0.3s ease",
-  },
+  display: "block",
+  lineHeight: "1.5",
+  fontWeight: 500,
+  textTransform: "none",
   "&:hover": {
-    color: "#0066cc",
-    "&::after": {
-      width: "100%",
-    },
+    opacity: 0.7,
   },
 };
 
-const titleStyles = {
-  fontFamily: "Poppins",
-  fontSize: "13px",
-  fontWeight: 600,
-  color: "#1a1a1a",
-  mb: 0.5,
-  textAlign: "left",
+const textStyles = {
+  fontFamily: "Poppins, sans-serif",
+  fontSize: "16px",
+  color: COLORS.textDark,
+  lineHeight: "1.5",
+  fontWeight: 500,
+  textTransform: "none",
 };
 
-export default function Footer() {
+const socialLinkStyles = {
+  fontFamily: "Poppins, sans-serif",
+  fontSize: "16px",
+  color: COLORS.textDark,
+  textDecoration: "none",
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  lineHeight: "1.5",
+  fontWeight: 500,
+  textTransform: "none",
+  "&:hover": {
+    opacity: 0.7,
+  },
+};
+
+export default function Footer({ variant }) {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <Box sx={{ width: "100%", px: { xs: "16px", md: "20px" }, pb: { xs: "16px", md: "20px" } }}>
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: COLORS.cardBg,
-          borderRadius: { xs: "20px", md: "24px" },
-          overflow: "hidden",
-          // --- GLASS EFFECT ---
-          // 1. Gradient Background (Light source direction)
-          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%)",
+    <Box sx={{
+      px: { xs: "12px", md: "40px" }, // AJUSTE: Margen lateral externo del footer (aire gris alrededor de la card)
+      pb: { xs: "12px", md: "40px" }, // AJUSTE: Margen inferior externo
+      pt: { xs: "20px", md: "60px" }, // AJUSTE: Margen superior externo (separación con sección previa)
+      width: "100%",
+      boxSizing: "border-box",
+    }}>
+      <Box component="footer" sx={{
+        width: "100%",
+        px: { xs: "30px", md: "70px" },
+        pt: { xs: "60px", md: "100px" },
+        pb: { xs: "40px", md: "60px" },
+        bgcolor: "white",
+        color: COLORS.textDark,
+        borderRadius: "20px",
+        boxSizing: "border-box",
+        border: "1px solid rgba(0,0,0,0.05)",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
+      }}>
+        <Box sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(12, 1fr)",
+          gap: { xs: "40px", md: "20px" },
+          position: "relative"
+        }}>
 
-          // 2. The Frost
-          backdropFilter: "blur(20px) saturate(180%)",
-          WebkitBackdropFilter: "blur(20px) saturate(180%)", // Safari support
+          {/* LEFT COLUMN: CTA at top, Logo at bottom */}
+          <Box sx={{
+            gridColumn: { xs: "1 / -1", md: "1 / 6" },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "flex-start"
+          }}>
+            {/* CTA Text and Button at top */}
+            <Box sx={{ mb: { xs: "40px", md: "0" }, textAlign: "left" }}>
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "32px", md: "42px" },
+                color: COLORS.textDark,
+                fontWeight: 500,
+                lineHeight: 1.15,
+                letterSpacing: "-0.03em",
+                mb: { xs: 2, md: 3 },
+                textTransform: "none"
+              }}>
+                Cirugía mamaria
+                <br />
+                <Typography
+                  component="span"
+                  sx={{
+                    color: "#0081C7",
+                    fontWeight: 500,
+                    fontSize: "inherit",
+                    fontFamily: "inherit"
+                  }}
+                >
+                  inteligente.
+                </Typography>
+              </Typography>
 
-          // 3. Border & Shape
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-
-          // 4. The Occlusion/Depth Shadows
-          boxShadow: `
-    0 8px 32px 0 rgba(0, 0, 0, 0.15),          /* Ambient Shadow */
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),  /* Inner Ring */
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.5)   /* Top Highlight */
-  `
-        }}
-      >
-        {/* ===== Mobile ===== */}
-        <Box sx={{ display: { xs: "block", md: "none", mx: "auto" } }}>
-          <Box sx={{ px: "24px", pt: "32px", pb: "24px" }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 4 }}>
-              <Box
+              <MuiLink
+                component={RouterLink}
+                to="/contacto"
+                underline="none"
                 sx={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  backgroundColor: COLORS.accent,
-                }}
-              />
-              <Typography
-                sx={{
-                  fontFamily: "Poppins",
-                  fontSize: "10px",
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: COLORS.accent,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  backgroundColor: "#ffffff",
+                  color: COLORS.textDark,
+                  border: "1px solid rgba(0, 0, 0, 0.06)",
+                  px: { xs: 2, md: 2.5 },
+                  py: { xs: 1, md: 1.2 },
+                  borderRadius: "12px",
+                  fontSize: { xs: "14px", md: "15px" },
+                  fontWeight: 500,
+                  letterSpacing: "0.01em",
+                  fontFamily: "Poppins, sans-serif",
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+                  "&:hover": {
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+                    backgroundColor: "#CCE4FE",
+                    color: "#0081C7"
+                  },
+                  "&:hover .arrow-icon": {
+                    transform: "translateX(4px)"
+                  }
                 }}
               >
-                FOOTER
-              </Typography>
+                Agendar consulta
+                <ArrowForwardIcon
+                  className="arrow-icon"
+                  sx={{
+                    fontSize: { xs: 18, md: 20 },
+                    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                  }}
+                />
+              </MuiLink>
             </Box>
 
-            <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 6 }}>
-              <Box sx={{ minWidth: "110px" }}>
-                <Typography sx={{ ...titleStyles, fontSize: "13px" }}>Navegación</Typography>
-                {navLinks.map((link) => (
-                  <MuiLink
-                    key={link.to}
-                    component={RouterLink}
-                    to={link.to}
-                    underline="none"
-                    sx={{ ...linkStyles, fontSize: "12px" }}
-                  >
-                    {link.text}
-                  </MuiLink>
-                ))}
-              </Box>
+          </Box>
 
-              <Box sx={{ minWidth: "140px", ml: 4 }}>
-                <Typography sx={{ ...titleStyles, fontSize: "13px" }}>Contacto</Typography>
-                {contactInfo.map((item, index) =>
-                  item.type === "email" ? (
-                    <MuiLink
-                      key={index}
-                      href={`mailto:${item.text}`}
-                      underline="none"
-                      sx={{ ...linkStyles, fontSize: "12px" }}
-                    >
-                      {item.text}
-                    </MuiLink>
-                  ) : (
-                    <Typography
-                      key={index}
-                      sx={{ fontFamily: "Poppins", fontSize: "12px", color: COLORS.textDark, textAlign: "left" }}
-                    >
-                      {item.text}
-                    </Typography>
-                  )
-                )}
-                <Box sx={{ mt: 1 }}>
-                  <Typography sx={{ ...titleStyles, fontSize: "13px" }}>Legal</Typography>
-                  {legalLinks.map((link) => (
-                    <MuiLink
-                      key={link.to}
-                      component={RouterLink}
-                      to={link.to}
-                      underline="none"
-                      sx={{ ...linkStyles, fontSize: "12px" }}
-                    >
-                      {link.text}
-                    </MuiLink>
-                  ))}
-                </Box>
-              </Box>
+          {/* CENTER COLUMN: Navigation */}
+          <Box sx={{ gridColumn: { xs: "1 / 7", md: "9 / 10" }, display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start", textAlign: "left" }}>
+            {navLinks.map((link) => (
+              <MuiLink
+                key={link.to}
+                component={RouterLink}
+                to={link.to}
+                underline="none"
+                sx={linkStyles}
+              >
+                {link.text}
+              </MuiLink>
+            ))}
+          </Box>
 
-            </Box>
+          {/* SOCIALS COLUMN */}
+          <Box sx={{ gridColumn: { xs: "7 / 13", md: "10 / 11" }, display: "flex", flexDirection: "column", gap: "10px", mt: { md: "0" }, alignItems: "flex-start", textAlign: "left" }}>
+            <MuiLink href="https://instagram.com/guzmanripoll" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
+              <InstagramIcon sx={{ fontSize: 20 }} /> Instagram
+            </MuiLink>
+            <MuiLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
+              <LinkedInIcon sx={{ fontSize: 20 }} /> LinkedIn
+            </MuiLink>
+            <MuiLink href="https://facebook.com/guzmanripoll" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
+              <FacebookIcon sx={{ fontSize: 20 }} /> Facebook
+            </MuiLink>
+          </Box>
 
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <Box
-                component="img"
-                src={LogoIso}
-                alt="Guzmán Ripoll"
-                sx={{ height: 40, width: "auto" }}
-              />
-              <Box sx={{ textAlign: "right" }}>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 0.5, mb: 1 }}>
-                  {socialLinks.map((link, index) => (
-                    <React.Fragment key={link.text}>
-                      <MuiLink
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        underline="none"
-                        sx={{ ...linkStyles, fontSize: "11px", display: "inline-block" }}
-                      >
-                        {link.text}
-                      </MuiLink>
-                      {index < socialLinks.length - 1 && (
-                        <Typography sx={{ color: COLORS.textDark, mx: 0.5, fontSize: "11px" }}>·</Typography>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </Box>
-                <Typography sx={{ fontFamily: "Poppins", fontSize: "11px", color: COLORS.textDark }}>
-                  © Guzmán Ripoll {currentYear}.
-                </Typography>
-                <Typography sx={{ fontFamily: "Poppins", fontSize: "11px", color: COLORS.textDark }}>
-                  Todos los derechos reservados.
-                </Typography>
-              </Box>
-            </Box>
+          {/* CONTACT COLUMN */}
+          <Box sx={{ gridColumn: { xs: "1 / -1", md: "11 / 13" }, display: "flex", flexDirection: "column", gap: "10px", mt: { xs: "20px", md: "0" }, alignItems: "flex-start", textAlign: "left" }}>
+            {realContactInfo.map((item, index) => (
+              <MuiLink key={`loc-${index}`} href="https://maps.google.com/?q=Punta+del+Este,+Uruguay" target="_blank" underline="none" sx={linkStyles}>
+                {item.text}
+              </MuiLink>
+            ))}
+            {phoneInfo.map((item, index) => (
+              <MuiLink key={`phone-${index}`} href={`tel:${item.text.replace(/\s+/g, '')}`} underline="none" sx={linkStyles}>
+                {item.text}
+              </MuiLink>
+            ))}
+            {emailInfo.map((item, index) => (
+              <MuiLink key={`email-${index}`} href={`mailto:${item.text}`} underline="none" sx={linkStyles}>
+                {item.text}
+              </MuiLink>
+            ))}
           </Box>
         </Box>
 
-        {/* ===== Desktop ===== */}
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(12, 1fr)",
-              columnGap: "20px",
-              px: "70px",
-              pt: "60px",
-              pb: "40px",
-            }}
-          >
-            {/* ROW 1: FOOTER label */}
-            <Box sx={{ gridColumn: "1 / 2", textAlign: "left" }}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Box
-                  sx={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    backgroundColor: COLORS.accent,
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: COLORS.accent,
-                  }}
-                >
-                  FOOTER
-                </Typography>
-              </Box>
+        {/* Bottom Section */}
+        <Box sx={{
+          mt: { xs: "60px", md: "80px" },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
+          alignItems: { xs: "flex-start", md: "flex-end" },
+          gap: "20px",
+        }}>
+          {/* Left: Logo */}
+          <Box sx={{ textAlign: "left" }}>
+            <img
+              src="/images/GR_9_Isologo.png"
+              alt="Guzmán Ripoll"
+              style={{ height: "60px", width: "auto" }}
+            />
+          </Box>
+
+          {/* Right: Volver arriba + Copyright */}
+          <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: { xs: "flex-start", md: "flex-end" },
+            gap: "12px"
+          }}>
+            {/* Volver arriba */}
+            <Box
+              onClick={scrollToTop}
+              sx={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                opacity: 0.7,
+                transition: "opacity 0.3s",
+                "&:hover": { opacity: 1 }
+              }}
+            >
+              <Typography sx={{ ...textStyles, color: COLORS.textGrey, fontSize: "14px" }}>volver arriba</Typography>
+              <Typography sx={{ ...textStyles, color: COLORS.textGrey, fontSize: "16px" }}>↑</Typography>
             </Box>
 
-            {/* ROW 1: Navegación - Columnas 7-8 */}
-            <Box sx={{ gridColumn: "7 / 9", textAlign: "left" }}>
-              <Typography sx={titleStyles}>Navegación</Typography>
-              {navLinks.map((link) => (
-                <MuiLink
-                  key={link.to}
-                  component={RouterLink}
-                  to={link.to}
-                  underline="none"
-                  sx={linkStyles}
-                >
-                  {link.text}
-                </MuiLink>
-              ))}
-            </Box>
-
-            {/* ROW 1: Contacto - Columnas 9-10 */}
-            <Box sx={{ gridColumn: "9 / 11", textAlign: "left" }}>
-              <Typography sx={titleStyles}>Contacto</Typography>
-              {contactInfo.map((item, index) =>
-                item.type === "email" ? (
-                  <MuiLink
-                    key={index}
-                    href={`mailto:${item.text}`}
-                    underline="none"
-                    sx={linkStyles}
-                  >
-                    {item.text}
-                  </MuiLink>
-                ) : (
-                  <Typography
-                    key={index}
-                    sx={{ fontFamily: "Poppins", fontSize: "13px", color: COLORS.textDark, textAlign: "left" }}
-                  >
-                    {item.text}
-                  </Typography>
-                )
-              )}
-            </Box>
-
-            {/* ROW 1: Legal - Columnas 11-12 */}
-            <Box sx={{ gridColumn: "11 / 13", textAlign: "left" }}>
-              <Typography sx={titleStyles}>Legal</Typography>
-              {legalLinks.map((link) => (
-                <MuiLink
-                  key={link.to}
-                  component={RouterLink}
-                  to={link.to}
-                  underline="none"
-                  sx={linkStyles}
-                >
-                  {link.text}
-                </MuiLink>
-              ))}
-            </Box>
-
-            {/* ROW 2: Logo */}
-            <Box sx={{ gridColumn: "1 / 3", mt: 8, alignSelf: "end", textAlign: "left" }}>
-              <Box
-                component="img"
-                src={LogoIso}
-                alt="Guzmán Ripoll"
-                sx={{ height: 45, width: "auto", display: "block" }}
-              />
-            </Box>
-
-            {/* ROW 2: Social - alineado con Navegación */}
-            <Box sx={{ gridColumn: "7 / 11", mt: 8, alignSelf: "end", textAlign: "left" }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                {socialLinks.map((link, index) => (
-                  <React.Fragment key={link.text}>
-                    <MuiLink
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      underline="none"
-                      sx={{ ...linkStyles, display: "inline-block" }}
-                    >
-                      {link.text}
-                    </MuiLink>
-                    {index < socialLinks.length - 1 && (
-                      <Typography sx={{ color: COLORS.textDark, mx: 1, fontSize: "13px" }}>·</Typography>
-                    )}
-                  </React.Fragment>
-                ))}
-              </Box>
-            </Box>
-
-            {/* ROW 2: Copyright - alineado con Legal */}
-            <Box sx={{ gridColumn: "11 / 13", mt: 8, alignSelf: "end", textAlign: "left" }}>
-              <Typography sx={{ fontFamily: "Poppins", fontSize: "13px", color: COLORS.textDark, textAlign: "left" }}>
-                © Guzmán Ripoll {currentYear}.
-              </Typography>
-              <Typography sx={{ fontFamily: "Poppins", fontSize: "13px", color: COLORS.textDark, textAlign: "left" }}>
-                Todos los derechos reservados.
-              </Typography>
-            </Box>
+            {/* Copyright */}
+            <Typography sx={{
+              ...textStyles,
+              color: COLORS.textGrey,
+              fontSize: "14px",
+              textAlign: { xs: "center", md: "right" },
+              textTransform: "none"
+            }}>
+              Copyright © {currentYear} Guzman Ripoll
+            </Typography>
           </Box>
         </Box>
       </Box>

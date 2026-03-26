@@ -2,706 +2,374 @@ import React, { useEffect, useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
-  Container,
   Typography,
-  Button,
-  AppBar,
-  Toolbar,
-  Grid,
-  Card,
-  CardMedia,
-  Link,
-  Divider,
-  Stack,
-  Chip,
   useMediaQuery,
   useTheme
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { styled } from '@mui/material/styles';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Register GSAP plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const LogoBox = styled(Box)(({ theme }) => ({
-  width: 32,
-  height: 32,
-  backgroundColor: theme.palette.primary.main,
-  borderRadius: 4,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const InnerLogoBox = styled(Box)({
-  width: 16,
-  height: 16,
-  backgroundColor: 'white',
-  borderRadius: 2,
-});
-
-const NavLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  textDecoration: 'none',
-  fontSize: '0.875rem',
-  transition: 'color 0.3s',
-  '&:hover': {
-    color: theme.palette.text.primary,
-  },
-}));
-
-const ProcedureNumber = styled(Typography)({
-  fontSize: '3.75rem',
-  fontWeight: 300,
-  lineHeight: 1,
-  width: 80,
-});
-
-const MoreButton = styled(Button)(({ theme }) => ({
-  fontSize: '0.75rem',
-  color: theme.palette.text.disabled,
-  width: '50%',
-  border: '2px solid #4b4b4bff',
-  borderRadius: '150px',
-  textTransform: 'none',
-  transition: 'all 0.2s ease, filter 0.15s ease',
-  '&:hover': {
-    backgroundColor: 'transparent',
-    color: theme.palette.text.secondary,
-  },
-  '&:active': {
-    filter: 'blur(1.5px)',
-    transform: 'scale(0.97)',
-  },
-}));
-
-export default function Home() {
+export default function MedicalProcedures() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-
-  // GSAP Animations
-  useEffect(() => {
-    if (!isMobile) {
-      procedures.forEach((_, index) => {
-        gsap.fromTo(
-          `.procedure-item-${index}`,
-          {
-            opacity: 0,
-            y: 60,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: `.procedure-item-${index}`,
-              start: 'top 85%',
-              end: 'top 60%',
-              toggleActions: 'play none none none',
-            },
-          }
-        );
-      });
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [isMobile]);
+  const sectionRef = useRef(null);
+  const introRef = useRef(null);
 
   const procedures = [
     {
-      number: "01",
-      name: "Aumento Mamario",
-      image: "/images/imagen3.jpg",
-      title: "Cirugía de Aumento Mamario",
-      specialties: [
-        "Implantes mamarios",
-        "Pexia mamaria",
+      id: "01",
+      number: "001",
+      name: "Cirugía Mamaria",
+      image: "/images/implantes.png",
+      description: "Procedimientos destinados a mejorar la forma, el volumen y la posición de las mamas mediante técnicas personalizadas.",
+      listTitle: "Incluye",
+      items: [
+        "Aumento mamario con implantes",
+        "Mastopexia",
         "Reducción mamaria",
-        "Ginecomastia",
-        "Reconstrucción mamaria",
-        "Asimetrías mamarias"
+        "Recambio de implantes",
+        "Reconstrucción mamaria"
       ]
     },
     {
-      number: "02",
+      id: "02",
+      number: "002",
       name: "Lipoescultura VASER",
-      image: "/images/imagen3.jpg",
-      title: "Tecnología VASER & BodyTite",
-      specialties: [
-        "VASER Hi-Def",
-        "BodyTite RFAL",
-        "Morpheus8",
-        "Contorno corporal",
-        "Definición muscular",
-        "Tensado de piel"
+      image: "/images/maxi2.png",
+      description: "Remodelación corporal mediante eliminación de grasa localizada utilizando tecnología avanzada.",
+      listTitle: "Tecnologías",
+      items: [
+        "VASER Liposuction",
+        "Morpheus RF"
       ]
     },
     {
-      number: "03",
-      name: "Rinoplastia",
-      image: "/images/imagen3.jpg",
-      title: "Cirugía Estética Nasal",
-      specialties: [
-        "Rinoplastia estética",
-        "Rinoplastia funcional",
-        "Rinoseptoplastia",
-        "Rinoplastia secundaria",
-        "Cirugía de tabique",
-        "Refinamiento nasal"
-      ]
-    },
-    {
-      number: "04",
+      id: "03",
+      number: "003",
       name: "Abdominoplastia",
-      image: "/images/imagen3.jpg",
-      title: "Remodelación Abdominal Completa",
-      specialties: [
-        "Abdominoplastia completa",
-        "Mini abdominoplastia",
-        "Lipoabdominoplastia",
-        "Plicatura muscular",
-        "Post-embarazo",
-        "Post-bariátrica"
-      ]
+      image: "/images/imagen4.jpg",
+      description: "Procedimiento quirúrgico que permite remodelar el abdomen eliminando exceso de piel y grasa.",
+      listTitle: null,
+      items: []
     },
     {
-      number: "05",
+      id: "04",
+      number: "004",
       name: "Blefaroplastia",
-      image: "/images/imagen3.jpg",
-      title: "Rejuvenecimiento de la Mirada",
-      specialties: [
-        "Blefaroplastia superior",
-        "Blefaroplastia inferior",
-        "Cirugía de párpados",
-        "Bolsas palpebrales",
-        "Lifting de cejas",
-        "Rejuvenecimiento ocular"
-      ]
+      image: "/images/imagen5.jpg",
+      description: "Cirugía estética de los párpados que elimina exceso de piel y bolsas de grasa.",
+      listTitle: null,
+      items: []
     },
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Intro headline words
+      const wordElements = gsap.utils.toArray(".proc-word");
+      if (wordElements.length > 0) {
+        gsap.fromTo(wordElements,
+          { y: "100%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+            stagger: 0.03,
+            scrollTrigger: {
+              trigger: introRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            }
+          }
+        );
+      }
 
-  // Desktop Layout (original)
-  if (!isMobile) {
-    return (
-      <Box
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          height: { xs: "100vh", md: "260vh" },
-          display: "grid",
-          marginBottom: { xs: '80px', md: '100px', lg: '100px', xl: '150px' },
-          backgroundColor: "#fff",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          marginInline: { xs: "15px", md: "70px" },
-          columnGap: { xs: "25px", md: "17px" },
-          "& > section": {
-            gridColumn: "1 / -1",
-          },
-        }}
-      >
-        {/* Línea divisoria superior */}
-        <Box
-          sx={{
-            gridColumn: '1 / 13',
-            gridRow: '1 / 1',
-            height: '1px',
-            backgroundColor: '#D0D0D0',
-            marginTop: { xs: '60px', md: '100px' },
-          }}
-        />
+      // Cards stagger
+      const cards = gsap.utils.toArray(".proc-card");
+      if (cards.length > 0) {
+        gsap.fromTo(cards,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: ".proc-grid",
+              start: "top 85%",
+              toggleActions: "play none none none",
+            }
+          }
+        );
+      }
+    }, sectionRef);
 
-        <Box
-          sx={{
-            marginTop: { xs: '70px', md: '115px' },
-            gridColumn: { xs: '1 / 13', md: '1 / 8' },
-            gridRow: '1 / 1',
-            display: 'flex',
-            flexDirection: 'column',
-            textAlign: 'left',
-            alignItems: 'flex-start',
-            justifyContent: 'start',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2.5 }}>
-            <Box
-              sx={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                backgroundColor: '#0066cc',
-                animation: 'pulse 2s ease-in-out infinite',
-                '@keyframes pulse': {
-                  '0%, 100%': {
-                    opacity: 1,
-                    transform: 'scale(1)',
-                  },
-                  '50%': {
-                    opacity: 0.6,
-                    transform: 'scale(1.2)',
-                  },
-                },
-              }}
-            />
-            <Typography variant="body2" component="span" sx={{ fontSize: { xs: '11px', md: '12px' }, fontWeight: 500, color: '#000000ff', letterSpacing: '0.05em' }}>
-              PROCEDIMIENTOS
-            </Typography>
-          </Box>
-          <Typography
-            variant="h4"
-            sx={{
-              color: '#111',
-              fontWeight: 500,
-              fontSize: { xs: '1.5rem', md: '54px' },
-              lineHeight: 1,
-              textAlign: 'left',
-              mb: 2.5,
-              maxWidth: { xs: '100%', md: 'calc(5 * (100% / 7) + 4 * 17px)' }
-            }}
-          >
-            Excelencia quirúrgica con enfoque humano
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: 'text.secondary',
-              maxWidth: { xs: '100%', md: 'calc(3 * (100% / 7) + 2 * 17px)' },
-              lineHeight: 1.25,
-              textAlign: 'left',
-              fontSize: { xs: '0.9rem', md: '18px' }
-            }}
-          >
-            Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica
-            con un cuidado humano excepcional.
-          </Typography>
-        </Box>
+    return () => ctx.revert();
+  }, [isMobile]);
 
-        {procedures.map((procedure, index) => (
-          <Box
-            key={`number-${index}`}
-            sx={{
-              marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '1 / 3', md: '1 / 1' },
-              maxHeight: { xs: '100px', sm: '350px' },
-              gridRow: `${index + 2} / ${index + 2}`,
-              display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-              alignItems: 'flex-start',
-              justifyContent: 'start',
-              paddingTop: '20px',
-              position: 'relative',
-              ':before': {
-                content: '""',
-                position: 'absolute',
-                top: '-30px',
-                left: '1/2',
-                width: 'calc(100vw - 140px)',
-                height: '1px',
-                backgroundColor: '#D0D0D0',
-                zIndex: 0,
-              },
-            }}
-          >
-            <ProcedureNumber variant="h2" sx={{ fontSize: { xs: '30px', md: '60px' } }} color="text.primary">
-              {procedure.number}
-            </ProcedureNumber>
-          </Box>
-        ))}
+  const headlineText = "Excelencia quirúrgica con enfoque humano";
+  const headlineWords = headlineText.split(" ");
 
-        {procedures.map((procedure, index) => (
-          <Box
-            key={`name-${index}`}
-            sx={{
-              marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '3 / 6', md: '4 / 7' },
-              maxHeight: { xs: '300px', sm: '350px' },
-              gridRow: `${index + 2} / ${index + 2}`,
-              display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-              alignItems: 'flex-start',
-              justifyContent: 'start',
-              paddingTop: '20px',
-            }}
-          >
-            <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: { xs: '15px', md: '1.125rem'}, textAlign: 'left', fontWeight: 700 }}>
-              {procedure.name}
-            </Typography>
-          </Box>
-        ))}
-
-        {procedures.map((procedure, index) => (
-          <Box
-            key={`content-${index}`}
-            className={`procedure-item-${index}`}
-            sx={{
-              marginTop: { xs: '40px', md: '60px' },
-              gridColumn: { xs: '5 / 13', md: '8 / 13' },
-              height: { xs: '300px', sm: '420px' },
-              gridRow: `${index + 2} / ${index + 2}`,
-              display: 'flex',
-              flexDirection: 'row',
-              textAlign: 'left',
-              alignItems: 'stretch',
-              justifyContent: 'start',
-              gap: { xs: '20px', md: '17px' },
-              position: 'relative',
-              paddingBottom: { xs: '30px', md: '20px' },
-            }}
-          >
-            {/* Image outside container */}
-            <Box
-              component="img"
-              src={procedure.image || "/placeholder.svg"}
-              alt={procedure.name}
-              sx={{
-                width: { xs: '100%', sm: '38%' },
-                height: { xs: '200px', sm: 'auto' },
-                objectFit: 'cover',
-                borderRadius: { xs: "8px", md: "10px" },
-                flexShrink: 0
-              }}
-            />
-
-            {/* Outer Container - Light Gray */}
-            <Box sx={{
-              p: { xs: "4px", md: "5px" },
-              backgroundColor: "#F5F5F5",
-              borderRadius: { xs: "12px", md: "14px" },
-              flex: 1,
-              position: 'relative',
-              border: index === 0 ? '1px solid rgba(0, 0, 0, 0.08)' : 'none',
-              overflow: 'visible',
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-              {/* "Más Popular" Flag - Only for first procedure (01) */}
-              {index === 0 && (
-                <Box sx={{
-                  position: 'absolute',
-                  top: '-12px',
-                  right: '16px',
-                  backgroundColor: '#000',
-                  color: '#fff',
-                  padding: { xs: '6px 14px', md: '7px 16px' },
-                  borderRadius: '6px',
-                  zIndex: 100,
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-                }}>
-                  <Typography
-                    sx={{
-                      fontSize: { xs: '10px', md: '11px' },
-                      fontWeight: 700,
-                      letterSpacing: '0.5px',
-                      textTransform: 'uppercase',
-                      fontFamily: 'Poppins',
-                      lineHeight: 1,
-                    }}
-                  >
-                    Más Popular
-                  </Typography>
-                </Box>
-              )}
-
-              {/* Inner Card - Darker Gray */}
-              <Box sx={{
-                p: { xs: "16px", md: "20px" },
-                backgroundColor: "#E9E9E9",
-                borderRadius: { xs: "8px", md: "10px" },
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '100%',
-              }}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontSize: { xs: '20px', md: '24px', lg: '28px', xl: '32px' }, mb: 2, color: 'textPrimary', fontFamily: 'Poppins', textAlign: 'left' }}
-                >
-                  {procedure.title}
-                </Typography>
-                <Box>
-
-                  
-                  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', mb: 3, flexGrow: 1 }}>
-                    {procedure.specialties.map((specialty, idx) => (
-                      <Typography
-                        key={idx}
-                        variant="caption"
-                        sx={{ color: 'text.primary', fontFamily: 'Poppins', display: 'block', fontSize: '16px', textAlign: 'left' }}
-                      >
-                        {specialty}
-                      </Typography>
-                    ))}
-                  </Box>
-
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-start', width: '100%', mt: 'auto' }}>
-                    <MoreButton
-                      component={RouterLink}
-                      to={`/procedimiento/${procedure.number}`}
-                      sx={{
-                        backgroundColor: 'transparent',
-                        color: '#000',
-                        borderRadius: { xs: "6px", md: "90px" },
-                        textTransform: 'none',
-                        py: { xs: 0.8, md: 2 },
-                        px: { xs: 2.5, md: 3.5 },
-                        fontSize: { xs: "13px", md: "14px" },
-                        fontWeight: 500,
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '3px',
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                          opacity: 0.7,
-                        },
-                      }}
-                    >
-                      Ver Más →
-                    </MoreButton>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        ))}
-      </Box>
-    );
-  }
-
-  // Mobile Layout (new responsive design)
   return (
     <Box
+      ref={sectionRef}
       sx={{
         position: "relative",
         zIndex: 1,
-        backgroundColor: "#fff",
-        paddingX: { xs: "20px", sm: "30px" },
-        paddingBottom: { xs: '40px', sm: '60px' },
+        backgroundColor: "#F2F2F2",
+        pt: { xs: "80px", md: "140px" },
+        pb: { xs: "60px", md: "100px" },
       }}
     >
-      {/* Línea divisoria superior */}
+      {/* Espacio vacío en móviles en lugar del título */}
+      <Box sx={{ display: { xs: "block", md: "none" }, height: "40px" }} />
+      {/* ═══════════════════════════════════════════════
+          INTRO — Editorial layout like clinica
+          ═══════════════════════════════════════════════ */}
       <Box
+        ref={introRef}
         sx={{
-          height: '1px',
-          backgroundColor: '#D0D0D0',
-          marginTop: { xs: '60px', sm: '80px' },
-          marginBottom: { xs: '30px', sm: '40px' },
-        }}
-      />
-
-      {/* Header Section */}
-      <Box
-        sx={{
-          marginBottom: { xs: '40px', sm: '60px' },
-          textAlign: 'left',
+          px: { xs: "20px", md: "70px" },
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
+          columnGap: "20px",
+          mb: { xs: "60px", md: "120px" },
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-          <Box
-            sx={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              backgroundColor: '#0066cc',
-              animation: 'pulse 2s ease-in-out infinite',
-              '@keyframes pulse': {
-                '0%, 100%': {
-                  opacity: 1,
-                  transform: 'scale(1)',
-                },
-                '50%': {
-                  opacity: 0.6,
-                  transform: 'scale(1.2)',
-                },
-              },
-            }}
-          />
-          <Typography variant="body2" component="span" sx={{ fontSize: '11px', fontWeight: 500, color: '#666', letterSpacing: '0.05em' }}>
-            PROCEDIMIENTOS
+        {/* Label — left */}
+        <Box sx={{
+          gridColumn: { xs: "1 / -1", md: "1 / 4" },
+          display: "flex",
+          alignItems: "baseline",
+          gap: "12px",
+          mb: { xs: "24px", md: 0 },
+        }}>
+          <Typography sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "14px", md: "16px" },
+            fontWeight: 500,
+            color: "rgba(0,0,0,0.35)",
+            lineHeight: 1,
+          }}>
+            (01)
+          </Typography>
+          <Typography sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "14px", md: "16px" },
+            fontWeight: 500,
+            color: "#000",
+            textTransform: "uppercase",
+            letterSpacing: "-0.01em",
+            lineHeight: 1,
+          }}>
+            Nuestro proceso
           </Typography>
         </Box>
-        <Typography
-          variant="h3"
-          sx={{
-            color: '#111',
+
+        {/* Headline — center */}
+        <Box sx={{ gridColumn: { xs: "1 / -1", md: "4 / 11" }, mb: { xs: "24px", md: 0 } }}>
+          <Typography sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "32px", md: "56px", lg: "64px" },
+            fontWeight: 500,
+            lineHeight: 1.08,
+            letterSpacing: "-0.04em",
+            color: "black",
+            textAlign: "left",
+            overflow: "hidden",
+          }}>
+            {headlineWords.map((word, i) => (
+              <Box component="span" key={i} sx={{ display: "inline-block", overflow: "hidden", verticalAlign: "bottom", mr: "0.25em" }}>
+                <Box component="span" className="proc-word" sx={{ display: "inline-block", willChange: "transform" }}>
+                  {word}
+                </Box>
+              </Box>
+            ))}
+          </Typography>
+        </Box>
+
+        {/* Description — right */}
+        <Box sx={{ gridColumn: { xs: "1 / -1", md: "9 / 13" }, mt: { md: "8px" } }}>
+          <Typography sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "16px", md: "17px" },
+            lineHeight: 1.55,
+            color: "rgba(0,0,0,0.5)",
             fontWeight: 600,
-            fontSize: { xs: '2rem', sm: '2.2rem' },
-            lineHeight: 1.2,
-            textAlign: 'left',
-            mb: 2,
-            width: '100%',
-            maxWidth: '100%'
-          }}
-        >
-          Excelencia quirúrgica con enfoque humano
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            color: 'text.secondary',
-            lineHeight: 1.7,
-            fontSize: { xs: '0.9rem', sm: '1rem' },
-            textAlign: 'left'
-          }}
-        >
-          Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica
-          con un cuidado humano excepcional.
-        </Typography>
+            textAlign: "left",
+          }}>
+            Como expertos en cirugía mamaria, ofrecemos tratamientos personalizados que combinan precisión tecnológica con un cuidado humano excepcional.
+          </Typography>
+        </Box>
       </Box>
 
-      {/* Procedures List - Mobile */}
-      <Stack spacing={{ xs: 4, sm: 6 }}>
-        {procedures.map((procedure, index) => (
+      {/* ═══════════════════════════════════════════════
+          PROCEDURE CARDS — Clean grid
+          ═══════════════════════════════════════════════ */}
+      <Box
+        className="proc-grid"
+        sx={{
+          px: { xs: "20px", md: "70px" },
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          gap: { xs: "16px", md: "20px" },
+        }}
+      >
+        {procedures.map((procedure) => (
           <Box
-            key={index}
+            key={procedure.id}
+            className="proc-card"
+            component={RouterLink}
+            to={`/procedimiento/${procedure.id}`}
             sx={{
-              paddingBottom: { xs: 4, sm: 6 },
-              position: 'relative',
+              textDecoration: "none",
+              color: "inherit",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+              borderRadius: "14px",
+              backgroundColor: { xs: "#EBEBEB", md: "white" },
+              position: "relative",
+              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              /* Subtle top-left glare flash */
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "120px",
+                height: "120px",
+                background: "radial-gradient(circle at 0% 0%, rgba(255,255,255,0.35) 0%, transparent 70%)",
+                zIndex: 2,
+                pointerEvents: "none",
+                borderRadius: "14px 0 0 0",
+              },
+              "&:hover": {
+                backgroundColor: "#efefef",
+              },
+              "&:hover .proc-card-img": {
+                transform: "scale(1.03)",
+              },
+              "&:hover .proc-card-arrow": {
+                transform: "translateX(4px)",
+                color: "#0081C7",
+              }
             }}
           >
-            {/* Línea divisoria sólida arriba de cada procedimiento */}
-            <Box
-              sx={{
-                height: '1px',
-                backgroundColor: '#D0D0D0',
-                marginBottom: { xs: 3, sm: 4 },
-              }}
-            />
-
-            {/* Number and Name Row */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2,
-                mb: 3,
-                position: 'relative',
-              }}
-            >
-              <Typography
-                variant="h2"
+            {/* Image */}
+            <Box sx={{
+              width: "100%",
+              height: { xs: "240px", md: "320px", lg: "360px" },
+              overflow: "hidden",
+            }}>
+              <Box
+                className="proc-card-img"
+                component="img"
+                src={procedure.image}
+                alt={procedure.name}
                 sx={{
-                  fontSize: { xs: '1.5rem', sm: '3rem' },
-                  fontWeight: { xs: 700, sm: 300 },
-                  lineHeight: 1,
-                  color: 'text.primary'
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                  transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
                 }}
-              >
-                {procedure.number}
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: 'text.secondary',
-                  fontSize: { xs: '1.25rem', sm: '1.25rem' },
-                  fontWeight: 700,
-                  flex: 1
-                }}
-              >
-                {procedure.name}
-              </Typography>
+              />
             </Box>
 
-            {/* Outer Container - Light Gray */}
-            <Box sx={{
-              p: { xs: "4px", sm: "5px" },
-              backgroundColor: "#F5F5F5",
-              borderRadius: { xs: "12px", sm: "14px" },
-            }}>
-              {/* Inner Card - Darker Gray */}
-              <Box sx={{
-                p: { xs: "16px", sm: "20px" },
-                backgroundColor: "#E9E9E9",
-                borderRadius: { xs: "8px", sm: "10px" },
-              }}>
-                {/* Image */}
-                <Box
-                  component="img"
-                  src={procedure.image || "/placeholder.svg"}
-                  alt={procedure.name}
+            {/* Content */}
+            <Box sx={{ p: { xs: "20px", md: "28px" }, display: "flex", flexDirection: "column", flexGrow: 1 }}>
+              {/* Number + Arrow row */}
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "14px" }}>
+                <Typography sx={{
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "#0081C7",
+                  letterSpacing: "0.05em",
+                }}>
+                  //{procedure.number}
+                </Typography>
+                <ArrowForwardIcon
+                  className="proc-card-arrow"
                   sx={{
-                    width: '100%',
-                    height: { xs: '200px', sm: '250px' },
-                    objectFit: 'cover',
-                    borderRadius: { xs: "6px", sm: "8px" },
-                    mb: 3
+                    color: "rgba(0,0,0,0.15)",
+                    fontSize: 18,
+                    transition: "all 0.3s ease",
                   }}
                 />
+              </Box>
 
-                {/* Content */}
-                <Box>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                      fontWeight: 500,
-                      mb: 2,
-                      color: 'textPrimary',
-                      fontFamily: 'Poppins',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {procedure.title}
+              {/* Title */}
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "20px", md: "24px" },
+                fontWeight: 500,
+                color: "#111",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.2,
+                textAlign: "left",
+                mb: "12px",
+              }}>
+                {procedure.name}
+              </Typography>
+
+              {/* Description */}
+              <Typography sx={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: "13px", md: "14px" },
+                color: "rgba(0,0,0,0.45)",
+                lineHeight: 1.6,
+                fontWeight: 400,
+                textAlign: "left",
+                mb: "auto",
+              }}>
+                {procedure.description}
+              </Typography>
+
+              {/* Items */}
+              {procedure.items && procedure.items.length > 0 && (
+                <Box sx={{ mt: "20px", pt: "16px", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+                  <Typography sx={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: "rgba(0,0,0,0.3)",
+                    mb: "10px",
+                    textAlign: "left",
+                  }}>
+                    {procedure.listTitle}
                   </Typography>
-
-                  {/* Specialties Grid */}
-                  <Box
-                    sx={{
-                      display: 'grid',
-                      gridTemplateColumns: { xs: '1fr 1fr', sm: 'repeat(3, 1fr)' },
-                      gap: { xs: '8px', sm: '12px' },
-                      mb: 3
-                    }}
-                  >
-                    {procedure.specialties.map((specialty, idx) => (
-                      <Typography
-                        key={idx}
-                        variant="caption"
-                        sx={{
-                          color: 'text.disabled',
-                          display: 'block',
-                          fontSize: { xs: '0.75rem', sm: '0.813rem' },
-                          textAlign: 'left'
-                        }}
-                      >
-                        {specialty}
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: "4px 20px" }}>
+                    {procedure.items.map((item, i) => (
+                      <Typography key={i} sx={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "12px",
+                        color: "rgba(0,0,0,0.45)",
+                        fontWeight: 500,
+                        lineHeight: 1.6,
+                        textAlign: "left",
+                      }}>
+                        {item}
                       </Typography>
                     ))}
                   </Box>
-
-                  {/* More Button */}
-                  <Button
-                    component={RouterLink}
-                    to={`/procedimiento/${procedure.number}`}
-                    endIcon={<ArrowForwardIcon />}
-                    sx={{
-                      backgroundColor: '#FFFFFF',
-                      color: '#000',
-                      borderRadius: { xs: "6px", sm: "8px" },
-                      textTransform: 'none',
-                      py: { xs: 1, sm: 1.2 },
-                      px: { xs: 2.5, sm: 3.5 },
-                      fontSize: { xs: '13px', sm: '14px' },
-                      fontWeight: 500,
-                      '&:hover': { backgroundColor: '#F5F5F5' },
-                    }}
-                  >
-                    Ver Más
-                  </Button>
                 </Box>
-              </Box>
+              )}
             </Box>
           </Box>
         ))}
-      </Stack>
+      </Box>
+
     </Box>
   );
 }

@@ -1,190 +1,185 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParticleLogo from "../animations/ParticleLogo";
 
-function BlurButton({ children, sx, ...props }) {
-  const [isPressed, setIsPressed] = useState(false);
-
-  return (
-    <Box
-      component="span"
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setTimeout(() => setIsPressed(false), 150)}
-      onMouseLeave={() => setIsPressed(false)}
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 0.8,
-        backgroundColor: "#ffffff",
-        color: "#0a0a0a",
-        px: { xs: 1.8, md: 2 },
-        py: { xs: 0.9, md: 1 },
-        borderRadius: "6px",
-        fontSize: { xs: "0.65rem", md: "0.7rem" },
-        fontWeight: 500,
-        letterSpacing: "0.03em",
-        textTransform: "uppercase",
-        cursor: "pointer",
-        transition: "all 0.2s ease, filter 0.15s ease",
-        fontFamily: "Poppins, sans-serif",
-        filter: isPressed ? "blur(1.5px)" : "blur(0px)",
-        transform: isPressed ? "scale(0.97)" : "scale(1)",
-        "&:hover": {
-          backgroundColor: "#e5e5e5",
-        },
-        ...sx,
-      }}
-      {...props}
-    >
-      {children}
-      <ArrowForwardIcon sx={{ fontSize: 13 }} />
-    </Box>
-  );
-}
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CTACard({
-  title = "¿Lista para dar el primer paso?",
-  buttonText = "Agendar consulta",
-  badgeText = "Agenda tu cita",
-  linkText = "Contactar",
+  title = "Da el primer paso hoy",
+  subtitle = "Contactanos hoy y agendá tu consulta personalizada con nuestro equipo de especialistas.",
+  buttonText = "Agenda tu consulta",
   href = "/contacto",
   logoSrc = "/images/GR_9_Isologo_Blanco.png",
 }) {
+  const containerRef = useRef(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Sizes for the ParticleLogo wrapper
+  const particleSize = isMobile ? 380 : 500; // Ajustado a un tamaño más sutil
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(containerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <Box
       sx={{
-        // ESPACIO ENTRE ÚLTIMO PROCEDIMIENTO Y CTA CARD
-        // Aumenta o disminuye estos valores para ajustar el espacio superior (NO afecta el footer)
-        // xs: móviles, md: desktop
-        pt: { xs: 10, md: 20 },
-        pb: { xs: 8, md: 12 },
+        width: "100%",
+        mx: "auto",
+        position: "relative",
+        mt: { xs: 6, md: 10 },
+        mb: { xs: 6, md: 10 },
         px: { xs: "20px", md: "70px" },
-        backgroundColor: "#ffffff",
       }}
     >
-      {/* Grid de 12 columnas */}
       <Box
+        ref={containerRef}
+        component={RouterLink}
+        to={href}
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          columnGap: "20px",
-          maxWidth: "1920px",
-          margin: "0 auto",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          justifyContent: { xs: "center", md: "space-between" },
+          backgroundColor: "#0081C7", // Requested background color
+          borderRadius: { xs: "32px", md: "34px" }, // More rounded borders
+          position: "relative",
+          overflow: "hidden",
+          textDecoration: "none",
+          color: "white",
+          boxShadow: "0 20px 40px -10px rgba(11, 21, 40, 0.4)",
+          minHeight: { xs: "240px", md: "180px" },
+          px: { xs: 4, md: 10 },
+          py: { xs: 4, md: 5 },
+          textAlign: { xs: "center", md: "left" },
         }}
       >
-        {/* Card ocupa 4 columnas */}
+        {/* Content */}
         <Box
-          component={RouterLink}
-          to={href}
           sx={{
-            gridColumn: { xs: "1 / -1", md: "1 / 5" },
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            backgroundColor: "#0a0a0a",
-            borderRadius: "24px",
-            p: { xs: 5, md: 6 },
-            minHeight: { xs: "400px", md: "550px" },
-            textDecoration: "none",
-            color: "inherit",
-            transition: "transform 0.3s ease, box-shadow 0.3s ease",
-            "&:hover": {
-              transform: "translateY(-4px)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-            },
+            alignItems: { xs: "center", md: "flex-start" },
+            gap: { xs: 1.5, md: 1.2 },
+            zIndex: 2,
+            width: "100%",
+            position: "relative",
+            justifyContent: { xs: "center", md: "center" },
           }}
         >
-          {/* Header */}
-          <Box
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              mb: "auto",
+              fontFamily: "Poppins, sans-serif",
+              fontSize: { xs: "24px", md: "34px" },
+              fontWeight: 500,
+              color: "#ffffff",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.15,
+              maxWidth: { md: "700px" },
+              textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Box
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  backgroundColor: "#0066cc",
-                }}
-              />
-              <Typography
-                sx={{
-                  fontSize: "0.85rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  color: "#0066cc",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                {badgeText}
-              </Typography>
-            </Box>
-            <Typography
+            {title}
+          </Typography>
+
+          {/* Subtitle en letra más chica */}
+          <Typography
+            sx={{
+              fontFamily: "Poppins, sans-serif",
+              fontSize: { xs: "14px", md: "15px" },
+              fontWeight: 300,
+              color: "rgba(255, 255, 255, 0.85)",
+              lineHeight: 1.5,
+              maxWidth: { md: "500px" },
+              textAlign: { xs: "center", md: "left" },
+              mb: { xs: 1, md: 2 }
+            }}
+          >
+            {subtitle}
+          </Typography>
+
+          {/* Button: Agenda tu consulta con flechita ultra clean */}
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 1.5,
+              backgroundColor: "#ffffff",
+              color: "#0B1528",
+              px: { xs: 2.5, md: 3 },
+              py: { xs: 1, md: 1.2 },
+              borderRadius: "12px",
+              fontSize: { xs: "13px", md: "14px" },
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              fontFamily: "Poppins, sans-serif",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              "&:hover": {
+                transform: "translateY(-3px)",
+                boxShadow: "0 10px 24px rgba(0,0,0,0.2)",
+                backgroundColor: "#f8fafc"
+              },
+              "&:hover .arrow-icon": {
+                transform: "translateX(4px)"
+              }
+            }}
+          >
+            {buttonText}
+            <ArrowForwardIcon
+              className="arrow-icon"
               sx={{
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-                color: "#ffffff",
-                fontFamily: "Poppins, sans-serif",
+                fontSize: { xs: 18, md: 20 },
+                transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
               }}
-            >
-              {linkText}
-            </Typography>
+            />
           </Box>
+        </Box>
 
-
-          {/* Content group - Logo + Title + Button */}
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start"
-          }}>
-            {/* Logo */}
-            <Box sx={{ mb: { xs: 3, md: 4 }, width: 56, height: 56 }}>
-              <Box
-                component="img"
-                src={logoSrc}
-                alt="Guzmán Ripoll Cirugía"
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-              />
-            </Box>
-
-            {/* Title */}
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 400,
-                fontSize: { xs: "1.75rem", md: "2.5rem" },
-                lineHeight: 1.2,
-                color: "#ffffff",
-                mb: { xs: 3, md: 4 },
-                fontFamily: "Poppins, sans-serif",
-                textAlign: "left",
-              }}
-            >
-              {title.split("\n").map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i < title.split("\n").length - 1 && <br />}
-                </span>
-              ))}
-            </Typography>
-
-            {/* Button */}
-            <BlurButton>{buttonText}</BlurButton>
-          </Box>
+        {/* Dynamic Canvas Watermark Logo Filled With Particles */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: { xs: "50%", md: "50%" },
+            left: { xs: "50%", md: "auto" },
+            // Mover hacia adentro (izquierda) dando margen positivo desde la derecha
+            right: { xs: "auto", md: "5%" },
+            transform: { xs: "translate(-50%, -50%)", md: "translateY(-50%)" },
+            width: `${particleSize}px`,
+            height: `${particleSize}px`,
+            opacity: { xs: 0.8, md: 0.9 },
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        >
+          <ParticleLogo
+            src={logoSrc}
+            width={particleSize}
+            height={particleSize}
+            particleColor="#ffffff"
+            repelRadius={30} // Aún más chico el radio de repulsión
+          />
         </Box>
       </Box>
     </Box>

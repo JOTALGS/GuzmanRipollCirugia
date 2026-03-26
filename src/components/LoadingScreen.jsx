@@ -1,88 +1,146 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { Box, Typography } from "@mui/material"
+import { gsap } from "gsap"
 
 const LoadingScreen = ({ onComplete }) => {
   const [count, setCount] = useState(0)
-  const [fadeOut, setFadeOut] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const counterRef = useRef(null)
+  const overlayRef = useRef(null)
 
   useEffect(() => {
-    // Track actual page load progress
-    let loadProgress = 0
-    const startTime = Date.now()
+    const duration = 4.0; 
+    const ctx = gsap.context(() => {
+      // Smooth numeric count 0 to 100
+      const obj = { value: 0 };
+      gsap.to(obj, {
+        value: 100,
+        duration: duration,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setCount(Math.floor(obj.value));
+        },
+        onComplete: () => {
+          // Pause at 100 before fade out
+          gsap.delayedCall(0.4, () => {
+            gsap.to(overlayRef.current, {
+              opacity: 0,
+              duration: 0.8,
+              ease: "power2.out",
+              onComplete: () => {
+                if (onComplete) onComplete();
+              }
+            });
+          });
+        }
+      });
 
-    // Simulate progress based on actual loading events
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime
-      // Faster animation - reach 100 in ~1.5 seconds or when page loads
-      const timeProgress = Math.min(100, (elapsed / 1500) * 100)
-      loadProgress = Math.floor(timeProgress)
-      setCount(loadProgress)
+      // POSITION Animation: Starts at bottom and ends at top without clipping
+      // Using 'top' to control the final stop accurately
+      const viewportHeight = window.innerHeight;
+      const counterHeight = counterRef.current?.offsetHeight || 160;
+      const margin = 40; // Safety margin to avoid touching edges
 
-      if (loadProgress < 100 && !isLoaded) {
-        requestAnimationFrame(updateProgress)
-      } else if (loadProgress >= 100 || isLoaded) {
-        setCount(100)
-        // Iniciar fade out después de llegar a 100
-        setTimeout(() => {
-          setFadeOut(true)
-          // Llamar a onComplete después del fade out (300ms)
-          setTimeout(() => {
-            if (onComplete) onComplete()
-          }, 300)
-        }, 100)
-      }
-    }
+      gsap.fromTo(counterRef.current,
+        { 
+          y: viewportHeight - counterHeight - margin, 
+          opacity: 0 
+        },
+        { 
+          y: margin, 
+          opacity: 1,
+          duration: duration, 
+          ease: "power2.inOut"
+        }
+      );
+    });
 
-    // Check for window load event
-    const handleLoad = () => {
-      setIsLoaded(true)
-    }
-
-    if (document.readyState === 'complete') {
-      setIsLoaded(true)
-    } else {
-      window.addEventListener('load', handleLoad)
-    }
-
-    requestAnimationFrame(updateProgress)
-
-    return () => {
-      window.removeEventListener('load', handleLoad)
-    }
-  }, [onComplete, isLoaded])
+    return () => ctx.revert();
+  }, [onComplete]);
 
   return (
     <Box
+      ref={overlayRef}
       sx={{
         position: "fixed",
         top: 0,
         left: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "#000",
-        display: "flex",
-        alignItems: "flex-end",
-        justifyContent: "flex-end",
-        zIndex: 9999,
-        opacity: fadeOut ? 0 : 1,
-        transition: "opacity 0.5s ease-out",
-        pointerEvents: fadeOut ? "none" : "auto",
+        backgroundColor: "#191968", // Start color requested
+        zIndex: 99999,
+        pointerEvents: "auto",
+        transition: "opacity 0.8s ease-out",
+        overflow: "hidden",
       }}
     >
-      <Typography
+      {/* Darkening layer - increases opacity with count for a smooth darkening effect */}
+      <Box 
         sx={{
-          fontFamily: "Archivo, sans-serif",
-          fontWeight: 500,
-          fontSize: { xs: "60px", md: "78px" },
-          color: "#fff",
-          marginRight: { xs: "30px", md: "70px" },
-          marginBottom: { xs: "20px", md: "40px" },
-          lineHeight: 1,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "#000",
+          opacity: (count / 100) * 0.4, // Darkens up to 40% towards the end
+          zIndex: 0
+        }}
+      />
+      {/* ISOLOGO Blanco abajo a la izquierda - Minimalist */}
+      <Box sx={{
+        position: "absolute",
+        left: { xs: "30px", md: "50px" },
+        bottom: { xs: "30px", md: "50px" },
+        width: { xs: "40px", md: "60px" },
+        opacity: 0.6
+      }}>
+        <Box 
+          component="img"
+          src="/images/GR_9_Isologo_Blanco.png"
+          alt="Isologo"
+          sx={{ width: "100%", height: "auto", objectFit: "contain" }}
+        />
+      </Box>
+
+      {/* Counter Block - Minimalist vertical slide */}
+      <Box
+        ref={counterRef}
+        sx={{
+          position: "absolute",
+          right: { xs: "40px", md: "50px" }, // More padding as requested
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          zIndex: 2,
         }}
       >
-        {count}%
-      </Typography>
+        {/* Large Counter Number */}
+        <Typography
+          sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: 200,
+            fontSize: { xs: "80px", md: "160px" },
+            color: "#fff",
+            lineHeight: 0.8,
+            letterSpacing: "-0.04em",
+          }}
+        >
+          {count.toString().padStart(2, '0')}
+        </Typography>
+
+        {/* / 100 Small Marker */}
+        <Typography
+          sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "14px",
+            color: "rgba(255,255,255,0.2)",
+            fontWeight: 400,
+            mt: 0.5
+          }}
+        >
+          / 100
+        </Typography>
+      </Box>
     </Box>
   )
 }

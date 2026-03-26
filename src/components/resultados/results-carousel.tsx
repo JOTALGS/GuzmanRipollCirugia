@@ -21,33 +21,23 @@ const originalItems = [
 ]
 
 export function ResultsCarousel() {
-  const [itemWidth, setItemWidth] = useState(430)
   const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      const w = window.innerWidth
-      setIsMobile(w <= 768)
-
-      if (!isMobile) {
-        const maxWidth = Math.min(w, 1920)
-        const gridWidth = maxWidth - 140 // padding left + right
-        const columnWidth = gridWidth / 12
-        // Cada item ocupa 6 columnas - 10px de gutter (20px / 2)
-        const calculatedWidth = columnWidth * 6 - 10
-        setItemWidth(Math.max(300, calculatedWidth))
-      }
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [isMobile])
+ 
+   useEffect(() => {
+     const handleResize = () => {
+       const w = window.innerWidth
+       setIsMobile(w <= 768)
+     }
+ 
+     handleResize()
+     window.addEventListener("resize", handleResize)
+     return () => window.removeEventListener("resize", handleResize)
+   }, [])
 
   // MOBILE VERSION - Static vertical scroll
   if (isMobile) {
     return (
-      <div style={{ width: "100%", backgroundColor: "white", overflow: "hidden" }}>
+      <div style={{ width: "100%", backgroundColor: "#F2F2F2", overflow: "hidden" }}>
         {/* Header con título y subtítulo */}
         <div
           style={{
@@ -55,34 +45,36 @@ export function ResultsCarousel() {
             paddingRight: "20px",
             paddingTop: "75px",
             paddingBottom: "80px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline"
           }}
         >
           <h1
             style={{
               color: "#000000",
               lineHeight: "1.2",
-              fontWeight: "700",
-              fontSize: "48px",
+              fontWeight: "700", // BOLD
+              fontSize: "24px",
               fontFamily: "Poppins, sans-serif",
-              margin: "0 0 8px 0",
+              margin: 0,
               textAlign: "left",
-              letterSpacing: "-1px",
+              letterSpacing: "-0.5px",
             }}
           >
-            RESULTADOS
+            Casos Seleccionados
           </h1>
           <p
             style={{
               color: "#000000",
-              fontSize: "20px",
+              fontSize: "24px",
               fontFamily: "Poppins, sans-serif",
-              fontWeight: "500",
+              fontWeight: "400",
               margin: 0,
-              paddingTop: "25px",
-              textAlign: "left",
+              textAlign: "right",
             }}
           >
-            Pacientes - 2013/2024
+            17 - 26
           </p>
         </div>
 
@@ -108,14 +100,14 @@ export function ResultsCarousel() {
         </div>
 
         {/* Footer solo en mobile */}
-        <Footer />
+        <Footer variant="contact" />
       </div>
     )
   }
 
   // DESKTOP VERSION - Grid 2 columns (6 columnas cada uno)
   return (
-    <div style={{ width: "100%", backgroundColor: "white" }}>
+    <div style={{ width: "100%", backgroundColor: "#F2F2F2" }}>
       {/* Grid de 12 columnas */}
       <div
         style={{
@@ -134,8 +126,8 @@ export function ResultsCarousel() {
             rowGap: "40px",
           }}
         >
-          {/* Título a la izquierda - primeras 6 columnas */}
-          <div style={{ gridColumn: "span 6", paddingTop: "75px", paddingBottom: "80px" }}>
+          {/* Título a la izquierda - primeras 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px" }}>
             <h1
               style={{
                 color: "#000000",
@@ -146,38 +138,57 @@ export function ResultsCarousel() {
                 margin: "0 0 8px 0",
                 textAlign: "left",
                 letterSpacing: "-2px",
+                display: "none", // Ocultamos el título anterior
               }}
             >
-              </h1>
+            </h1>
             <p
               style={{
                 color: "#000000",
                 fontSize: "20px",
                 fontFamily: "Poppins, sans-serif",
-                fontWeight: "500",
+                fontWeight: "600", // Bold
                 margin: 0,
                 paddingTop: "25px",
                 textAlign: "left",
+                textTransform: "uppercase",
               }}
             >
-              Pacientes - 2018/2025
+              CASOS SELECCIONADOS
             </p>
           </div>
 
-          {/* Scroll text a la derecha - siguientes 6 columnas */}
-          <div style={{ gridColumn: "span 6", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
+          {/* Centro - '01' - siguientes 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
+            <p
+              style={{
+                color: "#D1D5DB", // Light gray
+                fontSize: "20px",
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: "600",
+                margin: 0,
+                paddingTop: "25px",
+                textAlign: "center",
+              }}
+            >
+              01
+            </p>
+          </div>
+
+          {/* Scroll text a la derecha - siguientes 4 columnas */}
+          <div style={{ gridColumn: "span 4", paddingTop: "75px", paddingBottom: "80px", display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
             <p
               style={{
                 color: "#000000",
                 fontSize: "20px",
                 fontFamily: "Poppins, sans-serif",
-                fontWeight: "500",
+                fontWeight: "600", // Bold
                 margin: 0,
                 paddingTop: "25px",
                 textAlign: "right",
               }}
             >
-              (scroll)
+              17 - 26&apos;
             </p>
           </div>
 

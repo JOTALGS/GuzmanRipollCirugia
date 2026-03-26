@@ -68,7 +68,7 @@ export default function Faq() {
       gridTemplateColumns: 'repeat(12, 1fr)',
       mx: 'auto', 
       p: 3, 
-      bgcolor: 'background.paper' 
+      bgcolor: '#F2F2F2' 
     }}>
       <Box sx={{
         gridColumn: '1 / 13',

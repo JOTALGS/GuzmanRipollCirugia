@@ -31,7 +31,7 @@ export default function CTAhome() {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top 7%",
-        end: isMobile() ? "bottom+=5000% top" : "bottom+=142% top",
+        end: isMobile() ? "bottom+=5000% top" : "bottom+=200% top",  // Extendido para llegar hasta recuperación
         pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,
@@ -63,7 +63,7 @@ export default function CTAhome() {
   return (
     <Box
       sx={{
-        height: { xs: 'auto', md: '250vh' },
+        height: { xs: 'auto', md: '260vh' },  // Reducido de 280vh
         overflowY: 'scroll',
         overflowX: 'hidden',
         // Hide scrollbar - Webkit (Brave, Chrome, Safari)
@@ -78,7 +78,7 @@ export default function CTAhome() {
         flexDirection: { xs: 'column', md: 'row' },
         columnGap: { xs: '16px', md: '20px' },
         paddingInline: { xs: '20px', md: '70px' },
-        marginBottom: { xs: '6vh', md: '0vh' },
+        marginBottom: { xs: '6vh', md: '4vh' },  // Reducido el espacio
       }}
     >
       {/* SECCIÓN IZQUIERDA - TEXTO PRINCIPAL */}
@@ -94,89 +94,73 @@ export default function CTAhome() {
           justifyContent: 'start',
         }}
       >
-        {/* TEXTO SUPERIOR PEQUEÑO */}
-        <Typography 
-          fontFamily={'Red Hat Display'} 
-          fontSize={{ xs: '14px', md: '16px', xl: '16px' }} 
-          sx={{ 
-            fontWeight: '500', 
-            width: { xs: '60%', md: '30%'}, 
-            color: 'background', 
-            textTransform: 'uppercase',
-            lineHeight: '1.1', // EDITAR AQUÍ - Line height texto pequeño
-          }}
-        >
-          Descubrí como podemos transformar tu vida
-        </Typography>
+        {/* Numeración de sección */}
+        <Box sx={{
+          display: { xs: 'none', md: 'flex' },
+          alignItems: 'baseline',
+          gap: '10px',
+          mb: 2,
+        }}>
+          <Typography component="span" sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "16px", md: "18px" },
+            fontWeight: 600,
+            color: "rgba(0, 0, 0, 0.44)",
+            lineHeight: 1
+          }}>
+            03
+          </Typography>
+          <Typography sx={{
+            fontFamily: "Poppins",
+            fontSize: { xs: "16px", md: "18px" },
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: "#000000",
+            letterSpacing: "0.03em",
+            lineHeight: 1
+          }}>
+            Resultados
+          </Typography>
+        </Box>
         
         <div id="left-section">
           {/* CONTENEDOR PRINCIPAL DEL TÍTULO */}
-          <Typography 
-            component="h1"
-            className="leading-tight font-bold text-white text-start space-y-2"
-            sx={{
-              paddingTop: "40px",
-              fontSize: isXs ? "calc(100vw / 25)" : "calc(100vw / 32)",
-              lineHeight: '0.9', // EDITAR AQUÍ - Line height general del título
-            }}
-          >
-            {/* LÍNEA 1: "Diseñados para" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: '', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 1
+          <Box sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            mb: { xs: 4, md: 0 }
+          }}>
+            {/* Título adaptable */}
+            <Typography
+              sx={{
+                fontFamily: 'Poppins',
+                fontSize: { xs: '44px', md: '48px', xl: '70px' },
+                fontWeight: 400,
+                color: 'background',
+                lineHeight: '1.1',
+                letterSpacing: { xs: '-1.5px', md: '-3px' },
+                textAlign: 'left',
               }}
             >
               Diseñados para 
+              <Box component="span" sx={{ display: 'block' }}>
+                <Typography 
+                  component="span" 
+                  fontFamily={'Poppins'} 
+                  fontSize="inherit" 
+                  sx={{ color: 'textAccent', letterSpacing: 'inherit' }}
+                >
+                  Maximizar
+                </Typography>
+                {' '}Tus 
+                <Box component="span" sx={{ display: 'block', textTransform: 'capitalize' }}>
+                  Resultados
+                </Box>
+              </Box>
             </Typography>
-            
-            {/* LÍNEA 2: "Maximizar tus" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: '', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 2
-              }}
-            >
-              <Typography 
-                component="span" 
-                fontFamily={'Poppins'} 
-                fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-                sx={{ 
-                  color: 'textAccent', 
-                  letterSpacing: '-3px',
-                  lineHeight: '1.1', // EDITAR AQUÍ - Line height del span "Maximizar"
-                }}
-              >
-                Maximizar
-              </Typography>
-              {' '}Tus 
-            </Typography>
-            
-            {/* LÍNEA 3: "Resultados" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: 'capitalize', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 3
-              }}
-            >
-              Resultados
-            </Typography>
-          </Typography>
+          </Box>
 
           {/* TEXTO DESCRIPTIVO */}
           <Typography 
@@ -241,19 +225,19 @@ export default function CTAhome() {
           {
             title: "Recuperación",
             number: "4",
-            image: "/images/imagen3.jpg",
+            image: "/images/recuperacion.png",
             subtitle: "Cuidado integral post cirugía",
             text: "Contarás con un plan de seguimiento personalizado y asesoría continua. Nuestro equipo te acompaña en cada etapa para una recuperación óptima."
           }
         ].map((card, index) => (
           <Box key={index} sx={{
             width: { xs: "100%", md: "100%" },
-            mb: 4,
+            mb: card.title === "Recuperación" ? 8 : 4,  // Más margen inferior para Recuperación
             mr: 20,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            minHeight: "450px",
+            minHeight: card.title === "Recuperación" ? "550px" : "450px",  // Aumentado a 550px
             alignItems: "flex-start"
           }}>
             
@@ -296,8 +280,19 @@ export default function CTAhome() {
               </Box>
 
               {/* IMAGEN */}
-              <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: 3, mb: 4 }}>
-                <img src={card.image} style={{ width: "50%", height: "300px", objectFit: "contain" }} />
+              <Box sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                mt: 3,
+                mb: card.title === "Recuperación" ? 2 : 4,  // Menos margen inferior para recuperación
+                height: card.title === "Recuperación" ? "320px" : "auto"  // Altura fija para recuperación
+              }}>
+                <img src={card.image} style={{
+                  width: card.title === "Recuperación" ? "60%" : "50%",  // Reducido un poco el ancho
+                  height: card.title === "Recuperación" ? "100%" : "300px",
+                  objectFit: card.title === "Recuperación" ? "contain" : "contain"
+                }} />
               </Box>
 
             </Box>

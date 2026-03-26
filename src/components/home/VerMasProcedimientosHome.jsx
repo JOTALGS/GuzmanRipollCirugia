@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom';
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 
@@ -53,8 +54,10 @@ export default function VerMasProcedimientosHome() {
 
   return (
     <Box
+      id="procedimientos-home-section"  // ID único para detectar esta sección
       sx={{
-        height: { xs: 'auto', md: '300vh' },
+        position: 'relative',
+        height: { xs: 'auto', md: 'calc(300vh + 100px)' },
         overflowY: { xs: 'visible', md: 'scroll' },
         overflowX: 'hidden',
         '&::-webkit-scrollbar': {
@@ -62,13 +65,97 @@ export default function VerMasProcedimientosHome() {
         },
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingInline: { xs: '20px', md: '70px' },
+      }}
+    >
+      {/* Header con numeración y enlace */}
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        width: '100%',
+        mb: { xs: 2, md: 0 },
+        pt: { xs: 4, md: 6 },
+      }}>
+        {/* Numeración de sección */}
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'baseline',
+          gap: '10px',
+        }}>
+          <Typography component="span" sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: { xs: "16px", md: "18px" },
+            fontWeight: 600,
+            color: "rgba(0, 0, 0, 0.44)",
+            lineHeight: 1
+          }}>
+            02
+          </Typography>
+          <Typography sx={{
+            fontFamily: "Poppins",
+            fontSize: { xs: "16px", md: "18px" },
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: "#000000",
+            letterSpacing: "0.03em",
+            lineHeight: 1
+          }}>
+            Procedimientos
+          </Typography>
+        </Box>
+
+        {/* Enlace a todos los procedimientos */}
+        <Box
+          component={RouterLink}
+          to="/procedimientos"
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+            alignItems: 'center',
+            gap: '4px',
+            textDecoration: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+            pb: '4px',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: '1px',
+              backgroundColor: '#000',
+              transform: 'translateX(-100%)',
+              transition: 'transform 0.3s ease-out',
+            },
+            '&:hover::after': {
+              transform: 'translateX(0)',
+            }
+          }}
+        >
+          <Typography sx={{
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            fontWeight: 500,
+            textTransform: "uppercase",
+            color: "#000",
+            letterSpacing: "0.05em",
+          }}>
+            Ver todos los procedimientos
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Grid de procedimientos */}
+      <Box sx={{
         display: { xs: 'flex', md: 'grid' },
         flexDirection: { xs: 'column', md: 'row' },
         gridTemplateColumns: { xs: 'none', md: 'repeat(12, 1fr)' },
         columnGap: { xs: '16px', md: '20px' },
-        paddingInline: { xs: '20px', md: '70px' },
-      }}
-    >
+        flex: 1,
+      }}>
       {/* Primer elemento */}
       <Box
         sx={{
@@ -564,6 +651,7 @@ export default function VerMasProcedimientosHome() {
           <Typography variant="p" fontSize={{ xs: '14px', md: '16px' }} fontFamily={'Poppins'} color="text.secondary" fontWeight={500}>Bodytite, Morpheus8</Typography>
         </Box>
       </Box>
+      </Box> {/* Cierre del grid */}
     </Box>
   );
 }

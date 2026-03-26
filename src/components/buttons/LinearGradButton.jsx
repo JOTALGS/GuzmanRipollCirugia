@@ -18,9 +18,13 @@ const LinearGradButton = () => {
           borderRadius: '9999px',
           padding: '12px 32px',
           fontFamily: 'Red Hat Display, sans-serif',
+          transition: 'transform 160ms var(--ease-out), filter 200ms ease, opacity 200ms ease',
           '&:hover': {
             opacity: 0.9,
             background: 'linear-gradient(to right, #191968, #0081C7)',
+          },
+          '&:active': {
+            transform: 'scale(0.97)',
           },
           textTransform: 'uppercase',
         }}

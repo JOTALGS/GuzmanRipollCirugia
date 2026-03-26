@@ -5,7 +5,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function MobileFloatingBar() {
   const location = useLocation();
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   // Detectar en qué página estamos
@@ -25,8 +25,9 @@ export default function MobileFloatingBar() {
           const windowHeight = window.innerHeight;
 
           // Mostrar solo cuando la sección de procedimientos está visible
-          // Consideramos que está visible cuando al menos el 20% de la sección está en pantalla
-          const visibilityThreshold = windowHeight * 0.2;
+          // Consideramos que está visible cuando al menos el 10% de la sección está en pantalla
+          // Y nos aseguramos de no mostrarlo si estamos muy arriba (en el Hero)
+          const visibilityThreshold = windowHeight * 0.1;
 
           if (rect.top < windowHeight - visibilityThreshold && rect.bottom > visibilityThreshold) {
             setIsVisible(true);
@@ -60,35 +61,29 @@ export default function MobileFloatingBar() {
           }
         }
       } else {
-        // Si no hay footer, usar solo la lógica de scroll
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setIsVisible(false);
-        } else {
+        // Para páginas sin footer (landing de procedimientos, etc)
+        if (currentScrollY > 100) {
           setIsVisible(true);
+        } else {
+          setIsVisible(false);
         }
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    // Solo activar en móviles
-    const checkMobile = () => {
-      if (window.innerWidth <= 768) {
-        window.addEventListener('scroll', handleScroll);
-      } else {
-        setIsVisible(false);
-        window.removeEventListener('scroll', handleScroll);
-      }
+    // Activar listeners
+    const checkVisibility = () => {
+      handleScroll(); // Chequeo inicial
+      window.addEventListener('scroll', handleScroll);
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkVisibility();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', checkMobile);
     };
-  }, [lastScrollY, isHome]);
+  }, [lastScrollY, isHome, location.pathname]);
 
   return (
     <Box

@@ -72,7 +72,7 @@ export default function VerMasProcedimientosHome() {
     >
       {/* Header con numeración y enlace */}
       <Box sx={{
-        display: 'flex',
+        display: { xs: 'none', md: 'flex' },
         justifyContent: 'space-between',
         alignItems: 'baseline',
         width: '100%',

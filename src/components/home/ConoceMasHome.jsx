@@ -335,7 +335,7 @@ export default function ConoceMasHome() {
       >
         {/* 01 CLÍNICA arriba de todo - MOBILE */}
         <Box sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           alignItems: "baseline",
           gap: "10px",
           mb: 5 // 🔺 SEPARACIÓN entre "01 CLÍNICA" y párrafo (aumentado a 5)

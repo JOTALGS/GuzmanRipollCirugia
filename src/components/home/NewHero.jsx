@@ -61,24 +61,25 @@ export default function NewHero() {
           bottom: 0,
           zIndex: 0,
           pointerEvents: "auto",
-          overflow: "hidden"
+          overflow: "hidden",
+          "& > div": {
+            width: "100% !important",
+            height: "100% !important",
+          },
+          "& canvas": {
+            width: "100% !important",
+            height: "100% !important",
+            objectFit: "cover",
+          }
         }}
       >
         <UnicornScene
           projectId="WPUXZwywkQSIFX5v2ghw"
-          width="1440px"
-          height="900px"
+          width="100%"
+          height="100%"
           scale={1}
           dpi={1.5}
           sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@2.1.5/dist/unicornStudio.umd.js"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover"
-          }}
         />
       </Box>
 

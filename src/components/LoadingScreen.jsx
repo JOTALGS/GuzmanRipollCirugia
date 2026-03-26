@@ -4,255 +4,142 @@ import { gsap } from "gsap"
 
 const LoadingScreen = ({ onComplete }) => {
   const [count, setCount] = useState(0)
-  const [fadeOut, setFadeOut] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const nameRef = useRef(null)
-  const topBarRef = useRef(null)
-  const bottomBarRef = useRef(null)
+  const counterRef = useRef(null)
+  const overlayRef = useRef(null)
 
   useEffect(() => {
-    // Y-axis rotation entrance for the name
-    const letters = nameRef.current?.querySelectorAll('.loading-letter')
-    const topItems = topBarRef.current?.querySelectorAll('.top-bar-item')
-    const bottomItems = bottomBarRef.current?.querySelectorAll('.bottom-bar-item')
+    const duration = 4.0; 
+    const ctx = gsap.context(() => {
+      // Smooth numeric count 0 to 100
+      const obj = { value: 0 };
+      gsap.to(obj, {
+        value: 100,
+        duration: duration,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setCount(Math.floor(obj.value));
+        },
+        onComplete: () => {
+          // Pause at 100 before fade out
+          gsap.delayedCall(0.4, () => {
+            gsap.to(overlayRef.current, {
+              opacity: 0,
+              duration: 0.8,
+              ease: "power2.out",
+              onComplete: () => {
+                if (onComplete) onComplete();
+              }
+            });
+          });
+        }
+      });
 
-    if (letters && letters.length > 0) {
-      gsap.set(letters, { rotateX: -90, opacity: 0, transformOrigin: "center bottom" })
-      gsap.to(letters, {
-        rotateX: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.03,
-        delay: 0.2,
-      })
-    }
+      // POSITION Animation: Starts at bottom and ends at top without clipping
+      // Using 'top' to control the final stop accurately
+      const viewportHeight = window.innerHeight;
+      const counterHeight = counterRef.current?.offsetHeight || 160;
+      const margin = 40; // Safety margin to avoid touching edges
 
-    if (topItems && topItems.length > 0) {
-      gsap.set(topItems, { y: 20, opacity: 0 })
-      gsap.to(topItems, {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.1,
-        delay: 0.4,
-      })
-    }
+      gsap.fromTo(counterRef.current,
+        { 
+          y: viewportHeight - counterHeight - margin, 
+          opacity: 0 
+        },
+        { 
+          y: margin, 
+          opacity: 1,
+          duration: duration, 
+          ease: "power2.inOut"
+        }
+      );
+    });
 
-    if (bottomItems && bottomItems.length > 0) {
-      gsap.set(bottomItems, { y: 20, opacity: 0 })
-      gsap.to(bottomItems, {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.1,
-        delay: 0.6,
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    let loadProgress = 0
-    const startTime = Date.now()
-
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime
-      const timeProgress = Math.min(100, (elapsed / 1500) * 100)
-      loadProgress = Math.floor(timeProgress)
-      setCount(loadProgress)
-
-      if (loadProgress < 100 && !isLoaded) {
-        requestAnimationFrame(updateProgress)
-      } else if (loadProgress >= 100 || isLoaded) {
-        setCount(100)
-        setTimeout(() => {
-          setFadeOut(true)
-          setTimeout(() => {
-            if (onComplete) onComplete()
-          }, 400)
-        }, 100)
-      }
-    }
-
-    const handleLoad = () => {
-      setIsLoaded(true)
-    }
-
-    if (document.readyState === 'complete') {
-      setIsLoaded(true)
-    } else {
-      window.addEventListener('load', handleLoad)
-    }
-
-    requestAnimationFrame(updateProgress)
-
-    return () => {
-      window.removeEventListener('load', handleLoad)
-    }
-  }, [onComplete, isLoaded])
-
-  const renderWord = (word) => {
-    return word.split("").map((letter, i) => (
-      <Box
-        component="span"
-        key={i}
-        sx={{
-          display: "inline-block",
-          overflow: "hidden",
-          verticalAlign: "bottom",
-          perspective: "600px",
-        }}
-      >
-        <Box
-          component="span"
-          className="loading-letter"
-          sx={{
-            display: "inline-block",
-            willChange: "transform",
-          }}
-        >
-          {letter}
-        </Box>
-      </Box>
-    ))
-  }
+    return () => ctx.revert();
+  }, [onComplete]);
 
   return (
     <Box
+      ref={overlayRef}
       sx={{
         position: "fixed",
         top: 0,
         left: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "#000",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        zIndex: 9999,
-        opacity: fadeOut ? 0 : 1,
-        transition: "opacity 400ms var(--ease-out)",
-        pointerEvents: fadeOut ? "none" : "auto",
+        backgroundColor: "#191968", // Start color requested
+        zIndex: 99999,
+        pointerEvents: "auto",
+        transition: "opacity 0.8s ease-out",
+        overflow: "hidden",
       }}
     >
-      {/* Top Bar — only left info (desktop: left + center) */}
-      <Box
-        ref={topBarRef}
+      {/* Darkening layer - increases opacity with count for a smooth darkening effect */}
+      <Box 
         sx={{
-          display: "flex",
-          justifyContent: { xs: "flex-start", md: "space-between" },
-          alignItems: "flex-start",
-          px: { xs: "20px", md: "70px" },
-          pt: { xs: "24px", md: "36px" },
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "#000",
+          opacity: (count / 100) * 0.4, // Darkens up to 40% towards the end
+          zIndex: 0
         }}
-      >
-        <Box className="top-bar-item">
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: { xs: "10px", md: "12px" }, color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Cirugía estética
-          </Typography>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: { xs: "10px", md: "12px" }, color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Mamaria
-          </Typography>
-        </Box>
-        <Box className="top-bar-item" sx={{ display: { xs: "none", md: "block" } }}>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Punta del Este
-          </Typography>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Uruguay
-          </Typography>
-        </Box>
-        {/* Loading indicator — desktop only in top-right */}
-        <Box className="top-bar-item" sx={{ display: { xs: "none", md: "block" } }}>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Cargando
-          </Typography>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            {count}%
-          </Typography>
-        </Box>
+      />
+      {/* ISOLOGO Blanco abajo a la izquierda - Minimalist */}
+      <Box sx={{
+        position: "absolute",
+        left: { xs: "30px", md: "50px" },
+        bottom: { xs: "30px", md: "50px" },
+        width: { xs: "40px", md: "60px" },
+        opacity: 0.6
+      }}>
+        <Box 
+          component="img"
+          src="/images/GR_9_Isologo_Blanco.png"
+          alt="Isologo"
+          sx={{ width: "100%", height: "auto", objectFit: "contain" }}
+        />
       </Box>
 
-      {/* Center Name — Thin weight, Y-rotation entrance */}
+      {/* Counter Block - Minimalist vertical slide */}
       <Box
-        ref={nameRef}
+        ref={counterRef}
         sx={{
+          position: "absolute",
+          right: { xs: "40px", md: "50px" }, // More padding as requested
           display: "flex",
           flexDirection: "column",
-          alignItems: { xs: "flex-start", md: "center" },
-          justifyContent: "center",
-          flex: 1,
-          gap: { xs: "2px", md: "6px" },
-          px: { xs: "20px", md: "70px" },
+          alignItems: "flex-end",
+          zIndex: 2,
         }}
       >
+        {/* Large Counter Number */}
         <Typography
           sx={{
             fontFamily: "Poppins, sans-serif",
-            fontWeight: 300,
-            fontSize: { xs: "36px", sm: "56px", md: "100px", lg: "130px" },
+            fontWeight: 200,
+            fontSize: { xs: "80px", md: "160px" },
             color: "#fff",
-            lineHeight: 1,
+            lineHeight: 0.8,
             letterSpacing: "-0.04em",
-            textTransform: "uppercase",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
           }}
         >
-          {renderWord("Guzmán")}
-          <Box component="span" sx={{ display: "inline-block", width: { xs: "12px", md: "24px" } }} />
-          {renderWord("Ripoll")}
+          {count.toString().padStart(2, '0')}
         </Typography>
-      </Box>
 
-      {/* Bottom Bar — mobile: location left + loading right. Desktop: hidden (shown in top) */}
-      <Box
-        ref={bottomBarRef}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          px: { xs: "20px", md: "70px" },
-          pb: { xs: "24px", md: "40px" },
-        }}
-      >
-        {/* Location — mobile only  */}
-        <Box className="bottom-bar-item" sx={{ display: { xs: "block", md: "none" } }}>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Punta del Este
-          </Typography>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Uruguay
-          </Typography>
-        </Box>
-
-        {/* Loading — mobile: bottom-right. Desktop: subtle large number */}
-        <Box className="bottom-bar-item" sx={{ display: { xs: "block", md: "none" } }}>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            Cargando
-          </Typography>
-          <Typography sx={{ fontFamily: "Poppins, sans-serif", fontSize: "10px", color: "rgba(255,255,255,0.5)", fontWeight: 400, lineHeight: 1.4, letterSpacing: "0.02em" }}>
-            {count}%
-          </Typography>
-        </Box>
-
-        {/* Desktop: subtle watermark number bottom-right */}
-        <Box className="bottom-bar-item" sx={{ display: { xs: "none", md: "block" }, ml: "auto" }}>
-          <Typography
-            sx={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 300,
-              fontSize: "64px",
-              color: "rgba(255,255,255,0.08)",
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            {count}
-          </Typography>
-        </Box>
+        {/* / 100 Small Marker */}
+        <Typography
+          sx={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "14px",
+            color: "rgba(255,255,255,0.2)",
+            fontWeight: 400,
+            mt: 0.5
+          }}
+        >
+          / 100
+        </Typography>
       </Box>
     </Box>
   )

@@ -3,6 +3,8 @@ import { Box, Typography } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 
+import UnicornScene from "unicornstudio-react";
+
 export default function IntroHome() {
   const [isPinned, setIsPinned] = useState(true);
   const biasVideoRef = useRef(null);
@@ -10,7 +12,7 @@ export default function IntroHome() {
   const inteligenteBoxRef = useRef(null);
   const inteligenteTextRef = useRef(null);
   const isMobile = window.innerWidth <= 768;
-  
+
   useEffect(() => {
     if (biasVideoRef.current) {
       gsap.fromTo(
@@ -35,13 +37,13 @@ export default function IntroHome() {
     if (inteligenteBoxRef.current && inteligenteTextRef.current) {
       const box = inteligenteBoxRef.current;
       const text = inteligenteTextRef.current;
-      
+
       // Get the final dimensions from the text
-      const wOffset = isMobile? 15 : 50;
+      const wOffset = isMobile ? 15 : 50;
 
       const finalHeight = text.offsetHeight + 15;
       const finalWidth = text.offsetWidth + wOffset; // Adding padding (8px on each side)
-      
+
       // Reset to initial state
       gsap.set(box, {
         width: 0,
@@ -51,7 +53,7 @@ export default function IntroHome() {
 
       // Create the animation timeline
       const tl = gsap.timeline({ delay: 0.5 });
-      
+
       // First: grow height from 0 to text height with 1px width
       tl.to(box, {
         width: 1,
@@ -59,12 +61,12 @@ export default function IntroHome() {
         duration: 0.4,
         ease: "power2.out"
       })
-      // Then: grow width from 1px to full text width
-      .to(box, {
-        width: finalWidth,
-        duration: 0.6,
-        ease: "power2.out"
-      });
+        // Then: grow width from 1px to full text width
+        .to(box, {
+          width: finalWidth,
+          duration: 0.6,
+          ease: "power2.out"
+        });
     }
   }, []);
 
@@ -93,148 +95,45 @@ export default function IntroHome() {
         gridTemplateColumns: "repeat(12, 1fr)",
         paddingX: { xs: "15px", sm: "30px", md: "50px", lg: "70px" },
         columnGap: { xs: "15px", sm: "20px" },
-        paddingTop: { xs: "120px", sm: "140px", md: "160px", lg: "180px", xl: "200px" },
+        paddingTop: { xs: "160px", sm: "140px", md: "160px", lg: "180px", xl: "200px" },
         paddingBottom: { xs: "30px", md: "60px" },
         overflow: "hidden",
         "& > section": {
           gridColumn: "1 / -1",
         },
       }}
-    > 
-      {/* BASE BACKGROUND - Deep Blue */}
+    >
+      {/* Fondo interactivo de Unicorn Studio - Pantalla completa */}
       <Box
         sx={{
-          width: "100%",
-          height: "100%",
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
           zIndex: 0,
-          backgroundColor: "#191968",
-        }}
-      />
-
-      {/* VIGNETTE EFFECT - Darker edges */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 0,
-          background: `
-            radial-gradient(ellipse 120% 100% at 50% 50%, transparent 0%, transparent 35%, rgba(10, 13, 31, 0.3) 55%, rgba(10, 13, 31, 0.6) 75%, rgba(5, 7, 15, 0.85) 100%)
-          `,
-        }}
-      />
-
-      {/* SVG Circle Background - Decorative element - debe estar arriba del gradiente */}
-      {/* CÍRCULO DECORATIVO - Ajusta estos valores para cambiar el tamaño y posición del círculo de fondo */}
-      <Box
-        sx={{
-          position: "absolute",
-          // width: ancho del círculo
-          // height: alto del círculo
-          width: {
-            xs: "2400px",         // móviles - MUCHO más grande para solo ver curvatura
-            md: "2800px",         // tablets y pantallas medianas (reducido de 3200px para dar más espacio)
-            lg: "3400px",         // pantallas grandes (más grande para pantallas grandes)
-            xl: "3800px"          // pantallas extra grandes (MacBook Pro y superiores)
+          pointerEvents: "auto",
+          overflow: "hidden",
+          "& > div": {
+            width: "100% !important",
+            height: "100% !important",
           },
-          height: {
-            xs: "2400px",         // móviles - MUCHO más grande para solo ver curvatura
-            md: "1600px",         // tablets y pantallas medianas (reducido de 1800px)
-            lg: "1900px",         // pantallas grandes
-            xl: "1900px"          // pantallas extra grandes
-          },
-          // top: distancia desde arriba (negativo = fuera de pantalla)
-          top: {
-            xs: "-700px",         // móviles - más arriba para que solo se vea la curvatura inferior
-            md: "-800px",         // pantallas medianas (menos negativo = más visible)
-            lg: "-900px",         // pantallas grandes
-            xl: "-1000px"         // pantallas extra grandes
-          },
-          // left: distancia desde la izquierda (negativo = más a la izquierda)
-          left: {
-            xs: "50%",            // móviles (centrado)
-            md: "-200px",         // pantallas medianas (menos negativo = más hacia el centro)
-            lg: "-350px",         // pantallas grandes
-            xl: "-400px"          // pantallas extra grandes
-          },
-          transform: { xs: "translateX(-50%)", md: "none" },
-          zIndex: 0,
-          pointerEvents: "none",
-          // opacity: transparencia del círculo (0.6 = 60% visible)
-          opacity: {
-            xs: 0.7,              // móviles - un poco más visible
-            md: 0.85,             // pantallas medianas (reducido de 0.9 para menos brillo)
-            lg: 0.9,              // pantallas grandes
-            xl: 0.95              // pantallas extra grandes
-          },
+          "& canvas": {
+            width: "100% !important",
+            height: "100% !important",
+            objectFit: "cover",
+          }
         }}
       >
-        {/* Primary circle */}
-        <Box
-          sx={{
-            position: "absolute",
-            // width del círculo interno (120% = más grande que el contenedor)
-            width: {
-              xs: "100%",         // móviles
-              md: "110%",         // pantallas medianas (reducido de 120% para menos apretado)
-              lg: "115%",         // pantallas grandes
-              xl: "120%"          // pantallas extra grandes
-            },
-            height: "100%",
-            borderRadius: "50%",
-            // border: grosor y color del borde del círculo
-            border: {
-              xs: "1px solid rgba(255, 255, 255, 0.4)",    // móviles - un poco más visible
-              md: "1px solid rgba(255, 255, 255, 0.5)",    // pantallas medianas (reducido de 0.57)
-              lg: "1px solid rgba(255, 255, 255, 0.55)",   // pantallas grandes
-              xl: "1px solid rgba(255, 255, 255, 0.57)"    // pantallas extra grandes
-            },
-          }}
+        <UnicornScene
+          projectId="WPUXZwywkQSIFX5v2ghw"
+          width="100%"
+          height="100%"
+          scale={1}
+          dpi={1.5}
+          sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@2.1.5/dist/unicornStudio.umd.js"
         />
       </Box>
-
-      {/* SMOOTH GRADIENT LAYERS - Techno Blue spots */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 0,
-          background: `
-            radial-gradient(circle 800px at 15% 70%, rgba(0, 129, 199, 0.65) 0%, rgba(0, 129, 199, 0.45) 15%, rgba(0, 129, 199, 0.28) 30%, rgba(0, 129, 199, 0.15) 45%, rgba(0, 129, 199, 0.06) 60%, transparent 75%),
-            radial-gradient(circle 750px at 88% 25%, rgba(0, 129, 199, 0.60) 0%, rgba(0, 129, 199, 0.42) 18%, rgba(0, 129, 199, 0.26) 35%, rgba(0, 129, 199, 0.13) 50%, rgba(0, 129, 199, 0.05) 65%, transparent 80%)
-          `,
-        }}
-      />
-
-      {/* SUBTLE NOISE TEXTURE */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1,
-          opacity: 0.02,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      />
 
       {/* Título Principal */}
       <Box
@@ -254,14 +153,14 @@ export default function IntroHome() {
           textAlign: { xs: 'left', sm: 'left', md: 'left', lg: 'left' },
           alignItems: { xs: 'flex-start', sm: 'flex-start', md: 'flex-start', lg: 'flex-start' },
           justifyContent: 'flex-start',
-          marginBottom: { xs: '20px', sm: '40px', md: '50px' },
+          marginBottom: { xs: '10px', sm: '40px', md: '50px' },
         }}
       >
         <Typography
           fontFamily={'Poppins'}
           sx={{
             fontSize: {
-              xs: 'clamp(26px, 7vw, 30px)',
+              xs: 'clamp(38px, 10vw, 44px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
               lg: 'clamp(55px, 5vw, 65px)',
@@ -275,7 +174,7 @@ export default function IntroHome() {
             display: 'flex',
             flexWrap: 'nowrap',
             whiteSpace: 'nowrap',
-            gap: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px'},
+            gap: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px' },
           }}
         >
           Cirugía mamaria{' '}
@@ -310,7 +209,7 @@ export default function IntroHome() {
           fontFamily={'Poppins'}
           sx={{
             fontSize: {
-              xs: 'clamp(26px, 7vw, 30px)',
+              xs: 'clamp(38px, 10vw, 44px)',
               sm: 'clamp(40px, 7vw, 50px)',
               md: 'clamp(48px, 6vw, 60px)',
               lg: 'clamp(55px, 5vw, 65px)',
@@ -322,7 +221,7 @@ export default function IntroHome() {
             lineHeight: 1.1,
           }}
         >
-          conexión humana.
+          conexión humana
         </Typography>
       </Box>
 
@@ -340,10 +239,10 @@ export default function IntroHome() {
           marginBottom: { xs: '20px', md: '0' },
         }}
       >
-        <Typography 
-          fontFamily={'Red Hat Display'} 
+        <Typography
+          fontFamily={'Red Hat Display'}
           sx={{
-            fontSize: { 
+            fontSize: {
               xs: 'clamp(14px, 4vw, 16px)',
               sm: 'clamp(16px, 3.5vw, 18px)',
               md: 'clamp(18px, 2vw, 21px)'
@@ -374,7 +273,7 @@ export default function IntroHome() {
           flexDirection: 'column',
           alignItems: { xs: 'flex-start', sm: 'flex-start', md: 'flex-start' },
           justifyContent: 'flex-start',
-          marginTop: { xs: 'auto', md: 'auto' },
+          marginTop: { xs: '-30px', md: 'auto' },
           marginBottom: { xs: '0px', md: '0px' },
         }}
       >
@@ -396,7 +295,7 @@ export default function IntroHome() {
             maxWidth: { xs: '100%', md: '90%' }
           }}
         >
-          Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas.
+          Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas
         </Typography>
 
         <Box sx={{
@@ -492,131 +391,7 @@ export default function IntroHome() {
         </Box>
       </Box>
 
-      {/* Contenedor del video */}
-      <Box
-        sx={{
-          gridColumn: {
-            xs: '1 / 13',
-            sm: '1 / 13',
-            md: '7 / 12',
-            lg: '8 / 11',
-            xl: '8 / 11'
-          },
-          zIndex: 1,
-          position: 'relative',
-          gridRow: { xs: '3', md: '2' },
-          padding: { xs: '7px', md: '7px' },
-          borderTopLeftRadius: { xs: '20px', md: '28px' },
-          borderTopRightRadius: { xs: '20px', md: '28px' },
-          borderBottomLeftRadius: { xs: '10px', md: '12px' },
-          borderBottomRightRadius: { xs: '10px', md: '12px' },
 
-          backdropFilter: 'blur(30px) saturate(100%)',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          border: '0.5px solid rgba(255, 255, 255, 0.15)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
-          alignItems: { xs: 'flex-start', md: 'flex-start' },
-          justifyContent: { xs: 'flex-end', md: 'flex-end' },
-          marginTop: { xs: '30px', sm: 'auto', md: 'auto' },
-          height: 'fit-content',
-          marginBottom: { xs: '30px', sm: '0px', md: '0px' },
-          marginX: { xs: 0, md: 0 },
-        }}
-      >
-        <Box
-          ref={biasVideoRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          sx={{
-            width: '100%',
-            maxWidth: { xs: '100%', md: '100%' },
-            // ALTURA DEL VIDEO - Ajusta estos valores para cambiar la altura del video que se mueve con hover
-            // xs: móviles pequeños, sm: tablets, md: pantallas medianas, lg: pantallas grandes
-            // clamp(mínimo, preferido, máximo)
-            height: {
-              xs: 'clamp(150px, 35vw, 180px)',    // Reducido de 180-220 a 150-180 en móviles
-              sm: 'clamp(180px, 30vw, 220px)',    // Reducido de 220-280 a 180-220 en tablets
-              md: 'clamp(180px, 22vh, 250px)',    // Reducido de 200-300 a 180-250 en pantallas medianas
-              lg: 'clamp(200px, 24vh, 280px)'     // Reducido de 250-350 a 200-280 en pantallas grandes
-            },
-            aspectRatio: { md: '16/9' },
-            backdropFilter: 'blur(30px) saturate(200%)',
-            backgroundColor: 'rgba(255, 255, 255, 0.15)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderTopLeftRadius: { xs: '16px', sm: '20px', md: '24px' },
-            borderTopRightRadius: { xs: '16px', sm: '20px', md: '24px' },
-            borderBottomLeftRadius: { xs: '6px', sm: '6px', md: '6px' },
-            borderBottomRightRadius: { xs: '6px', sm: '6px', md: '6px' },
-            boxShadow: `
-              0 8px 32px rgba(0, 0, 0, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-            `,
-            transition: 'transform 200ms var(--ease-out), border-color 200ms var(--ease-out), background-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out)',
-            position: 'relative',
-            overflow: 'hidden',
-            cursor: 'pointer',
-            '&:hover': {
-              backdropFilter: 'blur(35px) saturate(220%)',
-              backgroundColor: 'rgba(255, 255, 255, 0.15)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              transform: 'scale(1.02)',
-              boxShadow: `
-                0 12px 40px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.05)
-              `
-            }
-          }}
-        >
-          {/* Video dentro del contenedor glass */}
-          <Box
-            ref={videoRef}
-            component="video"
-            src="/videos/despues.mp4"
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            sx={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
-          />
-        </Box>
-        
-        {/* Visualización 3D - Inside video */}
-        <Typography
-          fontFamily={'Poppins'}
-          sx={{
-            fontSize: { 
-              xs: 'clamp(9px, 2.5vw, 10px)',
-              md: 'clamp(10px, 1.5vw, 12px)'
-            },
-            position: 'relative',
-            color: 'white',
-            fontWeight: '300',
-            letterSpacing: '0.5px',
-            textTransform: 'uppercase',
-            textAlign: 'center',
-            textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-            backdropFilter: 'blur(6px)',
-            padding: { 
-              xs: 'clamp(2px, 1vw, 3px) clamp(8px, 2vw, 10px)',
-              md: 'clamp(3px, 0.8vw, 4px) clamp(12px, 1.5vw, 14px)'
-            },
-            zIndex: 100,
-            borderRadius: '6px',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          Visualización 3D
-        </Typography>
-      </Box>
 
       {/* Texto (Scroll) */}
       <Box

@@ -96,7 +96,7 @@ export default function CTAhome() {
       >
         {/* Numeración de sección */}
         <Box sx={{
-          display: 'flex',
+          display: { xs: 'none', md: 'flex' },
           alignItems: 'baseline',
           gap: '10px',
           mb: 2,
@@ -125,72 +125,59 @@ export default function CTAhome() {
         
         <div id="left-section">
           {/* CONTENEDOR PRINCIPAL DEL TÍTULO */}
-          <Typography 
-            component="h1"
-            className="leading-tight font-bold text-white text-start space-y-2"
-            sx={{
-              paddingTop: "40px",
-              fontSize: isXs ? "calc(100vw / 25)" : "calc(100vw / 32)",
-              lineHeight: '0.9', // EDITAR AQUÍ - Line height general del título
-            }}
-          >
-            {/* LÍNEA 1: "Diseñados para" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: '', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 1
+          <Box sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            mb: { xs: 4, md: 0 }
+          }}>
+            {/* Casos Seleccionados (Lado Izquierdo) */}
+            <Typography
+              sx={{
+                fontFamily: 'Poppins',
+                fontSize: { xs: '24px', md: '48px', xl: '70px' },
+                fontWeight: { xs: 700, md: 500 },
+                color: 'background',
+                lineHeight: '1.1',
+                letterSpacing: '-1.5px',
+                textAlign: 'left',
               }}
             >
-              Diseñados para 
+              {isXs ? "Casos Seleccionados" : "Diseñados para"}
+              {!isXs && (
+                <Box component="span" sx={{ display: 'block' }}>
+                  <Typography
+                    component="span"
+                    fontFamily={'Poppins'}
+                    fontSize={{ xs: '48px', md: '48px', xl: '70px' }}
+                    sx={{ color: 'textAccent', letterSpacing: '-3px' }}
+                  >
+                    Maximizar
+                  </Typography>
+                  {' '}Tus
+                  <Box component="span" sx={{ display: 'block', textTransform: 'capitalize' }}>
+                    Resultados
+                  </Box>
+                </Box>
+              )}
             </Typography>
-            
-            {/* LÍNEA 2: "Maximizar tus" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '45px', md: '45px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: '', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 2
+
+            {/* Contador (Lado Derecho) */}
+            <Typography
+              sx={{
+                fontFamily: 'Poppins',
+                fontSize: { xs: '24px', md: '48px', xl: '70px' },
+                fontWeight: { xs: 400, md: 400 },
+                color: 'background',
+                lineHeight: '1.1',
+                letterSpacing: '-1.5px',
+                textAlign: 'right',
               }}
             >
-              <Typography 
-                component="span" 
-                fontFamily={'Poppins'} 
-                fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-                sx={{ 
-                  color: 'textAccent', 
-                  letterSpacing: '-3px',
-                  lineHeight: '1.1', // EDITAR AQUÍ - Line height del span "Maximizar"
-                }}
-              >
-                Maximizar
-              </Typography>
-              {' '}Tus 
+              17 - 26
             </Typography>
-            
-            {/* LÍNEA 3: "Resultados" */}
-            <Typography 
-              fontFamily={'Poppins'} 
-              fontSize={{ xs: '48px', md: '48px', xl: '70px' }} 
-              sx={{ 
-                width: '100%', 
-                color: 'background', 
-                textTransform: 'capitalize', 
-                letterSpacing: '-3px',
-                lineHeight: '1.1', // EDITAR AQUÍ - Line height línea 3
-              }}
-            >
-              Resultados
-            </Typography>
-          </Typography>
+          </Box>
 
           {/* TEXTO DESCRIPTIVO */}
           <Typography 

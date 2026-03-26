@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import NewHero from "../components/home/NewHero";
+import IntroHome from "../components/home/IntroHome";
+import NewHero from "../components/home/NewHero"; // Kept but unused
 import ConoceMasHome from "../components/home/ConoceMasHome";
 import VerMasProcedimientosHome from "../components/home/VerMasProcedimientosHome";
 import CTAhome from "../components/home/CTAhome";
@@ -25,7 +26,7 @@ export default function Home({ toggleTheme }) {
     >
       {/* Hero Section pinned to bottom */}
       <Box sx={{ position: 'sticky', top: 0, zIndex: 0 }}>
-        <NewHero />
+        <IntroHome />
       </Box>
 
       {/* Content scrolling over the Hero */}

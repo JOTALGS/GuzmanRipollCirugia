@@ -108,7 +108,6 @@ export default function Clinica({ id }) {
       overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
-<<<<<<< HEAD
       zIndex: 1,
       ':after': {
         content: '""',
@@ -121,8 +120,6 @@ export default function Clinica({ id }) {
         overflow: "hidden",
         zIndex: 0
       }
-=======
->>>>>>> ea05305c51b3eea3ee3d7719da7d012e4d1a7ce5
     }}>
 
       <Box sx={{

@@ -49,6 +49,7 @@ export function ContactSection({ id }) {
           gridColumn: '1 / 13',
           textAlign: 'left',
           mb: { xs: '10px', md: '0' },
+          display: { xs: 'none', md: 'block' }, // Oculto en móvil
         }}
       >
         <Typography

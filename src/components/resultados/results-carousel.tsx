@@ -45,35 +45,36 @@ export function ResultsCarousel() {
             paddingRight: "20px",
             paddingTop: "75px",
             paddingBottom: "80px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline"
           }}
         >
           <h1
             style={{
               color: "#000000",
               lineHeight: "1.2",
-              fontWeight: "400",
-              fontSize: "28px",
+              fontWeight: "700", // BOLD
+              fontSize: "24px",
               fontFamily: "Poppins, sans-serif",
-              margin: "0 0 8px 0",
+              margin: 0,
               textAlign: "left",
               letterSpacing: "-0.5px",
             }}
           >
-            Resultados
+            Casos Seleccionados
           </h1>
           <p
             style={{
               color: "#000000",
-              fontSize: "16px",
+              fontSize: "24px",
               fontFamily: "Poppins, sans-serif",
               fontWeight: "400",
               margin: 0,
-              paddingTop: "16px",
-              textAlign: "left",
-              opacity: 0.5,
+              textAlign: "right",
             }}
           >
-            Casos seleccionados
+            17 - 26
           </p>
         </div>
 

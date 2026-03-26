@@ -132,50 +132,33 @@ export default function CTAhome() {
             alignItems: 'flex-start',
             mb: { xs: 4, md: 0 }
           }}>
-            {/* Casos Seleccionados (Lado Izquierdo) */}
+            {/* Título adaptable */}
             <Typography
               sx={{
                 fontFamily: 'Poppins',
-                fontSize: { xs: '24px', md: '48px', xl: '70px' },
-                fontWeight: { xs: 700, md: 500 },
+                fontSize: { xs: '44px', md: '48px', xl: '70px' },
+                fontWeight: 400,
                 color: 'background',
                 lineHeight: '1.1',
-                letterSpacing: '-1.5px',
+                letterSpacing: { xs: '-1.5px', md: '-3px' },
                 textAlign: 'left',
               }}
             >
-              {isXs ? "Casos Seleccionados" : "Diseñados para"}
-              {!isXs && (
-                <Box component="span" sx={{ display: 'block' }}>
-                  <Typography
-                    component="span"
-                    fontFamily={'Poppins'}
-                    fontSize={{ xs: '48px', md: '48px', xl: '70px' }}
-                    sx={{ color: 'textAccent', letterSpacing: '-3px' }}
-                  >
-                    Maximizar
-                  </Typography>
-                  {' '}Tus
-                  <Box component="span" sx={{ display: 'block', textTransform: 'capitalize' }}>
-                    Resultados
-                  </Box>
+              Diseñados para 
+              <Box component="span" sx={{ display: 'block' }}>
+                <Typography 
+                  component="span" 
+                  fontFamily={'Poppins'} 
+                  fontSize="inherit" 
+                  sx={{ color: 'textAccent', letterSpacing: 'inherit' }}
+                >
+                  Maximizar
+                </Typography>
+                {' '}Tus 
+                <Box component="span" sx={{ display: 'block', textTransform: 'capitalize' }}>
+                  Resultados
                 </Box>
-              )}
-            </Typography>
-
-            {/* Contador (Lado Derecho) */}
-            <Typography
-              sx={{
-                fontFamily: 'Poppins',
-                fontSize: { xs: '24px', md: '48px', xl: '70px' },
-                fontWeight: { xs: 400, md: 400 },
-                color: 'background',
-                lineHeight: '1.1',
-                letterSpacing: '-1.5px',
-                textAlign: 'right',
-              }}
-            >
-              17 - 26
+              </Box>
             </Typography>
           </Box>
 

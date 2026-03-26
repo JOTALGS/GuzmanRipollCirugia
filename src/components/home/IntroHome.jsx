@@ -172,8 +172,8 @@ export default function IntroHome() {
             lineHeight: 1.1,
             alignItems: 'center',
             display: 'flex',
-            flexWrap: 'nowrap',
-            whiteSpace: 'nowrap',
+            flexWrap: 'wrap', // FIXED: Allow wrapping to prevent overflow
+            whiteSpace: 'normal', // FIXED: Prevent clipping on right
             gap: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px' },
           }}
         >
@@ -188,7 +188,7 @@ export default function IntroHome() {
               letterSpacing: 'inherit',
               fontWeight: 'semibold',
               lineHeight: 1.2,
-              whiteSpace: 'nowrap',
+              whiteSpace: 'normal', // FIXED: Allow wrapping
             }}
           >
             inteligente

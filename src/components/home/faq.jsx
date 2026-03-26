@@ -79,7 +79,6 @@ export default function Faq() {
         <Box sx={{
           mb: "80px",
           textAlign: 'start',
-          display: { xs: 'none', md: 'block' }
         }}>
           <Typography
             variant="h2"

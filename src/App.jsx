@@ -4,7 +4,7 @@ import { Button, Box, Typography } from "@mui/material";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ReactLenis } from '@studio-freight/react-lenis';
+import { ReactLenis } from '@lenis/react';
 import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
 import Resultados from "./pages/Resultados";

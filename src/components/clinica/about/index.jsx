@@ -134,7 +134,6 @@ export default function About() {
         <Box component="section" sx={{
           pt: { xs: "20px", md: 0 }, 
           pb: { xs: "40px", md: 20 },
-          backgroundColor: "#F2F2F2",
           width: "100%",
         }}>
           <Typography variant="body1" sx={{

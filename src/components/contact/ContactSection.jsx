@@ -64,7 +64,6 @@ export function ContactSection({ id }) {
             letterSpacing: { xs: '-0.02em', md: '0' },
           }}
         >
-          Contacto
         </Typography>
       </Box>
 

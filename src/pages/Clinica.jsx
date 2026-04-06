@@ -148,9 +148,9 @@ export default function Clinica({ id }) {
             variant="h1"
             sx={{
               fontFamily: "Poppins, sans-serif",
-              fontSize: { xs: "32px", md: "72px" },
+              fontSize: { xs: "32px", md: "82px" },
               fontWeight: 600,
-              lineHeight: 1.2,
+              lineHeight: 1.1,
               mb: { xs: "40px", md: "40px" },
               letterSpacing: "-0.04em",
               maxWidth: "1100px",
@@ -180,7 +180,7 @@ export default function Clinica({ id }) {
               <Typography sx={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: { xs: "18px", md: "24px" },
-                lineHeight: 1.5,
+                lineHeight: 1.3,
                 color: "#000",
                 fontWeight: 500,
                 textAlign: "left",

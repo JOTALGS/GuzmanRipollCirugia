@@ -17,7 +17,7 @@ export default function Home({ toggleTheme }) {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundColor: 'background.default',
+        backgroundColor: '#07111C', // Navy continuity for Safari
         overflowX: 'hidden',
         position: 'relative',
         width: '100%',

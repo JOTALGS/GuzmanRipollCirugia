@@ -10,6 +10,7 @@ import { Sparkles, ShieldCheck, HeartPulse, Users, Cpu } from "lucide-react"
 
 import Footer from "../components/UI/Footer"
 import ProcessSteps from "../components/procedimientos/ProcessSteps.tsx"
+import BeforeAfterSlider from "../components/procedimientos/BeforeAfterSlider"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -128,7 +129,7 @@ const benefitsData = [
   { title: "Seguridad Certificada", description: "Todos los procedimientos se realizan bajo los más altos estándares de calidad y seguridad. Contamos con protocolos estrictos, equipamiento de última generación e instalaciones habilitadas." },
   { title: "Recuperación Optimizada", description: "Diseñamos protocolos de recuperación personalizados para cada paciente. El seguimiento postoperatorio continuo permite una vuelta a las actividades de forma segura y cómoda." },
   { title: "Atención Personalizada", description: "Cada procedimiento es único porque cada paciente lo es. Desde la primera consulta adaptamos el plan quirúrgico a tus objetivos, contexto y expectativas reales." },
-  { title: "Tecnología de Vanguardia", description: "Incorporamos equipamiento de última generación e inteligencia artificial en la planificación quirúrgica, elevando la precisión y los resultados de cada intervención." }
+  { title: "Tecnología de Vanguardia", description: "Incorporamos equipamiento de última generación para elevar la precisión y los resultados de cada intervención quirúrgica personalizada." }
 ]
 
 export default function ProcedimientoDetalle() {
@@ -202,21 +203,33 @@ export default function ProcedimientoDetalle() {
                 alignItems: "center",
                 px: { xs: "14px", md: "20px" },
                 py: { xs: "8px", md: "10px" },
-                borderRadius: "8px",
-                border: "1.5px solid",
-                borderColor: proc.number === id ? "#111" : "rgba(0,0,0,0.12)",
-                backgroundColor: proc.number === id ? "#111" : "#fff",
+                borderRadius: "12px",
+                backdropFilter: "blur(24px) saturate(180%)",
+                WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                borderTop: "1px solid",
+                borderLeft: "1px solid",
+                borderRight: "1px solid",
+                borderBottom: "1px solid",
+                borderTopColor: proc.number === id ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.8)",
+                borderLeftColor: proc.number === id ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.6)",
+                borderRightColor: proc.number === id ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.3)",
+                borderBottomColor: proc.number === id ? "rgba(255, 255, 255, 0.02)" : "rgba(255, 255, 255, 0.2)",
+                boxShadow: proc.number === id ? "0 4px 16px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.15)" : "0 4px 12px rgba(0,0,0,0.02), inset 0 1px 0 rgba(255,255,255,0.6)",
+                background: proc.number === id ? "linear-gradient(135deg, rgba(18, 20, 24, 0.9), rgba(30, 32, 38, 0.8))" : "rgba(255, 255, 255, 0.65)",
                 textDecoration: "none",
                 fontFamily: "Poppins, sans-serif",
                 fontSize: { xs: "12px", md: "13px" },
-                fontWeight: 500,
+                fontWeight: proc.number === id ? 600 : 500,
                 color: proc.number === id ? "#fff" : "#111",
                 letterSpacing: "-0.01em",
                 transition: "all 0.25s ease",
                 "&:hover": {
-                  backgroundColor: proc.number === id ? "#111" : "#f5f5f5",
-                  borderColor: proc.number === id ? "#111" : "rgba(0,0,0,0.2)",
+                  background: proc.number === id ? "linear-gradient(135deg, rgba(28, 30, 34, 0.95), rgba(40, 42, 48, 0.85))" : "rgba(255, 255, 255, 0.95)",
+                  transform: "translateY(-1px)"
                 },
+                "&:active": {
+                  transform: "translateY(0)"
+                }
               }}
             >
               {proc.title}
@@ -278,15 +291,16 @@ export default function ProcedimientoDetalle() {
         {/* Left Column: Image (Sticky + Reveal Animation) */}
         <Box sx={{
           gridColumn: { xs: "1 / -1", md: "1 / 7" },
-          position: "relative",
-          height: { md: "100%" }
+          position: { md: "sticky" },
+          top: "140px",
+          alignSelf: "start",
+          height: { xs: "400px", md: "75vh" },
+          borderRadius: "12px",
+          overflow: "hidden"
         }}>
           <Box sx={{
-            position: { md: "sticky" },
-            top: "140px",
-            height: { xs: "400px", md: "75vh" },
-            borderRadius: "12px",
-            overflow: "hidden"
+            width: "100%",
+            height: "100%"
           }}>
             <Box
               ref={heroImageRef}
@@ -417,52 +431,67 @@ export default function ProcedimientoDetalle() {
             gap: { xs: 4, md: 8 },
             alignItems: "center"
           }}>
-            {/* Simulation UI Style */}
             <Box sx={{
               gridColumn: { xs: "1 / -1", md: "1 / 7" },
               backgroundColor: "#fff",
               borderRadius: "24px",
-              padding: "40px",
+              padding: { xs: "24px", md: "40px" },
               boxShadow: "0 20px 40px rgba(0,0,0,0.03)",
               border: "1px solid rgba(0,129,199,0.1)",
               position: "relative",
               overflow: "hidden"
             }}>
-              <Box sx={{ mb: 4 }}>
-                <Typography sx={{
-                  fontFamily: "Poppins", fontSize: "12px", textTransform: "uppercase",
-                  color: "#0081C7", fontWeight: 600, letterSpacing: "0.1em", mb: 1, textAlign: "left"
-                }}>
-                  Previsualización 3D
-                </Typography>
-                <Typography sx={{
-                  fontFamily: "Poppins", fontSize: "32px", fontWeight: 500, color: "#111", lineHeight: 1.1, textAlign: "left"
-                }}>
-                  Tecnología <br />Crisalix®
-                </Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                {[
-                  { t: "Simulación Realista", d: "Motor de renderizado 3D basado en tu anatomía real." },
-                  { t: "Alineación de Expectativas", d: "Elegí el volumen y forma con total seguridad." },
-                  { t: "Precisión Quirúrgica", d: "Mejor planificación para mejores resultados." }
-                ].map((item, i) => (
-                  <Box key={i} sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
-                    <Box sx={{
-                      width: "8px", height: "8px", borderRadius: "50%",
-                      backgroundColor: "#0081C7", mt: "8px", flexShrink: 0
-                    }} />
-                    <Box>
-                      <Typography sx={{ fontFamily: "Poppins", fontSize: "16px", fontWeight: 600, color: "#111", textAlign: "left" }}>
-                        {item.t}
-                      </Typography>
-                      <Typography sx={{ fontFamily: "Poppins", fontSize: "14px", color: "rgba(0,0,0,0.5)", textAlign: "left" }}>
-                        {item.d}
-                      </Typography>
-                    </Box>
+              {/* Horizontal layout: info left, slider right on desktop */}
+              <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: { xs: 3, md: 2 }, alignItems: { md: "stretch" } }}>
+                {/* Left: Text Info */}
+                <Box sx={{ flex: 1 }}>
+                  <Box sx={{ mb: 3 }}>
+                    <Typography sx={{
+                      fontFamily: "Poppins", fontSize: "12px", textTransform: "uppercase",
+                      color: "#0081C7", fontWeight: 600, letterSpacing: "0.1em", mb: 1, textAlign: "left"
+                    }}>
+                      Previsualización 3D
+                    </Typography>
+                    <Typography sx={{
+                      fontFamily: "Poppins", fontSize: { xs: "24px", md: "28px" }, fontWeight: 500, color: "#111", lineHeight: 1.1, textAlign: "left"
+                    }}>
+                      Tecnología <br />Crisalix®
+                    </Typography>
                   </Box>
-                ))}
+
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                    {[
+                      { t: "Simulación Realista", d: "Motor de renderizado 3D basado en tu anatomía real." },
+                      { t: "Alineación de Expectativas", d: "Elegí el volumen y forma con total seguridad." },
+                      { t: "Precisión Quirúrgica", d: "Mejor planificación para mejores resultados." }
+                    ].map((item, i) => (
+                      <Box key={i} sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
+                        <Box sx={{
+                          width: "6px", height: "6px", borderRadius: "50%",
+                          backgroundColor: "#0081C7", mt: "7px", flexShrink: 0
+                        }} />
+                        <Box>
+                          <Typography sx={{ fontFamily: "Poppins", fontSize: "15px", fontWeight: 600, color: "#111", textAlign: "left" }}>
+                            {item.t}
+                          </Typography>
+                          <Typography sx={{ fontFamily: "Poppins", fontSize: "14px", color: "rgba(0,0,0,0.5)", textAlign: "left", lineHeight: 1.5 }}>
+                            {item.d}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+
+                {/* Right: Compact Before/After Slider – same height as info */}
+                <Box sx={{ width: { xs: "100%", md: "240px" }, flexShrink: 0, display: "flex" }}>
+                  <Box sx={{ width: "100%", borderRadius: "16px", overflow: "hidden" }}>
+                    <BeforeAfterSlider
+                      beforeSrc="/videos/antes.mp4"
+                      afterSrc="/videos/despues.mp4"
+                    />
+                  </Box>
+                </Box>
               </Box>
 
               {/* Pixel Grid Decoration */}
@@ -643,7 +672,7 @@ export default function ProcedimientoDetalle() {
       </Box>
 
       {/* ─── PROCESS STEPS ─────────────────────── */}
-      <ProcessSteps />
+      <ProcessSteps procedureId={id} />
 
       <Footer />
     </Box>

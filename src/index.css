@@ -21,11 +21,12 @@
 /* Hide scrollbar for IE, Edge and Firefox */
 body, html {
   margin: 0;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  background-color: white; /* White background */
-  color: black; /* Black text */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  background-color: #F2F2F2; /* Base color for continuity */
+  color: black;
+  min-height: 100dvh;
 }
 
 body::-webkit-scrollbar {

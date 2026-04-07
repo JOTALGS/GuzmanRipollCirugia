@@ -297,14 +297,7 @@ export default function MedicalProcedures() {
                 }}>
                   //{procedure.number}
                 </Typography>
-                <ArrowForwardIcon
-                  className="proc-card-arrow"
-                  sx={{
-                    color: "rgba(0,0,0,0.15)",
-                    fontSize: 18,
-                    transition: "all 0.3s ease",
-                  }}
-                />
+
               </Box>
 
               {/* Title */}

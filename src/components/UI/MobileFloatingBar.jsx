@@ -11,6 +11,7 @@ export default function MobileFloatingBar() {
   // Detectar en qué página estamos
   const isHome = location.pathname === '/' || location.pathname === '/inicio';
   const isProcedimientos = location.pathname.startsWith('/procedimientos') || location.pathname.startsWith('/procedimiento');
+  const isContacto = location.pathname === '/contacto';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,26 +86,31 @@ export default function MobileFloatingBar() {
     };
   }, [lastScrollY, isHome, location.pathname]);
 
+  // Don't show on contacto page (has its own floating bar)
+  if (isContacto) return null;
+
   return (
     <Box
       sx={{
         position: 'fixed',
-        bottom: isVisible ? '20px' : '-100px',
+        bottom: isVisible ? '34px' : '-100px',
         left: '50%',
         transform: 'translateX(-50%)',
-        display: { xs: 'flex', md: 'none' }, // Solo visible en móviles
+        display: { xs: 'flex', md: 'none' },
         zIndex: 1000,
-        transition: 'bottom 0.3s ease-in-out',
-        width: 'calc(100% - 40px)',
-        maxWidth: '400px',
-        px: '12px',
+        transition: 'bottom 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+        width: 'auto',
+        minWidth: '340px',
+        maxWidth: '96%',
+        px: '8px',
         py: '8px',
-        borderRadius: '14px',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(20px)',
-        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
-        border: '1px solid rgba(0, 0, 0, 0.06)',
-        gap: '8px',
+        borderRadius: '100px',
+        background: 'rgba(35, 38, 45, 0.8)',
+        backdropFilter: 'blur(32px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(32px) saturate(180%)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+        gap: '10px',
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -113,25 +119,25 @@ export default function MobileFloatingBar() {
         component={RouterLink}
         to="/contacto"
         sx={{
-          flex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '6px',
-          px: '16px',
-          py: '10px',
-          borderRadius: '10px',
-          backgroundColor: '#2563EB',
+          gap: '8px',
+          px: '22px',
+          py: '12px',
+          borderRadius: '100px',
+          background: 'linear-gradient(135deg, rgba(30, 80, 200, 0.7), rgba(20, 60, 160, 0.6))',
+          backdropFilter: 'blur(10px)',
           color: '#fff',
           textDecoration: 'none',
           fontFamily: 'Poppins, sans-serif',
-          fontSize: '14px',
-          fontWeight: 500,
-          letterSpacing: '-0.01em',
+          fontSize: '13px',
+          fontWeight: 600,
+          whiteSpace: 'nowrap',
           transition: 'all 0.2s ease',
-          '&:active': {
-            transform: 'scale(0.98)',
-          },
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: 'inset 0 1.5px 0 rgba(255, 255, 255, 0.3), 0 4px 12px rgba(20, 60, 160, 0.2)',
+          '&:active': { transform: 'scale(0.98)' },
         }}
       >
         Agendar consulta
@@ -145,24 +151,24 @@ export default function MobileFloatingBar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          px: '20px',
-          py: '10px',
-          borderRadius: '10px',
-          backgroundColor: 'transparent',
-          color: '#111',
+          px: '18px',
+          py: '12px',
+          borderRadius: '100px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          color: '#fff',
           textDecoration: 'none',
           fontFamily: 'Poppins, sans-serif',
-          fontSize: '14px',
+          fontSize: '13px',
           fontWeight: 500,
-          letterSpacing: '-0.01em',
-          border: '1.5px solid rgba(0, 0, 0, 0.12)',
+          whiteSpace: 'nowrap',
           transition: 'all 0.2s ease',
-          '&:active': {
-            transform: 'scale(0.98)',
-          },
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: 'inset 0 1.5px 0 rgba(255, 255, 255, 0.2)',
+          '&:active': { transform: 'scale(0.98)' },
         }}
       >
-        Ver todos
+        Ver más
       </Box>
     </Box>
   );

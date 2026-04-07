@@ -8,7 +8,7 @@ const LoadingScreen = ({ onComplete }) => {
   const overlayRef = useRef(null)
 
   useEffect(() => {
-    const duration = 4.0; 
+    const duration = 2.0; 
     const ctx = gsap.context(() => {
       // Smooth numeric count 0 to 100
       const obj = { value: 0 };
@@ -21,10 +21,10 @@ const LoadingScreen = ({ onComplete }) => {
         },
         onComplete: () => {
           // Pause at 100 before fade out
-          gsap.delayedCall(0.4, () => {
+          gsap.delayedCall(0.3, () => {
             gsap.to(overlayRef.current, {
               opacity: 0,
-              duration: 0.8,
+              duration: 0.6,
               ease: "power2.out",
               onComplete: () => {
                 if (onComplete) onComplete();
@@ -34,22 +34,13 @@ const LoadingScreen = ({ onComplete }) => {
         }
       });
 
-      // POSITION Animation: Starts at bottom and ends at top without clipping
-      // Using 'top' to control the final stop accurately
-      const viewportHeight = window.innerHeight;
-      const counterHeight = counterRef.current?.offsetHeight || 160;
-      const margin = 40; // Safety margin to avoid touching edges
-
+      // FADE IN only, no movement
       gsap.fromTo(counterRef.current,
+        { opacity: 0 },
         { 
-          y: viewportHeight - counterHeight - margin, 
-          opacity: 0 
-        },
-        { 
-          y: margin, 
           opacity: 1,
-          duration: duration, 
-          ease: "power2.inOut"
+          duration: 0.8, 
+          ease: "power2.out"
         }
       );
     });
@@ -64,16 +55,16 @@ const LoadingScreen = ({ onComplete }) => {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#191968", // Start color requested
+        width: "100dvw", // Use dynamic viewport
+        height: "100dvh",
+        backgroundColor: "#191968",
         zIndex: 99999,
         pointerEvents: "auto",
-        transition: "opacity 0.8s ease-out",
+        transition: "opacity 0.6s ease-out",
         overflow: "hidden",
       }}
     >
-      {/* Darkening layer - increases opacity with count for a smooth darkening effect */}
+      {/* Darkening layer */}
       <Box 
         sx={{
           position: "absolute",
@@ -82,17 +73,18 @@ const LoadingScreen = ({ onComplete }) => {
           right: 0,
           bottom: 0,
           backgroundColor: "#000",
-          opacity: (count / 100) * 0.4, // Darkens up to 40% towards the end
+          opacity: (count / 100) * 0.4,
           zIndex: 0
         }}
       />
-      {/* ISOLOGO Blanco abajo a la izquierda - Minimalist */}
+      {/* ISOLOGO Blanco - Lower Left */}
       <Box sx={{
         position: "absolute",
         left: { xs: "30px", md: "50px" },
-        bottom: { xs: "30px", md: "50px" },
+        bottom: { xs: "calc(30px + env(safe-area-inset-bottom))", md: "50px" },
         width: { xs: "40px", md: "60px" },
-        opacity: 0.6
+        opacity: 0.6,
+        zIndex: 2
       }}>
         <Box 
           component="img"
@@ -102,19 +94,20 @@ const LoadingScreen = ({ onComplete }) => {
         />
       </Box>
 
-      {/* Counter Block - Minimalist vertical slide */}
+      {/* Counter Block - Fixed Lower Right */}
       <Box
         ref={counterRef}
         sx={{
           position: "absolute",
-          right: { xs: "40px", md: "50px" }, // More padding as requested
+          right: { xs: "30px", md: "50px" },
+          bottom: { xs: "calc(30px + env(safe-area-inset-bottom))", md: "50px" },
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-end",
           zIndex: 2,
         }}
       >
-        {/* Large Counter Number */}
+        {/* Scrolling Counter (3 Digits) */}
         <Typography
           sx={{
             fontFamily: "Poppins, sans-serif",
@@ -125,20 +118,7 @@ const LoadingScreen = ({ onComplete }) => {
             letterSpacing: "-0.04em",
           }}
         >
-          {count.toString().padStart(2, '0')}
-        </Typography>
-
-        {/* / 100 Small Marker */}
-        <Typography
-          sx={{
-            fontFamily: "Poppins, sans-serif",
-            fontSize: "14px",
-            color: "rgba(255,255,255,0.2)",
-            fontWeight: 400,
-            mt: 0.5
-          }}
-        >
-          / 100
+          {count.toString().padStart(3, '0')}
         </Typography>
       </Box>
     </Box>

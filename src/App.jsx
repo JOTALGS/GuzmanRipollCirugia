@@ -15,6 +15,7 @@ import StandaloneScrollReveal from "./components/procedimientos/standalone-scrol
 import NavBar from "./components/UI/NavBar";
 import LoadingScreen from "./components/LoadingScreen";
 import MobileFloatingBar from "./components/UI/MobileFloatingBar";
+import ContactFloatingBar from "./components/UI/ContactFloatingBar";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
@@ -190,9 +191,9 @@ function GridDebugger({
 }
 
 // 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
-const App = () => {
+  const App = () => {
   const [mode, setMode] = useState('light');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const theme = useMemo(() => {
     return mode === 'light' ? lightTheme : darkTheme;
@@ -213,14 +214,10 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
-        {/* Loading Screen */}
-        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-
-        <ReactLenis root>
+        <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothTouch: true, smoothWheel: true }}>
           <Box id="scroll-container" sx={{
             textAlign: "center",
-            scrollBehavior: "smooth",
-            overflowX: "hidden",
+            overflowX: "clip",
             position: "relative",
             width: "100%",
             maxWidth: "100vw"
@@ -228,8 +225,10 @@ const App = () => {
             {/* NavBar fija en la parte superior */}
             <NavBar  toggleTheme={toggleTheme} />
 
-            {/* Barra flotante móvil para agendar consulta */}
-            <MobileFloatingBar />
+
+
+            {/* Barra flotante móvil para contacto con panel IA */}
+            <ContactFloatingBar />
 
             <Routes>
               <Route path="/" element={<Home toggleTheme={toggleTheme} />} />

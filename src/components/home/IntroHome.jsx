@@ -1,6 +1,7 @@
 'use client';
 import { Box, Typography } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { gsap } from "gsap";
 
 import UnicornScene from "unicornstudio-react";
@@ -83,15 +84,34 @@ export default function IntroHome() {
     }
   };
 
+  useEffect(() => {
+    // Initial state set in CSS for smoothness
+    gsap.fromTo(".intro-animate",
+      {
+        opacity: 0,
+        y: 20,
+        filter: "blur(20px)"
+      },
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power3.out",
+        delay: 0.4 // Small delay for browser readiness
+      }
+    );
+  }, []);
+
   return (
     <Box
       sx={{
         position: "relative",
         width: "100%",
-        minHeight: { xs: "100vh", md: "100vh" },
-        maxHeight: { xs: "100vh", md: "100vh" },
+        minHeight: { xs: "100dvh", md: "100vh" },
+        maxHeight: { xs: "100dvh", md: "100vh" },
         display: "grid",
-        backgroundColor: "transparent",
         gridTemplateColumns: "repeat(12, 1fr)",
         paddingX: { xs: "15px", sm: "30px", md: "50px", lg: "70px" },
         columnGap: { xs: "15px", sm: "20px" },
@@ -101,9 +121,12 @@ export default function IntroHome() {
         "& > section": {
           gridColumn: "1 / -1",
         },
+        "& .intro-animate": {
+          opacity: 0,
+        }
       }}
     >
-      {/* Fondo interactivo de Unicorn Studio - Pantalla completa */}
+      {/* Eternis-inspired Atmospheric Background Rebuild */}
       <Box
         sx={{
           position: "absolute",
@@ -112,31 +135,57 @@ export default function IntroHome() {
           right: 0,
           bottom: 0,
           zIndex: 0,
-          pointerEvents: "auto",
           overflow: "hidden",
-          "& > div": {
-            width: "100% !important",
-            height: "100% !important",
+          backgroundColor: "#06101A", // Absolute base
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: `
+              /* 4. Misty Horizon / Fog */
+              radial-gradient(ellipse at 50% 120%, #CBD6DB 0%, #7E95A3 35%, transparent 70%),
+              
+              /* 3. Inner Glow Mass (Horizontal Ellipse) */
+              radial-gradient(ellipse at 50% 50%, rgba(70, 95, 115, 0.45) 0%, transparent 60%),
+              
+              /* 2. Large Outer Bloom */
+              radial-gradient(ellipse at 50% 55%, rgba(49, 72, 91, 0.35) 0%, transparent 85%),
+              
+              /* 1. Top-to-Bottom Falloff base */
+              linear-gradient(to bottom, #06101A 0%, #08131F 20%, #10283A 60%, transparent 100%)
+            `,
+            animation: "hazeBreath 16s ease-in-out infinite",
+            zIndex: 1,
+            pointerEvents: "none",
           },
-          "& canvas": {
-            width: "100% !important",
-            height: "100% !important",
-            objectFit: "cover",
+          /* Side Containment Vignette */
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: `
+              linear-gradient(to right, #06101A 0%, transparent 20%, transparent 80%, #06101A 100%),
+              linear-gradient(to top, rgba(203, 214, 219, 0.1) 0%, transparent 40%)
+            `,
+            zIndex: 2,
+            pointerEvents: "none"
+          },
+          "@keyframes hazeBreath": {
+            "0%, 100%": {
+              transform: "scale(1) translateY(0px)",
+              opacity: 0.95
+            },
+            "50%": {
+              transform: "scale(1.02) translateY(-4px)",
+              opacity: 1
+            }
           }
         }}
-      >
-        <UnicornScene
-          projectId="WPUXZwywkQSIFX5v2ghw"
-          width="100%"
-          height="100%"
-          scale={1}
-          dpi={1.5}
-          sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@2.1.5/dist/unicornStudio.umd.js"
-        />
-      </Box>
+      />
 
       {/* Título Principal */}
       <Box
+        className="intro-animate"
         sx={{
           gridColumn: {
             xs: '1 / 13',
@@ -199,6 +248,7 @@ export default function IntroHome() {
               fontSize: 'inherit',
               color: 'textAccent',
               letterSpacing: 'inherit',
+              fontWeight: 'inherit'
             }}
           >
             ,
@@ -278,6 +328,7 @@ export default function IntroHome() {
         }}
       >
         <Typography
+          className="intro-animate"
           color="#E9E9E9"
           fontFamily={'Poppins'}
           sx={{
@@ -298,95 +349,74 @@ export default function IntroHome() {
           Cirugía Plástica Estética y Reconstructiva, especializados en brindar soluciones avanzadas
         </Typography>
 
-        <Box sx={{
-          display: 'flex',
-          gap: { xs: '12px', sm: '16px', md: '20px' },
-          flexWrap: 'nowrap',
-          justifyContent: { xs: 'flex-start', md: 'flex-start' },
-          width: '100%',
-          flexDirection: 'row',
-          '& .primary-button, & .secondary-button': {
-            flex: 1,
-            cursor: 'pointer',
-            transition: 'transform 160ms var(--ease-out), background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out)',
-            '&:active': {
-              transform: 'scale(0.97)',
+        <Box
+          className="intro-animate"
+          sx={{
+            display: 'flex',
+            gap: { xs: '10px', sm: '12px', md: '14px' },
+            flexWrap: 'nowrap',
+            justifyContent: { xs: 'flex-start', md: 'flex-end' },
+            width: { xs: '100%', md: '340px' },
+            flexDirection: 'row',
+            '& .primary-button, & .secondary-button': {
+              flex: '1 1 0',
+              width: '100%',
+              cursor: 'pointer',
+              transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
+              fontFamily: 'Poppins, sans-serif',
+              fontSize: '12px',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '42px',
+              padding: '0 20px',
+              whiteSpace: 'nowrap',
+              borderRadius: '100px',
+              textDecoration: 'none',
+              boxSizing: 'border-box',
+              '&:active': {
+                transform: 'scale(0.97)',
+              }
             },
-            fontFamily: 'Poppins',
-            fontWeight: '400',
-            fontSize: {
-              xs: 'clamp(14px, 3.8vw, 15px)',
-              md: 'clamp(14px, 1.8vw, 15px)'
+            '& .primary-button': {
+              background: '#FFFFFF',
+              border: '1px solid #FFFFFF',
+              color: '#000000',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1.5px 0 rgba(255, 255, 255, 0.4)',
+              '&:hover': {
+                background: '#F8F8F8',
+                transform: 'translateY(-3px) scale(1.02)',
+                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.2), inset 0 1.5px 0 rgba(255, 255, 255, 0.4)'
+              }
             },
-            letterSpacing: '-0.2px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: {
-              xs: 'clamp(12px, 3vw, 14px) clamp(16px, 4vw, 20px)',
-              md: 'clamp(10px, 1.5vw, 12px) clamp(24px, 3vw, 28px)'
-            },
-          },
-          '& .primary-button': {
-            backgroundColor: '#E9E9E9',
-            border: 'none',
-            borderRadius: '0px',
-            color: '#000',
-            boxShadow: 'none',
-            '&:hover': {
-              backgroundColor: '#d9d9d9',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-            }
-          },
-          '& .secondary-button': {
-            position: 'relative',
-            border: 'none',
-            backgroundColor: 'transparent',
-            backdropFilter: 'none',
-            boxShadow: 'none',
-            overflow: 'hidden',
-            color: 'white',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%)',
-            },
-            '&::after': {
-              content: '""',
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%)',
-            },
-            '&:hover': {
-              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            '& .secondary-button': {
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
               backdropFilter: 'blur(10px)',
-              transform: 'translateY(-2px)',
-              boxShadow: 'none',
-              '&::before, &::after': {
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%)',
+              WebkitBackdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              color: '#FFFFFF',
+              boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                transform: 'translateY(-3px) scale(1.02)',
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.2)'
               }
             }
-          }
-        }}>
+          }}>
           <Box
-            component="button"
+            component={RouterLink}
+            to="/clinica"
             className="primary-button"
           >
-            Conoce Más
+            Conoce mas
           </Box>
           <Box
-            component="button"
+            component={RouterLink}
+            to="/procedimientos"
             className="secondary-button"
           >
-            Ver Procedimientos
+            Ver procedimientos
           </Box>
         </Box>
       </Box>

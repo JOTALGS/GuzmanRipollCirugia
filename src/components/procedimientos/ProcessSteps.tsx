@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material"
 import { ArrowUpRight } from "lucide-react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import WebGPUSpinnerComponent from "../animations/WebGPUSpinner"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -49,31 +50,39 @@ const PixelGridIcon = ({ stepIndex, isBlue }: { stepIndex: number, isBlue: boole
 }
 
 // ─── Data ────────────────────────────────────────────────
-const steps = [
-  {
-    title: "Consulta Inicial",
-    description: "Evaluación integral de tus expectativas y anatomía para un plan único.",
-    isBlue: false
-  },
-  {
-    title: "Planificación 3D",
-    description: "Diseño preciso y simulación de resultados con tecnología avanzada.",
-    isBlue: false
-  },
-  {
-    title: "Procedimiento",
-    description: "Ejecución quirúrgica impecable en instalaciones de primer nivel.",
-    isBlue: false
-  },
-  {
-    title: "Resultados & Seguimiento",
-    description: "Acompañamiento VIP continuo hasta alcanzar tu mejor versión.",
-    isBlue: true // The shining blue card
-  }
-]
-
-export default function ProcessSteps() {
+export default function ProcessSteps({ procedureId }: { procedureId?: string }) {
   const containerRef = useRef(null)
+
+  const isBreastSurgery = procedureId === "01";
+
+  const currentSteps = [
+    {
+      title: "Consulta Inicial",
+      description: "Evaluación integral de tus expectativas y anatomía para un plan único.",
+      isBlue: true,
+      type: "spiral"
+    },
+    {
+      title: isBreastSurgery ? "Planificación 3D" : "Evaluación Médica",
+      description: isBreastSurgery 
+        ? "Diseñamos un plan preciso mediante simulación Crisalix 3D avanzada." 
+        : "Estudio exhaustivo de cada caso para garantizar resultados seguros y naturales.",
+      isBlue: true,
+      type: "rose"
+    },
+    {
+      title: "Procedimiento",
+      description: "Ejecución quirúrgica impecable en instalaciones de primer nivel.",
+      isBlue: true,
+      type: "lissajous"
+    },
+    {
+      title: "Resultados & Seguimiento",
+      description: "Acompañamiento VIP continuo hasta alcanzar tu mejor versión.",
+      isBlue: true,
+      type: "loops"
+    }
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -146,7 +155,7 @@ export default function ProcessSteps() {
           gap: "20px",
         }}
       >
-        {steps.map((step, index) => (
+        {currentSteps.map((step, index) => (
           <ProcessCard key={index} step={step} index={index} />
         ))}
       </Box>
@@ -185,16 +194,17 @@ function ProcessCard({ step, index }: { step: any, index: number }) {
         }
       }}
     >
-      {/* Top: Icon */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 4 }}>
-        <PixelGridIcon stepIndex={index} isBlue={step.isBlue} />
-        {step.isBlue && (
-          <ArrowUpRight size={24} color="#fff" strokeWidth={2} />
-        )}
+      {/* Top: Centered Action/Spinner */}
+      <Box sx={{ position: "relative", zIndex: 1, width: "100%", height: "150px", mb: 2, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        {/* Expanded bounding box so the canvas doesn't hard crop on the sides */}
+        <Box sx={{ width: "160px", height: "160px", position: "relative", zIndex: 2 }}>
+           <WebGPUSpinnerComponent type={step.type} />
+        </Box>
+
       </Box>
 
       {/* Bottom: Content */}
-      <Box sx={{ position: "relative", zIndex: 1 }}>
+      <Box sx={{ position: "relative", zIndex: 1, textAlign: "left", flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
         <Typography
           sx={{
             fontFamily: "Poppins, sans-serif",

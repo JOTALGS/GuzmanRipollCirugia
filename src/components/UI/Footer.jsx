@@ -2,9 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import { Instagram, Linkedin, Facebook } from 'lucide-react';
 
 const COLORS = {
   textDark: "#000000",
@@ -86,9 +84,9 @@ export default function Footer({ variant }) {
 
   return (
     <Box sx={{
-      px: { xs: "12px", md: "40px" }, // AJUSTE: Margen lateral externo del footer (aire gris alrededor de la card)
-      pb: { xs: "12px", md: "40px" }, // AJUSTE: Margen inferior externo
-      pt: { xs: "20px", md: "60px" }, // AJUSTE: Margen superior externo (separación con sección previa)
+      px: { xs: "12px", md: "40px" },
+      pb: { xs: "calc(12px + env(safe-area-inset-bottom))", md: "40px" },
+      pt: { xs: "20px", md: "60px" },
       width: "100%",
       boxSizing: "border-box",
     }}>
@@ -154,22 +152,32 @@ export default function Footer({ variant }) {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 1.5,
-                  backgroundColor: "#ffffff",
+                  background: "linear-gradient(135deg, rgba(0, 90, 180, 0.08), rgba(0, 60, 140, 0.04))",
+                  backdropFilter: "blur(32px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(32px) saturate(180%)",
                   color: COLORS.textDark,
-                  border: "1px solid rgba(0, 0, 0, 0.06)",
-                  px: { xs: 2, md: 2.5 },
-                  py: { xs: 1, md: 1.2 },
-                  borderRadius: "12px",
+                  borderTop: "1px solid rgba(0, 100, 200, 0.12)",
+                  borderLeft: "1px solid rgba(0, 100, 200, 0.06)",
+                  borderRight: "1px solid rgba(0, 100, 200, 0.04)",
+                  borderBottom: "1px solid rgba(0, 100, 200, 0.03)",
+                  px: { xs: 2.5, md: 3 },
+                  py: { xs: 1.2, md: 1.4 },
+                  borderRadius: "100px",
                   fontSize: { xs: "14px", md: "15px" },
                   fontWeight: 500,
                   letterSpacing: "0.01em",
                   fontFamily: "Poppins, sans-serif",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+                  transition: "all 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
+                  boxShadow: "0 4px 16px rgba(0, 80, 160, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 80, 160, 0.04)",
                   "&:hover": {
-                    boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
-                    backgroundColor: "#CCE4FE",
-                    color: "#0081C7"
+                    background: "linear-gradient(135deg, rgba(0, 90, 180, 0.14), rgba(0, 60, 140, 0.08))",
+                    borderTop: "1px solid rgba(0, 100, 200, 0.2)",
+                    boxShadow: "0 8px 24px rgba(0, 80, 160, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(0, 80, 160, 0.06)",
+                    transform: "translateY(-1px)",
+                  },
+                  "&:active": {
+                    transform: "translateY(0px)",
+                    boxShadow: "0 2px 8px rgba(0, 80, 160, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
                   },
                   "&:hover .arrow-icon": {
                     transform: "translateX(4px)"
@@ -207,13 +215,13 @@ export default function Footer({ variant }) {
           {/* SOCIALS COLUMN */}
           <Box sx={{ gridColumn: { xs: "7 / 13", md: "10 / 11" }, display: "flex", flexDirection: "column", gap: "10px", mt: { md: "0" }, alignItems: "flex-start", textAlign: "left" }}>
             <MuiLink href="https://instagram.com/guzmanripoll" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
-              <InstagramIcon sx={{ fontSize: 20 }} /> Instagram
+              <Instagram size={18} strokeWidth={2} /> Instagram
             </MuiLink>
             <MuiLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
-              <LinkedInIcon sx={{ fontSize: 20 }} /> LinkedIn
+              <Linkedin size={18} strokeWidth={2} /> LinkedIn
             </MuiLink>
             <MuiLink href="https://facebook.com/guzmanripoll" target="_blank" rel="noopener noreferrer" underline="none" sx={socialLinkStyles}>
-              <FacebookIcon sx={{ fontSize: 20 }} /> Facebook
+              <Facebook size={18} strokeWidth={2} /> Facebook
             </MuiLink>
           </Box>
 

@@ -104,26 +104,12 @@ export default function Clinica({ id }) {
   return (
     <Box id={id} sx={{
       position: "relative",
-      backgroundColor: "#f5f5f5",
-      overflowX: "hidden",
       width: "100%",
       maxWidth: "100vw",
-      zIndex: 1,
-      ':after': {
-        content: '""',
-        position: "absolute",
-        top: 0,
-        right: -120,
-        width: "180vw",
-        height: "600vh",
-        background: "white",
-        overflow: "hidden",
-        zIndex: 0
-      }
+      zIndex: 1
     }}>
 
       <Box sx={{
-        backgroundColor: '#f5f5f5',
         width: "100%",
         maxWidth: "100vw",
         overflowX: "hidden",

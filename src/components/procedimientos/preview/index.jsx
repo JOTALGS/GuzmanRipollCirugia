@@ -7,6 +7,7 @@ import {
   useTheme
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { ArrowUpRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -60,11 +61,15 @@ export default function MedicalProcedures() {
     {
       id: "04",
       number: "004",
-      name: "Blefaroplastia",
-      image: "/images/imagen5.jpg",
-      description: "Cirugía estética de los párpados que elimina exceso de piel y bolsas de grasa.",
-      listTitle: null,
-      items: []
+      name: "Aumento Mamario",
+      image: "/images/implantes2.jpg",
+      description: "Utilización de implantes de alta gama o transferencia de grasa propia para mejorar el volumen y proyección de las mamas.",
+      listTitle: "Técnicas",
+      items: [
+        "Implantes de gel cohesivo",
+        "Lipotransferencia",
+        "Abordaje submuscular"
+      ]
     },
   ];
 
@@ -252,13 +257,15 @@ export default function MedicalProcedures() {
                 borderRadius: "14px 0 0 0",
               },
               "&:hover": {
-                backgroundColor: "#efefef",
+                backgroundColor: "#FFFFFF",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.04)",
+                transform: "translateY(-4px)",
               },
               "&:hover .proc-card-img": {
-                transform: "scale(1.03)",
+                transform: "scale(1.05)",
               },
               "&:hover .proc-card-arrow": {
-                transform: "translateX(4px)",
+                transform: "translate(4px, -4px)",
                 color: "#0081C7",
               }
             }}
@@ -287,18 +294,18 @@ export default function MedicalProcedures() {
             {/* Content */}
             <Box sx={{ p: { xs: "20px", md: "28px" }, display: "flex", flexDirection: "column", flexGrow: 1 }}>
               {/* Number + Arrow row */}
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "14px" }}>
-                <Typography sx={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  color: "#0081C7",
-                  letterSpacing: "0.05em",
-                }}>
-                  //{procedure.number}
-                </Typography>
-
-              </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <Typography sx={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    color: "#0081C7",
+                    letterSpacing: "0.05em",
+                  }}>
+                    //{procedure.number}
+                  </Typography>
+                  <ArrowUpRight size={16} color="#0081C7" strokeWidth={2.5} className="proc-card-arrow" style={{ transition: 'transform 0.4s ease' }} />
+                </Box>
 
               {/* Title */}
               <Typography sx={{

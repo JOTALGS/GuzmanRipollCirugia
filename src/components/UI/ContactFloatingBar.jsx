@@ -136,11 +136,15 @@ export default function ContactFloatingBar() {
           px: isPanelOpen ? 0 : '10px',
           py: '6px',
           borderRadius: '100px',
-          background: 'rgba(28, 30, 36, 0.7)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          border: '0.5px solid rgba(255, 255, 255, 0.12)', // Hairline
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+          background: `
+            radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.25) 0%, transparent 75%),
+            radial-gradient(ellipse at 50% 125%, rgba(255, 255, 255, 0.12) 0%, transparent 70%),
+            rgba(22, 24, 28, 0.82)
+          `,
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+          border: '0.5px solid rgba(255, 255, 255, 0.08)', // Clean hairline
+          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0.5px 0 rgba(255, 255, 255, 0.15)',
           gap: '8px',
           alignItems: 'center',
           justifyContent: 'center',

@@ -453,9 +453,9 @@ export default function ProcedimientoDetalle() {
                       Previsualización 3D
                     </Typography>
                     <Typography sx={{
-                      fontFamily: "Poppins", fontSize: { xs: "24px", md: "28px" }, fontWeight: 500, color: "#111", lineHeight: 1.1, textAlign: "left"
+                      fontFamily: "Poppins", fontSize: { xs: "22px", md: "28px" }, fontWeight: 500, color: "#111", lineHeight: 1.1, textAlign: "left", whiteSpace: "nowrap"
                     }}>
-                      Tecnología <br />Crisalix®
+                      Tecnología Crisalix®
                     </Typography>
                   </Box>
 
@@ -484,7 +484,7 @@ export default function ProcedimientoDetalle() {
                 </Box>
 
                 {/* Right: Compact Before/After Slider – same height as info */}
-                <Box sx={{ width: { xs: "100%", md: "240px" }, flexShrink: 0, display: "flex" }}>
+                <Box sx={{ width: { xs: "280px", md: "240px" }, mx: "auto", flexShrink: 0, display: "flex" }}>
                   <Box sx={{ width: "100%", borderRadius: "16px", overflow: "hidden" }}>
                     <BeforeAfterSlider
                       beforeSrc="/videos/antes.mp4"
@@ -494,14 +494,6 @@ export default function ProcedimientoDetalle() {
                 </Box>
               </Box>
 
-              {/* Pixel Grid Decoration */}
-              <Box sx={{ position: "absolute", bottom: 20, right: 20, opacity: 0.1 }}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
-                  {[...Array(9)].map((_, i) => (
-                    <Box key={i} sx={{ width: '6px', height: '6px', backgroundColor: '#0081C7', borderRadius: '1px' }} />
-                  ))}
-                </Box>
-              </Box>
             </Box>
 
             {/* Content Left */}
@@ -516,13 +508,12 @@ export default function ProcedimientoDetalle() {
                 textAlign: "left",
                 mb: 4
               }}>
-                Mirá tus resultados <br />
-                <span style={{ color: '#0081C7' }}>antes de la cirugía.</span>
+                Mirá tus resultados <span style={{ color: '#0081C7' }}>antes de la cirugía.</span>
               </Typography>
               <Typography sx={{
                 fontFamily: "Poppins", fontSize: "18px", lineHeight: 1.6, color: "rgba(0,0,0,0.6)", textAlign: "left",
               }}>
-                Contamos con la tecnología líder a nivel mundial en simulación estética. Mediante Crispali®, transformamos la consulta en una experiencia interactiva donde podés visualizar diferentes opciones de volumen y perfil, asegurando que el plan quirúrgico sea exactamente lo que deseás.
+                Contamos con la tecnología líder a nivel mundial en simulación estética. Mediante Crisalix®, transformamos la consulta en una experiencia interactiva donde podés visualizar diferentes opciones de volumen y perfil, asegurando que el plan quirúrgico sea exactamente lo que deseás.
               </Typography>
             </Box>
           </Box>

@@ -1,0 +1,99 @@
+/* Hero Background Animations - Hunicorn Studio Style */
+
+@keyframes auroraFlow {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(2%, -1%) scale(1.08) rotate(45deg);
+  }
+  50% {
+    transform: translate(-1%, 2%) scale(1.02) rotate(90deg);
+  }
+  75% {
+    transform: translate(1%, -2%) scale(0.98) rotate(135deg);
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  20% {
+    transform: translate(-2%, 1.5%) scale(1.04);
+  }
+  40% {
+    transform: translate(1.5%, -1%) scale(0.98);
+  }
+  60% {
+    transform: translate(-1%, -2%) scale(1.02);
+  }
+  80% {
+    transform: translate(1%, 1%) scale(0.99);
+  }
+}
+
+@keyframes meshRotate {
+  0% {
+    transform: rotate(0deg) scale(1.5);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.5);
+  }
+}
+
+@keyframes grainShift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(5%, 5%);
+  }
+  30% {
+    transform: translate(-3%, 8%);
+  }
+  40% {
+    transform: translate(3%, -5%);
+  }
+  50% {
+    transform: translate(-5%, 3%);
+  }
+  60% {
+    transform: translate(5%, -8%);
+  }
+  70% {
+    transform: translate(-8%, 5%);
+  }
+  80% {
+    transform: translate(8%, -3%);
+  }
+  90% {
+    transform: translate(-3%, 5%);
+  }
+}
+
+/* Performance optimizations */
+.hero-background {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.hero-background-layer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes auroraFlow,
+  @keyframes orbFloat,
+  @keyframes meshRotate,
+  @keyframes grainShift {
+    animation-duration: 0s !important;
+  }
+}

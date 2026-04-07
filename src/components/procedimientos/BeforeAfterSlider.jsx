@@ -44,9 +44,8 @@ export default function BeforeAfterSlider({ beforeSrc, afterSrc }) {
       sx={{
         position: "relative",
         width: "100%",
-        aspectRatio: { xs: "9 / 16", md: "unset" },
+        aspectRatio: { xs: "1 / 1", md: "unset" },
         height: { md: "100%" },
-        minHeight: { md: "280px" },
         borderRadius: "16px",
         overflow: "hidden",
         cursor: "ew-resize",

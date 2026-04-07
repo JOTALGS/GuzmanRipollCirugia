@@ -126,7 +126,7 @@ export default function IntroHome() {
         }
       }}
     >
-      {/* Eternis-inspired Atmospheric Background Rebuild */}
+      {/* Reconstrucción Atmosférica Cromática de Marca "Seamless" (Centro Techno / Exterior Deep) */}
       <Box
         sx={{
           position: "absolute",
@@ -136,52 +136,72 @@ export default function IntroHome() {
           bottom: 0,
           zIndex: 0,
           overflow: "hidden",
-          backgroundColor: "#06101A", // Absolute base
+          backgroundColor: "#060618",
           "&::before": {
             content: '""',
             position: "absolute",
             top: 0, left: 0, right: 0, bottom: 0,
             background: `
-              /* 4. Misty Horizon / Fog */
-              radial-gradient(ellipse at 50% 120%, #CBD6DB 0%, #7E95A3 35%, transparent 70%),
+              /* 3. Bruma del horizonte expansiva */
+              radial-gradient(ellipse at 50% 120%, rgba(0, 129, 199, 0.22) 0%, transparent 80%),
               
-              /* 3. Inner Glow Mass (Horizontal Ellipse) */
-              radial-gradient(ellipse at 50% 50%, rgba(70, 95, 115, 0.45) 0%, transparent 60%),
+              /* 2. Núcleo central ultra-progresivo (Techno Blue) */
+              radial-gradient(ellipse at 50% 60%, rgba(0, 129, 199, 0.3) 0%, rgba(25, 25, 104, 0.1) 45%, transparent 100%),
               
-              /* 2. Large Outer Bloom */
-              radial-gradient(ellipse at 50% 55%, rgba(49, 72, 91, 0.35) 0%, transparent 85%),
-              
-              /* 1. Top-to-Bottom Falloff base */
-              linear-gradient(to bottom, #06101A 0%, #08131F 20%, #10283A 60%, transparent 100%)
+              /* 1. Degradado base multi-stop refinado para fusión perfecta */
+              linear-gradient(to bottom, 
+                #060618 0%, 
+                #080820 15%,
+                #0B0B2E 30%, 
+                #111149 50%, 
+                #152C70 70%,
+                #0E4F98 85%, 
+                #0081C7 100%
+              )
             `,
-            animation: "hazeBreath 16s ease-in-out infinite",
-            zIndex: 1,
-            pointerEvents: "none",
+            filter: "blur(60px)", /* Fusión extrema para derretir las líneas de color */
+            animation: "hazeBreath 24s ease-in-out infinite",
+            zIndex: 0,
           },
-          /* Side Containment Vignette */
+          /* Capa de Refinamiento: Ultra Clear Grain y Difusión Radial Continua */
           "&::after": {
             content: '""',
             position: "absolute",
             top: 0, left: 0, right: 0, bottom: 0,
             background: `
-              linear-gradient(to right, #06101A 0%, transparent 20%, transparent 80%, #06101A 100%),
-              linear-gradient(to top, rgba(203, 214, 219, 0.1) 0%, transparent 40%)
+              /* Viñeta radial expandida para mayor suavidad */
+              radial-gradient(circle at 50% 50%, transparent 0%, rgba(25, 25, 104, 0.05) 50%, rgba(6, 6, 24, 0.9) 100%),
+              /* Micro-textura de ruido ultra fino anti-banding */
+              url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.8'/%3E%3C/svg%3E")
             `,
+            opacity: 0.08,
+            mixBlendMode: "overlay",
+            zIndex: 1,
+            pointerEvents: "none"
+          },
+          /* Shaper de profundidad sin costuras */
+          "& .brand-shaper": {
+            position: "absolute",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: "radial-gradient(circle at 50% 50%, transparent 20%, rgba(6, 6, 24, 0.1) 70%, rgba(6, 6, 24, 0.8) 100%)",
+            boxShadow: "inset 0 0 200px rgba(6, 6, 24, 0.8)",
             zIndex: 2,
             pointerEvents: "none"
           },
           "@keyframes hazeBreath": {
             "0%, 100%": {
-              transform: "scale(1) translateY(0px)",
+              transform: "scale(1.15) translateY(0px)", /* Extra scale para ocultar bordes del blur */
               opacity: 0.95
             },
             "50%": {
-              transform: "scale(1.02) translateY(-4px)",
+              transform: "scale(1.18) translateY(-4px)",
               opacity: 1
             }
           }
         }}
-      />
+      >
+        <Box className="brand-shaper" />
+      </Box>
 
       {/* Título Principal */}
       <Box
@@ -420,8 +440,6 @@ export default function IntroHome() {
           </Box>
         </Box>
       </Box>
-
-
 
       {/* Texto (Scroll) */}
       <Box

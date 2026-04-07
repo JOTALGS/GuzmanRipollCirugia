@@ -455,21 +455,20 @@ export default function NavBar() {
               {[...menuLinks, { name: "Contacto", path: "/contacto" }].map((link, index) => (
                 <div key={link.name} style={{ overflow: 'hidden', width: '100%', textAlign: 'left' }}>
                   <motion.div
-                    initial={{ y: '100%' }}
-                    animate={{ y: 0 }}
+                    initial={{ y: '110%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     transition={{
-                      delay: 0.2 + index * 0.08, // Start slightly earlier but faster overlap
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1] // Quicker snap ease
+                      delay: 0.3 + index * 0.12, // More deliberate staggered timing
+                      duration: 1, // Slower 'Lux' reveal
+                      ease: [0.19, 1, 0.22, 1] // Apple/Porsche style ease
                     }}
                   >
                     {link.name === "Procedimientos" ? (
                       <>
-                        <div
+                        <Box
                           onClick={() => setIsProcDropdownOpen(!isProcDropdownOpen)}
-                          style={{
+                          sx={{
                             color: 'black',
-                            textDecoration: 'none',
                             fontFamily: 'Poppins, sans-serif',
                             fontWeight: '500',
                             fontSize: '40px',
@@ -479,23 +478,25 @@ export default function NavBar() {
                             lineHeight: '1.1',
                             cursor: 'pointer',
                             userSelect: 'none',
-                            textAlign: 'left'
+                            textAlign: 'left',
+                            position: 'relative'
                           }}
                         >
                           {link.name}
-                          <span style={{
+                          <Box component="span" sx={{
                             fontSize: '14px',
-                            fontWeight: '400',
-                            opacity: 0.4,
-                            marginLeft: '6px',
-                            verticalAlign: 'super',
-                            lineHeight: 1,
-                          }}>4</span>
+                            fontWeight: '600',
+                            opacity: 0.3,
+                            position: 'absolute',
+                            top: '-8px',
+                            right: '-16px',
+                            fontFamily: 'Poppins, sans-serif',
+                          }}>04</Box>
                           <motion.span
                             animate={{ rotate: isProcDropdownOpen ? 180 : 0 }}
                             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                             style={{
-                              marginLeft: '12px',
+                              marginLeft: '24px',
                               fontSize: '20px',
                               display: 'inline-block',
                               opacity: 0.35,
@@ -503,7 +504,7 @@ export default function NavBar() {
                           >
                             ▾
                           </motion.span>
-                        </div>
+                        </Box>
                         <AnimatePresence>
                           {isProcDropdownOpen && (
                             <motion.div
@@ -551,17 +552,22 @@ export default function NavBar() {
                                   textDecoration: 'none',
                                   fontFamily: 'Poppins, sans-serif',
                                   fontWeight: '500',
-                                  fontSize: '14px',
-                                  letterSpacing: '0px',
-                                  display: 'block',
+                                  fontSize: '13px',
+                                  letterSpacing: '0.02em',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
                                   lineHeight: '1.2',
-                                  padding: '10px 0 0 0',
-                                  opacity: 0.35,
-                                  borderTop: '1px solid rgba(0,0,0,0.08)',
-                                  marginTop: '4px',
+                                  marginTop: '12px',
+                                  padding: '12px',
+                                  background: 'rgba(0, 0, 0, 0.04)',
+                                  backdropFilter: 'blur(10px)',
+                                  borderRadius: '12px',
+                                  border: '1px solid rgba(0, 0, 0, 0.06)',
+                                  transition: 'all 0.2s ease',
                                 }}
                               >
-                                Ver todos →
+                                Ver todos los procedimientos →
                               </Link>
                             </motion.div>
                           )}

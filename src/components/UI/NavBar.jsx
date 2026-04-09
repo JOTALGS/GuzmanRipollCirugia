@@ -2,7 +2,7 @@ import React from "react"
 import { useState, useEffect, useRef } from "react"
 import { useLocation, Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { useLenis } from "@studio-freight/react-lenis"
+import { useLenis } from "lenis/react"
 import { Box, useMediaQuery } from "@mui/material"
 
 export default function NavBar() {

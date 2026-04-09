@@ -40,7 +40,7 @@ export function ContactSection({ id }) {
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
         columnGap: { xs: '16px', md: '20px' },
-        rowGap: { xs: '70px', md: '80px' },
+        rowGap: { xs: '2rem', md: '80px' },
       }}
     >
       {/* === TITULO PRINCIPAL === */}
@@ -74,7 +74,7 @@ export function ContactSection({ id }) {
           textAlign: 'left',
           display: 'flex',
           flexDirection: 'column',
-          gap: { xs: '40px', md: '48px' },
+          gap: { xs: '1rem', md: '48px' },
         }}
       >
         {/* Línea 1 */}
@@ -104,7 +104,7 @@ export function ContactSection({ id }) {
         </Box>
 
         {/* Línea 2: Consultas + Comunicate (2 columnas en móvil) */}
-        <Grid container spacing={4} sx={{ width: '100%' }}>
+        <Grid container sx={{ width: '100%', columnGap: { xs: '1rem', md: '4rem' } }}>
           <Grid item xs={12} sm={6}>
             <Typography
               sx={{
@@ -236,7 +236,7 @@ export function ContactSection({ id }) {
                   sx: {
                     fontFamily: 'Poppins',
                     borderBottom: '1px solid #D9D9D9',
-                    paddingBottom: '8px',
+                    paddingBottom: '0.2rem',
                     '&:focus-within': { borderBottom: '2px solid #000' },
                   },
                 }}

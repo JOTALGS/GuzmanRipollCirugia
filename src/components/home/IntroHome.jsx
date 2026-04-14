@@ -3,8 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { gsap } from "gsap";
-
-import UnicornScene from "unicornstudio-react";
+import { ShaderMakerEmbed } from "./ShaderMakerEmbed";
 
 export default function IntroHome() {
   const [isPinned, setIsPinned] = useState(true);
@@ -33,59 +32,37 @@ export default function IntroHome() {
     }
   }, []);
 
-  // Animation for the inteligente box
   useEffect(() => {
     if (inteligenteBoxRef.current && inteligenteTextRef.current) {
       const box = inteligenteBoxRef.current;
       const text = inteligenteTextRef.current;
-
-      // Get the final dimensions from the text
       const wOffset = isMobile ? 15 : 50;
 
       const finalHeight = text.offsetHeight + 15;
-      const finalWidth = text.offsetWidth + wOffset; // Adding padding (8px on each side)
+      const finalWidth = text.offsetWidth + wOffset;
 
-      // Reset to initial state
       gsap.set(box, {
         width: 0,
         height: 0,
         opacity: 1
       });
 
-      // Create the animation timeline
       const tl = gsap.timeline({ delay: 0.5 });
 
-      // First: grow height from 0 to text height with 1px width
       tl.to(box, {
         width: 1,
         height: finalHeight,
         duration: 0.4,
         ease: "power2.out"
-      })
-        // Then: grow width from 1px to full text width
-        .to(box, {
-          width: finalWidth,
-          duration: 0.6,
-          ease: "power2.out"
-        });
+      }).to(box, {
+        width: finalWidth,
+        duration: 0.6,
+        ease: "power2.out"
+      });
     }
   }, []);
 
-  const handleMouseEnter = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  };
-
   useEffect(() => {
-    // Initial state set in CSS for smoothness
     gsap.fromTo(".intro-animate",
       {
         opacity: 0,
@@ -99,7 +76,7 @@ export default function IntroHome() {
         duration: 1.2,
         stagger: 0.15,
         ease: "power3.out",
-        delay: 0.4 // Small delay for browser readiness
+        delay: 0.4
       }
     );
   }, []);
@@ -126,84 +103,55 @@ export default function IntroHome() {
         }
       }}
     >
-      {/* Reconstrucción Atmosférica Cromática de Marca "Seamless" (Centro Techno / Exterior Deep) */}
+      {/* ── Background: shader + overlays + grain ── */}
       <Box
         sx={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          inset: 0,
           zIndex: 0,
           overflow: "hidden",
-          backgroundColor: "#060618",
+          backgroundColor: "#050816",
+          /* color / gradient overlay */
           "&::before": {
             content: '""',
             position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            background: `
-              /* 3. Bruma del horizonte expansiva */
-              radial-gradient(ellipse at 50% 120%, rgba(0, 129, 199, 0.22) 0%, transparent 80%),
-              
-              /* 2. Núcleo central ultra-progresivo (Techno Blue) */
-              radial-gradient(ellipse at 50% 60%, rgba(0, 129, 199, 0.3) 0%, rgba(25, 25, 104, 0.1) 45%, transparent 100%),
-              
-              /* 1. Degradado base multi-stop refinado para fusión perfecta */
-              linear-gradient(to bottom, 
-                #060618 0%, 
-                #080820 15%,
-                #0B0B2E 30%, 
-                #111149 50%, 
-                #152C70 70%,
-                #0E4F98 85%, 
-                #0081C7 100%
-              )
-            `,
-            filter: "blur(60px)", /* Fusión extrema para derretir las líneas de color */
-            animation: "hazeBreath 24s ease-in-out infinite",
-            zIndex: 0,
-          },
-          /* Capa de Refinamiento: Ultra Clear Grain y Difusión Radial Continua */
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            background: `
-              /* Viñeta radial expandida para mayor suavidad */
-              radial-gradient(circle at 50% 50%, transparent 0%, rgba(25, 25, 104, 0.05) 50%, rgba(6, 6, 24, 0.9) 100%),
-              /* Micro-textura de ruido ultra fino anti-banding */
-              url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.8'/%3E%3C/svg%3E")
-            `,
-            opacity: 0.08,
-            mixBlendMode: "overlay",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, rgba(2, 4, 16, 0.28) 0%, rgba(2, 4, 16, 0.08) 38%, rgba(2, 4, 16, 0.34) 100%)",
             zIndex: 1,
             pointerEvents: "none"
           },
-          /* Shaper de profundidad sin costuras */
-          "& .brand-shaper": {
+          /* radial glow + vignette */
+          "&::after": {
+            content: '""',
             position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            background: "radial-gradient(circle at 50% 50%, transparent 20%, rgba(6, 6, 24, 0.1) 70%, rgba(6, 6, 24, 0.8) 100%)",
-            boxShadow: "inset 0 0 200px rgba(6, 6, 24, 0.8)",
+            inset: 0,
+            background: `
+              radial-gradient(circle at 60% 44%, rgba(72, 132, 255, 0.12) 0%, transparent 32%),
+              radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 8, 22, 0.12) 62%, rgba(5, 8, 22, 0.70) 100%)
+            `,
             zIndex: 2,
             pointerEvents: "none"
           },
-          "@keyframes hazeBreath": {
-            "0%, 100%": {
-              transform: "scale(1.15) translateY(0px)", /* Extra scale para ocultar bordes del blur */
-              opacity: 0.95
-            },
-            "50%": {
-              transform: "scale(1.18) translateY(-4px)",
-              opacity: 1
+          "& .shader-frame": {
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            "& media-shader": {
+              width: "100%",
+              height: "100%",
+              minHeight: "100%",
+              display: "block"
             }
           }
         }}
       >
-        <Box className="brand-shaper" />
+        <Box className="shader-frame">
+          <ShaderMakerEmbed />
+        </Box>
       </Box>
 
-      {/* Título Principal */}
+      {/* ── Heading ── */}
       <Box
         className="intro-animate"
         sx={{
@@ -241,8 +189,8 @@ export default function IntroHome() {
             lineHeight: 1.1,
             alignItems: 'center',
             display: 'flex',
-            flexWrap: 'wrap', // FIXED: Allow wrapping to prevent overflow
-            whiteSpace: 'normal', // FIXED: Prevent clipping on right
+            flexWrap: 'wrap',
+            whiteSpace: 'normal',
             gap: { xs: '4px', sm: '5px', md: '6px', lg: '7px', xl: '8px' },
           }}
         >
@@ -257,7 +205,7 @@ export default function IntroHome() {
               letterSpacing: 'inherit',
               fontWeight: 'semibold',
               lineHeight: 1.2,
-              whiteSpace: 'normal', // FIXED: Allow wrapping
+              whiteSpace: 'normal',
             }}
           >
             inteligente
@@ -295,7 +243,7 @@ export default function IntroHome() {
         </Typography>
       </Box>
 
-      {/* Contador de intervenciones */}
+      {/* ── Stats (hidden) ── */}
       <Box
         sx={{
           gridColumn: { xs: '1 / 13', md: '10 / 13' },
@@ -328,7 +276,7 @@ export default function IntroHome() {
         </Typography>
       </Box>
 
-      {/* Contenedor del párrafo y botón */}
+      {/* ── Subtitle + CTAs ── */}
       <Box
         sx={{
           gridColumn: {
@@ -423,7 +371,8 @@ export default function IntroHome() {
                 boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.2)'
               }
             }
-          }}>
+          }}
+        >
           <Box
             component={RouterLink}
             to="/clinica"
@@ -441,7 +390,7 @@ export default function IntroHome() {
         </Box>
       </Box>
 
-      {/* Texto (Scroll) */}
+      {/* ── Scroll indicator ── */}
       <Box
         sx={{
           gridColumn: { xs: '1 / 13', md: '12 / 13' },
@@ -469,7 +418,6 @@ export default function IntroHome() {
           (Scroll)
         </Typography>
       </Box>
-
     </Box>
   );
 }

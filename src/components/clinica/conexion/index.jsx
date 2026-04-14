@@ -83,7 +83,7 @@ export default function Conexion() {
         gridColumn: { xs: '1 / 13', md: '7 / 13' }, // AJUSTE: Comienza exactamente en col 7 (deja col 6 de gap)
         zIndex: 1,
         order: { xs: 2, md: 2 },
-        py: { xs: 8, md: 0 },
+        py: { xs: 5, md: 0 },
         display: "grid",
         gridTemplateColumns: { md: "repeat(6, 1fr)" },
         columnGap: "20px",
@@ -91,26 +91,26 @@ export default function Conexion() {
         pt: { md: 10 } // Manual padding to start nicely
       }}>
         {/* Human Connection Section */}
-        <Box component="section" sx={{ 
+        <Box component="section" sx={{
           gridColumn: "1 / 7",
           display: "flex",
-          flexDirection: "column"
+          flexDirection: "column",
         }}>
-          <Typography 
-            ref={humanConnectionTitleRef} 
-            variant="h2" 
+          <Typography
+            ref={humanConnectionTitleRef}
+            variant="h2"
             sx={{
               ...sectionTitle,
-              px: { xs: 2, md: 0 },
+              px: { xs: "0.1rem", md: 0 },
               whiteSpace: "nowrap",
-              fontSize: { xs: "2.5rem", md: "3.5rem" },
+              fontSize: { xs: "2.4rem", md: "3.5rem" },
               mb: 12, // Más separación debajo del titular
               textAlign: "left"
             }}
           >
             Conexión humana
           </Typography>
- 
+
           <Box sx={{ display: "flex", flexDirection: "column", gap: 12 }}> {/* Más separación entre bloques */}
             {humanConnectionPoints.map((point, index) => (
               <Box
@@ -160,7 +160,7 @@ const pointNumberStyle = {
   fontWeight: 500, // Medium
   display: "inline-block"
 }
- 
+
 const pointTitleStyle = {
   fontFamily: "Poppins",
   fontSize: "1.4rem", // AJUSTE: Un poco más grande para mejor jerarquía
@@ -169,7 +169,7 @@ const pointTitleStyle = {
   display: "inline-block",
   textAlign: "left"
 }
- 
+
 const pointDescriptionStyle = {
   mt: 2,
   fontSize: "1.25rem", // AJUSTE: Más grande

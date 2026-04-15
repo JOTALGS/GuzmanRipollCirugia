@@ -11,10 +11,10 @@
  * import { BlurText, BlurScrollProvider } from './BlurScrollEffect'
  */
 
-import React, { useEffect, useRef, useState, createContext, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
+import { useLenis } from 'lenis/dist/lenis-react';
 import SplitType from 'split-type';
 
 // Registrar ScrollTrigger
@@ -23,52 +23,19 @@ if (typeof window !== 'undefined') {
 }
 
 // ============================================
-// CONTEXT para Lenis (Smooth Scroll)
+// REMOVED: Context para Lenis - Ahora usamos la instancia global
 // ============================================
 
-const LenisContext = createContext(null);
-
-export const useLenis = () => {
-  return useContext(LenisContext);
-};
+// Export para compatibilidad - ahora usa el hook de lenis/react
+export { useLenis };
 
 /**
- * Provider para Smooth Scrolling con Lenis
- * Envuelve toda tu aplicación con este componente
+ * BlurScrollProvider ya no es necesario - mantenemos para compatibilidad
+ * @deprecated Use ReactLenis en App.jsx en su lugar
  */
-export const BlurScrollProvider = ({ children, options = {} }) => {
-  const lenisRef = useRef(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-      ...options
-    });
-
-    lenisRef.current = lenis;
-
-    // Sincronizar Lenis con ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Integrar con GSAP ticker
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
-    };
-  }, []);
-
-  return (
-    <LenisContext.Provider value={lenisRef.current}>
-      {children}
-    </LenisContext.Provider>
-  );
+export const BlurScrollProvider = ({ children }) => {
+  // Solo retorna los children sin crear nueva instancia de Lenis
+  return <>{children}</>;
 };
 
 // ============================================

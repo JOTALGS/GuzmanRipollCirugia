@@ -127,7 +127,6 @@ export default function IntroHome() {
             position: "absolute",
             inset: 0,
             background: `
-              radial-gradient(circle at 60% 44%, rgba(72, 132, 255, 0.12) 0%, transparent 32%),
               radial-gradient(circle at 50% 50%, transparent 0%, rgba(5, 8, 22, 0.12) 62%, rgba(5, 8, 22, 0.70) 100%)
             `,
             zIndex: 2,
@@ -137,10 +136,9 @@ export default function IntroHome() {
             position: "absolute",
             inset: 0,
             zIndex: 0,
-            "& media-shader": {
+            "& canvas": {
               width: "100%",
               height: "100%",
-              minHeight: "100%",
               display: "block"
             }
           }

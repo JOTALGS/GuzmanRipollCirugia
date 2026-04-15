@@ -4,7 +4,7 @@ import { Button, Box, Typography } from "@mui/material";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ReactLenis } from 'lenis/react';
+import { ReactLenis, useLenis } from 'lenis/dist/lenis-react';
 import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
 import Resultados from "./pages/Resultados";
@@ -16,6 +16,7 @@ import NavBar from "./components/UI/NavBar";
 import LoadingScreen from "./components/LoadingScreen";
 import MobileFloatingBar from "./components/UI/MobileFloatingBar";
 import ContactFloatingBar from "./components/UI/ContactFloatingBar";
+import LenisScrollTriggerSetup from "./components/LenisScrollTriggerSetup";
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './utils/theme';
@@ -214,7 +215,23 @@ function GridDebugger({
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
-        <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothTouch: true, smoothWheel: true }}>
+        <ReactLenis
+          root
+          options={{
+            lerp: 0.08,
+            duration: 1.2,
+            smoothTouch: true,
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 2,
+            infinite: false,
+            syncTouch: true,
+            syncTouchLerp: 0.1
+          }}
+        >
+          {/* Setup de integración con GSAP ScrollTrigger */}
+          <LenisScrollTriggerSetup />
+
           <Box id="scroll-container" sx={{
             textAlign: "center",
             overflowX: "clip",

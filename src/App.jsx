@@ -218,15 +218,17 @@ function GridDebugger({
         <ReactLenis
           root
           options={{
-            lerp: 0.08,
-            duration: 1.2,
-            smoothTouch: true,
+            lerp: 0.1,  // Slightly faster lerp for less lag
+            duration: 1.0,  // Shorter duration
+            smoothTouch: false,  // Disable smooth touch for better performance on mobile
             smoothWheel: true,
             wheelMultiplier: 1,
             touchMultiplier: 2,
             infinite: false,
-            syncTouch: true,
-            syncTouchLerp: 0.1
+            syncTouch: false,  // Disable sync touch for better performance
+            syncTouchLerp: 0.1,
+            prevent: false,  // Don't prevent default scroll for better performance
+            virtualScroll: false,  // Use native scroll where possible
           }}
         >
           {/* Setup de integración con GSAP ScrollTrigger */}

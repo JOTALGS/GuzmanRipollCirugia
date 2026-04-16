@@ -68,6 +68,7 @@ export default function VerMasProcedimientosHome() {
         display: 'flex',
         flexDirection: 'column',
         paddingInline: { xs: '20px', md: '70px' },
+        paddingBottom: { xs: '72px', md: '180px' },
       }}
     >
       {/* Header con numeración y enlace */}
@@ -137,11 +138,12 @@ export default function VerMasProcedimientosHome() {
         >
           <Typography sx={{
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "18px",
             fontWeight: 500,
             textTransform: "uppercase",
             color: "#000",
-            letterSpacing: "0.05em",
+            letterSpacing: "0.03em",
+            lineHeight: 1,
           }}>
             Ver todos los procedimientos
           </Typography>

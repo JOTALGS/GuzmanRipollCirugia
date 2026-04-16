@@ -128,84 +128,117 @@ export default function WebGPUSpinnerComponent({ type = "spiral" }) {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const width = containerRef.current.clientWidth;
-    const height = containerRef.current.clientHeight;
-
-    const renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    rendererRef.current = renderer;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    
-    while(containerRef.current.firstChild) {
-      containerRef.current.removeChild(containerRef.current.firstChild);
-    }
-    containerRef.current.appendChild(renderer.domElement);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    // Adjusted zoom precisely so that all models fit without clipping
-    if (type === "rose") camera.position.z = 0.9;
-    else if (type === "lissajous") camera.position.z = 1.2;
-    else if (type === "loops") camera.position.z = 1.2;
-    else camera.position.z = 1.2; // spiral
-
-    let spinner;
-    if (type === "rose") {
-      spinner = new Spinner(
-        {"strokeWidth":0.3,"particleCount":100000,"roseA":23,"roseABoost":11.7,"roseK":3,"roseBreathBase":0.01,"roseBreathBoost":0.01,"roseScale":1}, 
-        plotFunctionRose
-      );
-    } else if (type === "lissajous") {
-      spinner = new Spinner(
-        {"strokeWidth":0.3,"particleCount":100000,"lissajousAmp":0.24,"lissajousAmpBoost":0.1,"lissajousAX":3,"lissajousBY":4,"lissajousPhase":1.57,"lissajousYScale":0.92},
-        plotFunctionLissajous
-      );
-    } else if (type === "loops") {
-      spinner = new Spinner(
-        {"strokeWidth":0.2,"particleCount":100000,"loops":4,"tinyLoopAmount":1.1},
-        plotFunctionLoops
-      );
-    } else {
-      spinner = new Spinner(
-        {"strokeWidth":1,"particleCount":50000,"spiralR":3,"spiralr":0.1,"spirald":3.2,"spiralScale":0.0001,"spiralBreath":0.08}, 
-        plotFunctionSpiral
-      );
-    }
-    
-    scene.add(spinner);
-
+    const host = containerRef.current;
+    let disposed = false;
     let animationFrameId;
-    const animate = async () => {
-      animationFrameId = requestAnimationFrame(animate);
-      spinner.rotation.z += 0.002;
-      await renderer.render(scene, camera);
-    };
-    animate();
+    let renderer;
+    let spinner;
+    let handleResize = null;
 
-    const handleResize = () => {
-      if (!containerRef.current || !rendererRef.current) return;
-      const w = containerRef.current.clientWidth;
-      const h = containerRef.current.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      rendererRef.current.setSize(w, h);
+    const mount = async () => {
+      if (!host) return;
+
+      const width = host.clientWidth || 160;
+      const height = host.clientHeight || 160;
+
+      renderer = new THREE.WebGPURenderer({ antialias: true, alpha: true });
+      rendererRef.current = renderer;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      await renderer.init();
+
+      if (disposed) return;
+
+      if (!host.contains(renderer.domElement)) {
+        host.appendChild(renderer.domElement);
+      }
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+
+      if (type === "rose") camera.position.z = 0.9;
+      else if (type === "lissajous") camera.position.z = 1.2;
+      else if (type === "loops") camera.position.z = 1.2;
+      else camera.position.z = 1.2;
+
+      if (type === "rose") {
+        spinner = new Spinner(
+          {"strokeWidth":0.3,"particleCount":100000,"roseA":23,"roseABoost":11.7,"roseK":3,"roseBreathBase":0.01,"roseBreathBoost":0.01,"roseScale":1},
+          plotFunctionRose
+        );
+      } else if (type === "lissajous") {
+        spinner = new Spinner(
+          {"strokeWidth":0.3,"particleCount":100000,"lissajousAmp":0.24,"lissajousAmpBoost":0.1,"lissajousAX":3,"lissajousBY":4,"lissajousPhase":1.57,"lissajousYScale":0.92},
+          plotFunctionLissajous
+        );
+      } else if (type === "loops") {
+        spinner = new Spinner(
+          {"strokeWidth":0.2,"particleCount":100000,"loops":4,"tinyLoopAmount":1.1},
+          plotFunctionLoops
+        );
+      } else {
+        spinner = new Spinner(
+          {"strokeWidth":1,"particleCount":50000,"spiralR":3,"spiralr":0.1,"spirald":3.2,"spiralScale":0.0001,"spiralBreath":0.08},
+          plotFunctionSpiral
+        );
+      }
+
+      scene.add(spinner);
+
+      const animate = async () => {
+        if (disposed) return;
+
+        animationFrameId = requestAnimationFrame(animate);
+        spinner.rotation.z += 0.002;
+        await renderer.render(scene, camera);
+      };
+
+      animate();
+
+      handleResize = () => {
+        if (!host || !rendererRef.current) return;
+
+        const w = host.clientWidth || 160;
+        const h = host.clientHeight || 160;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        rendererRef.current.setSize(w, h);
+      };
+
+      window.addEventListener("resize", handleResize);
     };
-    window.addEventListener("resize", handleResize);
+
+    mount().catch((error) => {
+      console.error("WebGPUSpinner init failed", error);
+    });
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
-      spinner.dispose();
-      
+      disposed = true;
+
+      if (handleResize) {
+        window.removeEventListener("resize", handleResize);
+      }
+
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      if (spinner) {
+        spinner.dispose();
+      }
+
       try {
         if (rendererRef.current) {
           rendererRef.current.dispose();
         }
-        if (containerRef.current && rendererRef.current && containerRef.current.contains(rendererRef.current.domElement)) {
-          containerRef.current.removeChild(rendererRef.current.domElement);
+
+        if (host && rendererRef.current?.domElement?.parentNode === host) {
+          host.removeChild(rendererRef.current.domElement);
         }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        rendererRef.current = null;
       }
     };
   }, [type]);

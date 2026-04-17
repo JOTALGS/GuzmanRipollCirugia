@@ -1,5 +1,5 @@
 import {
-  ShaderLabComposition,
+  useShaderLabCanvasSource,
   type ShaderLabConfig,
 } from "@basementstudio/shader-lab";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
@@ -19,43 +19,43 @@ const initialConfig: ShaderLabConfig = {
       opacity: 1,
       params: {
         preset: "neon-glow",
-        activePoints: 2,
-        point1Color: "#0d093b",
+        activePoints: 3,
+        point1Color: "#0a0836",
         point1Position: [0.1100000000000001, -0.09],
         point1Weight: 0.6,
-        point2Color: "#070736",
+        point2Color: "#070730",
         point2Position: [-0.7, -0.5],
         point2Weight: 2.3,
-        point3Color: "#15296d",
+        point3Color: "#10205c",
         point3Position: [0.8, 0.3],
-        point3Weight: 1.1,
-        point4Color: "#1340749d",
+        point3Weight: 1.2,
+        point4Color: "#12296e80",
         point4Position: [0.2, -0.8],
         point4Weight: 0.9,
-        point5Color: "#2639e0c9",
+        point5Color: "#1a2f8a60",
         point5Position: [-0.5, 0.7],
         point5Weight: 1,
         noiseType: "turbulence",
         noiseSeed: 93.1,
-        warpAmount: 0.04,
-        warpScale: 0.28,
+        warpAmount: 0.022,
+        warpScale: 0.2,
         warpIterations: 3,
         warpDecay: 1,
         warpBias: 0.43,
-        vortexAmount: 1,
+        vortexAmount: 0.45,
         animate: true,
-        falloff: 3.5,
-        motionAmount: 0.4,
-        motionSpeed: 0.4,
+        falloff: 4.2,
+        motionAmount: 0.32,
+        motionSpeed: 0.28,
         tonemapMode: "totos",
-        glowStrength: 0.16,
-        glowThreshold: 0.2,
+        glowStrength: 0.1,
+        glowThreshold: 0.25,
         grainAmount: 0,
-        vignetteStrength: 0.71,
+        vignetteStrength: 0.5,
         vignetteRadius: 1.5,
         vignetteSoftness: 1,
       },
-      saturation: 1.63,
+      saturation: 1.4,
       type: "gradient",
       visible: true,
     },
@@ -68,69 +68,32 @@ const POINTER_EPSILON = 0.0025;
 const cloneConfig = () =>
   JSON.parse(JSON.stringify(initialConfig)) as ShaderLabConfig;
 
+type ShaderMakerSceneProps = {
+  priority?: "normal" | "high";
+};
+
 const lerp = (start: number, end: number, factor: number) =>
   start + (end - start) * factor;
 
-export function ShaderMakerScene() {
+export function ShaderMakerScene({ priority = "normal" }: ShaderMakerSceneProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasHostRef = useRef<HTMLDivElement | null>(null);
   const configRef = useRef<ShaderLabConfig>(cloneConfig());
   const targetPos = useRef<[number, number]>([0, 0]);
   const currentPos = useRef<[number, number]>([0, 0]);
-  const rafRef = useRef<number | null>(null);
   const isVisibleRef = useRef(true);
   const isPageVisibleRef = useRef(true);
-  const isPointerActiveRef = useRef(false);
+  const isScrollingRef = useRef(false);
   const isInteractivePointerRef = useRef(true);
+  const lowEndDeviceRef = useRef(false);
   const lastPointerUpdateRef = useRef(0);
+  const scrollTimeoutRef = useRef<number | null>(null);
+  const elapsedTimeRef = useRef(0);
+  const lastUpdateTimeRef = useRef<number | null>(null);
+  const warmupFramesRef = useRef(0);
   const [canUseWebGPU, setCanUseWebGPU] = useState<boolean | null>(null);
 
-  const stopLoop = () => {
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-  };
-
-  const runFrame = () => {
-    if (
-      !isVisibleRef.current ||
-      !isPageVisibleRef.current ||
-      !isPointerActiveRef.current
-    ) {
-      stopLoop();
-      return;
-    }
-
-    currentPos.current[0] = lerp(currentPos.current[0], targetPos.current[0], 0.035);
-    currentPos.current[1] = lerp(currentPos.current[1], targetPos.current[1], 0.035);
-
-    const gradientLayer = configRef.current.layers.find((layer) => layer.type === "gradient");
-    if (gradientLayer) {
-      gradientLayer.params.point3Position = [currentPos.current[0], currentPos.current[1]];
-    }
-
-    const deltaX = Math.abs(targetPos.current[0] - currentPos.current[0]);
-    const deltaY = Math.abs(targetPos.current[1] - currentPos.current[1]);
-
-    if (deltaX < POINTER_EPSILON && deltaY < POINTER_EPSILON) {
-      isPointerActiveRef.current = false;
-      stopLoop();
-      return;
-    }
-
-    rafRef.current = requestAnimationFrame(runFrame);
-  };
-
-  const startLoop = () => {
-    if (
-      rafRef.current === null &&
-      isVisibleRef.current &&
-      isPageVisibleRef.current &&
-      isPointerActiveRef.current
-    ) {
-      rafRef.current = requestAnimationFrame(runFrame);
-    }
-  };
+  const { canvas, ready, resize, update } = useShaderLabCanvasSource(configRef.current);
 
   useEffect(() => {
     const hasNavigator = typeof navigator !== "undefined";
@@ -154,66 +117,188 @@ export function ShaderMakerScene() {
       : false;
     const lowMemory =
       typeof connection.deviceMemory === "number" && connection.deviceMemory < 4;
+
     const isLowEndDevice =
       prefersReducedMotion || prefersCoarsePointer || saveData || lowCores || lowMemory;
+
+    lowEndDeviceRef.current = isLowEndDevice;
+    isInteractivePointerRef.current = !(prefersCoarsePointer || prefersReducedMotion);
 
     const gradientLayer = configRef.current.layers.find((layer) => layer.type === "gradient");
     if (gradientLayer) {
       gradientLayer.params.activePoints = isLowEndDevice ? 2 : 3;
-      gradientLayer.params.point3Weight = isLowEndDevice ? 1.1 : 1.5;
+      gradientLayer.params.point3Weight = isLowEndDevice ? 1.1 : 1.2;
       gradientLayer.params.warpIterations = isLowEndDevice ? 2 : 3;
-      gradientLayer.params.motionAmount = isLowEndDevice ? 0.3 : 0.4;
-      gradientLayer.params.motionSpeed = isLowEndDevice ? 0.32 : 0.4;
+      gradientLayer.params.motionAmount = isLowEndDevice ? 0.22 : 0.32;
+      gradientLayer.params.motionSpeed = isLowEndDevice ? 0.18 : 0.28;
     }
-
-    isInteractivePointerRef.current = !(prefersCoarsePointer || prefersReducedMotion);
 
     const handleVisibilityChange = () => {
       isPageVisibleRef.current = document.visibilityState === "visible";
-
       if (!isPageVisibleRef.current) {
-        stopLoop();
-        return;
+        lastUpdateTimeRef.current = null;
       }
-
-      startLoop();
     };
 
-    const node = containerRef.current;
-    let observer: IntersectionObserver | null = null;
+    const handleScroll = () => {
+      isScrollingRef.current = true;
 
-    if (node && typeof IntersectionObserver !== "undefined") {
-      observer = new IntersectionObserver(
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 140);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange, {
+      passive: true,
+    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("wheel", handleScroll, { passive: true });
+    window.addEventListener("touchmove", handleScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const host = canvasHostRef.current;
+    if (!host || !canvas) return;
+
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.display = "block";
+
+    if (!host.contains(canvas)) {
+      host.replaceChildren(canvas);
+    }
+  }, [canvas]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || canUseWebGPU !== true) return;
+
+    const getPixelRatio = () => {
+      const baseRatio = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+      return Math.min(baseRatio, lowEndDeviceRef.current ? 1 : 1.35);
+    };
+
+    const applySize = () => {
+      const rect = container.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width));
+      const height = Math.max(1, Math.round(rect.height));
+
+      resize(width, height, getPixelRatio());
+    };
+
+    applySize();
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(() => {
+        applySize();
+      });
+      resizeObserver.observe(container);
+    } else {
+      window.addEventListener("resize", applySize);
+    }
+
+    let intersectionObserver: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== "undefined") {
+      intersectionObserver = new IntersectionObserver(
         (entries) => {
-          const entry = entries[0];
-          isVisibleRef.current = Boolean(entry?.isIntersecting);
-
+          isVisibleRef.current = Boolean(entries[0]?.isIntersecting);
           if (!isVisibleRef.current) {
-            stopLoop();
-            return;
+            lastUpdateTimeRef.current = null;
           }
-
-          startLoop();
         },
         {
           threshold: 0,
           rootMargin: "150px 0px",
         }
       );
-
-      observer.observe(node);
+      intersectionObserver.observe(container);
     }
 
-    document.addEventListener("visibilitychange", handleVisibilityChange, {
-      passive: true,
-    });
+    return () => {
+      resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
+      window.removeEventListener("resize", applySize);
+    };
+  }, [canUseWebGPU, resize]);
+
+  useEffect(() => {
+    if (canUseWebGPU !== true || !ready) return;
+
+    let rafId = 0;
+    const onscreenFrameBudget = lowEndDeviceRef.current ? 1000 / 30 : 1000 / 45;
+    const offscreenFrameBudget = priority === "high" ? 1000 / 12 : Infinity;
+
+    const tick = (now: number) => {
+      rafId = requestAnimationFrame(tick);
+
+      if (!isPageVisibleRef.current || isScrollingRef.current) {
+        lastUpdateTimeRef.current = null;
+        return;
+      }
+
+      const shouldWarmupOffscreen =
+        priority === "high" && (!isVisibleRef.current || warmupFramesRef.current < 8);
+      const isActivelyRenderable = isVisibleRef.current || shouldWarmupOffscreen;
+
+      if (!isActivelyRenderable) {
+        lastUpdateTimeRef.current = null;
+        return;
+      }
+
+      if (lastUpdateTimeRef.current === null) {
+        lastUpdateTimeRef.current = now;
+      }
+
+      const deltaMs = now - lastUpdateTimeRef.current;
+      const currentFrameBudget = isVisibleRef.current ? onscreenFrameBudget : offscreenFrameBudget;
+
+      if (deltaMs < currentFrameBudget) {
+        return;
+      }
+
+      const deltaSeconds = Math.min(deltaMs / 1000, 0.05);
+      lastUpdateTimeRef.current = now;
+      elapsedTimeRef.current += deltaSeconds;
+      warmupFramesRef.current += 1;
+
+      currentPos.current[0] = lerp(currentPos.current[0], targetPos.current[0], 0.025);
+      currentPos.current[1] = lerp(currentPos.current[1], targetPos.current[1], 0.025);
+
+      const gradientLayer = configRef.current.layers.find((layer) => layer.type === "gradient");
+      if (gradientLayer) {
+        gradientLayer.params.point3Position = [currentPos.current[0], currentPos.current[1]];
+      }
+
+      const deltaX = Math.abs(targetPos.current[0] - currentPos.current[0]);
+      const deltaY = Math.abs(targetPos.current[1] - currentPos.current[1]);
+      if (deltaX < POINTER_EPSILON && deltaY < POINTER_EPSILON) {
+        targetPos.current = [currentPos.current[0], currentPos.current[1]];
+      }
+
+      update(elapsedTimeRef.current, deltaSeconds);
+    };
+
+    rafId = requestAnimationFrame(tick);
 
     return () => {
-      stopLoop();
-      observer?.disconnect();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [canUseWebGPU, priority, ready, update]);
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (
@@ -237,17 +322,12 @@ export function ShaderMakerScene() {
     const x = ((clientX - rect.left) / rect.width) * 2 - 1;
     const y = -(((clientY - rect.top) / rect.height) * 2 - 1);
 
-    targetPos.current = [x * 0.5, y * 0.5];
-    isPointerActiveRef.current = true;
-    startLoop();
+    targetPos.current = [x * 0.3, y * 0.3];
   };
 
   const handlePointerLeave = () => {
     if (!isInteractivePointerRef.current) return;
-
     targetPos.current = [0, 0];
-    isPointerActiveRef.current = true;
-    startLoop();
   };
 
   if (canUseWebGPU === false) {
@@ -267,13 +347,12 @@ export function ShaderMakerScene() {
         width: "100%",
       }}
     >
-      {canUseWebGPU === null ? <StaticFallback /> : null}
-
-      <ShaderLabComposition
-        config={configRef.current}
+      {canUseWebGPU !== true || !ready ? <StaticFallback /> : null}
+      <div
+        ref={canvasHostRef}
         style={{
           height: "100%",
-          opacity: canUseWebGPU ? 1 : 0,
+          opacity: canUseWebGPU && ready ? 1 : 0,
           transition: "opacity 0.5s ease",
           width: "100%",
         }}

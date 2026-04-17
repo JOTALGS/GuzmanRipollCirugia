@@ -221,7 +221,7 @@ export default function NavBar() {
                 style={{
                   height: 'auto',
                   width: 'auto',
-                  maxHeight: '40px'
+                  maxHeight: isMobile ? '40px' : '43px'
                 }}
               />
             </Link>

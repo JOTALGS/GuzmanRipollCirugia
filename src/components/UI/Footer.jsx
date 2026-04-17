@@ -3,11 +3,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Instagram, Linkedin, Facebook } from 'lucide-react';
+import BeamCTAButton from "./BeamCTAButton";
 
 const COLORS = {
   textDark: "#000000",
   textGrey: "#666666",
-  textLightGrey: "#999999",
 };
 
 const navLinks = [
@@ -28,12 +28,6 @@ const phoneInfo = [
 
 const emailInfo = [
   { text: "info@guzmanripoll.com", type: "email" },
-];
-
-const socialLinks = [
-  { href: "https://instagram.com/guzmanripoll", text: "instagram" },
-  { href: "https://linkedin.com", text: "linkedin" },
-  { href: "https://facebook.com/guzmanripoll", text: "facebook" },
 ];
 
 const linkStyles = {
@@ -75,7 +69,7 @@ const socialLinkStyles = {
   },
 };
 
-export default function Footer({ variant }) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -144,55 +138,24 @@ export default function Footer({ variant }) {
                 </Typography>
               </Typography>
 
-              <MuiLink
-                component={RouterLink}
+              <BeamCTAButton
                 to="/contacto"
-                underline="none"
+                tone="light"
+                endIcon={<ArrowForwardIcon sx={{ fontSize: { xs: 18, md: 20 } }} />}
                 sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
                   gap: 1.5,
-                  background: "linear-gradient(135deg, rgba(0, 90, 180, 0.08), rgba(0, 60, 140, 0.04))",
-                  backdropFilter: "blur(32px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(32px) saturate(180%)",
-                  color: COLORS.textDark,
-                  borderTop: "1px solid rgba(0, 100, 200, 0.12)",
-                  borderLeft: "1px solid rgba(0, 100, 200, 0.06)",
-                  borderRight: "1px solid rgba(0, 100, 200, 0.04)",
-                  borderBottom: "1px solid rgba(0, 100, 200, 0.03)",
                   px: { xs: 2.5, md: 3 },
                   py: { xs: 1.2, md: 1.4 },
-                  borderRadius: "100px",
                   fontSize: { xs: "14px", md: "15px" },
                   fontWeight: 500,
-                  letterSpacing: "0.01em",
-                  fontFamily: "Poppins, sans-serif",
-                  transition: "all 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
-                  boxShadow: "0 4px 16px rgba(0, 80, 160, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 80, 160, 0.04)",
-                  "&:hover": {
-                    background: "linear-gradient(135deg, rgba(0, 90, 180, 0.14), rgba(0, 60, 140, 0.08))",
-                    borderTop: "1px solid rgba(0, 100, 200, 0.2)",
-                    boxShadow: "0 8px 24px rgba(0, 80, 160, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(0, 80, 160, 0.06)",
-                    transform: "translateY(-1px)",
-                  },
-                  "&:active": {
-                    transform: "translateY(0px)",
-                    boxShadow: "0 2px 8px rgba(0, 80, 160, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
-                  },
-                  "&:hover .arrow-icon": {
-                    transform: "translateX(4px)"
-                  }
+                }}
+                beamProps={{
+                  strength: 0.3,
+                  brightness: 1.04,
                 }}
               >
                 Agendar consulta
-                <ArrowForwardIcon
-                  className="arrow-icon"
-                  sx={{
-                    fontSize: { xs: 18, md: 20 },
-                    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                  }}
-                />
-              </MuiLink>
+              </BeamCTAButton>
             </Box>
 
           </Box>

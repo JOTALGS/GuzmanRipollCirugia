@@ -1,20 +1,17 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
-import { Button, Box, Typography } from "@mui/material";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ReactLenis, useLenis } from 'lenis/dist/lenis-react';
+import { ReactLenis } from 'lenis/dist/lenis-react';
 import Home from "./pages/Home";
 import Clinica from "./pages/Clinica";
 import Resultados from "./pages/Resultados";
 import ProcedimientoDetalle from "./pages/ProcedimientoDetalle";
 import NotFound from "./pages/NotFound";
 
-import StandaloneScrollReveal from "./components/procedimientos/standalone-scroll-reveal-updated";
 import NavBar from "./components/UI/NavBar";
-import LoadingScreen from "./components/LoadingScreen";
-import MobileFloatingBar from "./components/UI/MobileFloatingBar";
 import ContactFloatingBar from "./components/UI/ContactFloatingBar";
 import LenisScrollTriggerSetup from "./components/LenisScrollTriggerSetup";
 
@@ -25,22 +22,20 @@ import { ContactSection } from "./components/contact/ContactSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Componentes temporales para las rutas que faltan
-
+// Componentes temporales
 const ProcedimientoCero = () => (
   <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
     <Typography variant="h4">Cirugía Mamaria - En construcción</Typography>
   </Box>
 );
 
-// Componente temporal para navegación (si lo necesitas)
 const NavButtons = () => (
   <Box>
     <Typography>Nav Buttons</Typography>
   </Box>
 );
 
-// 🎛️ GRID DEBUGGER COMPONENT CON DETECCIÓN MÓVIL
+// 🎛️ GRID DEBUGGER COMPONENT
 function GridDebugger({
   columns = 12,
   maxWidth = "1920px",
@@ -59,28 +54,18 @@ function GridDebugger({
     return false;
   });
 
-  // Detectar cambios en el tamaño de pantalla
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
-
     const checkMobile = (e) => {
       const matches = e ? e.matches : mediaQuery.matches;
-      console.log("📱 Grid Debugger - Mobile check:", matches, "Width:", window.innerWidth);
       setIsMobile(matches);
     };
 
-    // Verificar inicialmente
     checkMobile();
-
-    // Agregar listener para cambios
     mediaQuery.addEventListener("change", checkMobile);
-
-    return () => {
-      mediaQuery.removeEventListener("change", checkMobile);
-    };
+    return () => mediaQuery.removeEventListener("change", checkMobile);
   }, []);
 
-  // Manejar el atajo de teclado
   useEffect(() => {
     const handleKeyDown = (e) => {
       const keyMatch = e.key.toLowerCase() === toggleKey.toLowerCase();
@@ -88,41 +73,25 @@ function GridDebugger({
 
       if (keyMatch && modifierMatch) {
         e.preventDefault();
-        setShowGrid((prev) => {
-          const newState = !prev;
-          console.log(`🎛️ Grid Debug ${newState ? 'ACTIVADO' : 'DESACTIVADO'} - Móvil: ${isMobile}`);
-          return newState;
-        });
+        setShowGrid((prev) => !prev);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toggleKey, requireShift, isMobile]);
 
-  if (!showGrid) {
-    return null;
-  }
+  if (!showGrid) return null;
 
-  // Configuración para móvil
   const mobileColumns = 4;
-  const mobilePadding = "20px";  // Márgenes laterales en móvil
-  const mobileGap = "16px";      // Gutter entre columnas en móvil
+  const mobilePadding = "20px";
+  const mobileGap = "16px";
 
   const currentColumns = isMobile ? mobileColumns : columns;
   const currentPadding = isMobile ? mobilePadding : paddingX;
   const currentGap = isMobile ? mobileGap : gap;
   const currentMaxWidth = isMobile ? "100%" : maxWidth;
 
-  console.log(
-    "🎛️ Grid Debugger - Rendering:",
-    isMobile ? `${mobileColumns} columnas (móvil)` : `${columns} columnas (desktop)`
-  );
-
-  // Estilos del contenedor
   const containerStyle = {
     maxWidth: currentMaxWidth,
     paddingLeft: currentPadding,
@@ -136,7 +105,6 @@ function GridDebugger({
     pointerEvents: 'none'
   };
 
-  // Estilo para cada columna
   const columnStyle = {
     height: '100%',
     width: '100%',
@@ -144,161 +112,201 @@ function GridDebugger({
     border: '1px solid rgba(239, 68, 68, 0.2)'
   };
 
-  // Estilo del overlay principal
-  const overlayStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex,
-    pointerEvents: 'none'
-  };
-
-  // Estilo del indicador
-  const indicatorStyle = {
-    position: 'fixed',
-    top: '16px',
-    left: '16px',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    color: 'white',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    fontSize: '14px',
-    fontFamily: 'monospace',
-    zIndex: zIndex + 1,
-    pointerEvents: 'none'
-  };
-
   return (
     <>
-      {/* Contenedor de la rejilla que se superpone a toda la página */}
-      <div style={overlayStyle}>
-        {/* Contenedor que replica el layout principal */}
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex, pointerEvents: 'none' }}>
         <div style={containerStyle}>
-          {/* Genera las columnas visuales */}
           {Array.from({ length: currentColumns }).map((_, i) => (
             <div key={i} style={columnStyle} />
           ))}
         </div>
       </div>
-
-      {/* Indicador visual en la esquina */}
-      <div style={indicatorStyle}>
-        Grid Debug: {isMobile ? `${mobileColumns} cols (móvil)` : `${columns} cols (desktop)`} | {requireShift ? 'Shift+' : ''}{toggleKey.toUpperCase()} to toggle
+      <div style={{
+        position: 'fixed', top: '16px', left: '16px', backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        color: 'white', padding: '8px 12px', borderRadius: '4px', fontSize: '14px',
+        fontFamily: 'monospace', zIndex: zIndex + 1, pointerEvents: 'none'
+      }}>
+        Grid: {isMobile ? `${mobileColumns} cols (móvil)` : `${columns} cols (desktop)`}
       </div>
     </>
   );
 }
 
-// 🎯 COMPONENTE PRINCIPAL CON GRID DEBUGGER Y NAVBAR
-  const App = () => {
+// 🎯 COMPONENTE PRINCIPAL
+const App = () => {
   const [mode, setMode] = useState('light');
-  const [loading, setLoading] = useState(false);
+  const theme = useMemo(() => (mode === 'light' ? lightTheme : darkTheme), [mode]);
+  const toggleTheme = () => setMode(prev => (prev === 'light' ? 'dark' : 'light'));
 
-  const theme = useMemo(() => {
-    return mode === 'light' ? lightTheme : darkTheme;
-  }, [mode]);
-
-  const toggleTheme = () => {
-    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // Log para confirmar que el grid debugger está disponible
-    console.log('🎛️ Grid Debugger cargado - Presiona Shift + G para activar');
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <Router autoScrollToTop>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
         <ReactLenis
           root
           options={{
-            lerp: 0.1,  // Slightly faster lerp for less lag
-            duration: 1.0,  // Shorter duration
-            smoothTouch: false,  // Disable smooth touch for better performance on mobile
-            smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
-            infinite: false,
-            syncTouch: false,  // Disable sync touch for better performance
-            syncTouchLerp: 0.1,
-            prevent: false,  // Don't prevent default scroll for better performance
-            virtualScroll: false,  // Use native scroll where possible
+            lerp: 0.1, duration: 1.0, smoothTouch: false, smoothWheel: true,
+            wheelMultiplier: 1, touchMultiplier: 2, infinite: false, syncTouch: false,
+            syncTouchLerp: 0.1, prevent: false, virtualScroll: false,
           }}
         >
-          {/* Setup de integración con GSAP ScrollTrigger */}
-          <LenisScrollTriggerSetup />
-
-          <Box id="scroll-container" sx={{
-            textAlign: "center",
-            overflowX: "clip",
-            position: "relative",
-            width: "100%",
-            maxWidth: "100vw"
-          }}>
-            {/* NavBar fija en la parte superior */}
-            <NavBar  toggleTheme={toggleTheme} />
-
-
-
-            {/* Barra flotante móvil para contacto con panel IA */}
-            <ContactFloatingBar />
-
-            <Routes>
-              <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
-              <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />
-              <Route path="/clinica" element={<Clinica />} />
-              <Route path="/procedimientos" element={<Procedimientos toggleTheme={toggleTheme} />} />
-              <Route path="/procedimiento/:id" element={<ProcedimientoDetalle />} />
-              <Route path="/resultados" element={<Resultados/>} />
-              <Route path="/contacto" element={<ContactSection />} />
-              <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            
-            {/* Componente de navegación condicional */}
-            <ConditionalNavButtons />
-            
-            {/* 🎛️ GRID DEBUGGER - Se superpone a todo el contenido */}
-            <GridDebugger 
-              columns={12}
-              maxWidth="1920px"
-              paddingX="70px"
-              gap="20px"
-              columnColor="rgba(239, 68, 68, 0.1)"
-              toggleKey="g"
-              requireShift={true}
-              zIndex={9999}
-            />
-            
-          </Box>
+          <AppShell toggleTheme={toggleTheme} />
         </ReactLenis>
       </ThemeProvider>
     </Router>
   );
 };
 
-// 🔧 Componente auxiliar para manejar la navegación condicional
+function AppShell({ toggleTheme }) {
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionPhase, setTransitionPhase] = useState("idle");
+  
+  const TRANSITION_STAGGER_MS = 80;
+  const TRANSITION_BLOCK_COUNT = 4;
+  const ENTER_DURATION_MS = 720;
+  const EXIT_DURATION_MS = 820;
+  const TOTAL_STAGGER_MS = TRANSITION_STAGGER_MS * (TRANSITION_BLOCK_COUNT - 1);
+  const COVER_COMPLETE_MS = ENTER_DURATION_MS + TOTAL_STAGGER_MS;
+  const EXIT_COMPLETE_MS = EXIT_DURATION_MS + TOTAL_STAGGER_MS;
+
+  useEffect(() => {
+    // 🚨 LA CLAVE: Si la ruta a la que vamos es igual a la que estamos mostrando, abortamos.
+    // Esto evita el bucle infinito y que los timers se cancelen solos.
+    if (location.pathname === displayLocation.pathname) {
+      return;
+    }
+
+    // Fase 1: Baja el telón (los bloques entran)
+    setTransitionPhase("enter");
+
+    let exitTimer;
+    let idleTimer;
+
+    // Fase 2: Cambiar la ruta real cuando la pantalla está azul
+    const swapTimer = setTimeout(() => {
+      setDisplayLocation(location);
+      window.scrollTo(0, 0);
+
+      // Fase 3: Sube el telón (los bloques se van)
+      exitTimer = setTimeout(() => {
+        setTransitionPhase("exit");
+
+        // Fase 4: Ocultar el overlay
+        idleTimer = setTimeout(() => {
+          setTransitionPhase("idle");
+        }, EXIT_COMPLETE_MS);
+
+      }, 50); // Le damos 50ms a React para que pinte la nueva vista detrás
+    }, COVER_COMPLETE_MS);
+
+    // Solo se cancela si el usuario abandona toda la web de golpe
+    return () => {
+      clearTimeout(swapTimer);
+      clearTimeout(exitTimer);
+      clearTimeout(idleTimer);
+    };
+  }, [location]); // 🚨 ÚNICA DEPENDENCIA: Solo nos importa cuando el enrutador manda un cambio.
+
+  return (
+    <>
+      <LenisScrollTriggerSetup />
+
+      <Box id="scroll-container" sx={{ textAlign: "center", overflowX: "clip", position: "relative", width: "100%", maxWidth: "100vw" }}>
+        <NavBar toggleTheme={toggleTheme} />
+        <ContactFloatingBar />
+
+        {/* Carga la vista retrasada (la que decide el temporizador) */}
+        <Routes location={displayLocation}>
+          <Route path="/" element={<Home toggleTheme={toggleTheme} />} />
+          <Route path="/inicio" element={<Home toggleTheme={toggleTheme} />} />
+          <Route path="/clinica" element={<Clinica />} />
+          <Route path="/procedimientos" element={<Procedimientos toggleTheme={toggleTheme} />} />
+          <Route path="/procedimiento/:id" element={<ProcedimientoDetalle />} />
+          <Route path="/resultados" element={<Resultados />} />
+          <Route path="/contacto" element={<ContactSection />} />
+          <Route path="/cir-mamaria" element={<ProcedimientoCero />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+
+        <ConditionalNavButtons />
+
+        <GridDebugger
+          columns={12} maxWidth="1920px" paddingX="70px" gap="20px"
+          columnColor="rgba(239, 68, 68, 0.1)" toggleKey="g" requireShift={true} zIndex={9999}
+        />
+      </Box>
+
+      <RouteTransitionOverlay phase={transitionPhase} />
+    </>
+  );
+}
+
+// 🔧 Componente auxiliar
 function ConditionalNavButtons() {
   const location = useLocation();
-  
-  const shouldShowNavButtons = 
-    location.pathname !== "/cir-mamaria" && 
-    location.pathname !== "/" && 
-    false; // Cambia esto a true si quieres activar los botones
+  const shouldShowNavButtons = location.pathname !== "/cir-mamaria" && location.pathname !== "/" && false; 
 
-  if (!shouldShowNavButtons) {
-    return null;
-  }
+  if (!shouldShowNavButtons) return null;
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '82%' }}>
       <NavButtons />
+    </Box>
+  );
+}
+
+function RouteTransitionOverlay({ phase }) {
+  const blockColor = "#081743";
+  const isActive = phase !== "idle";
+
+  return (
+    <Box
+      aria-hidden="true"
+      sx={{
+        position: "fixed",
+        inset: 0,
+        overflow: "hidden",
+        pointerEvents: isActive ? "auto" : "none",
+        zIndex: 20000,
+        visibility: isActive ? "visible" : "hidden",
+      }}
+    >
+      {[0, 1, 2, 3].map((index) => {
+        const staggerDelay = index * 0.08; 
+
+        // Definimos de dónde a dónde va
+        let translateY = "100%"; // Estado base: Oculto abajo
+        if (phase === "enter") translateY = "0%"; // Pantalla azul completa
+        if (phase === "exit") translateY = "-100%"; // Se fue hacia arriba
+
+        // Animación según la fase
+        let transition = "none";
+        if (phase === "enter") {
+          transition = `transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${staggerDelay}s`;
+        } else if (phase === "exit") {
+          transition = `transform 0.8s cubic-bezier(0.77, 0, 0.175, 1) ${staggerDelay}s`;
+        }
+
+        return (
+          <Box
+            key={index}
+            sx={{
+              position: "absolute",
+              left: `${index * 25}%`,
+              top: 0,
+              width: "25%",
+              height: "100%",
+              backgroundColor: blockColor,
+              transform: `translateY(${translateY})`,
+              transition: transition,
+              willChange: "transform",
+            }}
+          />
+        );
+      })}
     </Box>
   );
 }

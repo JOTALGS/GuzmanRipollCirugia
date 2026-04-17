@@ -6,7 +6,6 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ArrowUpRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -41,7 +40,7 @@ export default function MedicalProcedures() {
       id: "02",
       number: "002",
       name: "Lipoescultura VASER",
-      image: "/images/maxi2.png",
+      image: "/images/imagen5.jpg",
       description: "Remodelación corporal mediante eliminación de grasa localizada utilizando tecnología avanzada.",
       listTitle: "Tecnologías",
       items: [

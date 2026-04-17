@@ -292,7 +292,7 @@ const TestimoniosCarousel = () => {
             >
               Confianza {" "}
             </Typography>
-            en cada Testimonio
+            en cada proceso
           </Typography>
        
           
@@ -304,7 +304,7 @@ const TestimoniosCarousel = () => {
             fontWeight: 500,
             maxWidth: '400px'
           }}>
-            Garantizamos confianza, cercanía y un toque humano en cada tratamiento.
+            Cercanía y profesionalismo en cada etapa.
           </Typography>
         </Box>
 

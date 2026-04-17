@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { gsap } from "gsap";
 import { ShaderMakerEmbed } from "./ShaderMakerEmbed";
+import BeamCTAButton from "../UI/BeamCTAButton";
 
 export default function IntroHome() {
   const [isPinned, setIsPinned] = useState(true);
@@ -90,7 +91,7 @@ export default function IntroHome() {
         maxHeight: { xs: "100dvh", md: "100vh" },
         display: "grid",
         gridTemplateColumns: "repeat(12, 1fr)",
-        paddingX: { xs: "15px", sm: "30px", md: "50px", lg: "70px" },
+        paddingX: { xs: "20px", sm: "30px", md: "50px", lg: "70px" },
         columnGap: { xs: "15px", sm: "20px" },
         paddingTop: { xs: "160px", sm: "140px", md: "160px", lg: "180px", xl: "200px" },
         paddingBottom: { xs: "30px", md: "60px" },
@@ -321,70 +322,68 @@ export default function IntroHome() {
             display: 'flex',
             gap: { xs: '10px', sm: '12px', md: '14px' },
             flexWrap: 'nowrap',
-            justifyContent: { xs: 'flex-start', md: 'flex-end' },
-            width: { xs: '100%', md: '340px' },
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: 'auto',
             flexDirection: 'row',
-            '& .primary-button, & .secondary-button': {
-              flex: '1 1 0',
-              width: '100%',
-              cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '12px',
-              fontWeight: 600,
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '42px',
-              padding: '0 20px',
-              whiteSpace: 'nowrap',
-              borderRadius: '100px',
-              textDecoration: 'none',
-              boxSizing: 'border-box',
-              '&:active': {
-                transform: 'scale(0.97)',
-              }
-            },
-            '& .primary-button': {
-              background: '#FFFFFF',
-              border: '1px solid #FFFFFF',
-              color: '#000000',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1.5px 0 rgba(255, 255, 255, 0.4)',
-              '&:hover': {
-                background: '#F8F8F8',
-                transform: 'translateY(-3px) scale(1.02)',
-                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.2), inset 0 1.5px 0 rgba(255, 255, 255, 0.4)'
-              }
-            },
-            '& .secondary-button': {
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#FFFFFF',
-              boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                transform: 'translateY(-3px) scale(1.02)',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1.5px 0 rgba(255, 255, 255, 0.2)'
-              }
-            }
           }}
         >
           <Box
-            component={RouterLink}
-            to="/clinica"
-            className="primary-button"
+            sx={{ flex: '0 0 auto' }}
           >
-            Conoce mas
+            <BeamCTAButton
+              to="/contacto"
+              tone="light"
+              sx={{
+                minHeight: '50px',
+                px: { xs: 2.75, md: 3.2 },
+                py: { xs: 1.2, md: 1.4 },
+                fontSize: { xs: '14px', md: '15px' },
+                fontWeight: 500,
+                ml: 0,
+              }}
+              beamProps={{
+                size: 'md',
+                strength: 0.76,
+                brightness: 1.26,
+                saturation: 1.22,
+                hueRange: 18,
+                duration: 3.15,
+              }}
+            >
+              Agendar consulta
+            </BeamCTAButton>
           </Box>
-          <Box
-            component={RouterLink}
+          <BeamCTAButton
             to="/procedimientos"
-            className="secondary-button"
+            tone="dark"
+            sx={{
+              minHeight: '50px',
+              px: { xs: 2.75, md: 3.2 },
+              py: { xs: 1.2, md: 1.4 },
+              fontSize: { xs: '14px', md: '15px' },
+              fontWeight: 500,
+              color: '#F4FAFF',
+              background: 'linear-gradient(180deg, rgba(24, 38, 89, 0.38) 0%, rgba(17, 29, 72, 0.52) 100%)',
+              border: '1px solid rgba(167, 207, 255, 0.18)',
+              boxShadow: '0 10px 24px rgba(0, 10, 30, 0.12), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(101,163,255,0.1)',
+              '&:hover': {
+                transform: 'translateY(-1px)',
+                boxShadow: '0 14px 30px rgba(0, 12, 34, 0.18), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(101,163,255,0.14)',
+                background: 'linear-gradient(180deg, rgba(26, 42, 98, 0.44) 0%, rgba(19, 33, 82, 0.58) 100%)',
+              },
+            }}
+            beamProps={{
+              size: 'md',
+              strength: 0.34,
+              brightness: 1.08,
+              saturation: 1.08,
+              hueRange: 12,
+              duration: 3.15,
+            }}
           >
             Ver procedimientos
-          </Box>
+          </BeamCTAButton>
         </Box>
       </Box>
 

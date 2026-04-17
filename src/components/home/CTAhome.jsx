@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShaderMakerEmbed } from "./ShaderMakerEmbed";
+import BeamCTAButton from "../UI/BeamCTAButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,7 +125,7 @@ export default function CTAhome() {
           },
         }}
       >
-        <ShaderMakerEmbed />
+        <ShaderMakerEmbed priority="high" />
       </Box>
 
       <Box
@@ -230,38 +231,28 @@ export default function CTAhome() {
             Tratamientos avanzados para procesos de recuperación más rápidos.
           </Typography>
 
-          <Box component="a" href="/contacto" sx={{ textDecoration: "none" }}>
-            <Box sx={{ marginTop: "22px" }}>
-              <Box
-                sx={{
-                  backgroundColor: "#FFFFFF",
-                  color: "#07111C",
-                  borderRadius: "100px",
-                  borderTop: "1px solid rgba(255,255,255,0.95)",
-                  borderLeft: "1px solid rgba(255,255,255,0.78)",
-                  borderRight: "1px solid rgba(255,255,255,0.78)",
-                  borderBottom: "1px solid rgba(210,225,255,0.58)",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7)",
-                  height: { xs: "48px", md: "50px" },
-                  minWidth: { xs: "216px", md: "220px" },
-                  paddingInline: { xs: "24px", md: "28px" },
-                  fontFamily: "Poppins",
-                  fontSize: { xs: "15px", md: "15px" },
-                  fontWeight: 500,
-                  letterSpacing: "0.01em",
-                  lineHeight: { xs: "48px", md: "50px" },
-                  textAlign: "center",
-                  display: "inline-block",
-                  transition: "all 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
-                  "&:hover": {
-                    transform: "translateY(-1px)",
-                    boxShadow: "0 12px 28px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.82)",
-                  },
-                }}
-              >
-                Agendate
-              </Box>
-            </Box>
+          <Box sx={{ marginTop: "22px" }}>
+            <BeamCTAButton
+              to="/contacto"
+              tone="light"
+              sx={{
+                minHeight: "50px",
+                px: { xs: 2.75, md: 3.2 },
+                py: { xs: 1.2, md: 1.4 },
+                fontSize: { xs: "14px", md: "15px" },
+                fontWeight: 500,
+              }}
+              beamProps={{
+                size: "md",
+                strength: 0.78,
+                brightness: 1.28,
+                saturation: 1.22,
+                hueRange: 18,
+                duration: 3.1,
+              }}
+            >
+              Agendar consulta
+            </BeamCTAButton>
           </Box>
         </div>
       </Box>

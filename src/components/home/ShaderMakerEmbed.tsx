@@ -1,9 +1,16 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
+const loadShaderMakerScene = () =>
+  import("./ShaderMakerScene");
+
 const ShaderMakerScene = lazy(async () => {
-  const module = await import("./ShaderMakerScene");
+  const module = await loadShaderMakerScene();
   return { default: module.ShaderMakerScene };
 });
+
+type ShaderMakerEmbedProps = {
+  priority?: "normal" | "high";
+};
 
 export function StaticFallback() {
   return (
@@ -70,13 +77,49 @@ export function StaticFallback() {
   );
 }
 
-export function ShaderMakerEmbed() {
+export function ShaderMakerEmbed({ priority = "normal" }: ShaderMakerEmbedProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(priority === "high");
+
+  useEffect(() => {
+    if (shouldLoad) return;
+
+    const preload = () => {
+      void loadShaderMakerScene();
+    };
+
+    if (priority === "high") {
+      preload();
+      return;
+    }
+
+    const requestIdle =
+      typeof window !== "undefined" && "requestIdleCallback" in window
+        ? window.requestIdleCallback.bind(window)
+        : null;
+
+    if (requestIdle) {
+      const idleId = requestIdle(() => {
+        preload();
+      }, { timeout: 1200 });
+
+      return () => {
+        window.cancelIdleCallback?.(idleId);
+      };
+    }
+
+    const timeoutId = window.setTimeout(preload, 500);
+    return () => window.clearTimeout(timeoutId);
+  }, [priority, shouldLoad]);
 
   useEffect(() => {
     const node = containerRef.current;
     if (!node || shouldLoad) return;
+
+    if (priority === "high") {
+      setShouldLoad(true);
+      return;
+    }
 
     if (typeof IntersectionObserver === "undefined") {
       setShouldLoad(true);
@@ -92,7 +135,7 @@ export function ShaderMakerEmbed() {
         }
       },
       {
-        rootMargin: "300px 0px",
+        rootMargin: "1200px 0px",
         threshold: 0.01,
       }
     );
@@ -100,7 +143,7 @@ export function ShaderMakerEmbed() {
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [shouldLoad]);
+  }, [priority, shouldLoad]);
 
   return (
     <div
@@ -114,7 +157,7 @@ export function ShaderMakerEmbed() {
       }}
     >
       <Suspense fallback={<StaticFallback />}>
-        {shouldLoad ? <ShaderMakerScene /> : <StaticFallback />}
+        {shouldLoad ? <ShaderMakerScene priority={priority} /> : <StaticFallback />}
       </Suspense>
     </div>
   );

@@ -55,7 +55,7 @@ export default function CTAhome() {
       scrollTriggerInstance = ScrollTrigger.create({
         trigger: leftSection,
         start: "top 7%",
-        end: isMobile() ? "bottom+=5000% top" : "bottom+=200% top",
+        end: isMobile() ? "bottom+=5000% top" : "bottom+=235% top",
         pin: isMobile() ? false : true,
         pinSpacing: false,
         scrub: true,

@@ -173,8 +173,7 @@ function AppShell({ toggleTheme }) {
   const EXIT_COMPLETE_MS = EXIT_DURATION_MS + TOTAL_STAGGER_MS;
 
   useEffect(() => {
-    // 🚨 LA CLAVE: Si la ruta a la que vamos es igual a la que estamos mostrando, abortamos.
-    // Esto evita el bucle infinito y que los timers se cancelen solos.
+    // Si la ruta a la que vamos es igual a la que estamos mostrando, abortamos.
     if (location.pathname === displayLocation.pathname) {
       return;
     }
@@ -199,16 +198,15 @@ function AppShell({ toggleTheme }) {
           setTransitionPhase("idle");
         }, EXIT_COMPLETE_MS);
 
-      }, 50); // Le damos 50ms a React para que pinte la nueva vista detrás
+      }, 50); 
     }, COVER_COMPLETE_MS);
 
-    // Solo se cancela si el usuario abandona toda la web de golpe
     return () => {
       clearTimeout(swapTimer);
       clearTimeout(exitTimer);
       clearTimeout(idleTimer);
     };
-  }, [location]); // 🚨 ÚNICA DEPENDENCIA: Solo nos importa cuando el enrutador manda un cambio.
+  }, [location]); 
 
   return (
     <>
@@ -277,12 +275,10 @@ function RouteTransitionOverlay({ phase }) {
       {[0, 1, 2, 3].map((index) => {
         const staggerDelay = index * 0.08; 
 
-        // Definimos de dónde a dónde va
-        let translateY = "100%"; // Estado base: Oculto abajo
-        if (phase === "enter") translateY = "0%"; // Pantalla azul completa
-        if (phase === "exit") translateY = "-100%"; // Se fue hacia arriba
+        let translateY = "100%"; 
+        if (phase === "enter") translateY = "0%"; 
+        if (phase === "exit") translateY = "-100%"; 
 
-        // Animación según la fase
         let transition = "none";
         if (phase === "enter") {
           transition = `transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${staggerDelay}s`;
@@ -297,7 +293,8 @@ function RouteTransitionOverlay({ phase }) {
               position: "absolute",
               left: `${index * 25}%`,
               top: 0,
-              width: "25%",
+              // FIX: calc(25% + 2px) soluciona las líneas blancas (sub-pixel rendering) en móviles
+              width: "calc(25% + 2px)", 
               height: "100%",
               backgroundColor: blockColor,
               transform: `translateY(${translateY})`,

@@ -14,11 +14,40 @@ export default function ContactFloatingBar() {
   useEffect(() => {
     if (isContacto) {
       const timer = setTimeout(() => setIsVisible(true), 100);
-      return () => clearTimeout(timer);
+
+      const handleFooterAwareScroll = () => {
+        const footerElement = document.querySelector('footer');
+        if (!footerElement) {
+          setIsVisible(true);
+          return;
+        }
+
+        const footerRect = footerElement.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        setIsVisible(footerRect.top >= windowHeight);
+      };
+
+      window.addEventListener('scroll', handleFooterAwareScroll, { passive: true });
+      handleFooterAwareScroll();
+
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', handleFooterAwareScroll);
+      };
     }
 
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
+      const footerElement = document.querySelector('footer');
+      const isPastThreshold = window.scrollY > 100;
+
+      if (!footerElement) {
+        setIsVisible(isPastThreshold);
+        return;
+      }
+
+      const footerRect = footerElement.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      setIsVisible(isPastThreshold && footerRect.top >= windowHeight);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -31,6 +60,48 @@ export default function ContactFloatingBar() {
 
   const buttonText = isContacto ? 'Ver todos' : 'Agendar consulta';
   const buttonLink = isContacto ? '/procedimientos' : '/contacto';
+  const iconOrbStyles = {
+    position: 'relative',
+    flex: '0 0 44px',
+    width: '44px',
+    minWidth: '44px',
+    maxWidth: '44px',
+    height: '44px',
+    minHeight: '44px',
+    maxHeight: '44px',
+    aspectRatio: '1 / 1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
+    background: 'rgba(120,120,120,0.15)',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255,255,255,0.2)',
+    boxShadow: `
+      inset 1px 1px 2px rgba(255,255,255,0.15),
+      inset -2px -2px 4px rgba(0,0,0,0.25)
+    `,
+    overflow: 'hidden',
+    transition: 'transform 0.16s cubic-bezier(0.23, 1, 0.32, 1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
+    '&:active': { transform: 'scale(0.96)' },
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '50%',
+      background: 'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.25), transparent 60%)',
+      pointerEvents: 'none',
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '50%',
+      background: 'radial-gradient(circle at 70% 75%, rgba(0,0,0,0.2), transparent 70%)',
+      pointerEvents: 'none',
+    },
+  };
 
   return (
     <>
@@ -117,21 +188,21 @@ export default function ContactFloatingBar() {
           zIndex: 1000,
           transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
           width: isPanelOpen ? '60px' : 'auto',
-          height: '54px',
-          minWidth: isPanelOpen ? '60px' : '300px',
-          px: isPanelOpen ? 0 : '10px',
+          height: '56px',
+          minWidth: isPanelOpen ? '60px' : '324px',
+          px: isPanelOpen ? 0 : '6px',
           py: '6px',
-          borderRadius: '100px',
+          borderRadius: '999px',
           background: `
-            radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.25) 0%, transparent 75%),
-            radial-gradient(ellipse at 50% 125%, rgba(255, 255, 255, 0.12) 0%, transparent 70%),
-            rgba(22, 24, 28, 0.82)
+            radial-gradient(ellipse at 50% -28%, rgba(255, 255, 255, 0.24) 0%, transparent 72%),
+            radial-gradient(ellipse at 50% 130%, rgba(255, 255, 255, 0.07) 0%, transparent 70%),
+            linear-gradient(180deg, rgba(103, 105, 112, 0.74) 0%, rgba(78, 80, 88, 0.82) 100%)
           `,
-          backdropFilter: 'blur(24px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-          border: '0.5px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0.5px 0 rgba(255, 255, 255, 0.15)',
-          gap: '8px',
+          backdropFilter: 'blur(30px) saturate(155%)',
+          WebkitBackdropFilter: 'blur(30px) saturate(155%)',
+          border: '1px solid rgba(255, 255, 255, 0.16)',
+          boxShadow: '0 16px 34px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(30, 32, 38, 0.18)',
+          gap: '7px',
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -143,16 +214,28 @@ export default function ContactFloatingBar() {
             tone="dark"
             sx={{
               flex: 1,
-              minHeight: '42px',
-              px: '20px',
-              py: '10px',
+              minHeight: '44px',
+              px: '22px',
+              py: '9px',
               fontSize: '13px',
               fontWeight: 600,
               whiteSpace: 'nowrap',
+              borderRadius: '999px',
+              background: 'linear-gradient(180deg, rgba(46, 63, 92, 0.72) 0%, rgba(29, 42, 66, 0.82) 100%)',
+              border: '1px solid rgba(183, 208, 255, 0.12)',
+              boxShadow: '0 8px 18px rgba(6, 10, 20, 0.18), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(66,104,173,0.18)',
+              '&:hover': {
+                transform: 'translateY(-1px)',
+                boxShadow: '0 12px 22px rgba(6, 10, 20, 0.24), inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(66,104,173,0.2)',
+                background: 'linear-gradient(180deg, rgba(52, 71, 104, 0.76) 0%, rgba(33, 47, 74, 0.86) 100%)',
+              },
             }}
             beamProps={{
-              strength: 0.34,
-              brightness: 1.05,
+              strength: 0.1,
+              brightness: 0.88,
+              saturation: 0.84,
+              hueRange: 4,
+              duration: 3.4,
             }}
           >
             {buttonText}
@@ -165,47 +248,47 @@ export default function ContactFloatingBar() {
             href="https://wa.me/5491112345678"
             target="_blank"
             sx={{
-              width: '46px',
-              height: '46px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(30, 80, 200, 0.45), rgba(20, 60, 160, 0.4))',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(30, 80, 200, 0.6)',
-              boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.4)',
-              color: '#fff',
-              transition: 'all 0.2s ease',
-              '&:active': { transform: 'scale(0.9)' },
+              ...iconOrbStyles,
+              background: 'rgba(74, 92, 152, 0.24)',
+              border: '1px solid rgba(177, 195, 245, 0.22)',
+              boxShadow: `
+                inset 1px 1px 2px rgba(255,255,255,0.16),
+                inset -2px -2px 4px rgba(18,26,52,0.32)
+              `,
+              color: '#F5F8FF',
+              '&:hover': {
+                background: 'rgba(82, 100, 162, 0.28)',
+                borderColor: 'rgba(188, 205, 248, 0.24)',
+                boxShadow: `
+                  inset 1px 1px 2px rgba(255,255,255,0.18),
+                  inset -2px -2px 4px rgba(18,26,52,0.34)
+                `,
+              },
             }}
           >
-            <MessageCircle size={20} fill="rgba(255,255,255,0.2)" />
+            <MessageCircle size={19} strokeWidth={2.1} style={{ position: 'relative', zIndex: 1 }} />
           </Box>
         )}
 
         <Box
           onClick={() => setIsPanelOpen((prev) => !prev)}
           sx={{
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '50%',
+            ...iconOrbStyles,
             cursor: 'pointer',
-            background: isPanelOpen ? 'rgba(60, 62, 68, 0.6)' : 'rgba(255, 255, 255, 0.1)',
-            border: '1.5px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: 'inset 0 1.5px 0 rgba(255, 255, 255, 0.4)',
-            transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-            '&:active': { transform: 'scale(0.9)' },
-            width: isPanelOpen ? '44px' : '46px',
-            height: isPanelOpen ? '44px' : '46px',
+            background: isPanelOpen
+              ? 'rgba(126,126,126,0.2)'
+              : 'rgba(120,120,120,0.15)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: `
+              inset 1px 1px 2px rgba(255,255,255,0.15),
+              inset -2px -2px 4px rgba(0,0,0,0.25)
+            `,
           }}
         >
           {isPanelOpen ? (
-            <X size={20} color="#fff" strokeWidth={2.5} />
+            <X size={20} color="#fff" strokeWidth={2.5} style={{ position: 'relative', zIndex: 1 }} />
           ) : (
-            <Sparkles size={20} color="#fff" strokeWidth={1.5} />
+            <Sparkles size={20} color="#fff" strokeWidth={1.5} style={{ position: 'relative', zIndex: 1 }} />
           )}
         </Box>
       </Box>
